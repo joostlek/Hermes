@@ -1,0 +1,62 @@
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="imageId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Image ID</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.imageId}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="promotion">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Promotion</mat-header-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/promotions/{{row.promotionId}}">{{row.promotion}}</a></mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="screens">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Screens</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.screens}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="height">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Height</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.height}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="width">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Width</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.width}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="active">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.active}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+    [length]="dataSource.data.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>

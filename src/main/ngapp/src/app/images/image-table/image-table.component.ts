@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { ImageTableDataSource } from './image-table-datasource';
+import {ImageService} from "../shared/image.service";
 
 @Component({
   selector: 'image-table',
@@ -13,9 +14,11 @@ export class ImageTableComponent implements OnInit {
   dataSource: ImageTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['imageId', 'name', 'active', 'promotion', 'username', 'width', 'height', ];
+
+  constructor (private imageService: ImageService) {}
 
   ngOnInit() {
-    this.dataSource = new ImageTableDataSource(this.paginator, this.sort);
+    this.dataSource = new ImageTableDataSource(this.paginator, this.sort, this.imageService);
   }
 }
