@@ -3,6 +3,7 @@ import {Observable, of} from "rxjs/index";
 
 
 import {Image} from "./image.model";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +19,13 @@ export class ImageService {
   getImages(): Observable<Image[]> {
     return of(this.IMAGES)
   }
+
+  getImage(id: Number): Observable<Image> {
+    for (let i = 0; i < this.IMAGES.length; i++) {
+      if (this.IMAGES[i].imageId === id) {
+        return of(this.IMAGES[i]);
+      }
+    }
+  }
+
 }
