@@ -1,10 +1,10 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table [dataSource]="dataSource" matSort aria-label="Images">
 
     <!-- Id Column -->
-    <ng-container matColumnDef="imageId">
+    <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Image ID</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.imageId}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
@@ -14,21 +14,15 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="promotion">
+    <ng-container matColumnDef="promotion_name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Promotion</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/promotions/{{row.promotionId}}">{{row.promotion}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/promotions/{{row.promotion_id}}">{{row.promotion_name}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="username">
+    <ng-container matColumnDef="user_name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="screens">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Screens</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.screens}}</mat-cell>
+      <mat-cell *matCellDef="let row"><a href="/users/{{row.user_id}}">{{row.user_name}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->

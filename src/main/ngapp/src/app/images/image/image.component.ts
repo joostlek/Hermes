@@ -11,6 +11,7 @@ import {Image} from "../shared/image.model";
 })
 export class ImageComponent implements OnInit {
   image: Image;
+
   constructor(
     private route: ActivatedRoute,
     private imageService: ImageService,
@@ -18,10 +19,10 @@ export class ImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getHero();
+    this.getImage();
   }
 
-  getHero(): void {
+  getImage(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.imageService.getImage(id)
       .subscribe(image => this.image = image);

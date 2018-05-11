@@ -3,20 +3,21 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {ImageService} from "../shared/image.service";
+import {Image} from "../shared/image.model";
 
 // TODO: Replace this with your own data model type
 export interface ImageTableItem {
-  imageId: number;
+  id: number;
   name: string;
-  promotion: string;
-  username: string;
-  screens: string[];
-  height: number;
+  promotion_name: string;
+  promotion_id: number;
+  user_name: string;
+  user_id: number;
+  screens: object[];
   width: number;
-  url: string;
+  height: number;
   active: boolean;
 }
-
 
 /**
  * Data source for the ImageTable view. This class should
@@ -28,7 +29,7 @@ export class ImageTableDataSource extends DataSource<ImageTableItem> {
 
   constructor(private paginator: MatPaginator, private sort: MatSort, private imageService: ImageService) {
     super();
-    imageService.getImages().subscribe(images => this.data = images);
+    imageService.getImages().subscribe(images => this.data = images.map(image => image.toTable()));
   }
 
   /**
@@ -80,8 +81,15 @@ export class ImageTableDataSource extends DataSource<ImageTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
+        case 'id': return compare(+a.id, +b.id, isAsc);
         case 'name': return compare(a.name, b.name, isAsc);
-        case 'imageId': return compare(+a.imageId, +b.imageId, isAsc);
+        case 'promotion_name': return compare(a.promotion_name, b.promotion_name, isAsc);
+        case 'promotion_id': return compare(+a.promotion_id, +b.promotion_id, isAsc);
+        case 'user_name': return compare(a.user_name, b.user_name, isAsc);
+        case 'user_id': return compare(+a.user_id, +b.user_id, isAsc);
+        case 'width': return compare(+a.width, +b.width, isAsc);
+        case 'height': return compare(+a.height, +b.height, isAsc);
+        case 'active': return compare(+a.active, +b.active, isAsc);
         default: return 0;
       }
     });
