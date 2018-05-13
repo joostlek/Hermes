@@ -4,20 +4,9 @@
       <ng-template matStepLabel>Image details</ng-template>
       <mat-form-field>
         <input matInput placeholder="Image name" formControlName="imageName" required>
-      </mat-form-field>
+      </mat-form-field><br>
+      <mat-slider [min]="0" [max]="10" [step]="1" [value]="0" [thumbLabel]="true" (change)="update_time($event.value)"></mat-slider>
       <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="promotionFormGroup">
-    <form [formGroup]="promotionFormGroup">
-      <ng-template matStepLabel>Choose a promotion</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Address" formControlName="secondCtrl" required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
@@ -34,9 +23,26 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="timeFormGroup">
-    <form [formGroup]="timeFormGroup">
-      <ng-template matStepLabel>Time on screen</ng-template>
+  <mat-step [stepControl]="promotionFormGroup">
+    <form [formGroup]="promotionFormGroup">
+      <ng-template matStepLabel>Choose a promotion</ng-template>
+      <mat-form-field>
+        <mat-select placeholder="Promotion" name="select_promotion" (selectionChange)="check_promotion($event.value)">
+          <mat-option>New promotion</mat-option>
+          <mat-option *ngFor="let promotion of promotions" [value]="promotion.id">
+            {{ promotion.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="newPromotionFormGroup" [optional]="true" *ngIf="newPromotion">
+    <form [formGroup]="newPromotionFormGroup">
+      <ng-template matStepLabel>Create a promotion</ng-template>
       <mat-form-field>
         <input matInput placeholder="Address" formControlName="secondCtrl" required>
       </mat-form-field>
