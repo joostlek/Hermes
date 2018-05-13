@@ -5,6 +5,7 @@ import {ImageComponent} from "./image/image.component";
 
 const routes: Routes = [
   {path: '', component: ImagesComponent},
+  {path: 'add', loadChildren: './image-add/image-add.module#ImageAddModule'},
   {path: ':id', component: ImageComponent},
 ];
 

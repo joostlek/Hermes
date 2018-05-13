@@ -1,3 +1,6 @@
-mat-sidenav {
-  margin-right: 200px;
+@media screen and (min-width: 600px) {
+  .container {
+    margin-left: 200px;
+    padding: 16px;
+  }
 }
