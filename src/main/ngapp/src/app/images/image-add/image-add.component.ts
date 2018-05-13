@@ -9,7 +9,6 @@ export class ImageAddComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
 }
