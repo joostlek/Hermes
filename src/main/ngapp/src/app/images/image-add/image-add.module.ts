@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatSliderModule,
+  MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSliderModule,
   MatStepperModule
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -21,6 +21,7 @@ import { ImageStepperComponent } from './image-stepper/image-stepper.component';
     FormsModule,
     MatSelectModule,
     MatSliderModule,
+    MatIconModule,
     ImageAddRoutingModule
   ],
   declarations: [ImageAddComponent, ImageStepperComponent]

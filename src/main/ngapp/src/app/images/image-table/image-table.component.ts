@@ -14,7 +14,7 @@ export class ImageTableComponent implements OnInit {
   dataSource: ImageTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'promotion_name', 'user_name', 'width', 'height', 'active', ];
+  displayedColumns = ['id', 'name', 'promotion_name', 'user_name', 'width', 'height', 'active', 'action'];
 
   constructor (private imageService: ImageService) {}
 

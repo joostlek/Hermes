@@ -13,34 +13,40 @@
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- Promotion Column -->
     <ng-container matColumnDef="promotion_name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Promotion</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/promotions/{{row.promotion_id}}">{{row.promotion_name}}</a></mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- User Column -->
     <ng-container matColumnDef="user_name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>User</mat-header-cell>
       <mat-cell *matCellDef="let row"><a href="/users/{{row.user_id}}">{{row.user_name}}</a></mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- Height Column -->
     <ng-container matColumnDef="height">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Height</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.height}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- Width Column -->
     <ng-container matColumnDef="width">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Width</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.width}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- Active Column -->
     <ng-container matColumnDef="active">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.active}}</mat-cell>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+      <mat-cell *matCellDef="let row"><button mat-icon-button routerLink="/images/{{row.id}}"><mat-icon>create</mat-icon></button></mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

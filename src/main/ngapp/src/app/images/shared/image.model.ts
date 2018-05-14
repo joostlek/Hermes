@@ -6,6 +6,7 @@ export class Image {
   screens: object[];
   size: object;
   url: string;
+  time: number;
   active: boolean;
 
 
@@ -19,6 +20,7 @@ export class Image {
               height: number,
               width: number,
               url: string,
+              time: number,
               active: boolean) {
     this.id = id;
     this.name = name;
@@ -33,6 +35,7 @@ export class Image {
     this.size["height"] = height;
     this.screens = screens;
     this.url = url;
+    this.time = time;
     this.active = active;
   }
 
