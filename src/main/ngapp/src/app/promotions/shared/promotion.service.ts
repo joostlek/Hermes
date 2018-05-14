@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs/index";
 import {Promotion} from "@app/promotions/shared/promotion.model";
+import {MessagingService} from "@app/shared/messaging.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,27 @@ export class PromotionService {
   constructor() { }
 
   getPromotions(): Observable<Promotion[]> {
-    return of(this.promotions );
+    MessagingService.send("Get all promotions");
+    return of(this.promotions);
+  }
+
+  getPromotion(id: number): Observable<Promotion> {
+    MessagingService.send("Get promotion " + id);
+    for (let i=0; i < this.promotions.length; i++) {
+      if (this.promotions[i].id === id) {
+        return of(this.promotions[i]);
+      }
+    }
+    MessagingService.sendError("Get promotion " + id + " failed!")
+  }
+
+  deletePromotion(id: number): void {
+    MessagingService.send("Delete promotion "+ id);
+    for (let i = 0; i < this.promotions.length; i++) {
+      if (this.promotions[i].id === id) {
+        this.promotions.splice(i, 1);
+      }
+    }
+    MessagingService.sendError("Delete promotion " + id + " failed!");
   }
 }

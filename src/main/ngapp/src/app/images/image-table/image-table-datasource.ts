@@ -27,9 +27,9 @@ export interface ImageTableItem {
 export class ImageTableDataSource extends DataSource<ImageTableItem> {
   data: ImageTableItem[] = [];
 
-  constructor(private paginator: MatPaginator, private sort: MatSort, private imageService: ImageService) {
+  constructor(private paginator: MatPaginator, private sort: MatSort, private images: ImageTableItem[]) {
     super();
-    imageService.getImages().subscribe(images => this.data = images.map(image => image.toTable()));
+    this.data = images;
   }
 
   /**

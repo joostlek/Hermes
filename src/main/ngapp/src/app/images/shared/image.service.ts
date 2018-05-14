@@ -3,7 +3,7 @@ import {Observable, of} from "rxjs/index";
 
 
 import {Image} from "./image.model";
-import {forEach} from "@angular/router/src/utils/collection";
+import {MessagingService} from "@app/shared/messaging.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +17,46 @@ export class ImageService {
   constructor() { }
 
   getImages(): Observable<Image[]> {
+    MessagingService.send("Get all images");
     return of(this.IMAGES)
   }
 
   getImage(id: number): Observable<Image> {
+    MessagingService.send("Get image " + id);
     for (let i = 0; i < this.IMAGES.length; i++) {
       if (this.IMAGES[i].id === id) {
         return of(this.IMAGES[i]);
       }
     }
+    MessagingService.sendError("Get image " + id + " failed!");
   }
 
-  deleteImage(id: number): void {
+  deleteImage(image: Image): void {
+    MessagingService.send("Delete image " + image.name);
     for (let i=0; i < this.IMAGES.length; i++) {
-      if (this.IMAGES[i].id === id) {
+      if (this.IMAGES[i] === image) {
         this.IMAGES.splice(i,1);
+        return;
       }
     }
+    MessagingService.sendError("Delete image " + image.name + " failed!");
+  }
+
+  addImage(image: Image): void {
+    MessagingService.send("Add image " + image.name);
+    image.id = this.IMAGES[this.IMAGES.length - 1].id + 1;
+    this.IMAGES.push(image);
+  }
+
+  editImage(image: Image): void {
+    MessagingService.send("Edit image " + image.name);
+    for (let i=0; i < this.IMAGES.length; i++) {
+      if (this.IMAGES[i].id === image.id) {
+        this.IMAGES[i] = image;
+        return;
+      }
+    }
+    MessagingService.sendError("Edit image " + image.name + " failed!");
   }
 
 }
