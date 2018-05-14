@@ -13,6 +13,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class ImageComponent implements OnInit {
   image: Image;
   formGroup: FormGroup;
+  edit: boolean = false;
+  time: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +42,22 @@ export class ImageComponent implements OnInit {
   }
 
   deleteImage(): void {
-    this.imageService.deleteImage(this.image.id);
+    this.imageService.deleteImage(this.image);
     this.location.back();
+  }
+
+  editImage(): void {
+    this.time = this.image.time;
+    this.edit = true;
+  }
+
+  finishEdit(): void {
+    this.edit = false;
+    this.image.name = this.formGroup.value['imageName'];
+    this.image.time = this.time;
+  }
+
+  slide(event): void {
+    this.time = event;
   }
 }
