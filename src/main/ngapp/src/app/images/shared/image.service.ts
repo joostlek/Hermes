@@ -31,7 +31,7 @@ export class ImageService {
   deleteImage(id: number): void {
     for (let i=0; i < this.IMAGES.length; i++) {
       if (this.IMAGES[i].id === id) {
-        this.IMAGES.splice(0,i + 1);
+        this.IMAGES.splice(i,1);
       }
     }
   }
