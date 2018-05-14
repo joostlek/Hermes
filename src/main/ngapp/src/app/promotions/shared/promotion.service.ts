@@ -39,4 +39,11 @@ export class PromotionService {
     }
     MessagingService.sendError("Delete promotion " + id + " failed!");
   }
+
+  addPromotion(name: string): Promotion {
+    MessagingService.send("Add promotion " + name);
+    let id = this.promotions[this.promotions.length - 1].id + 1;
+    this.promotions.push(new Promotion(name, id));
+    return this.promotions[this.promotions.length - 1];
+  }
 }

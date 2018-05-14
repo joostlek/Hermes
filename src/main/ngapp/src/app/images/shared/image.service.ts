@@ -4,6 +4,7 @@ import {Observable, of} from "rxjs/index";
 
 import {Image} from "./image.model";
 import {MessagingService} from "@app/shared/messaging.service";
+import {Promotion} from "@app/promotions/shared/promotion.model";
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +43,10 @@ export class ImageService {
     MessagingService.sendError("Delete image " + image.name + " failed!");
   }
 
-  addImage(image: Image): void {
-    MessagingService.send("Add image " + image.name);
-    image.id = this.IMAGES[this.IMAGES.length - 1].id + 1;
+  addImage(imageName: string, promotion: Promotion, user_id: number, height: number, width: number, url: string, time: number): void {
+    MessagingService.send("Add image " + imageName);
+    let image_id = this.IMAGES[this.IMAGES.length - 1].id + 1;
+    let image = new Image(image_id, imageName, promotion.name, promotion.id, "joostlek", user_id, [], height, width, url, time, true);
     this.IMAGES.push(image);
   }
 
@@ -58,5 +60,4 @@ export class ImageService {
     }
     MessagingService.sendError("Edit image " + image.name + " failed!");
   }
-
 }

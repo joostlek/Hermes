@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PromotionService} from "@app/promotions/shared/promotion.service";
 import {Promotion} from "@app/promotions/shared/promotion.model";
+import {ImageService} from "@app/images/shared/image.service";
 
 @Component({
   selector: 'app-image-stepper',
@@ -17,9 +18,10 @@ export class ImageStepperComponent implements OnInit {
   promotionFormGroup: FormGroup;
   newPromotionFormGroup: FormGroup;
   fileFormGroup: FormGroup;
+  newPromo: Promotion;
 
 
-  constructor(private _formBuilder: FormBuilder, private promotionService: PromotionService) { }
+  constructor(private _formBuilder: FormBuilder, private promotionService: PromotionService, private imageService: ImageService) { }
 
   ngOnInit() {
     this.getPromotions();
@@ -30,9 +32,8 @@ export class ImageStepperComponent implements OnInit {
     this.promotionFormGroup = this._formBuilder.group({
       select_promotion: ['', []]
     });
-    this.promotionFormGroup.get('select_promotion');
     this.newPromotionFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      promotionName: ['', Validators.required]
     });
     this.fileFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -50,6 +51,20 @@ export class ImageStepperComponent implements OnInit {
 
   update_time(event) {
     this.time = event;
+  }
+
+  create_promotion(): void {
+    this.newPromo = this.promotionService.addPromotion(this.newPromotionFormGroup.value['promotionName']);
+  }
+
+  finishSetUp() {
+    let promo;
+    if (this.newPromotion) {
+      promo = this.newPromo;
+    } else {
+      promo = this.promotions[this.promotionFormGroup.value['select_promotion'] - 1]
+    }
+    this.imageService.addImage(this.detailsFormGroup.value['imageName'], promo, 1, 1080, 1920, ' ', this.time);
   }
 }
 

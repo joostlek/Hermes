@@ -7,7 +7,7 @@
       </mat-form-field><br>
       <mat-slider [min]="0" [max]="10" [step]="1" [value]="0" [thumbLabel]="true" (change)="update_time($event.value)"></mat-slider>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -18,8 +18,8 @@
         <input matInput placeholder="Address" formControlName="secondCtrl" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -27,7 +27,7 @@
     <form [formGroup]="promotionFormGroup">
       <ng-template matStepLabel>Choose a promotion</ng-template>
       <mat-form-field>
-        <mat-select placeholder="Promotion" name="select_promotion" (selectionChange)="check_promotion($event.value)">
+        <mat-select placeholder="Promotion" formControlName="select_promotion" (selectionChange)="check_promotion($event.value)">
           <mat-option>New promotion</mat-option>
           <mat-option *ngFor="let promotion of promotions" [value]="promotion.id">
             {{ promotion.name }}
@@ -35,8 +35,8 @@
         </mat-select>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -44,11 +44,11 @@
     <form [formGroup]="newPromotionFormGroup">
       <ng-template matStepLabel>Create a promotion</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+        <input matInput placeholder="Promotion Name" formControlName="promotionName" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext (click)="create_promotion()">Next</button>
       </div>
     </form>
   </mat-step>
@@ -56,8 +56,8 @@
     <ng-template matStepLabel>Done</ng-template>
     You are now done.
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
+      <button mat-raised-button color="primary" (click)="finishSetUp()">Reset</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
