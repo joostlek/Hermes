@@ -35,6 +35,7 @@ export class PromotionService {
     for (let i = 0; i < this.promotions.length; i++) {
       if (this.promotions[i].id === id) {
         this.promotions.splice(i, 1);
+        return;
       }
     }
     MessagingService.sendError("Delete promotion " + id + " failed!");
