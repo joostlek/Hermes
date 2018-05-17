@@ -28,8 +28,9 @@ export class LoginComponent implements OnInit {
     if (val.email && val.password) {
       this.authService.login(val.email, val.password)
         .subscribe(
-          () => {
+          user => {
             console.log("User is logged in");
+            localStorage.setItem('user', JSON.stringify(user));
             this.router.navigateByUrl('/');
           }
         );
