@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           user => {
             console.log("User is logged in");
-            localStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('user', JSON.stringify(user));
             this.router.navigateByUrl('/');
           }
         );

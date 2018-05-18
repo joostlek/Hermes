@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
+import {User} from "@app/users/shared/user";
+import {UserService} from "@app/users/shared/user.service";
 
 @Component({
   selector: 'navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  user: User;
+  constructor(private breakpointObserver: BreakpointObserver, private userService: UserService) {}
+  ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
+    this.userService.getCurrentUser()
+      .subscribe(user => this.user = user);
+  }
 }
