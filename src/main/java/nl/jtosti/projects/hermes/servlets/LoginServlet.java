@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet {
         if (loginRequest.getPassword().equals("test")) {
             resp.addCookie(new Cookie("session", req.getSession().getId()));
             resp.setStatus(200);
-            resp.getOutputStream().println("{\"id\":1,\"firstName\":\"Joost\",\"middleName\":\"\",\"lastName\":\"Lekkerkerker\", \"email\":\"\", \"roles\":\"\", \"locations\":[], \"promotions\":[], \"images\":[], \"phoneNumber\":\"\", \"street\":\"\", \"houseNumber\":\"\", \"zipCode\":\"\", \"city\":\"\", \"country\":\"\"}");
+            resp.getOutputStream().println("{\"id\":1,\"firstName\":\"Joost\",\"middleName\":\"\",\"lastName\":\"Lekkerkerker\", \"email\":\"\", \"roles\":[\"SUPAUSA\"], \"locations\":[], \"promotions\":[], \"images\":[], \"phoneNumber\":\"\", \"street\":\"\", \"houseNumber\":\"\", \"zipCode\":\"\", \"city\":\"\", \"country\":\"\"}");
         } else {
             resp.setStatus(404);
         }

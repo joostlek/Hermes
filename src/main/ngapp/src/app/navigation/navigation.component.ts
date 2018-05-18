@@ -22,4 +22,13 @@ export class NavigationComponent implements OnInit {
     this.userService.getCurrentUser()
       .subscribe(user => this.user = user);
   }
+
+  hasPermission(roles: string[]): boolean {
+    for (let i = 0; i < this.user.roles.length; i++) {
+      if (this.user.roles.indexOf(roles[i]) > -1) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
