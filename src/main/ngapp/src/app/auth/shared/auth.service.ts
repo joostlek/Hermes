@@ -16,7 +16,13 @@ export class AuthService {
     return this.http.post<User>(url, {'email': email, 'password': password});
   }
 
+  logout() {
+    let url = 'api/logout';
+    return this.http.get(url);
+  }
+
   getCurrentUser(): Observable<User> {
-    return of({"id":1,"firstName":"Joost","middleName":"","lastName":"Lekkerkerker","email":"","roles":["SUPAUSA", "Owner"],"locations":[],"promotions":[],"images":[],"phoneNumber":"","street":"","houseNumber":"","zipCode":"","city":"","country":""} as User);
+    // return of({"id":1,"firstName":"Joost","middleName":"","lastName":"Lekkerkerker","email":"","roles":["SUPAUSA", "Owner"],"locations":[],"promotions":[],"images":[],"phoneNumber":"","street":"","houseNumber":"","zipCode":"","city":"","country":""} as User);
+    return;
   }
 }

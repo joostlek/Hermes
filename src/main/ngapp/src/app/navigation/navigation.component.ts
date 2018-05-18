@@ -24,11 +24,17 @@ export class NavigationComponent implements OnInit {
   }
 
   hasPermission(roles: string[]): boolean {
-    for (let i = 0; i < this.user.roles.length; i++) {
-      if (this.user.roles.indexOf(roles[i]) > -1) {
-        return true;
+    if (this.isLoggedIn()) {
+      for (let i = 0; i < this.user.roles.length; i++) {
+        if (this.user.roles.indexOf(roles[i]) > -1) {
+          return true;
+        }
       }
     }
     return false;
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.user;
   }
 }

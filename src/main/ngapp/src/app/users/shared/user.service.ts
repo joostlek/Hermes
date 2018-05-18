@@ -11,8 +11,8 @@ export class UserService {
   constructor(private authService: AuthService) { }
 
   getCurrentUser(): Observable<User> {
-    if (sessionStorage.getItem("user")) {
-      return of(JSON.parse(sessionStorage.getItem("user")) as User);
+    if (localStorage.getItem("user")) {
+      return of(JSON.parse(localStorage.getItem("user")) as User);
     } else {
       return this.authService.getCurrentUser()
     }
