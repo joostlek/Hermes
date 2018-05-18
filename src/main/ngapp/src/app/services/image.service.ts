@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs/index";
 
 
-import {Image} from "./image.model";
-import {MessagingService} from "@app/shared/messaging.service";
-import {Promotion} from "@app/promotions/shared/promotion.model";
+import {Image} from "../models/image";
+import {MessagingService} from "app/services/messaging.service";
+import {Promotion} from "app/models/promotion";
 
 @Injectable({
   providedIn: 'root'

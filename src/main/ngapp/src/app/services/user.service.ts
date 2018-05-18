@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {User} from "@app/users/shared/user";
-import {AuthService} from "@app/auth/shared/auth.service";
+import {User} from "app/models/user";
+import {AuthService} from "app/services/auth.service";
 import {Observable, of} from "rxjs/index";
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import {ImageService} from "@app/images/shared/image.service";
+import {ImageService} from "@app/services/image.service";
 import {ImageTableItem} from "@app/images/image-table/image-table-datasource";
 
 @Component({

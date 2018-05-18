@@ -2,8 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import {ImageService} from "../shared/image.service";
-import {Image} from "../shared/image.model";
+import {ImageService} from "../../services/image.service";
+import {Image} from "../../models/image";
 
 // TODO: Replace this with your own data model type
 export interface ImageTableItem {

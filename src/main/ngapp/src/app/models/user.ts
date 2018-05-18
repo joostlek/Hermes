@@ -1,4 +1,4 @@
-import {UserTableItem} from "@app/users/user-table/user-table-datasource";
+import {UserTableItem} from "app/users/user-table/user-table-datasource";
 
 export class User {
   id: number;
