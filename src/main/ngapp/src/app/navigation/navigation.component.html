@@ -6,13 +6,15 @@
     [attr.role]="isHandset ? 'dialog' : 'navigation'"
     [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
     [opened]="!(isHandset | async)!.matches">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-toolbar color="primary"></mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="images">Images</a>
+      <a mat-list-item routerLink="images" *ngIf="hasPermission(['SUPAUSA'])">Images</a>
       <a mat-list-item routerLink="types" *ngIf="hasPermission(['SUPAUSA'])">Types</a>
-      <a mat-list-item routerLink="promotions">Promotion</a>
-      <a mat-list-item routerLink="auth/login" *ngIf="!isLoggedIn()">Login</a>
-      <a mat-list-item routerLink="auth/logout" *ngIf="isLoggedIn()">Logout</a>
+      <a mat-list-item routerLink="promotions" *ngIf="hasPermission(['SUPAUSA'])">Promotions</a>
+      <a mat-list-item routerLink="users" *ngIf="hasPermission(['SUPAUSA'])">Users</a>
+      <a mat-list-item routerLink="locations" *ngIf="hasPermission(['SUPAUSA'])">Locations</a>
+      <a mat-list-item routerLink="auth/login" *ngIf="!loggedIn">Login</a>
+      <a mat-list-item routerLink="auth/logout" *ngIf="loggedIn">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

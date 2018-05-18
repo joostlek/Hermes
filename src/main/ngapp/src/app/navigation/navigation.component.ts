@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
+import { AuthService } from "@app/services/auth.service";
 import {User} from "@app/models/user";
-import {UserService} from "@app/services/user.service";
 
 @Component({
   selector: 'navigation',
@@ -12,19 +12,18 @@ import {UserService} from "@app/services/user.service";
 export class NavigationComponent implements OnInit {
   @Input() title: string;
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
+  loggedIn: boolean;
   user: User;
-  constructor(private breakpointObserver: BreakpointObserver, private userService: UserService) {}
-  ngOnInit() {
-    this.getUser();
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user);
   }
-
-  getUser() {
-    this.userService.getCurrentUser()
-      .subscribe(user => this.user = user);
+  ngOnInit() {
+    this.isLoggedIn();
   }
 
   hasPermission(roles: string[]): boolean {
-    if (this.isLoggedIn()) {
+    if (this.loggedIn) {
       for (let i = 0; i < this.user.roles.length; i++) {
         if (this.user.roles.indexOf(roles[i]) > -1) {
           return true;
@@ -34,7 +33,8 @@ export class NavigationComponent implements OnInit {
     return false;
   }
 
-  isLoggedIn(): boolean {
-    return !!this.user;
+  isLoggedIn() {
+    this.authService.isLoggedIn()
+      .subscribe(bool => this.loggedIn = bool);
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {User} from "app/models/user";
-import {AuthService} from "app/services/auth.service";
 import {Observable, of} from "rxjs/index";
 
 @Injectable({
@@ -8,16 +7,8 @@ import {Observable, of} from "rxjs/index";
 })
 export class UserService {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
-  getCurrentUser(): Observable<User> {
-    if (localStorage.getItem("user")) {
-      return of(JSON.parse(localStorage.getItem("user")) as User);
-    } else {
-      return this.authService.getCurrentUser()
-    }
-
-  }
 
   getUsers(): Observable<User[]> {
     return of([new User(1, 'joost', '', 'Lekkerkerker', 'joostlek@outlook.com', ['SUPAUSA', "Owner"], [], [], [], '0645592066', 'Esdoornlaan', '1','3481BH', 'Harmelen', 'The Netherlands' )]);
