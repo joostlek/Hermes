@@ -24,6 +24,9 @@ export class NavigationComponent implements OnInit {
 
   hasPermission(roles: string[]): boolean {
     if (this.loggedIn) {
+      if (!this.user) {
+        this.user = JSON.parse(localStorage.getItem('user'));
+      }
       for (let i = 0; i < this.user.roles.length; i++) {
         if (this.user.roles.indexOf(roles[i]) > -1) {
           return true;
