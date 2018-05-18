@@ -18,4 +18,8 @@ export class UserService {
     }
 
   }
+
+  getUsers(): Observable<User[]> {
+    return of([new User(1, 'joost', '', 'Lekkerkerker', 'joostlek@outlook.com', 'SUPAUSA', [], [], [], '0645592066', 'Esdoornlaan', '1','3481BH', 'Harmelen', 'The Netherlands' )]);
+  }
 }

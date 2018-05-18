@@ -6,6 +6,7 @@ const routes: Routes = [
   {path: 'promotions', loadChildren: './promotions/promotions.module#PromotionsModule'},
   {path: 'types', loadChildren: './types/types.module#TypesModule'},
   {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+  {path: 'users', loadChildren: './users/users.module#UsersModule'},
 ];
 
 @NgModule({

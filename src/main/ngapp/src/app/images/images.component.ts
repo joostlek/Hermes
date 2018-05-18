@@ -14,7 +14,8 @@ export class ImagesComponent implements OnInit {
   constructor(private imageService: ImageService) { }
 
   ngOnInit() {
-    this.imageService.getImages().subscribe(images => this.images = images.map(image => image.toTable()));
+    this.imageService.getImages()
+      .subscribe(images => this.images = images.map(image => image.toTable()));
   }
 
 }

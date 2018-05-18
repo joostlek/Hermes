@@ -3,12 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
+import { UserTableComponent } from './user-table/user-table.component';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    UsersRoutingModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    UsersRoutingModule,
   ],
-  declarations: [UsersComponent]
+  declarations: [UsersComponent, UserTableComponent]
 })
 export class UsersModule { }

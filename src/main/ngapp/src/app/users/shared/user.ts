@@ -1,36 +1,53 @@
+import {UserTableItem} from "@app/users/user-table/user-table-datasource";
+
 export class User {
   id: number;
-  first_name: string;
-  middle_name: string;
-  last_name: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
   email: string;
   role: string;
   locations: object[];
   promotions: object[];
   images: object[];
-  phone_number: string;
+  phoneNumber: string;
   street: string;
-  house_number: string;
-  zip_code: string;
+  houseNumber: string;
+  zipCode: string;
   city: string;
   country: string;
 
 
-  constructor(id: number, first_name: string, middle_name: string, last_name: string, email: string, role: string, locations: object[], promotions: object[], images: object[], phone_number: string, street: string, house_number: string, zip_code: string, city: string, country: string) {
+  constructor(id: number, firstName: string, middleName: string, lastName: string, email: string, role: string, locations: object[], promotions: object[], images: object[], phoneNumber: string, street: string, houseNumber: string, zipCode: string, city: string, country: string) {
     this.id = id;
-    this.first_name = first_name;
-    this.middle_name = middle_name;
-    this.last_name = last_name;
+    this.firstName = firstName;
+    this.middleName = middleName;
+    this.lastName = lastName;
     this.email = email;
     this.role = role;
     this.locations = locations;
     this.promotions = promotions;
     this.images = images;
-    this.phone_number = phone_number;
+    this.phoneNumber = phoneNumber;
     this.street = street;
-    this.house_number = house_number;
-    this.zip_code = zip_code;
+    this.houseNumber = houseNumber;
+    this.zipCode = zipCode;
     this.city = city;
     this.country = country;
+  }
+
+  getLastName(): string {
+    if (this.middleName) {
+      return this.middleName + ' ' + this.lastName;
+    }
+    return this.lastName;
+  }
+
+  getFullName(): string {
+    return this.firstName + ' ' + this.getLastName();
+  }
+
+  toTable(): UserTableItem {
+    return {id: this.id, name: this.getFullName(), role: this.role};
   }
 }
