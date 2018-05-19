@@ -12,7 +12,8 @@ import {User} from "@app/models/user";
 export class NavigationComponent implements OnInit {
   @Input() title: string;
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
-  loggedIn: boolean;
+  // TODO - remove ' = true' when in production
+  loggedIn: boolean = true;
   user: User;
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
     this.user = JSON.parse(localStorage.getItem('user'));
