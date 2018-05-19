@@ -3,7 +3,7 @@
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Promotion ID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
@@ -11,6 +11,30 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="typeId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Type ID</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.typeId}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="userId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>User ID</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.userId}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="images">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of images</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.images}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Start date</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.startDate}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
