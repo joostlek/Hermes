@@ -13,6 +13,7 @@
       <a mat-list-item routerLink="promotions" *ngIf="hasPermission(['SUPAUSA'])">Promotions</a>
       <a mat-list-item routerLink="users" *ngIf="hasPermission(['SUPAUSA'])">Users</a>
       <a mat-list-item routerLink="locations" *ngIf="hasPermission(['SUPAUSA'])">Locations</a>
+      <a mat-list-item routerLink="screens" *ngIf="hasPermission(['SUPAUSA'])">Screens</a>
       <a mat-list-item routerLink="auth/login" *ngIf="!loggedIn">Login</a>
       <a mat-list-item routerLink="auth/logout" *ngIf="loggedIn">Logout</a>
     </mat-nav-list>
