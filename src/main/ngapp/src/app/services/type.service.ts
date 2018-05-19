@@ -11,7 +11,7 @@ import { Type } from "app/models/type";
 export class TypeService {
   types: Type[] = [
     new Type(1, 'one', 10, 9.99, true, false, 2, 1),
-    new Type(2, 'dos', 10, 10, true, false, 2, 1),
+    new Type(2, 'dos', 10, 1000, true, false, 2, 1),
     new Type(3, 'trois', 10, 9.88, true, false, 2, 1),
     new Type(4, 'quatre', 10, 10, true, false, 2, 1),
   ];

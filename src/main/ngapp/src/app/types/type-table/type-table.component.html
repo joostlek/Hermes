@@ -22,7 +22,8 @@
     <!-- Name Column -->
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
-      <mat-cell *matCellDef="let row">€{{row.price}}</mat-cell>
+      <!-- TODO - import the NL locale, so the price can be normal €1.000,00 instead of US format -->
+      <mat-cell *matCellDef="let row">{{row.price | currency:'EUR':'symbol':undefined}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
