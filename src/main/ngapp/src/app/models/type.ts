@@ -9,7 +9,8 @@ export class Type {
   location: object;
 
 
-  constructor(id: number, name: string, time: number, price: number, active: boolean, exclusive: boolean, imageCount: number, location: object) {
+  constructor(id: number, name: string, time: number, price: number, active: boolean, exclusive: boolean,
+              imageCount: number, location: object) {
     this.id = id;
     this.name = name;
     this.time = time;

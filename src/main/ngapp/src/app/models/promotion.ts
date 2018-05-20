@@ -17,8 +17,7 @@ export class Promotion {
   }
 
   toTable() {
-    return {'id': this.id, 'name': this.name, 'typeId': this.type['id'], 'typeName': this.type['name'],
-      'userId': this.user['id'], 'userName': this.user['name'], 'images': this.images.length,
-      'startDate': this.startDate};
+    return {id: this.id, name: this.name, typeId: this.type['id'], typeName: this.type['name'], userId: this.user['id'],
+      userName: this.user['name'], images: this.images.length, startDate: this.startDate};
   }
 }

@@ -10,7 +10,8 @@ export class Image {
   active: boolean;
 
 
-  constructor(id: number, name: string, promotion: object, user: object, screens: object[], size: object, url: string, time: number, active: boolean) {
+  constructor(id: number, name: string, promotion: object, user: object, screens: object[], size: object, url: string,
+              time: number, active: boolean) {
     this.id = id;
     this.name = name;
     this.promotion = promotion;

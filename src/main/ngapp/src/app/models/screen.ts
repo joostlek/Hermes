@@ -15,6 +15,7 @@ export class Screen {
   }
 
   toTable() {
-    return {id: this.id, name: this.name, height: this.height, width: this.width, locationId: this.location['id'], locationName: this.location['name']};
+    return {id: this.id, name: this.name, height: this.height, width: this.width, locationId: this.location['id'],
+      locationName: this.location['name']};
   }
 }

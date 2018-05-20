@@ -1,5 +1,3 @@
-import {UserTableItem} from "app/users/user-table/user-table-datasource";
-
 export class User {
   id: number;
   firstName: string;
@@ -18,7 +16,9 @@ export class User {
   country: string;
 
 
-  constructor(id: number, firstName: string, middleName: string, lastName: string, email: string, role: string[], locations: object[], promotions: object[], images: object[], phoneNumber: string, street: string, houseNumber: string, zipCode: string, city: string, country: string) {
+  constructor(id: number, firstName: string, middleName: string, lastName: string, email: string, role: string[],
+              locations: object[], promotions: object[], images: object[], phoneNumber: string, street: string,
+              houseNumber: string, zipCode: string, city: string, country: string) {
     this.id = id;
     this.firstName = firstName;
     this.middleName = middleName;
@@ -53,7 +53,7 @@ export class User {
     return res.slice(0, res.length - 2);
   }
 
-  toTable(): UserTableItem {
+  toTable() {
     return {id: this.id, name: this.getFullName(), role: this.printRoles()};
   }
 }
