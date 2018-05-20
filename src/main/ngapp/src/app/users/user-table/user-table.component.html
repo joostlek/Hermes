@@ -19,6 +19,11 @@
       <mat-cell *matCellDef="let row">{{row.role}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="more">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row"><button mat-icon-button color="primary" routerLink="{{row.id}}"><mat-icon>chevron_right</mat-icon></button></mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

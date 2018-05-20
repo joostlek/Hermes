@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { UserTableComponent } from './user-table/user-table.component';
-import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule} from '@angular/material';
+import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -13,6 +13,7 @@ import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule} from
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
+    MatIconModule,
     UsersRoutingModule,
   ],
   declarations: [UsersComponent, UserTableComponent]

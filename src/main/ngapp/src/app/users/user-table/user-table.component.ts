@@ -15,7 +15,7 @@ export class UserTableComponent implements OnInit {
   dataSource: UserTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'role'];
+  displayedColumns = ['id', 'name', 'role', 'more'];
 
   constructor() {  }
 
