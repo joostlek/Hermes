@@ -8,7 +8,9 @@ export interface PromotionTableItem {
   name: string;
   id: number;
   typeId: number;
+  typeName: string;
   userId: number;
+  userName: string;
   images: number;
   startDate: string;
 }
@@ -77,6 +79,10 @@ export class PromotionTableDataSource extends DataSource<PromotionTableItem> {
       switch (this.sort.active) {
         case 'name': return compare(a.name, b.name, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'type': return compare(a.typeName, b.typeName, isAsc);
+        case 'user': return compare(a.userName, b.userName, isAsc);
+        case 'images': return compare(+a.images, +b.images, isAsc);
+        case 'startDate': return compare(a.startDate, b.startDate, isAsc);
         default: return 0;
       }
     });

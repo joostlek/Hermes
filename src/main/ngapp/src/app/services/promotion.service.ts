@@ -8,10 +8,10 @@ import {MessagingService} from "app/services/messaging.service";
 })
 export class PromotionService {
   promotions: Promotion[] = [
-    new Promotion(1, "Promotion 1", 1, 1, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
-    new Promotion(2, "Promotion 2", 1, 1, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
-    new Promotion(3, "Promotion 3", 1, 1, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
-    new Promotion(4, "Promotion 4", 1, 1, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
+    new Promotion(1, "Promotion 1", {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
+    new Promotion(2, "Promotion 2", {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
+    new Promotion(3, "Promotion 3", {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
+    new Promotion(4, "Promotion 4", {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [{'name': "asd"}, {'name': "qwe"}], '19-05-2018'),
   ];
   constructor() { }
 
@@ -44,7 +44,7 @@ export class PromotionService {
   addPromotion(name: string): Promotion {
     MessagingService.send("Add promotion " + name);
     let id = this.promotions[this.promotions.length - 1].id + 1;
-    this.promotions.push(new Promotion(id, name, 1, 1, [], '19-05-2018'));
+    this.promotions.push(new Promotion(id, name, {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [], '19-05-2018'));
     return this.promotions[this.promotions.length - 1];
   }
 }

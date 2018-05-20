@@ -14,7 +14,7 @@ export class PromotionTableComponent implements OnInit {
   dataSource: PromotionTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'typeId', 'userId', 'images', 'startDate'];
+  displayedColumns = ['id', 'name', 'type', 'user', 'images', 'startDate'];
 
   ngOnInit() {
     this.dataSource = new PromotionTableDataSource(this.paginator, this.sort, this.promotions);

@@ -14,15 +14,15 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="typeId">
+    <ng-container matColumnDef="type">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Type ID</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.typeId}}</mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/types/{{row.typeId}}">{{row.typeName}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="userId">
+    <ng-container matColumnDef="user">
       <mat-header-cell *matHeaderCellDef mat-sort-header>User ID</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.userId}}</mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.userId}}">{{row.userName}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
