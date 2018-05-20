@@ -3,7 +3,7 @@
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Location ID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
@@ -15,7 +15,7 @@
 
     <!-- Owner Column -->
     <ng-container matColumnDef="ownerName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Owner name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.ownerId}}">{{row.ownerName}}</a></mat-cell>
     </ng-container>
 
