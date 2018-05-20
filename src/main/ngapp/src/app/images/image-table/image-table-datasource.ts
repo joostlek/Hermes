@@ -2,18 +2,15 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import {ImageService} from "../../services/image.service";
-import {Image} from "../../models/image";
 
 // TODO: Replace this with your own data model type
 export interface ImageTableItem {
   id: number;
   name: string;
-  promotion_name: string;
-  promotion_id: number;
-  user_name: string;
-  user_id: number;
-  screens: object[];
+  promotionName: string;
+  promotionId: number;
+  userName: string;
+  userId: number;
   width: number;
   height: number;
   active: boolean;
@@ -83,10 +80,8 @@ export class ImageTableDataSource extends DataSource<ImageTableItem> {
       switch (this.sort.active) {
         case 'id': return compare(+a.id, +b.id, isAsc);
         case 'name': return compare(a.name, b.name, isAsc);
-        case 'promotion_name': return compare(a.promotion_name, b.promotion_name, isAsc);
-        case 'promotion_id': return compare(+a.promotion_id, +b.promotion_id, isAsc);
-        case 'user_name': return compare(a.user_name, b.user_name, isAsc);
-        case 'user_id': return compare(+a.user_id, +b.user_id, isAsc);
+        case 'promotion': return compare(a.promotionName, b.promotionName, isAsc);
+        case 'user': return compare(a.userName, b.userName, isAsc);
         case 'width': return compare(+a.width, +b.width, isAsc);
         case 'height': return compare(+a.height, +b.height, isAsc);
         case 'active': return compare(+a.active, +b.active, isAsc);

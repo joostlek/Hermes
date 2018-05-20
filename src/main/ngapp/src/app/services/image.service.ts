@@ -11,9 +11,9 @@ import {Promotion} from "app/models/promotion";
 })
 export class ImageService {
   IMAGES: Image[] = [
-    new Image(1, "asd", "new", 1, "joostlek", 1,[{'naam': 'Scherm 1', 'id': 1}], 1080, 1920, "", 5, true),
-    new Image(2, "asdd", "new", 2, "joostlek", 1, [{'naam': 'Scherm 1', 'id': 1}],  1080, 1920, "", 4,false),
-    new Image(3, "asddd", "new", 1, "joostlek", 1, [{'naam': 'Scherm 1', 'id': 1}],  1080, 1920, "", 9,true),
+    new Image(1, "asd", {name: 'asd', id: 1}, {name: 'Joost Lekkerkerker', id: 1}, [{'naam': 'Scherm 1', 'id': 1}], {height: 1080, width: 1920}, "", 5, true),
+    new Image(2, "asd", {name: 'asd', id: 1}, {name: 'Joost Lekkerkerker', id: 1}, [{'naam': 'Scherm 1', 'id': 1}], {height: 1080, width: 1920}, "", 5, true),
+    new Image(3, "asd", {name: 'asd', id: 1}, {name: 'Joost Lekkerkerker', id: 1}, [{'naam': 'Scherm 1', 'id': 1}], {height: 1080, width: 1920}, "", 5, true),
   ];
   constructor() { }
 
