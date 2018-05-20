@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import {LocationTableDataSource, LocationTableItem} from './location-table-datasource';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'location-table',
@@ -14,8 +15,9 @@ export class LocationTableComponent implements OnInit {
   dataSource: LocationTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'ownerName', 'screens'];
+  displayedColumns = ['id', 'name', 'ownerName', 'screens', 'more'];
 
+  constructor () {}
   ngOnInit() {
     this.dataSource = new LocationTableDataSource(this.paginator, this.sort, this.locations);
   }

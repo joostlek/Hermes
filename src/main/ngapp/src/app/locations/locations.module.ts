@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LocationsRoutingModule } from './locations-routing.module';
 import { LocationsComponent } from './locations.component';
 import { LocationTableComponent } from './location-table/location-table.component';
-import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule} from '@angular/material';
+import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -13,6 +13,7 @@ import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule} from
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
+    MatIconModule,
     LocationsRoutingModule,
   ],
   declarations: [LocationsComponent, LocationTableComponent]
