@@ -14,7 +14,7 @@ export class ScreenTableComponent implements OnInit {
   dataSource: ScreenTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'width', 'height', 'location'];
+  displayedColumns = ['id', 'name', 'width', 'height', 'location', 'more'];
 
   ngOnInit() {
     this.dataSource = new ScreenTableDataSource(this.paginator, this.sort, this.screens);
