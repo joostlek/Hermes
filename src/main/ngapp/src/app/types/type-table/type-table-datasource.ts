@@ -11,8 +11,9 @@ export interface TypeTableItem {
   price: number;
   active: boolean;
   exclusive: boolean;
-  numberOfImages: number;
+  imageCount: number;
   locationId: number;
+  locationName: string;
 }
 
 /**
@@ -83,8 +84,8 @@ export class TypeTableDataSource extends DataSource<TypeTableItem> {
         case 'price': return compare(+a.price, +b.price, isAsc);
         case 'active': return compare(+a.active, +b.active, isAsc);
         case 'exclusive': return compare(+a.exclusive, +b.exclusive, isAsc);
-        case 'numberOfImages': return compare(+a.numberOfImages, +b.numberOfImages, isAsc);
-        case 'locationId': return compare(+a.locationId, +b.locationId, isAsc);
+        case 'imageCount': return compare(+a.imageCount, +b.imageCount, isAsc);
+        case 'location': return compare(a.locationName, b.locationName, isAsc);
         default: return 0;
       }
     });

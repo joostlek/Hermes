@@ -10,10 +10,10 @@ import { Type } from "app/models/type";
 })
 export class TypeService {
   types: Type[] = [
-    new Type(1, 'one', 10, 9.99, true, false, 2, 1),
-    new Type(2, 'dos', 10, 1000, true, false, 2, 1),
-    new Type(3, 'trois', 10, 9.88, true, false, 2, 1),
-    new Type(4, 'quatre', 10, 10, true, false, 2, 1),
+    new Type(1, 'one', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
+    new Type(2, 'dos', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
+    new Type(3, 'trois', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
+    new Type(4, 'quatre', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
   ];
   constructor() { }
 
@@ -43,10 +43,10 @@ export class TypeService {
     MessagingService.sendError("Delete type " + id + " failed!");
   }
 
-  addType(name: string, time:number, price: number, active: boolean, exclusive: boolean, numberOfImages: number, locationId: number): Type {
+  addType(name: string, time:number, price: number, active: boolean, exclusive: boolean, numberOfImages: number, locationId: number, locationName: string): Type {
     MessagingService.send("Add type " + name);
     let id = this.types[this.types.length - 1].id + 1;
-    this.types.push(new Type(id, name, time, price, active, exclusive, numberOfImages, locationId));
+    this.types.push(new Type(id, name, time, price, active, exclusive, numberOfImages, {name: locationName, id: locationId}));
     return this.types[this.types.length - 1];
   }
 }

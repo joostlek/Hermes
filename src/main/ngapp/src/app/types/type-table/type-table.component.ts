@@ -14,7 +14,7 @@ export class TypeTableComponent implements OnInit {
   dataSource: TypeTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'time', 'price', 'active', 'exclusive', 'numberOfImages', 'locationId'];
+  displayedColumns = ['id', 'name', 'time', 'price', 'active', 'exclusive', 'imageCount', 'location', 'more'];
 
   constructor(){}
 
