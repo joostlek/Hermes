@@ -46,8 +46,8 @@ export class ImageService {
   addImage(imageName: string, promotion: Promotion, user_id: number, height: number, width: number, url: string, time: number): void {
     MessagingService.send("Add image " + imageName);
     let image_id = this.IMAGES[this.IMAGES.length - 1].id + 1;
-    let image = new Image(image_id, imageName, promotion.name, promotion.id, "joostlek", user_id, [], height, width, url, time, true);
-    this.IMAGES.push(image);
+    // let image = new Image(image_id, imageName, promotion.name, promotion.id, "joostlek", user_id, [], height, width, url, time, true);
+    // this.IMAGES.push(image);
   }
 
   editImage(image: Image): void {

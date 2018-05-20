@@ -1,0 +1,47 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Basic details</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Type name" formControlName="typeName" required>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-select placeholder="Location" formControlName="location">
+          <mat-option *ngFor="let location of user.locations" [value]="location['id']">
+            {{location['name']}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field><br>
+      <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
+      <div>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup" (ngSubmit)="finishSetUp()">
+      <ng-template matStepLabel>Type details</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Time in months" formControlName="time" required>
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Price" formControlName="price" required>
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Amount of images" formControlName="imageCount" required>
+      </mat-form-field><br>
+      <mat-slide-toggle formControlName="exclusive">Exclusive</mat-slide-toggle>
+      <div>
+        <button mat-raised-button color="primary" type="submit">Finish</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <!-- TODO - Add a short summary of the type they are going to add -->
+    <div>
+      <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
+      <button mat-raised-button color="primary" (click)="finishSetUp()">Finish</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

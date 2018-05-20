@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
-import {ImageService} from "../../services/image.service";
-import {Image} from "../../models/image";
+import {ImageService} from "@app/services/image.service";
+import {Image} from "@app/models/image";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({

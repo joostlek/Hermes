@@ -43,10 +43,10 @@ export class TypeService {
     MessagingService.sendError("Delete type " + id + " failed!");
   }
 
-  addType(name: string, time:number, price: number, active: boolean, exclusive: boolean, numberOfImages: number, locationId: number, locationName: string): Type {
+  addType(name: string, time:number, price: number, active: boolean, exclusive: boolean, numberOfImages: number, locationId: number): Type {
     MessagingService.send("Add type " + name);
     let id = this.types[this.types.length - 1].id + 1;
-    this.types.push(new Type(id, name, time, price, active, exclusive, numberOfImages, {name: locationName, id: locationId}));
+    this.types.push(new Type(id, name, time, price, active, exclusive, numberOfImages, {name: 'CAFETARIA VIKAS', id: locationId}));
     return this.types[this.types.length - 1];
   }
 }
