@@ -30,13 +30,16 @@ export class TypeStepperComponent implements OnInit {
       imageCount: [''],
       exclusive: [false],
     })
+    if (this.user.locations.length === 1) {
+      this.firstFormGroup.get('location').setValue(this.user.locations[0]['id'])
+    }
   }
 
   finishSetUp() {
     this.typeService.addType(this.firstFormGroup.get('typeName').value, this.secondFormGroup.get('time').value,
       this.secondFormGroup.get('price').value, this.firstFormGroup.get('active').value,
       this.secondFormGroup.get('exclusive').value, this.secondFormGroup.get('imageCount').value,
-      this.firstFormGroup.get('location').value)
+      this.firstFormGroup.get('location').value);
     this.router.navigateByUrl('/types');
   }
 
