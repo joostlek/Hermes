@@ -40,4 +40,11 @@ export class TypeStepperComponent implements OnInit {
     this.router.navigateByUrl('/types');
   }
 
+  getLocationNameById(id: number) {
+    for (let i = 0; i < this.user.locations.length; i++) {
+      if (this.user.locations[i]['id'] === id) {
+        return this.user.locations[i]['name'];
+      }
+    }
+  }
 }
