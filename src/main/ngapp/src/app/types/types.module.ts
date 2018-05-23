@@ -9,7 +9,8 @@ import {
   MatPaginatorModule,
   MatSortModule,
   MatButtonModule,
-  MatIconModule, MatInputModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatSlideToggleModule
+  MatIconModule, MatInputModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatSlideToggleModule,
+  MatDialogModule
 } from '@angular/material';
 import { TypeComponent } from './type/type.component';
 import { ReactiveFormsModule} from "@angular/forms";
@@ -28,6 +29,7 @@ import { ReactiveFormsModule} from "@angular/forms";
     MatOptionModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatDialogModule,
     TypesRoutingModule,
   ],
   declarations: [TypesComponent, TypeTableComponent, TypeComponent]

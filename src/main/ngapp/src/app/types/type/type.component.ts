@@ -5,6 +5,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Type} from "@app/models/type";
 import { Location } from "@angular/common";
 import {User} from "@app/models/user";
+import {MatDialog} from "@angular/material";
+import {DeleteAlertComponent} from "@app/dialogs/delete-alert/delete-alert.component";
 
 @Component({
   selector: 'app-type',
@@ -19,7 +21,8 @@ export class TypeComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private typeService: TypeService,
               private location: Location,
-              private _FormBuilder: FormBuilder) { }
+              private _FormBuilder: FormBuilder,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getType();
@@ -30,8 +33,8 @@ export class TypeComponent implements OnInit {
       price: [this.type.price, Validators.required],
       imageCount: [this.type.imageCount, Validators.required],
       location: [this.type.location['id'], Validators.required],
-      active: [this.type.active],
-      exclusive: [this.type.exclusive]
+      active: [{value: this.type.active, disabled: !this.edit}],
+      exclusive: [{value: this.type.exclusive, disabled: !this.edit}]
     })
   }
 
@@ -45,8 +48,21 @@ export class TypeComponent implements OnInit {
     this.location.back();
   }
 
+  askDelete(): void {
+    let dialogRef = this.dialog.open(DeleteAlertComponent, {
+      width: '300px',
+      data: {delete: this.deleteType, name: this.type.name}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.deleteType();
+      }
+    })
+  }
+
   deleteType(): void {
-    this.typeService;
+    this.typeService.deleteType(this.type);
     this.location.back();
   }
 

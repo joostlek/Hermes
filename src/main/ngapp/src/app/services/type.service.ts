@@ -32,15 +32,15 @@ export class TypeService {
     MessagingService.sendError("Get type " + id + " failed!")
   }
 
-  deleteType(id: number): void {
-    MessagingService.send("Delete type "+ id);
+  deleteType(type: Type): void {
+    MessagingService.send("Delete type "+ type.name);
     for (let i = 0; i < this.types.length; i++) {
-      if (this.types[i].id === id) {
+      if (this.types[i].id === type.id) {
         this.types.splice(i, 1);
         return;
       }
     }
-    MessagingService.sendError("Delete type " + id + " failed!");
+    MessagingService.sendError("Delete type " + type.name + " failed!");
   }
 
   addType(name: string, time:number, price: number, active: boolean, exclusive: boolean, numberOfImages: number, locationId: number): Type {
