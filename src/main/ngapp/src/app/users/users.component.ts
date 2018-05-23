@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 import {UserTableItem} from "@app/users/user-table/user-table-datasource";
-import {UserService} from "@app/services/user.service";
+import {UserService} from "@app/_services/user.service";
 
 @Component({
   selector: 'app-users',

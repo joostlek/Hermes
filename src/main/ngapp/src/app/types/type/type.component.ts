@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {TypeService} from "@app/services/type.service";
+import {TypeService} from "@app/_services/type.service";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Type} from "@app/models/type";
+import {Type} from "@app/_models/type";
 import { Location } from "@angular/common";
-import {User} from "@app/models/user";
+import {User} from "@app/_models/user";
 import {MatDialog} from "@angular/material";
-import {DeleteAlertComponent} from "@app/dialogs/delete-alert/delete-alert.component";
+import {DeleteAlertComponent} from "@app/_dialogs/delete-alert/delete-alert.component";
 
 @Component({
   selector: 'app-type',

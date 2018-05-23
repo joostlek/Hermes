@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { AuthService } from "@app/services/auth.service";
-import {User} from "@app/models/user";
+import { AuthService } from "@app/_services/auth.service";
+import {User} from "@app/_models/user";
 
 @Component({
   selector: 'navigation',

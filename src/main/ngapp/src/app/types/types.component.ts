@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TypeTableItem} from "@app/types/type-table/type-table-datasource";
-import {TypeService} from "@app/services/type.service";
+import {TypeService} from "@app/_services/type.service";
 
 @Component({
   selector: 'app-types',

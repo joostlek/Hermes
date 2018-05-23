@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PromotionTableItem} from "@app/promotions/promotion-table/promotion-table-datasource";
-import {PromotionService} from "@app/services/promotion.service";
+import {PromotionService} from "@app/_services/promotion.service";
 
 @Component({
   selector: 'app-promotions',

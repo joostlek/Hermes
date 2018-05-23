@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from "rxjs/index";
 
 
-import { MessagingService } from "app/services/messaging.service";
-import { Type } from "app/models/type";
+import { MessagingService } from "app/_services/messaging.service";
+import { Type } from "app/_models/type";
 
 @Injectable({
   providedIn: 'root'

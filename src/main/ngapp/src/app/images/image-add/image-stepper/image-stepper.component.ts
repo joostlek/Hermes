@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {PromotionService} from "@app/services/promotion.service";
-import {Promotion} from "@app/models/promotion";
-import {ImageService} from "@app/services/image.service";
+import {PromotionService} from "@app/_services/promotion.service";
+import {Promotion} from "@app/_models/promotion";
+import {ImageService} from "@app/_services/image.service";
 
 @Component({
   selector: 'app-image-stepper',

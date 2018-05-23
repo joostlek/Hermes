@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import {UserTableDataSource, UserTableItem} from './user-table-datasource';
-import {UserService} from "@app/services/user.service";
+import {UserService} from "@app/_services/user.service";
 
 @Component({
   selector: 'user-table',

@@ -21,7 +21,7 @@ import {
 import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {HttpClientModule} from "@angular/common/http";
-import { DeleteAlertComponent } from './dialogs/delete-alert/delete-alert.component';
+import { DeleteAlertComponent } from './_dialogs/delete-alert/delete-alert.component';
 
 @NgModule({
   declarations: [

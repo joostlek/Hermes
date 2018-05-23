@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Screen } from '@app/models/screen'
+import { Screen } from '@app/_models/screen'
 import {Observable} from "rxjs/internal/Observable";
 import {of} from "rxjs/internal/observable/of";
 @Injectable({

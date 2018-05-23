@@ -11,7 +11,7 @@
             {{location['name']}}
           </mat-option>
         </mat-select>
-      </mat-form-field><br>
+      </mat-form-field><br *ngIf="user.locations.length > 1">
       <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
       <div>
         <button mat-raised-button color="primary" matStepperNext>Next</button>
@@ -47,7 +47,7 @@
     </mat-form-field><br>
     <mat-form-field *ngIf="user.locations.length > 1">
       <input matInput disabled [value]="getLocationNameById(firstFormGroup.get('location').value)" placeholder="Location">
-    </mat-form-field><br>
+    </mat-form-field><br *ngIf="user.locations.length > 1">
     <mat-form-field>
       <input matInput disabled [value]="secondFormGroup.get('time').value" placeholder="Time">
     </mat-form-field><br>

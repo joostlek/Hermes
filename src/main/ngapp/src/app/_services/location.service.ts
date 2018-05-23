@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/internal/Observable";
 import {of} from "rxjs/internal/observable/of";
-import { Location } from '@app/models/location';
+import { Location } from '@app/_models/location';
 
 @Injectable({
   providedIn: 'root'
