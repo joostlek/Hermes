@@ -29,7 +29,7 @@ export class TypeStepperComponent implements OnInit {
       price: ['', Validators.required],
       imageCount: [''],
       exclusive: [false],
-    })
+    });
     if (this.user.locations.length === 1) {
       this.firstFormGroup.get('location').setValue(this.user.locations[0]['id'])
     }

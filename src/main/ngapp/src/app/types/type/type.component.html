@@ -1,0 +1,42 @@
+<div *ngIf="type">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <label>
+    {{type.name}}
+  </label>
+  <div class="content">
+    <form [formGroup]="formGroup">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Time" formControlName="time" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Price" formControlName="price" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Amount of images" formControlName="imageCount" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+      <input matInput placeholder="Location" [value]="type.location['name']" [readonly]="true" *ngIf="!edit || (!(user.locations.length > 1) && edit); else selector">
+      <ng-template #selector>
+        <mat-select placeholder="Location" formControlName="location" [value]="type.location['id']">
+          <mat-option *ngFor="let location of user.locations" [value]="location['id']">
+            {{location['name']}}
+          </mat-option>
+        </mat-select>
+      </ng-template>
+      </mat-form-field><br>
+      <mat-slide-toggle formControlName="active" [disabled]="!edit">Active</mat-slide-toggle><br>
+      <mat-slide-toggle formControlName="exclusive" [disabled]="!edit">Exclusive</mat-slide-toggle>
+      <br>
+      <div>
+        <button mat-raised-button color="primary" class="editbutton" (click)="finishEdit()" *ngIf="edit">Save</button>
+        <button mat-raised-button color="primary" class="editbutton" (click)="editType()" *ngIf="!edit">Edit</button>
+        <button mat-raised-button color="warn" (click)="deleteType()">Delete image</button>
+      </div>
+    </form>
+  </div>
+</div>

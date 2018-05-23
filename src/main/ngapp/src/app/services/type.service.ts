@@ -49,4 +49,14 @@ export class TypeService {
     this.types.push(new Type(id, name, time, price, active, exclusive, numberOfImages, {name: 'CAFETARIA VIKAS', id: locationId}));
     return this.types[this.types.length - 1];
   }
+
+  updateType(type: Type): Observable<any> {
+    for (let i=0; i < this.types.length; i++) {
+      if (this.types[i].id === type.id) {
+        this.types[i] = type;
+        break;
+      }
+    }
+    return of([]);
+  }
 }
