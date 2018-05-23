@@ -33,8 +33,8 @@ export class TypeComponent implements OnInit {
       price: [this.type.price, Validators.required],
       imageCount: [this.type.imageCount, Validators.required],
       location: [this.type.location['id'], Validators.required],
-      active: [{value: this.type.active, disabled: !this.edit}],
-      exclusive: [{value: this.type.exclusive, disabled: !this.edit}]
+      active: [this.type.active],
+      exclusive: [this.type.exclusive]
     })
   }
 
