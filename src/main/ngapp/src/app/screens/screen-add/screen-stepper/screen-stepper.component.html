@@ -1,0 +1,33 @@
+<form [formGroup]="formGroup">
+  <mat-horizontal-stepper #stepper formArrayName="formArray">
+    <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+      <ng-template matStepLabel>Basic details</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Screen name" formControlName="screenName" required>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-select placeholder="Location" formControlName="location">
+          <mat-option *ngFor="let location of locations" [value]="location['id']">
+            {{location['name']}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Screen width" formControlName="screenWidth" required>
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Screen height" formControlName="screenHeight" required>
+      </mat-form-field><br>
+      <div>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <div>
+        <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" type="submit" (click)="finishSetUp()">Finish</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</form>

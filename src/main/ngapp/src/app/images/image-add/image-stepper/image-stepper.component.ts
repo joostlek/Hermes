@@ -54,7 +54,7 @@ export class ImageStepperComponent implements OnInit {
   }
 
   create_promotion(): void {
-    this.newPromo = this.promotionService.addPromotion(this.newPromotionFormGroup.value['promotionName']);
+    // this.newPromo = this.promotionService.addPromotion(this.newPromotionFormGroup.value['promotionName']);
   }
 
   finishSetUp() {

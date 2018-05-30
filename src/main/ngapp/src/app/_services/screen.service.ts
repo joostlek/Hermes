@@ -16,4 +16,8 @@ export class ScreenService {
   getScreens(): Observable<Screen[]> {
     return of(this.SCREENS);
   }
+
+  addScreen(name: string, height: number, width: number, locationId: number) {
+    this.SCREENS.push(new Screen(this.SCREENS.length, name, height, width, {name: 'CAFETARIA VIKAS', id: locationId}))
+  }
 }

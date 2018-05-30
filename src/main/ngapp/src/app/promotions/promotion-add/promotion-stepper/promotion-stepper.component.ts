@@ -61,7 +61,6 @@ export class PromotionStepperComponent implements OnInit {
   }
 
   finishSetUp() {
-    console.log(this.formArray.get([0]).value['promotionName']);
     this.promotionService.addPromotion(
       this.formArray.get([0]).value['promotionName'],
       this.formArray.get([0]).value['type'],
