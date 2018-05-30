@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {LocationsComponent} from "@app/locations/locations.component";
 
 const routes: Routes = [
-  {path: '', component: LocationsComponent}
+  {path: '', component: LocationsComponent},
+  {path: 'add', loadChildren: './location-add/location-add.module#LocationAddModule'},
 ];
 
 @NgModule({

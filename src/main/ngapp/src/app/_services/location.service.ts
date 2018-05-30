@@ -17,4 +17,8 @@ export class LocationService {
   getLocations(): Observable<Location[]> {
     return of(this.LOCATIONS);
   }
+
+  addLocation(name: string, ownerId: number, street: string, houseNumber: string, zipCode: string, city: string, country: string) {
+    this.LOCATIONS.push(new Location(2, name, {name: 'Joost Lekkerkerker', id: ownerId}, [], street, houseNumber, zipCode, city, country))
+  }
 }
