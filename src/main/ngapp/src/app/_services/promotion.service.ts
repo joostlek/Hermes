@@ -41,7 +41,7 @@ export class PromotionService {
     MessagingService.sendError("Delete promotion " + id + " failed!");
   }
 
-  addPromotion(name: string): Promotion {
+  addPromotion(name: string, type: number, location: number, user: number, startDate: Date): Promotion {
     MessagingService.send("Add promotion " + name);
     let id = this.promotions[this.promotions.length - 1].id + 1;
     this.promotions.push(new Promotion(id, name, {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [], '19-05-2018'));

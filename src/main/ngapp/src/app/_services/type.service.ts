@@ -11,8 +11,8 @@ import { Type } from "app/_models/type";
 export class TypeService {
   types: Type[] = [
     new Type(1, 'one', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
-    new Type(2, 'dos', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
-    new Type(3, 'trois', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
+    new Type(2, 'dos', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 2}),
+    new Type(3, 'trois', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 3}),
     new Type(4, 'quatre', 10, 9.99, true, false, 2, {name: 'Cafetaria Vikas', id: 1}),
   ];
   constructor() { }
@@ -58,5 +58,16 @@ export class TypeService {
       }
     }
     return of([]);
+  }
+
+  getTypesByLocationId(locationId: number): Observable<Type[]> {
+    MessagingService.send(String(locationId));
+    let types = [];
+    for (let i=0; i < this.types.length; i++) {
+      if (this.types[i].location['id'] == locationId) {
+        types.push(this.types[i])
+      }
+    }
+    return of(types);
   }
 }

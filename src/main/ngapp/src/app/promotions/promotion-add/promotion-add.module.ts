@@ -3,12 +3,33 @@ import { CommonModule } from '@angular/common';
 
 import { PromotionAddRoutingModule } from './promotion-add-routing.module';
 import { PromotionAddComponent } from './promotion-add.component';
+import { PromotionStepperComponent } from './promotion-stepper/promotion-stepper.component';
+import {
+  MatButtonModule, MatDatepickerModule,
+  MatFormFieldModule, MatIconModule,
+  MatInputModule, MatNativeDateModule,
+  MatOptionModule,
+  MatSelectModule, MatSlideToggleModule,
+  MatStepperModule, NativeDateModule
+} from "@angular/material";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatSlideToggleModule,
+    MatButtonModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatIconModule,
     PromotionAddRoutingModule
   ],
-  declarations: [PromotionAddComponent]
+  declarations: [PromotionAddComponent, PromotionStepperComponent]
 })
 export class PromotionAddModule { }
