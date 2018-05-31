@@ -10,6 +10,7 @@ export interface ScreenTableItem {
   width: number;
   locationId: number;
   locationName: string;
+  thirdParty: boolean;
 }
 
 /**
@@ -79,6 +80,7 @@ export class ScreenTableDataSource extends DataSource<ScreenTableItem> {
         case 'width': return compare(+a.width, +b.width, isAsc);
         case 'height': return compare(+a.height, +b.height, isAsc);
         case 'location': return compare(a.locationName, b.locationName, isAsc);
+        case 'thirdParty': return compare(+a.locationName, +b.locationName, isAsc);
         default: return 0;
       }
     });

@@ -28,7 +28,8 @@ export class ScreenStepperComponent implements OnInit {
           screenName: ['', Validators.required],
           screenHeight: ['', Validators.required],
           screenWidth: ['', Validators.required],
-          location: ['', Validators.required]
+          location: ['', Validators.required],
+          thirdParty: ['']
         })
       ])
     });
@@ -45,7 +46,8 @@ export class ScreenStepperComponent implements OnInit {
       this.formArray.get([0]).value['screenName'],
       this.formArray.get([0]).value['screenHeight'],
       this.formArray.get([0]).value['screenWidth'],
-      this.formArray.get([0]).value['location']
+      this.formArray.get([0]).value['location'],
+      this.formArray.get([0]).value['thirdParty']
     )
   }
 }

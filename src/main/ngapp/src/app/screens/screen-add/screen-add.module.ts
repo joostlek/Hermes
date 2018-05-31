@@ -10,7 +10,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatOptionModule,
-  MatSelectModule, MatStepperModule
+  MatSelectModule, MatSlideToggleModule, MatStepperModule
 } from "@angular/material";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
@@ -26,6 +26,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     FormsModule,
     MatIconModule,
     MatStepperModule,
+    MatSlideToggleModule,
     ScreenAddRoutingModule
   ],
   declarations: [ScreenAddComponent, ScreenStepperComponent]
