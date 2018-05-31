@@ -4,6 +4,7 @@ import {PromotionService} from "@app/_services/promotion.service";
 import {Promotion} from "@app/_models/promotion";
 import {ImageService} from "@app/_services/image.service";
 import {User} from "@app/_models/user";
+import {FileUploader} from "ng2-file-upload";
 
 @Component({
   selector: 'app-image-stepper',
@@ -16,6 +17,7 @@ export class ImageStepperComponent implements OnInit {
   formGroup: FormGroup;
   promotions: Promotion[] = [];
   user: User;
+  uploader: FileUploader = new FileUploader({url: 'api', itemAlias: 'screen'});
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -38,6 +40,11 @@ export class ImageStepperComponent implements OnInit {
         })
       ])
     });
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      console.log('ImageUpload:uploaded:', item, status, response);
+      alert('File uploaded successfully');
+    };
   }
 
   update_time(event) {
