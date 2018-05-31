@@ -43,11 +43,9 @@ export class ImageService {
     MessagingService.sendError("Delete image " + image.name + " failed!");
   }
 
-  addImage(imageName: string, promotion: Promotion, user_id: number, height: number, width: number, url: string, time: number): void {
-    MessagingService.send("Add image " + imageName);
-    let image_id = this.IMAGES[this.IMAGES.length - 1].id + 1;
-    // let image = new Image(image_id, imageName, promotion.name, promotion.id, "joostlek", user_id, [], height, width, url, time, true);
-    // this.IMAGES.push(image);
+  addImage(name: string, promotionId: number, userId: number, height: number, width: number, url: string, time: number): void {
+    MessagingService.send("Add image " + name);
+    this.IMAGES.push(new Image(this.IMAGES.length + 1, name, {id: promotionId, name: 'PROMOTIE'}, {name: 'Joost Lekkerkerker', id: userId}, [], {width: width, height: height}, url, time, true));
   }
 
   editImage(image: Image): void {

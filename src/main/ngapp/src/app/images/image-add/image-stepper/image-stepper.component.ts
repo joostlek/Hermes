@@ -5,6 +5,7 @@ import {Promotion} from "@app/_models/promotion";
 import {ImageService} from "@app/_services/image.service";
 import {User} from "@app/_models/user";
 import {FileUploader} from "ng2-file-upload";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-image-stepper',
@@ -23,7 +24,8 @@ export class ImageStepperComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private promotionService: PromotionService,
-              private imageService: ImageService) {
+              private imageService: ImageService,
+              private location: Location) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
@@ -60,6 +62,11 @@ export class ImageStepperComponent implements OnInit {
       1920,
       ' ',
       this.formArray.get([0]).value['timeSlider']);
+    this.goBack();
+  }
+
+  goBack() {
+    this.location.back();
   }
 }
 
