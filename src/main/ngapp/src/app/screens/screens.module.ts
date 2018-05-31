@@ -4,7 +4,16 @@ import { CommonModule } from '@angular/common';
 import { ScreensRoutingModule } from './screens-routing.module';
 import { ScreensComponent } from './screens.component';
 import { ScreenTableComponent } from './screen-table/screen-table.component';
-import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule} from '@angular/material';
+import {
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatButtonModule,
+  MatIconModule,
+  MatInputModule, MatFormFieldModule, MatDialogModule, MatSlideToggleModule
+} from '@angular/material';
+import { ScreenComponent } from './screen/screen.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
@@ -14,8 +23,14 @@ import {MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatI
     MatSortModule,
     MatButtonModule,
     MatIconModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatSlideToggleModule,
     ScreensRoutingModule,
   ],
-  declarations: [ScreensComponent, ScreenTableComponent]
+  declarations: [ScreensComponent, ScreenTableComponent, ScreenComponent]
 })
 export class ScreensModule { }

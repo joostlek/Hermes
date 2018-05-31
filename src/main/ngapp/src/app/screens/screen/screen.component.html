@@ -1,0 +1,31 @@
+<div *ngIf="screen">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <label>
+    {{screen.name}}
+  </label>
+  <div class="content">
+    <form [formGroup]="formGroup">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Width" formControlName="width" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Height" formControlName="height" [readonly]="!edit">
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Location" [value]="screen.location['name']" disabled>
+      </mat-form-field><br>
+      <mat-slide-toggle disabled>Allow advertising</mat-slide-toggle><br>
+      <br>
+      <div>
+        <button mat-raised-button color="primary" class="editbutton" (click)="finishEdit()" *ngIf="edit">Save</button>
+        <button mat-raised-button color="primary" class="editbutton" (click)="editType()" *ngIf="!edit">Edit</button>
+        <button mat-raised-button color="warn" (click)="askDelete()">Delete image</button>
+      </div>
+    </form>
+  </div>
+</div>

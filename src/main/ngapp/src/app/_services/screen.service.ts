@@ -20,4 +20,30 @@ export class ScreenService {
   addScreen(name: string, height: number, width: number, locationId: number, thirdParty: boolean) {
     this.SCREENS.push(new Screen(this.SCREENS.length + 1, name, height, width, {name: 'CAFETARIA VIKAS', id: locationId}, thirdParty))
   }
+
+  getScreen(id: number): Observable<Screen> {
+    for (let i=0; i < this.SCREENS.length; i++) {
+      if (this.SCREENS[i].id === id) {
+        return of(this.SCREENS[i]);
+      }
+    }
+  }
+
+  deleteScreen(screen: Screen) {
+    for (let i=0; i < this.SCREENS.length; i++) {
+      if (this.SCREENS[i].id === screen.id) {
+        this.SCREENS.splice(i,1);
+        return;
+      }
+    }
+  }
+
+  editScreen(screen: Screen): void {
+    for (let i=0; i < this.SCREENS.length; i++) {
+      if (this.SCREENS[i].id === screen.id) {
+        this.SCREENS[i] = screen;
+        return;
+      }
+    }
+  }
 }
