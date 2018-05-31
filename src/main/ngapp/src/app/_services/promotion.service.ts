@@ -30,15 +30,15 @@ export class PromotionService {
     MessagingService.sendError("Get promotion " + id + " failed!")
   }
 
-  deletePromotion(id: number): void {
-    MessagingService.send("Delete promotion "+ id);
+  deletePromotion(promotion: Promotion): void {
+    MessagingService.send("Delete promotion "+ promotion.id);
     for (let i = 0; i < this.promotions.length; i++) {
-      if (this.promotions[i].id === id) {
+      if (this.promotions[i].id === promotion.id) {
         this.promotions.splice(i, 1);
         return;
       }
     }
-    MessagingService.sendError("Delete promotion " + id + " failed!");
+    MessagingService.sendError("Delete promotion " + promotion.id + " failed!");
   }
 
   addPromotion(name: string, type: number, location: number, user: number, startDate: Date): Promotion {
@@ -46,5 +46,14 @@ export class PromotionService {
     let id = this.promotions[this.promotions.length - 1].id + 1;
     this.promotions.push(new Promotion(id, name, {'name': 'TYPE 1', 'id': 1}, {'name':'Joost Lekkerkerker', 'id': 1}, [], '19-05-2018'));
     return this.promotions[this.promotions.length - 1];
+  }
+
+  updatePromotion(promotion: Promotion) {
+    for (let i=0; i < this.promotions.length; i++) {
+      if (this.promotions[i].id === promotion.id) {
+        this.promotions[i] = promotion;
+        return;
+      }
+    }
   }
 }
