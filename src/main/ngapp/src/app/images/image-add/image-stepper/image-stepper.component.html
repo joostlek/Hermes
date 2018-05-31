@@ -1,63 +1,37 @@
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="detailsFormGroup">
-    <form [formGroup]="detailsFormGroup">
+<form [formGroup]="formGroup">
+  <mat-horizontal-stepper #stepper formArrayName="formArray">
+    <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
       <ng-template matStepLabel>Image details</ng-template>
       <mat-form-field>
         <input matInput placeholder="Image name" formControlName="imageName" required>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-select placeholder="Promotion" formControlName="selectPromotion">
+          <mat-option *ngFor="let promotion of user.promotions" [value]="promotion['id']">
+            {{promotion['name']}}
+          </mat-option>
+        </mat-select>
       </mat-form-field><br>
       <mat-slider [min]="0" [max]="10" [step]="1" [value]="0" [thumbLabel]="true" (change)="update_time($event.value)"></mat-slider>
       <div>
         <button mat-raised-button color="primary" matStepperNext>Next</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="fileFormGroup">
-    <form [formGroup]="fileFormGroup">
+    </mat-step>
+    <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
       <ng-template matStepLabel>Upload file</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+        <input matInput placeholder="Address" formControlName="file" required>
       </mat-form-field>
       <div>
         <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
         <button mat-raised-button color="primary" matStepperNext>Next</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="promotionFormGroup">
-    <form [formGroup]="promotionFormGroup">
-      <ng-template matStepLabel>Choose a promotion</ng-template>
-      <mat-form-field>
-        <mat-select placeholder="Promotion" formControlName="select_promotion" (selectionChange)="check_promotion($event.value)">
-          <mat-option>New promotion</mat-option>
-          <mat-option *ngFor="let promotion of promotions" [value]="promotion.id">
-            {{ promotion.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
       <div>
         <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
-        <button mat-raised-button color="primary" matStepperNext>Next</button>
+        <button mat-raised-button color="primary" (click)="finishSetUp()">Reset</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="newPromotionFormGroup" [optional]="true" *ngIf="newPromotion">
-    <form [formGroup]="newPromotionFormGroup">
-      <ng-template matStepLabel>Create a promotion</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Promotion Name" formControlName="promotionName" required>
-      </mat-form-field>
-      <div>
-        <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
-        <button mat-raised-button color="primary" matStepperNext (click)="create_promotion()">Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    You are now done.
-    <div>
-      <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
-      <button mat-raised-button color="primary" (click)="finishSetUp()">Reset</button>
-    </div>
-  </mat-step>
-</mat-horizontal-stepper>
+    </mat-step>
+  </mat-horizontal-stepper>
