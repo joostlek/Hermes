@@ -12,6 +12,8 @@ export interface PromotionTableItem {
   userId: number;
   userName: string;
   images: number;
+  locationId: number;
+  locationName: string;
   startDate: string;
 }
 
@@ -81,6 +83,7 @@ export class PromotionTableDataSource extends DataSource<PromotionTableItem> {
         case 'id': return compare(+a.id, +b.id, isAsc);
         case 'type': return compare(a.typeName, b.typeName, isAsc);
         case 'user': return compare(a.userName, b.userName, isAsc);
+        case 'location': return compare(a.locationName, b.locationName, isAsc);
         case 'images': return compare(+a.images, +b.images, isAsc);
         case 'startDate': return compare(a.startDate, b.startDate, isAsc);
         default: return 0;

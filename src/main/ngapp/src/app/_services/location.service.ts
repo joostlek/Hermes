@@ -21,4 +21,25 @@ export class LocationService {
   addLocation(name: string, ownerId: number, street: string, houseNumber: string, zipCode: string, city: string, country: string) {
     this.LOCATIONS.push(new Location(2, name, {name: 'Joost Lekkerkerker', id: ownerId}, [], street, houseNumber, zipCode, city, country))
   }
+
+  getLocation(id: number): Observable<Location> {
+    for (let i=0; i < this.LOCATIONS.length; i++) {
+      if (this.LOCATIONS[i].id === id) {
+        return of(this.LOCATIONS[i]);
+      }
+    }
+  }
+
+  deleteLocation(location: Location) {
+
+  }
+
+  updateLocation(location: Location) {
+    for (let i=0; i < this.LOCATIONS.length; i++) {
+      if (this.LOCATIONS[i].id === location.id) {
+        this.LOCATIONS[i] = location;
+        return;
+      }
+    }
+  }
 }

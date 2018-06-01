@@ -26,6 +26,12 @@
     </ng-container>
 
     <!-- Name Column -->
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.locationId}}">{{row.locationName}}</a></mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
     <ng-container matColumnDef="images">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of images</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.images}}</mat-cell>
