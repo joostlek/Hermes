@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "app/_models/user";
 import {Observable, of, Subject} from "rxjs/index";
 import {map} from "rxjs/internal/operators";
+import {ActionResponse} from "@app/_models/action-response";
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,9 @@ export class AuthService {
     return this.logger.asObservable();
   }
 
-  getCurrentUser(): Observable<User> {
-    // return of({"id":1,"firstName":"Joost","middleName":"","lastName":"Lekkerkerker","email":"","roles":["SUPAUSA", "Owner"],"locations":[],"promotions":[],"images":[],"phoneNumber":"","street":"","houseNumber":"","zipCode":"","city":"","country":""} as User);
-    return;
+  register(firstName: string, lastName: string, email: string, phoneNumber: string, street: string, houseNumber: string, zipCode: string, city: string, country: string, password: string, middleName?: string): Observable<ActionResponse> {
+    let url = 'api/register';
+    return this.http.post<ActionResponse>(url, {firstName: firstName, middleName: middleName, lastName: lastName, email: email, phoneNumber: phoneNumber, street: street, houseNumber: houseNumber, zipCode: zipCode, city: city, country: country, password: password});
+
   }
 }
