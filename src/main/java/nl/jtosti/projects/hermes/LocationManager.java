@@ -49,7 +49,7 @@ public class LocationManager extends JPABase implements LocationDAO {
                 return true;
             }
         } catch (EntityNotFoundException e) {
-            System.out.println(location.getName() + " not found");
+            System.out.println(location.toString() + " not found");
         }
         return false;
     }

@@ -44,7 +44,7 @@ public class ImageManager extends JPABase implements ImageDAO {
                 return true;
             }
         } catch (EntityNotFoundException e) {
-            System.out.println(image.getName() + " not found");
+            System.out.println(image.toString() + " not found");
         }
         return false;
     }

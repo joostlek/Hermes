@@ -45,7 +45,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
                 return true;
             }
         } catch (EntityNotFoundException e) {
-            System.out.println(promotion.getName() + " not found");
+            System.out.println(promotion.toString() + " not found");
         }
         return false;
     }

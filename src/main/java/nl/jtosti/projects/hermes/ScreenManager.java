@@ -45,7 +45,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
                 return true;
             }
         } catch (EntityNotFoundException e) {
-            System.out.println(screen.getName() + " not found");
+            System.out.println(screen.toString() + " not found");
         }
         return false;
     }
