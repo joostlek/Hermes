@@ -2,9 +2,12 @@ package nl.jtosti.projects.hermes;
 
 import nl.jtosti.projects.hermes.models.User;
 
+import java.util.List;
+
 public interface UserDAO {
-    public User save(User user);
-    public User get(int id);
-    public User update(User user);
-    public void delete(User user);
+    User save(User user);
+    User get(int id);
+    User update(User user);
+    void delete(User user);
+    List getAll();
 }

@@ -209,4 +209,13 @@ public class User {
             return AuthenticationResource.ROLE_USER;
         }
     }
+
+    public String getFullName() {
+        return this.middleName != null ? this.firstName + " "  + this.middleName + " " + this.lastName : this.firstName + " " + this.lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "<User " + this.getFullName() + ">";
+    }
 }

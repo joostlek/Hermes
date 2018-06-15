@@ -4,6 +4,8 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.User;
 
 import javax.persistence.EntityManager;
+import java.util.Collection;
+import java.util.List;
 
 public class UserManager extends JPABase implements UserDAO {
     private EntityManager em = super.getConnection();
@@ -43,5 +45,10 @@ public class UserManager extends JPABase implements UserDAO {
         em.getTransaction().begin();
         em.remove(em.find(User.class, user.getId()));
         em.getTransaction().commit();
+    }
+
+    @Override
+    public List<User> getAll() {
+        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 }
