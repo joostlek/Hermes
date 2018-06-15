@@ -10,6 +10,9 @@ public class Image {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "height", nullable = false)
     private int height;
 
@@ -40,7 +43,8 @@ public class Image {
     public Image() {
     }
 
-    public Image(int height, int width, String url, boolean active, int time, Screen screen, User owner, Promotion promotion) {
+    public Image(String name, int height, int width, String url, boolean active, int time, Screen screen, User owner, Promotion promotion) {
+        this.name = name;
         this.height = height;
         this.width = width;
         this.url = url;
@@ -57,6 +61,14 @@ public class Image {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getHeight() {
@@ -121,5 +133,10 @@ public class Image {
 
     public void setPromotion(Promotion promotion) {
         this.promotion = promotion;
+    }
+
+    @Override
+    public String toString() {
+        return "<Image " + this.name + ">";
     }
 }
