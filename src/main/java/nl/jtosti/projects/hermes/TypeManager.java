@@ -22,14 +22,15 @@ public class TypeManager extends JPABase implements TypeDAO {
 
     @Override
     public Type update(Type type) {
-        Type type_db = em.find(Type.class, type.getId());
-        type_db.setActive(type.isActive());
-        type_db.setAmountOfImages(type.getAmountOfImages());
-        type_db.setExclusive(type.isExclusive());
-        type_db.setName(type.getName());
-        type_db.setPrice(type.getPrice());
-        type_db.setTime(type.getTime());
-        type_db.setLocation(type.getLocation());
+        Type dbType = em.find(Type.class, type.getId());
+        em.getTransaction().begin();
+        dbType.setActive(type.isActive());
+        dbType.setAmountOfImages(type.getAmountOfImages());
+        dbType.setExclusive(type.isExclusive());
+        dbType.setName(type.getName());
+        dbType.setPrice(type.getPrice());
+        dbType.setTime(type.getTime());
+        dbType.setLocation(type.getLocation());
         em.getTransaction().commit();
         return type;
     }
