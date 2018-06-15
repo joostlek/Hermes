@@ -66,6 +66,8 @@ public class User {
         this.city = city;
         this.country = country;
         this.locations = new ArrayList<>();
+        this.images = new ArrayList<>();
+        this.promotions = new ArrayList<>();
     }
 
     public int getId() {
@@ -166,5 +168,29 @@ public class User {
 
     public void addLocation(Location location) {
         this.locations.add(location);
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
+    }
+
+    public List<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+
+    public void addPromotion(Promotion promotion) {
+        this.promotions.add(promotion);
     }
 }

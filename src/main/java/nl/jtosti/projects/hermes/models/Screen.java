@@ -1,6 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,4 +27,67 @@ public class Screen {
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.PERSIST)
     private List<Image> images;
+
+    public Screen() {
+    }
+
+    public Screen(int height, int width, boolean allowAds, Location location) {
+        this.height = height;
+        this.width = width;
+        this.allowAds = allowAds;
+        this.location = location;
+        this.images = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public boolean isAllowAds() {
+        return allowAds;
+    }
+
+    public void setAllowAds(boolean allowAds) {
+        this.allowAds = allowAds;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
+    }
 }

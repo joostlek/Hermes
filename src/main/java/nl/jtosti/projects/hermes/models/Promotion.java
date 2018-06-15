@@ -1,6 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,4 +29,67 @@ public class Promotion {
 
     @OneToMany(mappedBy = "promotion", cascade = CascadeType.PERSIST)
     private List<Image> images;
+
+    public Promotion() {
+    }
+
+    public Promotion(String name, Date startDate, User owner, Type type) {
+        this.name = name;
+        this.startDate = startDate;
+        this.owner = owner;
+        this.type = type;
+        this.images = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
+    }
 }

@@ -1,6 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,13 +40,15 @@ public class Type {
     public Type() {
     }
 
-    public Type(String name, int time, int price, boolean active, boolean exclusive, int amountOfImages) {
+    public Type(String name, int time, int price, boolean active, boolean exclusive, int amountOfImages, Location location) {
         this.name = name;
         this.time = time;
         this.price = price;
         this.active = active;
         this.exclusive = exclusive;
         this.amountOfImages = amountOfImages;
+        this.location = location;
+        this.promotions = new ArrayList<>();
     }
 
     public int getId() {
@@ -110,5 +113,17 @@ public class Type {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public List<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+
+    public void addPromotion(Promotion promotion) {
+        this.promotions.add(promotion);
     }
 }
