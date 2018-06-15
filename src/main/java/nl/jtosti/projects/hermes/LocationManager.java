@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.Location;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public class LocationManager extends JPABase implements LocationDAO {
@@ -40,11 +41,15 @@ public class LocationManager extends JPABase implements LocationDAO {
     @Override
     public boolean delete(Location location) {
         Location dbLocation = this.get(location.getId());
-        if (dbLocation != null) {
-            em.getTransaction().begin();
-            em.remove(dbLocation);
-            em.getTransaction().commit();
-            return true;
+        try {
+            if (dbLocation != null) {
+                em.getTransaction().begin();
+                em.remove(dbLocation);
+                em.getTransaction().commit();
+                return true;
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println(location.getName() + " not found");
         }
         return false;
     }

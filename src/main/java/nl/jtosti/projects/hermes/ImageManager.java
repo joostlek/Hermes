@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.Image;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public class ImageManager extends JPABase implements ImageDAO {
@@ -35,11 +36,15 @@ public class ImageManager extends JPABase implements ImageDAO {
     @Override
     public boolean delete(Image image) {
         Image dbImage = this.get(image.getId());
-        if (dbImage != null) {
-            em.getTransaction().begin();
-            em.remove(dbImage);
-            em.getTransaction().commit();
-            return true;
+        try {
+            if (dbImage != null) {
+                em.getTransaction().begin();
+                em.remove(dbImage);
+                em.getTransaction().commit();
+                return true;
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println(image.getName() + " not found");
         }
         return false;
     }

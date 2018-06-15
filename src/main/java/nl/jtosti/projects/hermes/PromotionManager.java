@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.Promotion;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public class PromotionManager extends JPABase implements PromotionDAO {
@@ -36,11 +37,15 @@ public class PromotionManager extends JPABase implements PromotionDAO {
     @Override
     public boolean delete(Promotion promotion) {
         Promotion dbPromotion = this.get(promotion.getId());
-        if (dbPromotion != null) {
-            em.getTransaction().begin();
-            em.remove(dbPromotion);
-            em.getTransaction().commit();
-            return true;
+        try {
+            if (dbPromotion != null) {
+                em.getTransaction().begin();
+                em.remove(dbPromotion);
+                em.getTransaction().commit();
+                return true;
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println(promotion.getName() + " not found");
         }
         return false;
     }

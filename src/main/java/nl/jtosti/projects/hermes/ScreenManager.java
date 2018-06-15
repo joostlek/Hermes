@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.Screen;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public class ScreenManager extends JPABase implements ScreenDAO {
@@ -36,11 +37,15 @@ public class ScreenManager extends JPABase implements ScreenDAO {
     @Override
     public boolean delete(Screen screen) {
         Screen dbScreen = this.get(screen.getId());
-        if (dbScreen != null) {
-            em.getTransaction().begin();
-            em.remove(dbScreen);
-            em.getTransaction().commit();
-            return true;
+        try {
+            if (dbScreen != null) {
+                em.getTransaction().begin();
+                em.remove(dbScreen);
+                em.getTransaction().commit();
+                return true;
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println(screen.getName() + " not found");
         }
         return false;
     }

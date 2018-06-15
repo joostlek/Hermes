@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.Type;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public class TypeManager extends JPABase implements TypeDAO {
@@ -38,11 +39,15 @@ public class TypeManager extends JPABase implements TypeDAO {
     @Override
     public boolean delete(Type type) {
         Type dbType = this.get(type.getId());
-        if (dbType != null) {
-            em.getTransaction().begin();
-            em.remove(dbType);
-            em.getTransaction().commit();
-            return true;
+        try {
+            if (dbType != null) {
+                em.getTransaction().begin();
+                em.remove(dbType);
+                em.getTransaction().commit();
+                return true;
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println(type.toString() + " not found");
         }
         return false;
     }

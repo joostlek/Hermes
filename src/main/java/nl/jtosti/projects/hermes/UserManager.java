@@ -4,6 +4,7 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public class UserManager extends JPABase implements UserDAO {
@@ -42,11 +43,15 @@ public class UserManager extends JPABase implements UserDAO {
     @Override
     public boolean delete(User user) {
         User dbUser = this.get(user.getId());
-        if (dbUser != null) {
-            em.getTransaction().begin();
-            em.remove(dbUser);
-            em.getTransaction().commit();
-            return true;
+        try {
+            if (dbUser.getId() != 0) {
+                em.getTransaction().begin();
+                em.remove(dbUser);
+                em.getTransaction().commit();
+                return true;
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println(user.toString() + " not found");
         }
         return false;
     }
