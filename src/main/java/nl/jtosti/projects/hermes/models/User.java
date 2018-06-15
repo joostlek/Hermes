@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.servlets.AuthenticationResource;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,5 +194,19 @@ public class User {
 
     public void addPromotion(Promotion promotion) {
         this.promotions.add(promotion);
+    }
+
+    public String getRole() {
+        if (this.locations.size() > 1 && this.promotions.size() > 1) {
+            return AuthenticationResource.ROLE_OWNER_AD;
+        } else if (this.locations.size() > 1) {
+            return AuthenticationResource.ROLE_ADVERTISING;
+        } else if (this.promotions.size() > 1) {
+            return AuthenticationResource.ROLE_OWNER;
+        } else if (this.id == 1) {
+            return AuthenticationResource.ROLE_SUPERUSER;
+        } else {
+            return AuthenticationResource.ROLE_USER;
+        }
     }
 }
