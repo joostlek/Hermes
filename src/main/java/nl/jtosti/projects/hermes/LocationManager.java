@@ -22,7 +22,7 @@ public class LocationManager extends JPABase implements LocationDAO {
 
     @Override
     public Location update(Location location) {
-        Location dbLocation = em.find(Location.class, location.getId());
+        Location dbLocation = this.get(location.getId());
         em.getTransaction().begin();
         dbLocation.setCity(location.getCity());
         dbLocation.setCountry(location.getCountry());
@@ -38,10 +38,15 @@ public class LocationManager extends JPABase implements LocationDAO {
     }
 
     @Override
-    public void delete(Location location) {
-        em.getTransaction().begin();
-        em.remove(location);
-        em.getTransaction().commit();
+    public boolean delete(Location location) {
+        Location dbLocation = this.get(location.getId());
+        if (dbLocation != null) {
+            em.getTransaction().begin();
+            em.remove(dbLocation);
+            em.getTransaction().commit();
+            return true;
+        }
+        return false;
     }
 
     @Override

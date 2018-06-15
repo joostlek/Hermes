@@ -8,6 +8,6 @@ public interface ScreenDAO {
     Screen get(int id);
     Screen save(Screen screen);
     Screen update(Screen screen);
-    void delete(Screen screen);
+    boolean delete(Screen screen);
     List<Screen> getAll();
 }

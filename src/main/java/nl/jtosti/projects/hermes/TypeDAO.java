@@ -8,6 +8,6 @@ public interface TypeDAO {
     Type get(int id);
     Type save(Type type);
     Type update(Type type);
-    void delete(Type type);
+    boolean delete(Type type);
     List<Type> getAll();
 }

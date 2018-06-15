@@ -8,6 +8,6 @@ public interface ImageDAO {
     Image get(int id);
     Image save(Image image);
     Image update(Image image);
-    void delete(Image image);
+    boolean delete(Image image);
     List<Image> getAll();
 }

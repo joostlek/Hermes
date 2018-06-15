@@ -22,7 +22,7 @@ public class TypeManager extends JPABase implements TypeDAO {
 
     @Override
     public Type update(Type type) {
-        Type dbType = em.find(Type.class, type.getId());
+        Type dbType = this.get(type.getId());
         em.getTransaction().begin();
         dbType.setActive(type.isActive());
         dbType.setAmountOfImages(type.getAmountOfImages());
@@ -36,10 +36,15 @@ public class TypeManager extends JPABase implements TypeDAO {
     }
 
     @Override
-    public void delete(Type type) {
-        em.getTransaction().begin();
-        em.remove(type);
-        em.getTransaction().commit();
+    public boolean delete(Type type) {
+        Type dbType = this.get(type.getId());
+        if (dbType != null) {
+            em.getTransaction().begin();
+            em.remove(dbType);
+            em.getTransaction().commit();
+            return true;
+        }
+        return false;
     }
 
     @Override

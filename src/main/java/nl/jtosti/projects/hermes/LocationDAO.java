@@ -8,6 +8,6 @@ public interface LocationDAO {
     Location get(int id);
     Location save(Location location);
     Location update(Location location);
-    void delete(Location location);
+    boolean delete(Location location);
     List<Location> getAll();
 }

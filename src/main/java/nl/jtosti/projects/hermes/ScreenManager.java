@@ -22,7 +22,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
 
     @Override
     public Screen update(Screen screen) {
-        Screen dbScreen = em.find(Screen.class, screen.getId());
+        Screen dbScreen = this.get(screen.getId());
         em.getTransaction().begin();
         dbScreen.setAllowAds(screen.isAllowAds());
         dbScreen.setHeight(screen.getHeight());
@@ -34,10 +34,15 @@ public class ScreenManager extends JPABase implements ScreenDAO {
     }
 
     @Override
-    public void delete(Screen screen) {
-        em.getTransaction().begin();
-        em.remove(screen);
-        em.getTransaction().commit();
+    public boolean delete(Screen screen) {
+        Screen dbScreen = this.get(screen.getId());
+        if (dbScreen != null) {
+            em.getTransaction().begin();
+            em.remove(dbScreen);
+            em.getTransaction().commit();
+            return true;
+        }
+        return false;
     }
 
     @Override

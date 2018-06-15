@@ -23,7 +23,7 @@ public class UserManager extends JPABase implements UserDAO {
 
     @Override
     public User update(User user) {
-        User dbUser = em.find(User.class, user.getId());
+        User dbUser = this.get(user.getId());
         em.getTransaction().begin();
         dbUser.setFirstName(user.getFirstName());
         dbUser.setMiddleName(user.getMiddleName());

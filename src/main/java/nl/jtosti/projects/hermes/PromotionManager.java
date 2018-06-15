@@ -22,7 +22,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
 
     @Override
     public Promotion update(Promotion promotion) {
-        Promotion dbPromotion = em.find(Promotion.class, promotion.getId());
+        Promotion dbPromotion = this.get(promotion.getId());
         em.getTransaction().begin();
         dbPromotion.setName(promotion.getName());
         dbPromotion.setStartDate(promotion.getStartDate());
@@ -34,10 +34,15 @@ public class PromotionManager extends JPABase implements PromotionDAO {
     }
 
     @Override
-    public void delete(Promotion promotion) {
-        em.getTransaction().begin();
-        em.remove(promotion);
-        em.getTransaction().commit();
+    public boolean delete(Promotion promotion) {
+        Promotion dbPromotion = this.get(promotion.getId());
+        if (dbPromotion != null) {
+            em.getTransaction().begin();
+            em.remove(dbPromotion);
+            em.getTransaction().commit();
+            return true;
+        }
+        return false;
     }
 
     @Override

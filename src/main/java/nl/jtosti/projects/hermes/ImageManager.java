@@ -33,10 +33,15 @@ public class ImageManager extends JPABase implements ImageDAO {
     }
 
     @Override
-    public void delete(Image image) {
-        em.getTransaction().begin();
-        em.remove(image);
-        em.getTransaction().commit();
+    public boolean delete(Image image) {
+        Image dbImage = this.get(image.getId());
+        if (dbImage != null) {
+            em.getTransaction().begin();
+            em.remove(dbImage);
+            em.getTransaction().commit();
+            return true;
+        }
+        return false;
     }
 
     @Override
