@@ -126,4 +126,9 @@ public class Type {
     public void addPromotion(Promotion promotion) {
         this.promotions.add(promotion);
     }
+
+    @Override
+    public String toString() {
+        return "<Type " + this.name + ">";
+    }
 }

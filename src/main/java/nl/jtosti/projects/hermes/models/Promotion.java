@@ -92,4 +92,9 @@ public class Promotion {
     public void addImage(Image image) {
         this.images.add(image);
     }
+
+    @Override
+    public String toString() {
+        return "<Promotion " + this.name + ">";
+    }
 }

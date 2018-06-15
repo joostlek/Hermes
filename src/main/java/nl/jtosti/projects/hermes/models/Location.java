@@ -142,4 +142,9 @@ public class Location {
     public void addScreen(Screen screen) {
         this.screens.add(screen);
     }
+
+    @Override
+    public String toString() {
+        return "<Location " + this.name + ">";
+    }
 }

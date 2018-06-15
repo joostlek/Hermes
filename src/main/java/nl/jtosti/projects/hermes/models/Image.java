@@ -10,7 +10,7 @@ public class Image {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "height", nullable = false)

@@ -12,6 +12,9 @@ public class Screen {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Column(name = "height", nullable = false)
     private int height;
 
@@ -31,7 +34,8 @@ public class Screen {
     public Screen() {
     }
 
-    public Screen(int height, int width, boolean allowAds, Location location) {
+    public Screen(String name, int height, int width, boolean allowAds, Location location) {
+        this.name = name;
         this.height = height;
         this.width = width;
         this.allowAds = allowAds;
@@ -45,6 +49,14 @@ public class Screen {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getHeight() {
@@ -89,5 +101,10 @@ public class Screen {
 
     public void addImage(Image image) {
         this.images.add(image);
+    }
+
+    @Override
+    public String toString() {
+        return "<Screen " + this.name + ">";
     }
 }
