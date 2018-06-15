@@ -4,7 +4,6 @@ package nl.jtosti.projects.hermes;
 import nl.jtosti.projects.hermes.models.User;
 
 import javax.persistence.EntityManager;
-import java.util.Collection;
 import java.util.List;
 
 public class UserManager extends JPABase implements UserDAO {
