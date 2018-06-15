@@ -40,10 +40,15 @@ public class UserManager extends JPABase implements UserDAO {
     }
 
     @Override
-    public void delete(User user) {
-        em.getTransaction().begin();
-        em.remove(em.find(User.class, user.getId()));
-        em.getTransaction().commit();
+    public boolean delete(User user) {
+        User dbUser = this.get(user.getId());
+        if (dbUser != null) {
+            em.getTransaction().begin();
+            em.remove(dbUser);
+            em.getTransaction().commit();
+            return true;
+        }
+        return false;
     }
 
     @Override
