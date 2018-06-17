@@ -1,11 +1,14 @@
 package nl.jtosti.projects.hermes.resources;
 
 import com.google.gson.Gson;
-import nl.jtosti.projects.hermes.UserManager;
+import nl.jtosti.projects.hermes.persistence.UserManager;
 import nl.jtosti.projects.hermes.models.User;
+import nl.jtosti.projects.hermes.responses.UserResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/users")
 public class UserResource {
@@ -14,7 +17,20 @@ public class UserResource {
     public String getUsers() {
         Gson gson = new Gson();
         UserManager userManager = new UserManager();
-        return gson.toJson(userManager.getAll());
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user: userManager.getAll()) {
+            userResponses.add(user.toResponse());
+        }
+        return gson.toJson(userResponses);
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getUser(@PathParam("id") int id) {
+        Gson gson = new Gson();
+        UserManager userManager = new UserManager();
+        return gson.toJson(userManager.get(id).toResponse());
     }
 
     @POST
@@ -22,8 +38,7 @@ public class UserResource {
     public String addUser(String body) {
         Gson gson = new Gson();
         UserManager userManager = new UserManager();
-        User user = gson.fromJson(body, User.class);
-        return gson.toJson(userManager.save(user));
+        return gson.toJson(userManager.save(gson.fromJson(body, User.class)).toResponse());
     }
 
     @PUT
@@ -31,8 +46,7 @@ public class UserResource {
     public String updateUser(String body) {
         Gson gson = new Gson();
         UserManager userManager = new UserManager();
-        User user = gson.fromJson(body, User.class);
-        return gson.toJson(userManager.update(user));
+        return gson.toJson(userManager.update(gson.fromJson(body, User.class)).toResponse());
     }
 
     @DELETE
@@ -40,7 +54,6 @@ public class UserResource {
     public String deleteUser(String body) {
         Gson gson = new Gson();
         UserManager userManager = new UserManager();
-        User user = gson.fromJson(body, User.class);
-        return gson.toJson(userManager.delete(user));
+        return gson.toJson(userManager.delete(gson.fromJson(body, User.class)));
     }
 }

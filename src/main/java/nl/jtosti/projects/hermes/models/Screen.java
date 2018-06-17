@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.ScreenResponse;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,5 +108,13 @@ public class Screen {
     @Override
     public String toString() {
         return "<Screen " + this.name + ">";
+    }
+
+    public ScreenResponse toResponse() {
+        return new ScreenResponse(this);
+    }
+
+    public ScreenResponse toResponse(boolean simple) {
+        return new ScreenResponse(this, true);
     }
 }

@@ -1,5 +1,6 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.UserResponse;
 import nl.jtosti.projects.hermes.servlets.AuthenticationResource;
 
 import javax.persistence.*;
@@ -217,5 +218,13 @@ public class User {
     @Override
     public String toString() {
         return "<User " + this.getFullName() + ">";
+    }
+
+    public UserResponse toResponse() {
+        return new UserResponse(this);
+    }
+
+    public UserResponse toResponse(boolean simple) {
+        return new UserResponse(this, true);
     }
 }

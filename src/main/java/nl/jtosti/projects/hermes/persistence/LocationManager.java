@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes;
+package nl.jtosti.projects.hermes.persistence;
 
 import nl.jtosti.projects.hermes.models.Location;
 

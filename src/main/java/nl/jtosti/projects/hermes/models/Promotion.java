@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.PromotionResponse;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,5 +98,13 @@ public class Promotion {
     @Override
     public String toString() {
         return "<Promotion " + this.name + ">";
+    }
+
+    public PromotionResponse toResponse() {
+        return new PromotionResponse(this);
+    }
+
+    public PromotionResponse toResponse(boolean simple) {
+        return new PromotionResponse(this, true);
     }
 }

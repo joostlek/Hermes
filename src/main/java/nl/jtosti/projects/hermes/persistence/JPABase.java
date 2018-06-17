@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes;
+package nl.jtosti.projects.hermes.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

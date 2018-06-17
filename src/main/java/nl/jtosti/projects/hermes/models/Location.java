@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.LocationResponse;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,5 +148,13 @@ public class Location {
     @Override
     public String toString() {
         return "<Location " + this.name + ">";
+    }
+
+    public LocationResponse toResponse(boolean simple) {
+        return new LocationResponse(this, true);
+    }
+
+    public LocationResponse toResponse() {
+        return new LocationResponse(this);
     }
 }

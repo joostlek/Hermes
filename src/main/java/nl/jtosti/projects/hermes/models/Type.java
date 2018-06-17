@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.TypeResponse;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,5 +132,13 @@ public class Type {
     @Override
     public String toString() {
         return "<Type " + this.name + ">";
+    }
+
+    public TypeResponse toResponse() {
+        return new TypeResponse(this);
+    }
+
+    public TypeResponse toResponse(boolean simple) {
+        return new TypeResponse(this, true);
     }
 }

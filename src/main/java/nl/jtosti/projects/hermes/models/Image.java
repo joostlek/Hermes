@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.ImageResponse;
+
 import javax.persistence.*;
 
 @Entity
@@ -138,5 +140,13 @@ public class Image {
     @Override
     public String toString() {
         return "<Image " + this.name + ">";
+    }
+
+    public ImageResponse toResponse() {
+        return new ImageResponse(this);
+    }
+
+    public ImageResponse toResponse(boolean simple) {
+        return new ImageResponse(this, true);
     }
 }
