@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes.responses;
 import nl.jtosti.projects.hermes.models.Promotion;
 import nl.jtosti.projects.hermes.models.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypeResponse {
@@ -28,6 +29,7 @@ public class TypeResponse {
         this.exclusive = type.isExclusive();
         this.amountOfImages = type.getAmountOfImages();
         this.location = type.getLocation().toResponse(true);
+        this.promotions = new ArrayList<>();
         if (type.getPromotions() != null) {
             for (Promotion promotion: type.getPromotions()) {
                 addPromotion(promotion.toResponse(true));
@@ -36,7 +38,8 @@ public class TypeResponse {
     }
 
     public TypeResponse(Type type, boolean simple) {
-
+        this.id = type.getId();
+        this.name = type.getName();
     }
 
     public void addPromotion(PromotionResponse promotionResponse) {

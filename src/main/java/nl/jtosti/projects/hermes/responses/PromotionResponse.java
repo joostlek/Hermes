@@ -3,6 +3,7 @@ package nl.jtosti.projects.hermes.responses;
 import nl.jtosti.projects.hermes.models.Image;
 import nl.jtosti.projects.hermes.models.Promotion;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class PromotionResponse {
         this.startDate = promotion.getStartDate();
         this.owner = promotion.getOwner().toResponse(true);
         this.type = promotion.getType().toResponse(true);
+        this.images = new ArrayList<>();
         if (promotion.getImages() != null) {
             for (Image image: promotion.getImages()) {
                 addImage(image.toResponse(true));
