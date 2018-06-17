@@ -32,7 +32,7 @@ public class Location {
     @Column(name = "country", nullable = false)
     private String country;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
     private User owner;
 
