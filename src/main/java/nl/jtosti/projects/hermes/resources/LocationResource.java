@@ -22,6 +22,13 @@ public class LocationResource {
         return GsonProvider.getGson().toJson(locationResponses);
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getLocation(@PathParam("id") int id) {
+        return GsonProvider.getGson().toJson(ManagerProvider.getLocationManager().get(id).toResponse());
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String addLocation(String body) {
