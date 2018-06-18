@@ -15,6 +15,7 @@ import java.util.List;
 @Path("/screens")
 public class ScreenResource {
     @GET
+    @Path("/all")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getScreens() {
