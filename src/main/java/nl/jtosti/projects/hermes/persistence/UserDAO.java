@@ -10,4 +10,5 @@ public interface UserDAO {
     User update(User user);
     boolean delete(User user);
     List<User> getAll();
+    User getUserByLogin(String email, String password);
 }

@@ -1,7 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
 import nl.jtosti.projects.hermes.responses.UserResponse;
-import nl.jtosti.projects.hermes.servlets.AuthenticationResource;
+import nl.jtosti.projects.hermes.resources.AuthenticationResource;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
