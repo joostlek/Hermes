@@ -15,6 +15,7 @@ import java.util.List;
 @Path("/types")
 public class TypeResource {
     @GET
+    @Path("/all")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTypes() {
@@ -28,8 +29,22 @@ public class TypeResource {
     }
 
     @GET
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
+    @Path("/location/{id}")
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_USER, AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_ADVERTISING})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTypesByLocationId(@PathParam("id") int locationId) {
+        List<TypeResponse> typeResponses = new ArrayList<>();
+        for (Type type: ManagerProvider.getLocationManager().get(locationId).getTypes()) {
+            typeResponses.add(type.toResponse());
+        }
+        return Response
+                .ok(GsonProvider.getGson().toJson(typeResponses))
+                .build();
+    }
+
+    @GET
     @Path("{id}")
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getType(@PathParam("id") int id) {
         return Response
