@@ -7,6 +7,7 @@ import nl.jtosti.projects.hermes.util.GsonProvider;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,36 +15,46 @@ import java.util.List;
 public class PromotionResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPromotions() {
+    public Response getPromotions() {
         List<PromotionResponse> promotionResponses = new ArrayList<>();
         for (Promotion promotion: ManagerProvider.getPromotionManager().getAll()) {
             promotionResponses.add(promotion.toResponse());
         }
-        return GsonProvider.getGson().toJson(promotionResponses);
+        return Response
+                .ok(GsonProvider.getGson().toJson(promotionResponses))
+                .build();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPromotion(@PathParam("id") int id) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().get(id).toResponse());
+    public Response getPromotion(@PathParam("id") int id) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().get(id).toResponse()))
+                .build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String addPromotion(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().save(GsonProvider.getGson().fromJson(body, Promotion.class)).toResponse());
+    public Response addPromotion(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().save(GsonProvider.getGson().fromJson(body, Promotion.class)).toResponse()))
+                .build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String updatePromotion(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().update(GsonProvider.getGson().fromJson(body, Promotion.class)).toResponse());
+    public Response updatePromotion(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().update(GsonProvider.getGson().fromJson(body, Promotion.class)).toResponse()))
+                .build();
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String deletePromotion(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().delete(GsonProvider.getGson().fromJson(body, Promotion.class)));
+    public Response deletePromotion(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().delete(GsonProvider.getGson().fromJson(body, Promotion.class))))
+                .build();
     }
 }
