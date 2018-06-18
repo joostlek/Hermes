@@ -7,14 +7,17 @@ import nl.jtosti.projects.hermes.util.GsonProvider;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.ArrayList;
 import java.util.List;
 
 @Path("/users")
 public class UserResource {
     @GET
+    @Path("all")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
@@ -25,6 +28,17 @@ public class UserResource {
         return Response
                 .ok(GsonProvider.getGson().toJson(userResponses))
                 .build();
+    }
+
+    @GET
+    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_OWNER,
+            AuthenticationResource.ROLE_USER,
+            AuthenticationResource.ROLE_SUPERUSER})
+    @Path("me")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMe(@Context SecurityContext context) {
+        return getUser(Integer.parseInt(context.getUserPrincipal().getName()));
     }
 
     @GET
