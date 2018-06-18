@@ -32,7 +32,8 @@ public class PromotionResource {
     }
 
     @GET
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyPromotions(@Context SecurityContext context) {
         User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
@@ -47,7 +48,8 @@ public class PromotionResource {
 
     @GET
     @Path("{id}")
-    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING, AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPromotion(@PathParam("id") int id) {
         return Response
@@ -56,7 +58,10 @@ public class PromotionResource {
     }
 
     @POST
-    @RolesAllowed({AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_ADVERTISING, AuthenticationResource.ROLE_USER, AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER,
+            AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_USER,
+            AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPromotion(String body) {
         return Response
@@ -65,7 +70,8 @@ public class PromotionResource {
     }
 
     @PUT
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_ADVERTISING})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePromotion(String body) {
         return Response
@@ -74,7 +80,8 @@ public class PromotionResource {
     }
 
     @DELETE
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_ADVERTISING})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deletePromotion(String body) {
         return Response

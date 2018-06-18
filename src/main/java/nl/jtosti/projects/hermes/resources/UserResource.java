@@ -43,8 +43,8 @@ public class UserResource {
 
     @GET
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
-            AuthenticationResource.ROLE_OWNER,
             AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_OWNER,
             AuthenticationResource.ROLE_USER})
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -64,7 +64,9 @@ public class UserResource {
     }
 
     @PUT
-    @RolesAllowed({AuthenticationResource.ROLE_USER, AuthenticationResource.ROLE_ADVERTISING, AuthenticationResource.ROLE_OWNER})
+    @RolesAllowed({AuthenticationResource.ROLE_USER,
+            AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUser(String body) {
         return Response

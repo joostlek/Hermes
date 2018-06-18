@@ -50,7 +50,7 @@ public class ImageResource {
     @RolesAllowed({AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUnchecked(@Context SecurityContext context) {
-        User user = ManagerProvider.getUserManager().get(Integer.parseInt(context.getUserPrincipal().getName()));
+        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<ImageResponse> imageResponses = new ArrayList<>();
         for (Image image: ManagerProvider.getImageManager().getUncheckedImages(user)) {
             imageResponses.add(image.toResponse());

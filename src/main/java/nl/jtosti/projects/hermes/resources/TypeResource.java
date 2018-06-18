@@ -30,7 +30,10 @@ public class TypeResource {
 
     @GET
     @Path("/location/{id}")
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_USER, AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_ADVERTISING})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_USER,
+            AuthenticationResource.ROLE_OWNER,
+            AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTypesByLocationId(@PathParam("id") int locationId) {
         List<TypeResponse> typeResponses = new ArrayList<>();
@@ -44,7 +47,8 @@ public class TypeResource {
 
     @GET
     @Path("{id}")
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getType(@PathParam("id") int id) {
         return Response
@@ -53,7 +57,8 @@ public class TypeResource {
     }
 
     @PUT
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateType(String body) {
         return Response
@@ -62,7 +67,8 @@ public class TypeResource {
     }
 
     @POST
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addType(String body) {
         return Response
@@ -71,7 +77,8 @@ public class TypeResource {
     }
 
     @DELETE
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
+            AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteType(String body) {
         return Response
