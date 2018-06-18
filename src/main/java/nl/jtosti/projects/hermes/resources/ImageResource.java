@@ -21,12 +21,14 @@ public class ImageResource {
     @Path("/all")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
-    public String getImages() {
+    public Response getImages() {
         List<ImageResponse> imageResponses = new ArrayList<>();
         for (Image image: ManagerProvider.getImageManager().getAll()) {
             imageResponses.add(image.toResponse());
         }
-        return GsonProvider.getGson().toJson(imageResponses);
+        return Response
+                .ok(GsonProvider.getGson().toJson(imageResponses))
+                .build();
     }
 
     @GET
@@ -75,28 +77,36 @@ public class ImageResource {
             AuthenticationResource.ROLE_ADVERTISING,
             AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
-    public String getImage(@PathParam("id") int id) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getImageManager().get(id).toResponse());
+    public Response getImage(@PathParam("id") int id) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().get(id).toResponse()))
+                .build();
     }
 
     @POST
     @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
-    public String addImage(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getImageManager().save(GsonProvider.getGson().fromJson(body, Image.class)).toResponse());
+    public Response addImage(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().save(GsonProvider.getGson().fromJson(body, Image.class)).toResponse()))
+                .build();
     }
 
     @PUT
     @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateImage(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getImageManager().update(GsonProvider.getGson().fromJson(body, Image.class)).toResponse());
+    public Response updateImage(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().update(GsonProvider.getGson().fromJson(body, Image.class)).toResponse()))
+                .build();
     }
 
     @DELETE
     @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteImage(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getImageManager().delete(GsonProvider.getGson().fromJson(body, Image.class)));
+    public Response deleteImage(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().delete(GsonProvider.getGson().fromJson(body, Image.class))))
+                .build();
     }
 }
