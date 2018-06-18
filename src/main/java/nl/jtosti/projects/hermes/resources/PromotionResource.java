@@ -5,6 +5,7 @@ import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.PromotionResponse;
 import nl.jtosti.projects.hermes.util.GsonProvider;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import java.util.List;
 @Path("/promotions")
 public class PromotionResource {
     @GET
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPromotions() {
         List<PromotionResponse> promotionResponses = new ArrayList<>();
@@ -27,6 +29,7 @@ public class PromotionResource {
 
     @GET
     @Path("{id}")
+    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING, AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPromotion(@PathParam("id") int id) {
         return Response
@@ -35,6 +38,7 @@ public class PromotionResource {
     }
 
     @POST
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_ADVERTISING, AuthenticationResource.ROLE_USER, AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPromotion(String body) {
         return Response
@@ -43,6 +47,7 @@ public class PromotionResource {
     }
 
     @PUT
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePromotion(String body) {
         return Response
@@ -51,6 +56,7 @@ public class PromotionResource {
     }
 
     @DELETE
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deletePromotion(String body) {
         return Response
