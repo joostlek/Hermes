@@ -5,6 +5,7 @@ import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.LocationResponse;
 import nl.jtosti.projects.hermes.util.GsonProvider;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import java.util.List;
 @Path("/locations")
 public class LocationResource {
     @GET
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLocations() {
         List<LocationResponse> locationResponses = new ArrayList<>();
@@ -27,6 +29,7 @@ public class LocationResource {
 
     @GET
     @Path("{id}")
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLocation(@PathParam("id") int id) {
         return Response
@@ -35,6 +38,7 @@ public class LocationResource {
     }
 
     @POST
+    @RolesAllowed({AuthenticationResource.ROLE_USER, AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_OWNER_AD})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addLocation(String body) {
         return Response
@@ -43,6 +47,7 @@ public class LocationResource {
     }
 
     @PUT
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateLocation(String body) {
         return Response
@@ -51,6 +56,7 @@ public class LocationResource {
     }
 
     @DELETE
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER, AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteLocation(String body) {
         return Response
