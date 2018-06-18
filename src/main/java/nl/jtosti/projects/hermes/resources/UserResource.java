@@ -7,6 +7,7 @@ import nl.jtosti.projects.hermes.util.GsonProvider;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,36 +15,46 @@ import java.util.List;
 public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getUsers() {
+    public Response getUsers() {
         List<UserResponse> userResponses = new ArrayList<>();
         for (User user: ManagerProvider.getUserManager().getAll()) {
             userResponses.add(user.toResponse());
         }
-        return GsonProvider.getGson().toJson(userResponses);
+        return Response
+                .ok(GsonProvider.getGson().toJson(userResponses))
+                .build();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getUser(@PathParam("id") int id) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getUserManager().get(id).toResponse());
+    public Response getUser(@PathParam("id") int id) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getUserManager().get(id).toResponse()))
+                .build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String addUser(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getUserManager().save(GsonProvider.getGson().fromJson(body, User.class)).toResponse());
+    public Response addUser(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getUserManager().save(GsonProvider.getGson().fromJson(body, User.class)).toResponse()))
+                .build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateUser(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getUserManager().update(GsonProvider.getGson().fromJson(body, User.class)).toResponse());
+    public Response updateUser(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getUserManager().update(GsonProvider.getGson().fromJson(body, User.class)).toResponse()))
+                .build();
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteUser(String body) {
-        return GsonProvider.getGson().toJson(ManagerProvider.getUserManager().delete(GsonProvider.getGson().fromJson(body, User.class)));
+    public Response deleteUser(String body) {
+        return Response
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getUserManager().delete(GsonProvider.getGson().fromJson(body, User.class))))
+                .build();
     }
 }
