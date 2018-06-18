@@ -19,7 +19,7 @@ public class MySecurityContext implements SecurityContext {
         return new Principal() {
             @Override
             public String getName() {
-                return user.getFullName();
+                return Integer.toString(user.getId());
             }
         };
     }
