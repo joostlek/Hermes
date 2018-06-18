@@ -20,6 +20,7 @@ public class UserResponse {
     private String zipCode;
     private String city;
     private String country;
+    private String role;
     private List<LocationResponse> locations;
     private List<ImageResponse> images;
     private List<PromotionResponse> promotions;
@@ -43,6 +44,7 @@ public class UserResponse {
         this.zipCode = user.getZipCode();
         this.city = user.getCity();
         this.country = user.getCountry();
+        this.role = user.getRole();
         this.locations = new ArrayList<>();
         this.images = new ArrayList<>();
         this.promotions = new ArrayList<>();
