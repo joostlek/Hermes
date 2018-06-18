@@ -44,6 +44,32 @@ public class ImageResource {
     }
 
     @GET
+    @Path("/unchecked")
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUnchecked(@Context SecurityContext context) {
+        User user = ManagerProvider.getUserManager().get(Integer.parseInt(context.getUserPrincipal().getName()));
+        List<ImageResponse> imageResponses = new ArrayList<>();
+        for (Image image: ManagerProvider.getImageManager().getUncheckedImages(user)) {
+            imageResponses.add(image.toResponse());
+        }
+        return Response
+                .ok(GsonProvider.getGson().toJson(imageResponses))
+                .build();
+    }
+
+    @POST
+    @Path("/unchecked")
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response allow(@Context SecurityContext context, String body) {
+        return Response
+                .ok(ManagerProvider.getImageManager().updateActive(GsonProvider.getGson().fromJson(body, Image.class)).toResponse())
+                .build();
+    }
+
+
+    @GET
     @Path("{id}")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
             AuthenticationResource.ROLE_ADVERTISING,

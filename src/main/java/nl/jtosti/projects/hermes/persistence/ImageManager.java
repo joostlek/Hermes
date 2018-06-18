@@ -1,6 +1,7 @@
 package nl.jtosti.projects.hermes.persistence;
 
 import nl.jtosti.projects.hermes.models.Image;
+import nl.jtosti.projects.hermes.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -52,5 +53,21 @@ public class ImageManager extends JPABase implements ImageDAO {
     @Override
     public List<Image> getAll() {
         return em.createQuery("SELECT i FROM Image i", Image.class).getResultList();
+    }
+
+    @Override
+    public List<Image> getUncheckedImages(User user) {
+        return (List<Image>) em.createQuery("from Image as image where image.promotion = Promotion and Promotion.type = Type and Type.location = Location and Location.owner = ?")
+                .setParameter(0, user)
+                .getResultList();
+    }
+
+    @Override
+    public Image updateActive(Image image) {
+        Image dbImage = this.get(image.getId());
+        em.getTransaction().begin();
+        dbImage.setActive(image.isActive());
+        em.getTransaction().commit();
+        return image;
     }
 }
