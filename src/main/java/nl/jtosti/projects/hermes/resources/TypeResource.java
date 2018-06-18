@@ -5,6 +5,7 @@ import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.TypeResponse;
 import nl.jtosti.projects.hermes.util.GsonProvider;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import java.util.List;
 @Path("/types")
 public class TypeResource {
     @GET
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTypes() {
         List<TypeResponse> typeResponses = new ArrayList<>();
@@ -26,6 +28,7 @@ public class TypeResource {
     }
 
     @GET
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getType(@PathParam("id") int id) {
@@ -35,6 +38,7 @@ public class TypeResource {
     }
 
     @PUT
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateType(String body) {
         return Response
@@ -43,6 +47,7 @@ public class TypeResource {
     }
 
     @POST
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addType(String body) {
         return Response
@@ -51,6 +56,7 @@ public class TypeResource {
     }
 
     @DELETE
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER, AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteType(String body) {
         return Response
