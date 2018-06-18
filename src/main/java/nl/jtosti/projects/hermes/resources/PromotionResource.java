@@ -1,25 +1,43 @@
 package nl.jtosti.projects.hermes.resources;
 
 import nl.jtosti.projects.hermes.models.Promotion;
+import nl.jtosti.projects.hermes.models.User;
 import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.PromotionResponse;
 import nl.jtosti.projects.hermes.util.GsonProvider;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.ArrayList;
 import java.util.List;
 
 @Path("/promotions")
 public class PromotionResource {
     @GET
+    @Path("/all")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPromotions() {
         List<PromotionResponse> promotionResponses = new ArrayList<>();
         for (Promotion promotion: ManagerProvider.getPromotionManager().getAll()) {
+            promotionResponses.add(promotion.toResponse());
+        }
+        return Response
+                .ok(GsonProvider.getGson().toJson(promotionResponses))
+                .build();
+    }
+
+    @GET
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMyPromotions(@Context SecurityContext context) {
+        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
+        List<PromotionResponse> promotionResponses = new ArrayList<>();
+        for (Promotion promotion: user.getPromotions()) {
             promotionResponses.add(promotion.toResponse());
         }
         return Response
