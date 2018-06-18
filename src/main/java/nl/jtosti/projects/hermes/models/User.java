@@ -2,6 +2,7 @@ package nl.jtosti.projects.hermes.models;
 
 import nl.jtosti.projects.hermes.responses.UserResponse;
 import nl.jtosti.projects.hermes.servlets.AuthenticationResource;
+import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -44,6 +45,10 @@ public class User {
 
     @Column(name = "country", nullable = false)
     private String country;
+
+    @Column(name = "password", nullable = false)
+    @ColumnTransformer(write = "md5(?)")
+    private String password;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
     private List<Location> locations;
@@ -198,11 +203,11 @@ public class User {
     }
 
     public String getRole() {
-        if (this.locations.size() > 1 && this.promotions.size() > 1) {
+        if (this.locations.size() > 0 && this.promotions.size() > 0) {
             return AuthenticationResource.ROLE_OWNER_AD;
-        } else if (this.locations.size() > 1) {
+        } else if (this.locations.size() > 0) {
             return AuthenticationResource.ROLE_ADVERTISING;
-        } else if (this.promotions.size() > 1) {
+        } else if (this.promotions.size() > 0) {
             return AuthenticationResource.ROLE_OWNER;
         } else if (this.id == 1) {
             return AuthenticationResource.ROLE_SUPERUSER;
