@@ -26,7 +26,6 @@ public class ImageManager extends JPABase implements ImageDAO {
     public Image update(Image image) {
         Image dbImage = this.get(image.getId());
         em.getTransaction().begin();
-        dbImage.setActive(image.isActive());
         dbImage.setName(image.getName());
         dbImage.setTime(image.getTime());
         dbImage.setScreen(image.getScreen());

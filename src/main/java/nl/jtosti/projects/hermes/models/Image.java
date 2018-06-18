@@ -24,7 +24,7 @@ public class Image {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "active")
     private boolean active;
 
     @Column(name = "time", nullable = false)
