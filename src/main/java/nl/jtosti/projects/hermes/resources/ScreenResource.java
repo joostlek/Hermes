@@ -5,6 +5,7 @@ import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.ScreenResponse;
 import nl.jtosti.projects.hermes.util.GsonProvider;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import java.util.List;
 @Path("/screens")
 public class ScreenResource {
     @GET
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getScreens() {
         List<ScreenResponse> screenResponses = new ArrayList<>();
@@ -27,6 +29,7 @@ public class ScreenResource {
 
     @GET
     @Path("{id}")
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getScreen(@PathParam("id") int id) {
         return Response
@@ -35,6 +38,7 @@ public class ScreenResource {
     }
 
     @POST
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addScreen(String body) {
         return Response
@@ -43,6 +47,7 @@ public class ScreenResource {
     }
 
     @PUT
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateScreen(String body) {
         return Response
@@ -51,6 +56,7 @@ public class ScreenResource {
     }
 
     @DELETE
+    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteScreen(String body) {
         return Response
