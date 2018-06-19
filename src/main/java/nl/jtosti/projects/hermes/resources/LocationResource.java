@@ -33,8 +33,7 @@ public class LocationResource {
 
     @GET
     @Path("/simple")
-    @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER,
-            AuthenticationResource.ROLE_OWNER,
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER,
             AuthenticationResource.ROLE_ADVERTISING,
             AuthenticationResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
@@ -64,8 +63,7 @@ public class LocationResource {
 
     @GET
     @Path("{id}")
-    @RolesAllowed({AuthenticationResource.ROLE_OWNER,
-            AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLocation(@PathParam("id") int id) {
         return Response
@@ -75,8 +73,7 @@ public class LocationResource {
 
     @POST
     @RolesAllowed({AuthenticationResource.ROLE_USER,
-            AuthenticationResource.ROLE_OWNER,
-            AuthenticationResource.ROLE_OWNER_AD})
+            AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response addLocation(String body) {
         return Response
@@ -85,8 +82,7 @@ public class LocationResource {
     }
 
     @PUT
-    @RolesAllowed({AuthenticationResource.ROLE_OWNER,
-            AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateLocation(String body) {
         return Response
@@ -95,8 +91,7 @@ public class LocationResource {
     }
 
     @DELETE
-    @RolesAllowed({AuthenticationResource.ROLE_OWNER,
-            AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteLocation(String body) {
         return Response

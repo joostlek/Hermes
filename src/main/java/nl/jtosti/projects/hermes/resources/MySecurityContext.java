@@ -26,7 +26,9 @@ public class MySecurityContext implements SecurityContext {
 
     public boolean isUserInRole(String role) {
         if (user != null) {
-            if (user.getRole().equals(role)) {
+            if (user.getRole().equals(AuthenticationResource.ROLE_SUPERUSER)) {
+                return true;
+            } else if (user.getRole().equals(role)) {
                 return true;
             } else if (user.getRole().equals(AuthenticationResource.ROLE_OWNER_AD) && (role.equals(AuthenticationResource.ROLE_OWNER) || role.equals(AuthenticationResource.ROLE_ADVERTISING))) {
                 return true;

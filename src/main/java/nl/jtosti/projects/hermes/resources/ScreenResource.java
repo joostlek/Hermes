@@ -29,6 +29,23 @@ public class ScreenResource {
     }
 
     @GET
+    @Path("promotion/{id}")
+    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING,
+            AuthenticationResource.ROLE_OWNER})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getScreensByPromotionId(@PathParam("id") int id) {
+        List<ScreenResponse> screenResponses = new ArrayList<>();
+        for (Screen screen: ManagerProvider.getPromotionManager().get(id).getType().getLocation().getScreens()) {
+            if (screen.isAllowAds()) {
+                screenResponses.add(screen.toResponse());
+            }
+        }
+        return Response
+                .ok(GsonProvider.getGson().toJson(screenResponses))
+                .build();
+    }
+
+    @GET
     @Path("{id}")
     @RolesAllowed({AuthenticationResource.ROLE_SUPERUSER})
     @Produces(MediaType.APPLICATION_JSON)
