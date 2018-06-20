@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import {PromotionTableDataSource, PromotionTableItem} from './promotion-table-datasource';
 import {PromotionService} from "@app/_services/promotion.service";
+import {Roles} from "@app/_models/roles";
 
 @Component({
   selector: 'promotion-table',
@@ -16,6 +17,10 @@ export class PromotionTableComponent implements OnInit {
   constructor (private promotionService: PromotionService) {
   }
   ngOnInit() {
-    this.dataSource = new PromotionTableDataSource(this.promotionService.getPromotions());
+    if (JSON.parse(localStorage.getItem('user')).role === Roles.ROLE_SUPERUSER) {
+      this.dataSource = new PromotionTableDataSource(this.promotionService.getPromotions());
+    } else {
+      this.dataSource = new PromotionTableDataSource(this.promotionService.getMyPromotions());
+    }
   }
 }

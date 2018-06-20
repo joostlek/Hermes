@@ -29,13 +29,16 @@ export class PromotionService {
       )
   }
 
+  getMyPromotions(): Observable<Promotion[]> {
+    let url = 'api/v1/promotions';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Promotion[]>(url, {headers: httpHeaders});
+  }
+
   getPromotion(id: number): Observable<Promotion> {
     MessagingService.send("Get promotion " + id);
-    // for (let i=0; i < this.promotions.length; i++) {
-    //   if (this.promotions[i].id === id) {
-    //     return of(this.promotions[i]);
-    //   }
-    // }
     let url = 'api/v1/promotions/';
     let httpHeaders = new HttpHeaders({
       Authorization: JSON.parse(localStorage.getItem('token'))
