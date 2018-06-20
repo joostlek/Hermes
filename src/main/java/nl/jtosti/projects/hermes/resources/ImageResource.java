@@ -96,8 +96,9 @@ public class ImageResource {
     @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateImage(String body) {
+        Image image = ManagerProvider.getImageManager().update(GsonProvider.getGson().fromJson(body, Image.class));
         return Response
-                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().update(GsonProvider.getGson().fromJson(body, Image.class)).toResponse()))
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().get(image.getId()).toResponse()))
                 .build();
     }
 

@@ -8,13 +8,13 @@
   <div class="content">
     <form [formGroup]="formGroup">
       <mat-form-field>
-      <input matInput placeholder="Uploaded by" [readonly]="true" [value]="image.user['name']">
+      <input matInput placeholder="Uploaded by" [readonly]="true" [value]="image.owner['name']">
       </mat-form-field><br>
       <mat-form-field>
         <input matInput placeholder="Promotion" [readonly]="true" [value]="image.promotion['name']">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="imageName" [readonly]="!edit">
+        <input matInput placeholder="Name" formControlName="imageName" [value]="image.name" [readonly]="!edit">
       </mat-form-field><br>
       <mat-slider [min]="0" [max]="10" [step]="1" [value]="image.time" [thumbLabel]="true" [disabled]="!edit" (change)="slide($event.value)"></mat-slider><br>
       <div>

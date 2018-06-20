@@ -26,7 +26,7 @@ export class ImageComponent implements OnInit {
   ngOnInit() {
     this.getImage();
     this.formGroup = this._FormBuilder.group({
-      imageName: [this.image.name, Validators.required]
+      imageName: [Validators.required]
       }
     )
   }
@@ -34,7 +34,11 @@ export class ImageComponent implements OnInit {
   getImage(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.imageService.getImage(id)
-      .subscribe(image => this.image = image);
+      .subscribe(image => {
+        this.image = image
+        console.log(this.image.name)
+
+      });
   }
 
   goBack(): void {
@@ -53,8 +57,11 @@ export class ImageComponent implements OnInit {
 
   finishEdit(): void {
     this.edit = false;
-    this.image.name = this.formGroup.value['imageName'];
+    console.log(this.formGroup)
+    this.image.name = this.formGroup.get('imageName').value;
     this.image.time = this.time;
+    this.imageService.editImage(this.image)
+      .subscribe(result => console.log(result));
   }
 
   slide(event): void {

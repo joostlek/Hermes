@@ -25,7 +25,6 @@ export class PromotionComponent implements OnInit {
 
   ngOnInit() {
     this.getPromotion();
-
     this.formGroup = this._FormBuilder.group({
       name: [Validators.required],
     })
@@ -65,7 +64,7 @@ export class PromotionComponent implements OnInit {
 
   finishEdit(): void {
     this.edit = false;
-    this.promotion.name = this.formGroup.value['name'];
+    this.promotion.name = this.formGroup.get('name').value;
     this.promotionService.updatePromotion(this.promotion)
       .subscribe(result => console.log(result));
   }

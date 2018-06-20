@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs/index";
 import {Promotion} from "app/_models/promotion";
 import {MessagingService} from "app/_services/messaging.service";
-import {User} from "@app/_models/user";
 import {AuthService} from "@app/_services/auth.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

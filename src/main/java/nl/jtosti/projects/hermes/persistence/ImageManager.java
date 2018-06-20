@@ -24,11 +24,10 @@ public class ImageManager extends JPABase implements ImageDAO {
 
     @Override
     public Image update(Image image) {
-        Image dbImage = this.get(image.getId());
         em.getTransaction().begin();
+        Image dbImage = this.get(image.getId());
         dbImage.setName(image.getName());
         dbImage.setTime(image.getTime());
-        dbImage.setScreen(image.getScreen());
         em.getTransaction().commit();
         return image;
     }
