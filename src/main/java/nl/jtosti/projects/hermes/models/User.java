@@ -50,13 +50,13 @@ public class User {
     @ColumnTransformer(write = "md5(?)")
     private String password;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Location> locations;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Image> images;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Promotion> promotions;
 
     public User() {

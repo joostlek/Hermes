@@ -36,10 +36,10 @@ public class Location {
     @JoinColumn(name = "userId", nullable = false)
     private User owner;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     private List<Type> types;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     private List<Screen> screens;
 
     public Location() {

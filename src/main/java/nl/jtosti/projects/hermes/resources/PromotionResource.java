@@ -74,8 +74,9 @@ public class PromotionResource {
             AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePromotion(String body) {
+        Promotion promotion = ManagerProvider.getPromotionManager().update(GsonProvider.getGson().fromJson(body, Promotion.class));
         return Response
-                .ok(GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().update(GsonProvider.getGson().fromJson(body, Promotion.class)).toResponse()))
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getPromotionManager().get(promotion.getId()).toResponse()))
                 .build();
     }
 

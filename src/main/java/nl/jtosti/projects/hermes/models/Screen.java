@@ -30,7 +30,7 @@ public class Screen {
     @JoinColumn(name = "locationId", nullable = false)
     private Location location;
 
-    @OneToMany(mappedBy = "screen", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
     private List<Image> images;
 
     public Screen() {

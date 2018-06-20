@@ -48,14 +48,15 @@ export class PromotionService {
 
   deletePromotion(promotion: Promotion): void {
     MessagingService.send("Delete promotion "+ promotion.id);
-    for (let i = 0; i < this.promotions.length; i++) {
-      if (this.promotions[i].id === promotion.id) {
-        this.promotions.splice(i, 1);
-        return;
-      }
-    }
-    MessagingService.sendError("Delete promotion " + promotion.id + " failed!");
+    let url = 'api/v1/promotions/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    this.http.request('DELETE', url, {body: {'id': promotion.id}, headers: httpHeaders})
+      .subscribe(object => console.log(object));
+    // MessagingService.sendError("Delete promotion " + promotion.id + " failed!");
   }
+
 
   addPromotion(name: string, type: number, location: number, user: number, startDate: Date): Observable<Promotion> {
     MessagingService.send("Add promotion " + name);
@@ -83,12 +84,15 @@ export class PromotionService {
   }
 
   updatePromotion(promotion: Promotion) {
-    for (let i=0; i < this.promotions.length; i++) {
-      if (this.promotions[i].id === promotion.id) {
-        this.promotions[i] = promotion;
-        return;
-      }
-    }
+    let url = 'api/v1/promotions/';
+    let body = {
+      id: promotion.id,
+      name: promotion.name
+    };
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.put(url, body, {headers: httpHeaders});
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

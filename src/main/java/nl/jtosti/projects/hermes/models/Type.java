@@ -36,7 +36,7 @@ public class Type {
     @JoinColumn(name = "location", nullable = false)
     private Location location;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Promotion> promotions;
 
     public Type() {

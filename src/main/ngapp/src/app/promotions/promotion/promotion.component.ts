@@ -27,7 +27,7 @@ export class PromotionComponent implements OnInit {
     this.getPromotion();
 
     this.formGroup = this._FormBuilder.group({
-      name: ['', Validators.required],
+      name: [Validators.required],
     })
   }
 
@@ -66,7 +66,8 @@ export class PromotionComponent implements OnInit {
   finishEdit(): void {
     this.edit = false;
     this.promotion.name = this.formGroup.value['name'];
-    this.promotionService.updatePromotion(this.promotion);
+    this.promotionService.updatePromotion(this.promotion)
+      .subscribe(result => console.log(result));
   }
 
 }

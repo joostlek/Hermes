@@ -29,7 +29,7 @@ public class Promotion {
     @JoinColumn(name = "type", nullable = false)
     private Type type;
 
-    @OneToMany(mappedBy = "promotion", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)
     private List<Image> images;
 
     public Promotion() {

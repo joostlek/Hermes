@@ -23,13 +23,13 @@ public class PromotionManager extends JPABase implements PromotionDAO {
 
     @Override
     public Promotion update(Promotion promotion) {
-        Promotion dbPromotion = this.get(promotion.getId());
         em.getTransaction().begin();
+        Promotion dbPromotion = this.get(promotion.getId());
         dbPromotion.setName(promotion.getName());
-        dbPromotion.setStartDate(promotion.getStartDate());
-        dbPromotion.setOwner(promotion.getOwner());
-        dbPromotion.setType(promotion.getType());
-        dbPromotion.setImages(promotion.getImages());
+//        dbPromotion.setStartDate(promotion.getStartDate());
+//        dbPromotion.setOwner(promotion.getOwner());
+//        dbPromotion.setType(promotion.getType());
+//        dbPromotion.setImages(promotion.getImages());
         em.getTransaction().commit();
         return promotion;
     }
