@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import {PromotionTableDataSource, PromotionTableItem} from './promotion-table-datasource';
+import {PromotionService} from "@app/_services/promotion.service";
 
 @Component({
   selector: 'promotion-table',
@@ -8,15 +9,13 @@ import {PromotionTableDataSource, PromotionTableItem} from './promotion-table-da
   styleUrls: ['./promotion-table.component.css']
 })
 export class PromotionTableComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @Input() promotions: PromotionTableItem[];
   dataSource: PromotionTableDataSource;
-
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'type', 'user', 'location', 'images', 'startDate', 'more'];
+  displayedColumns = ['id', 'name', 'type', 'user', 'images', 'startDate', 'more'];
 
+  constructor (private promotionService: PromotionService) {
+  }
   ngOnInit() {
-    this.dataSource = new PromotionTableDataSource(this.paginator, this.sort, this.promotions);
+    this.dataSource = new PromotionTableDataSource(this.promotionService.getPromotions());
   }
 }

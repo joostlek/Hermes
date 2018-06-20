@@ -16,25 +16,25 @@
     <!-- Name Column -->
     <ng-container matColumnDef="type">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Type ID</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/types/{{row.typeId}}">{{row.typeName}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/types/{{row.type['id']}}">{{row.type['name']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="user">
       <mat-header-cell *matHeaderCellDef mat-sort-header>User ID</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.userId}}">{{row.userName}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.owner['id']}}">{{row.owner['firstName']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="location">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.locationId}}">{{row.locationName}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="images">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of images</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.images}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.images.length || 0}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
@@ -51,11 +51,4 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
-  <mat-paginator #paginator
-    [length]="dataSource.data.length"
-    [pageIndex]="0"
-    [pageSize]="50"
-    [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
 </div>

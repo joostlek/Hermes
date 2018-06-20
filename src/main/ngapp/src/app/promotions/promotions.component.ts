@@ -8,12 +8,9 @@ import {PromotionService} from "@app/_services/promotion.service";
   styleUrls: ['./promotions.component.scss']
 })
 export class PromotionsComponent implements OnInit {
-  promotions: PromotionTableItem[];
-  constructor(private promotionService: PromotionService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.promotionService.getPromotions()
-      .subscribe(promotions => this.promotions = promotions.map(promotion => promotion.toTable()));
   }
 
 }

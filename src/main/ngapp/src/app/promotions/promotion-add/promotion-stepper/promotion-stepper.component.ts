@@ -7,6 +7,7 @@ import {TypeService} from "@app/_services/type.service";
 import Util from "@app/_util/util";
 import {PromotionService} from "@app/_services/promotion.service";
 import {LocationService} from "@app/_services/location.service";
+import {AuthService} from "@app/_services/auth.service";
 
 @Component({
   selector: 'app-promotion-stepper',
@@ -28,6 +29,7 @@ export class PromotionStepperComponent implements OnInit {
     private typeService: TypeService,
     private promotionService: PromotionService,
     private locationService: LocationService,
+    private auth: AuthService,
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
@@ -71,7 +73,10 @@ export class PromotionStepperComponent implements OnInit {
       this.formArray.get([0]).value['type'],
       this.formArray.get([0]).value['location'],
       this.user.id,
-      this.formArray.get([1]).value['startDate']);
+      this.formArray.get([1]).value['startDate'])
+      .subscribe( _ =>
+        this.auth.updateSelf()
+      );
   }
 
   getSimpleLocations() {

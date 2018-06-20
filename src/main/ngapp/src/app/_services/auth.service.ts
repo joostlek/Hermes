@@ -42,7 +42,6 @@ export class AuthService {
     });
     return this.http.get<any>(url, {headers: httpHeaders})
       .pipe(map(string => {
-        console.log(string);
         return string;
       }));
   }
@@ -77,5 +76,11 @@ export class AuthService {
       country: country,
       password: password});
 
+  }
+
+  updateSelf() {
+    this.getMe()
+      .subscribe(user =>
+      localStorage.setItem('user', JSON.stringify(user)));
   }
 }
