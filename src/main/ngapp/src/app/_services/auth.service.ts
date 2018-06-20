@@ -4,13 +4,14 @@ import {User} from "app/_models/user";
 import {Observable, of, Subject} from "rxjs/index";
 import {map} from "rxjs/internal/operators";
 import {ActionResponse} from "@app/_models/action-response";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private logger = new Subject<boolean>();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
   }
 
   login(email: string, password: string) {
@@ -45,8 +46,14 @@ export class AuthService {
   }
 
   logout() {
-    this.logger.next(false);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.logger.next(false);
+  }
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   isLoggedIn(): Observable<boolean> {
