@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import {RoleGuardService as RoleGuard} from "@app/_services/role-guard.service";
+import {AuthGuardService as AuthGuard} from "@app/_services/auth-guard.service";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +24,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {HttpClientModule} from "@angular/common/http";
 import { DeleteAlertComponent } from './_dialogs/delete-alert/delete-alert.component';
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -48,7 +51,11 @@ import { DeleteAlertComponent } from './_dialogs/delete-alert/delete-alert.compo
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    RoleGuard,
+    JwtHelperService,
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     DeleteAlertComponent,

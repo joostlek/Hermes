@@ -205,12 +205,12 @@ public class User {
     public String getRole() {
         if (this.id == 1) {
             return AuthenticationResource.ROLE_SUPERUSER;
-        } else if (this.locations.size() > 0 && this.promotions.size() > 0) {
+        } else if (this.locations != null && this.promotions != null && this.locations.size() > 0 && this.promotions.size() > 0) {
             return AuthenticationResource.ROLE_OWNER_AD;
-        } else if (this.locations.size() > 0) {
-            return AuthenticationResource.ROLE_ADVERTISING;
-        } else if (this.promotions.size() > 0) {
+        } else if (this.locations != null && this.locations.size() > 0) {
             return AuthenticationResource.ROLE_OWNER;
+        } else if (this.promotions != null && this.promotions.size() > 0) {
+            return AuthenticationResource.ROLE_ADVERTISING;
         } else {
             return AuthenticationResource.ROLE_USER;
         }

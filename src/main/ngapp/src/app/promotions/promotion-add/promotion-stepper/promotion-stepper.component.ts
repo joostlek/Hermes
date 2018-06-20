@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "@app/_models/user";
 import {Type} from "@app/_models/type";
+import {Location} from "@app/_models/location";
 import {TypeService} from "@app/_services/type.service";
 import Util from "@app/_util/util";
 import {PromotionService} from "@app/_services/promotion.service";
+import {LocationService} from "@app/_services/location.service";
 
 @Component({
   selector: 'app-promotion-stepper',
@@ -17,6 +19,7 @@ export class PromotionStepperComponent implements OnInit {
   types: Type[] = [];
   currentType: Type;
   toDate: Date;
+  locations: Location[];
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -24,11 +27,13 @@ export class PromotionStepperComponent implements OnInit {
     private _FormBuilder: FormBuilder,
     private typeService: TypeService,
     private promotionService: PromotionService,
+    private locationService: LocationService,
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
   ngOnInit() {
+    this.getSimpleLocations();
     this.formGroup = this._FormBuilder.group({
       formArray: this._FormBuilder.array([
         this._FormBuilder.group({
@@ -67,5 +72,10 @@ export class PromotionStepperComponent implements OnInit {
       this.formArray.get([0]).value['location'],
       this.user.id,
       this.formArray.get([1]).value['startDate']);
+  }
+
+  getSimpleLocations() {
+    this.locationService.getSimpleLocations()
+      .subscribe(locations => this.locations = locations)
   }
 }

@@ -11,7 +11,9 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 })
 export class AuthService {
   private logger = new Subject<boolean>();
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+  private jwtHelper;
+  constructor(private http: HttpClient) {
+    this.jwtHelper = new JwtHelperService();
   }
 
   login(email: string, password: string) {

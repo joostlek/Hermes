@@ -2,7 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { AuthService } from "@app/_services/auth.service";
+import { Roles } from "@app/_models/roles";
 import {User} from "@app/_models/user";
+import {RoleGuardService} from "@app/_services/role-guard.service";
 
 @Component({
   selector: 'navigation',
@@ -13,8 +15,9 @@ export class NavigationComponent implements OnInit {
   @Input() title: string;
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
   // TODO - remove ' = true' when in production
-  loggedIn: boolean = false;
+  loggedIn: boolean = true;
   user: User;
+  roles = Roles;
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log(this.user);
@@ -28,11 +31,7 @@ export class NavigationComponent implements OnInit {
       if (!this.user) {
         this.user = JSON.parse(localStorage.getItem('user'));
       }
-      for (let i = 0; i < this.user.roles.length; i++) {
-        if (this.user.roles.indexOf(roles[i]) > -1) {
-          return true;
-        }
-      }
+      return RoleGuardService.isAllowed(this.user.role, roles);
     }
     return false;
   }

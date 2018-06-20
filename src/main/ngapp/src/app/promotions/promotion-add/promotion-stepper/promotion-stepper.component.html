@@ -5,9 +5,9 @@
       <mat-form-field>
         <input matInput placeholder="Promotion name" formControlName="promotionName" required>
       </mat-form-field><br>
-      <mat-form-field *ngIf="user.locations.length > 1 || true">
+      <mat-form-field>
         <mat-select placeholder="Location" formControlName="location" (selectionChange)="onNewLocation($event.source.value)">
-          <mat-option *ngFor="let location of user.locations" [value]="location['id']">
+          <mat-option *ngFor="let location of locations" [value]="location['id']">
             {{location['name']}}
           </mat-option>
         </mat-select>

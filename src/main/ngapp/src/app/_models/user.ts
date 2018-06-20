@@ -4,7 +4,7 @@ export class User {
   middleName: string;
   lastName: string;
   email: string;
-  roles: string[];
+  role: string;
   locations: object[];
   promotions: object[];
   images: object[];
@@ -16,7 +16,7 @@ export class User {
   country: string;
 
 
-  constructor(id: number, firstName: string, middleName: string, lastName: string, email: string, role: string[],
+  constructor(id: number, firstName: string, middleName: string, lastName: string, email: string, role: string,
               locations: object[], promotions: object[], images: object[], phoneNumber: string, street: string,
               houseNumber: string, zipCode: string, city: string, country: string) {
     this.id = id;
@@ -24,7 +24,7 @@ export class User {
     this.middleName = middleName;
     this.lastName = lastName;
     this.email = email;
-    this.roles = role;
+    this.role = role;
     this.locations = locations;
     this.promotions = promotions;
     this.images = images;
@@ -48,9 +48,7 @@ export class User {
   }
 
   printRoles(): string {
-    let res = '';
-    this.roles.map(role => res += role + ", ");
-    return res.slice(0, res.length - 2);
+    return this.role;
   }
 
   toTable() {
