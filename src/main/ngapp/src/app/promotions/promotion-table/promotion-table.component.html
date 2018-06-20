@@ -1,45 +1,45 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table [dataSource]="dataSource" aria-label="Elements">
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Promotion ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Promotion ID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Type ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Type ID</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/types/{{row.type['id']}}">{{row.type['name']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="user">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>User ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>User ID</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.owner['id']}}">{{row.owner['firstName']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="location">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="images">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of images</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Amount of images</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.images.length || 0}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="startDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Start date</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Start date</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.startDate}}</mat-cell>
     </ng-container>
 

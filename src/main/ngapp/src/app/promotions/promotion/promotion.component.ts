@@ -27,14 +27,14 @@ export class PromotionComponent implements OnInit {
     this.getPromotion();
 
     this.formGroup = this._FormBuilder.group({
-      name: [this.promotion.name, Validators.required],
+      name: ['', Validators.required],
     })
   }
 
   getPromotion() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.promotionService.getPromotion(id)
-      .subscribe(promotion => this.promotion = promotion);
+      .subscribe(promotion => this.promotion = new Promotion(promotion));
   }
 
   goBack(): void {

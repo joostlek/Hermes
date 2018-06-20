@@ -18,8 +18,6 @@ export class PromotionService {
 
   getPromotions(): Observable<Promotion[]> {
     MessagingService.send("Get all promotions");
-    // return of(this.promotions);
-
     let url = 'api/v1/promotions/all';
     let httpHeaders = new HttpHeaders({
       Authorization: JSON.parse(localStorage.getItem('token'))
@@ -33,12 +31,16 @@ export class PromotionService {
 
   getPromotion(id: number): Observable<Promotion> {
     MessagingService.send("Get promotion " + id);
-    for (let i=0; i < this.promotions.length; i++) {
-      if (this.promotions[i].id === id) {
-        return of(this.promotions[i]);
-      }
-    }
-    MessagingService.sendError("Get promotion " + id + " failed!")
+    // for (let i=0; i < this.promotions.length; i++) {
+    //   if (this.promotions[i].id === id) {
+    //     return of(this.promotions[i]);
+    //   }
+    // }
+    let url = 'api/v1/promotions/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+   return this.http.get<Promotion>(url + id, {headers: httpHeaders});
   }
 
   deletePromotion(promotion: Promotion): void {
