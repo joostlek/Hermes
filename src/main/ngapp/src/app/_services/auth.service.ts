@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {User} from "app/_models/user";
 import {Observable, of, Subject} from "rxjs/index";
 import {map} from "rxjs/internal/operators";
@@ -14,20 +14,37 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    let url = 'api/login';
-    return this.http.post<User>(url, {'email': email, 'password': password})
-      .pipe(map(user => {
-        if (user) {
+    let url = 'api/v1/authentication';
+    let httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+    return this.http.post<String>(url, new HttpParams()
+        .set('email', email)
+        .set('password', password)
+        .toString(),
+      {headers: httpHeaders})
+      .pipe(map(string => {
+        if (string) {
           this.logger.next(true);
-          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('token', JSON.stringify('Bearer ' + string));
         }
-        return user;
+        return string;
+      }));
+  }
+
+  getMe() {
+    let url = 'api/v1/users/me';
+    let httpHeaders = new HttpHeaders({
+      'Authorization': JSON.parse(localStorage.getItem('token')),
+    });
+    return this.http.get<any>(url, {headers: httpHeaders})
+      .pipe(map(string => {
+        console.log(string);
+        return string;
       }));
   }
 
   logout() {
-    // let url = 'api/logout';
-    // return this.http.get(url);
     this.logger.next(false);
     localStorage.removeItem('user');
   }
@@ -38,7 +55,18 @@ export class AuthService {
 
   register(firstName: string, lastName: string, email: string, phoneNumber: string, street: string, houseNumber: string, zipCode: string, city: string, country: string, password: string, middleName?: string): Observable<ActionResponse> {
     let url = 'api/register';
-    return this.http.post<ActionResponse>(url, {firstName: firstName, middleName: middleName, lastName: lastName, email: email, phoneNumber: phoneNumber, street: street, houseNumber: houseNumber, zipCode: zipCode, city: city, country: country, password: password});
+    return this.http.post<ActionResponse>(url, {
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      email: email,
+      phoneNumber: phoneNumber,
+      street: street,
+      houseNumber: houseNumber,
+      zipCode: zipCode,
+      city: city,
+      country: country,
+      password: password});
 
   }
 }

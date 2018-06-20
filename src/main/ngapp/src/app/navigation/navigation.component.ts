@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
   @Input() title: string;
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
   // TODO - remove ' = true' when in production
-  loggedIn: boolean = true;
+  loggedIn: boolean = false;
   user: User;
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
     this.user = JSON.parse(localStorage.getItem('user'));
