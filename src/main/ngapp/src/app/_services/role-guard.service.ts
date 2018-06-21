@@ -28,7 +28,7 @@ export class RoleGuardService implements CanActivate {
     }
     if (roles.indexOf(role) > -1) {
       return true;
-    } else if (roles.indexOf(Roles.ROLE_OWNER_AD) > -1 && (role === Roles.ROLE_OWNER || role === Roles.ROLE_ADVERTISING)) {
+    } else if (role === Roles.ROLE_OWNER_AD && (roles.indexOf(Roles.ROLE_OWNER) > -1 || roles.indexOf(Roles.ROLE_ADVERTISING) > -1)) {
       return true;
     } else return roles.indexOf(Roles.ROLE_USER) > -1 && role !== Roles.ROLE_GUEST;
   }

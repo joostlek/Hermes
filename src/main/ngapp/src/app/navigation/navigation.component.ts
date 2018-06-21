@@ -15,12 +15,11 @@ export class NavigationComponent implements OnInit {
   @Input() title: string;
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
   // TODO - remove ' = true' when in production
-  loggedIn: boolean = true;
+  loggedIn: boolean;
   user: User;
   roles = Roles;
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
-    this.user = JSON.parse(localStorage.getItem('user'));
-    console.log(this.user);
+    this.loggedIn = localStorage.getItem('token') !== null;
   }
   ngOnInit() {
     this.isLoggedIn();
@@ -28,9 +27,7 @@ export class NavigationComponent implements OnInit {
 
   hasPermission(roles: string[]): boolean {
     if (this.loggedIn) {
-      if (!this.user) {
-        this.user = JSON.parse(localStorage.getItem('user'));
-      }
+      this.user = JSON.parse(localStorage.getItem('user'));
       return RoleGuardService.isAllowed(this.user.role, roles);
     }
     return false;
