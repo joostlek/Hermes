@@ -16,32 +16,74 @@ export class LocationService {
   constructor(private http: HttpClient) { }
 
   getLocations(): Observable<Location[]> {
-    return of(this.LOCATIONS);
+    let url = '/api/v1/locations/all';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Location[]>(url, {headers: httpHeaders});
   }
 
+  getMyLocations(): Observable<Location[]> {
+    let url = '/api/v1/locations';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Location[]>(url, {headers: httpHeaders});
+    
+  }
+
+
   addLocation(name: string, ownerId: number, street: string, houseNumber: string, zipCode: string, city: string, country: string) {
-    this.LOCATIONS.push(new Location(2, name, {name: 'Joost Lekkerkerker', id: ownerId}, [], street, houseNumber, zipCode, city, country))
+    let location = {
+      name: name,
+      street: street,
+      houseNumber: houseNumber,
+      zipCode: zipCode,
+      city: city,
+      country: country,
+      owner: {
+        id: ownerId
+      }
+    };
+    let url = '/api/v1/locations';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.post<Location>(url, location, {headers: httpHeaders});
   }
 
   getLocation(id: number): Observable<Location> {
-    for (let i=0; i < this.LOCATIONS.length; i++) {
-      if (this.LOCATIONS[i].id === id) {
-        return of(this.LOCATIONS[i]);
-      }
-    }
+    let url = '/api/v1/locations/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Location>(url + id, {headers: httpHeaders});
   }
 
   deleteLocation(location: Location) {
-
+    let url = 'api/v1/locations/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    this.http.request('DELETE', url, {body: {'id': location.id}, headers: httpHeaders})
+      .subscribe(object => console.log(object));
   }
 
   updateLocation(location: Location) {
-    for (let i=0; i < this.LOCATIONS.length; i++) {
-      if (this.LOCATIONS[i].id === location.id) {
-        this.LOCATIONS[i] = location;
-        return;
-      }
-    }
+    let url = 'api/v1/locations/';
+    let body = {
+      id: location.id,
+      name: location.name,
+      street: location.street,
+      houseNumber: location.houseNumber,
+      zipCode: location.zipCode,
+      city: location.city,
+      country: location.country
+    };
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.put(url, body, {headers: httpHeaders});
   }
 
   getSimpleLocations(): Observable<Location[]> {

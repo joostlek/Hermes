@@ -31,9 +31,6 @@ public class LocationManager extends JPABase implements LocationDAO {
         dbLocation.setName(location.getName());
         dbLocation.setStreet(location.getStreet());
         dbLocation.setZipCode(location.getZipCode());
-        dbLocation.setTypes(location.getTypes());
-        dbLocation.setOwner(location.getOwner());
-        dbLocation.setScreens(location.getScreens());
         em.getTransaction().commit();
         return location;
     }

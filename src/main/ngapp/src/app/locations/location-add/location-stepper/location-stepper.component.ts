@@ -11,22 +11,22 @@ import {LocationService} from "@app/_services/location.service";
 })
 export class LocationStepperComponent implements OnInit {
   formGroup: FormGroup;
-  users: User[] = [];
-
+  user: User;
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
   constructor(
     private _FormBuilder: FormBuilder,
     private userService: UserService,
     private locationService: LocationService,
-  ) { }
+  ) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+  }
 
   ngOnInit() {
     this.formGroup = this._FormBuilder.group({
       formArray: this._FormBuilder.array([
         this._FormBuilder.group({
           locationName: ['', Validators.required],
-          locationOwner: ['', Validators.required],
           street: ['', Validators.required],
           houseNumber: ['', Validators.required],
           zipCode: ['', Validators.required],
@@ -35,24 +35,21 @@ export class LocationStepperComponent implements OnInit {
         })
       ])
     });
-    this.getUsers();
-  }
-
-  getUsers() {
-    this.userService.getUsers()
-      .subscribe(users => this.users = users);
   }
 
   finishSetUp() {
     this.locationService.addLocation(
       this.formArray.get([0]).value['locationName'],
-      this.formArray.get([0]).value['locationOwner'],
+      this.user.id,
       this.formArray.get([0]).value['street'],
       this.formArray.get([0]).value['houseNumber'],
       this.formArray.get([0]).value['zipCode'],
       this.formArray.get([0]).value['city'],
       this.formArray.get([0]).value['country']
     )
+      .subscribe(_ => {
+        console.log(_)
+      })
   }
 
 }

@@ -1,28 +1,28 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table [dataSource]="dataSource" aria-label="Elements">
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Location ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Location ID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
 
     <!-- Owner Column -->
     <ng-container matColumnDef="ownerName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.ownerId}}">{{row.ownerName}}</a></mat-cell>
+      <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.owner['id']}}">{{row.owner['firstName']}}</a></mat-cell>
     </ng-container>
 
     <!-- Screens Column -->
     <ng-container matColumnDef="screens">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of screens</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.screens}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef>Amount of screens</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.screens.length}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="more">
@@ -33,11 +33,4 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
-  <mat-paginator #paginator
-    [length]="dataSource.data.length"
-    [pageIndex]="0"
-    [pageSize]="50"
-    [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
 </div>

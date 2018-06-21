@@ -27,12 +27,12 @@ export class LocationComponent implements OnInit {
     this.getLocation();
 
     this.formGroup = this._FormBuilder.group({
-      name: [this.location.name, Validators.required],
-      street: [this.location.street, Validators.required],
-      houseNumber: [this.location.houseNumber, Validators.required],
-      zipCode: [this.location.zipCode, Validators.required],
-      city: [this.location.city, Validators.required],
-      country: [this.location.country, Validators.required],
+      name: [Validators.required],
+      street: [Validators.required],
+      houseNumber: [Validators.required],
+      zipCode: [Validators.required],
+      city: [Validators.required],
+      country: [Validators.required],
     })
   }
 

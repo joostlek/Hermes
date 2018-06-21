@@ -6,13 +6,6 @@
         <input matInput placeholder="Location name" formControlName="locationName" required>
       </mat-form-field><br>
       <mat-form-field>
-        <mat-select placeholder="Owner" formControlName="locationOwner">
-          <mat-option *ngFor="let user of users" [value]="user.id">
-            {{user.getFullName()}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field><br>
-      <mat-form-field>
         <input matInput placeholder="Street" formControlName="street" required>
       </mat-form-field><br>
       <mat-form-field>

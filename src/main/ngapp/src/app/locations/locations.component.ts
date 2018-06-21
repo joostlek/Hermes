@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {LocationService} from "@app/_services/location.service";
-import {LocationTableItem} from "@app/locations/location-table/location-table-datasource";
 
 @Component({
   selector: 'app-locations',
@@ -8,11 +6,8 @@ import {LocationTableItem} from "@app/locations/location-table/location-table-da
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
-  locations: LocationTableItem[];
-  constructor(private locationService: LocationService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.locationService.getLocations()
-      .subscribe(locations => this.locations = locations.map(location => location.toTable()))
   }
 }
