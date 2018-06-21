@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Screen } from '@app/_models/screen'
 import {Observable} from "rxjs/internal/Observable";
 import {of} from "rxjs/internal/observable/of";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,7 @@ export class ScreenService {
     new Screen(2, 'Scherm 1', 1080, 1920, {'id': 1, 'name': 'Cafetaria Vikas'}, false),
     new Screen(3, 'Scherm 1', 1080, 1920, {'id': 1, 'name': 'Cafetaria Vikas'}, false),
   ];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getScreens(): Observable<Screen[]> {
     return of(this.SCREENS);
@@ -45,5 +46,13 @@ export class ScreenService {
         return;
       }
     }
+  }
+
+  getScreenByPromotionId(id: number): Observable<Screen[]> {
+    let url = '/api/v1/screens/promotion/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Screen[]>(url + id, {headers: httpHeaders});
   }
 }

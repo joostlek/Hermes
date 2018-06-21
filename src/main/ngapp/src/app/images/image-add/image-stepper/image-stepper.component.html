@@ -6,9 +6,16 @@
         <input matInput placeholder="Image name" formControlName="imageName" required>
       </mat-form-field><br>
       <mat-form-field>
-        <mat-select placeholder="Promotion" formControlName="selectPromotion">
+        <mat-select placeholder="Promotion" formControlName="selectPromotion" (selectionChange)="onNewPromotion($event.source.value)">
           <mat-option *ngFor="let promotion of user.promotions" [value]="promotion['id']">
             {{promotion['name']}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-select placeholder="Screen" formControlName="selectScreen">
+          <mat-option *ngFor="let screen of screens" [value]="screen['id']">
+            {{screen['name']}}
           </mat-option>
         </mat-select>
       </mat-form-field><br>
