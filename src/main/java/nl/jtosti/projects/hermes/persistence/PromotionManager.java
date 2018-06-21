@@ -31,6 +31,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
 //        dbPromotion.setType(promotion.getType());
 //        dbPromotion.setImages(promotion.getImages());
         em.getTransaction().commit();
+        em.refresh(dbPromotion);
         return promotion;
     }
 

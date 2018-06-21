@@ -32,6 +32,8 @@ public class MySecurityContext implements SecurityContext {
                 return true;
             } else if (user.getRole().equals(AuthenticationResource.ROLE_OWNER_AD) && (role.equals(AuthenticationResource.ROLE_OWNER) || role.equals(AuthenticationResource.ROLE_ADVERTISING))) {
                 return true;
+            } else if (role.equals(AuthenticationResource.ROLE_USER) && !user.getRole().equals(AuthenticationResource.ROLE_GUEST)) {
+                return true;
             }
         }
         return role.equals(this.role);

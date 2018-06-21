@@ -13,7 +13,7 @@ public class JPABase {
         try {
             entityManagerFactory = Persistence.createEntityManagerFactory(cfg);
             em = entityManagerFactory.createEntityManager();
-            em.setFlushMode(FlushModeType.COMMIT);
+            em.setFlushMode(FlushModeType.AUTO);
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);

@@ -29,6 +29,7 @@ public class ImageManager extends JPABase implements ImageDAO {
         dbImage.setName(image.getName());
         dbImage.setTime(image.getTime());
         em.getTransaction().commit();
+        em.refresh(dbImage);
         return image;
     }
 

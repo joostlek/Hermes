@@ -46,6 +46,7 @@ public class UserManager extends JPABase implements UserDAO {
         dbUser.setCity(user.getCity());
         dbUser.setCountry(user.getCountry());
         em.getTransaction().commit();
+        em.refresh(dbUser);
         return user;
     }
 

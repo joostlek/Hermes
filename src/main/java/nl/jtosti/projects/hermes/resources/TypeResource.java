@@ -55,8 +55,11 @@ public class TypeResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTypesByLocationId(@PathParam("id") int locationId) {
         List<TypeResponse> typeResponses = new ArrayList<>();
-        for (Type type: ManagerProvider.getLocationManager().get(locationId).getTypes()) {
-            typeResponses.add(type.toResponse());
+        Location location = ManagerProvider.getLocationManager().get(locationId);
+        if (location.getTypes() != null) {
+            for (Type type: location.getTypes()) {
+                typeResponses.add(type.toResponse());
+            }
         }
         return Response
                 .ok(GsonProvider.getGson().toJson(typeResponses))

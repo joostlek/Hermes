@@ -33,6 +33,7 @@ public class TypeManager extends JPABase implements TypeDAO {
         dbType.setTime(type.getTime());
         dbType.setLocation(type.getLocation());
         em.getTransaction().commit();
+        em.refresh(dbType);
         return type;
     }
 

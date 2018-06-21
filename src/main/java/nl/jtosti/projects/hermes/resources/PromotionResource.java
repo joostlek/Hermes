@@ -32,8 +32,7 @@ public class PromotionResource {
     }
 
     @GET
-    @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING,
-            AuthenticationResource.ROLE_SUPERUSER})
+    @RolesAllowed({AuthenticationResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyPromotions(@Context SecurityContext context) {
         User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());

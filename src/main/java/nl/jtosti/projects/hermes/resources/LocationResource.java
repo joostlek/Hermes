@@ -33,9 +33,7 @@ public class LocationResource {
 
     @GET
     @Path("/simple")
-    @RolesAllowed({AuthenticationResource.ROLE_OWNER,
-            AuthenticationResource.ROLE_ADVERTISING,
-            AuthenticationResource.ROLE_USER})
+    @RolesAllowed({AuthenticationResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSimpleLocations() {
         List<LocationResponse> locationResponses = new ArrayList<>();
@@ -48,7 +46,7 @@ public class LocationResource {
     }
 
     @GET
-    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
+    @RolesAllowed({AuthenticationResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyLocations(@Context SecurityContext context) {
         User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());

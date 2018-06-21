@@ -29,6 +29,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
         dbScreen.setHeight(screen.getHeight());
         dbScreen.setWidth(screen.getWidth());
         em.getTransaction().commit();
+        em.refresh(dbScreen);
         return screen;
     }
 
