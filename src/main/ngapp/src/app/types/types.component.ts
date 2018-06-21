@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {TypeTableItem} from "@app/types/type-table/type-table-datasource";
-import {TypeService} from "@app/_services/type.service";
 
 @Component({
   selector: 'app-types',
@@ -8,12 +6,9 @@ import {TypeService} from "@app/_services/type.service";
   styleUrls: ['./types.component.scss']
 })
 export class TypesComponent implements OnInit {
-  types: TypeTableItem[];
-  constructor(private typeService: TypeService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.typeService.getTypes()
-      .subscribe(types => this.types = types.map(type => type.toTable()))
   }
 
 }

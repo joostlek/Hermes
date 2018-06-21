@@ -39,15 +39,15 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="imageCount">
+    <ng-container matColumnDef="amountOfImages">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of images</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.imageCount}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.amountOfImages}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="location">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.locationId}}">{{row.locationName}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="more">
@@ -58,11 +58,4 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
-  <mat-paginator #paginator
-    [length]="dataSource.data.length"
-    [pageIndex]="0"
-    [pageSize]="50"
-    [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
 </div>

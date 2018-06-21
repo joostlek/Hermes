@@ -3,6 +3,8 @@ import {User} from "@app/_models/user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TypeService} from "@app/_services/type.service";
 import {Router} from "@angular/router";
+import {Promotion} from "@app/_models/promotion";
+import {PromotionService} from "@app/_services/promotion.service";
 
 @Component({
   selector: 'app-type-stepper',
@@ -14,7 +16,8 @@ export class TypeStepperComponent implements OnInit {
   isLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  constructor(private _FormBuilder: FormBuilder, private typeService: TypeService, private router: Router) {
+  promotions: Promotion[] = [];
+  constructor(private _FormBuilder: FormBuilder, private typeService: TypeService, private router: Router, private promotionService: PromotionService) {
     this.user = JSON.parse(localStorage.getItem("user"));
   }
 
@@ -27,7 +30,7 @@ export class TypeStepperComponent implements OnInit {
     this.secondFormGroup = this._FormBuilder.group({
       time: ['', Validators.required],
       price: ['', Validators.required],
-      imageCount: [''],
+      amountOfImages: [''],
       exclusive: [false],
     });
     if (this.user.locations.length === 1) {
@@ -38,9 +41,11 @@ export class TypeStepperComponent implements OnInit {
   finishSetUp() {
     this.typeService.addType(this.firstFormGroup.get('typeName').value, this.secondFormGroup.get('time').value,
       this.secondFormGroup.get('price').value, this.firstFormGroup.get('active').value,
-      this.secondFormGroup.get('exclusive').value, this.secondFormGroup.get('imageCount').value,
-      this.firstFormGroup.get('location').value);
-    this.router.navigateByUrl('/types');
+      this.secondFormGroup.get('exclusive').value, this.secondFormGroup.get('amountOfImages').value,
+      this.firstFormGroup.get('location').value)
+      .subscribe(_ => {
+        this.router.navigateByUrl('/types')
+      });
   }
 
   getLocationNameById(id: number) {

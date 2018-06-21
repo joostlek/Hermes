@@ -1,5 +1,6 @@
 package nl.jtosti.projects.hermes.resources;
 
+import nl.jtosti.projects.hermes.models.Location;
 import nl.jtosti.projects.hermes.models.Type;
 import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.TypeResponse;
@@ -7,8 +8,10 @@ import nl.jtosti.projects.hermes.util.GsonProvider;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,21 @@ public class TypeResource {
         List<TypeResponse> typeResponses = new ArrayList<>();
         for (Type type: ManagerProvider.getTypeManager().getAll()) {
             typeResponses.add(type.toResponse());
+        }
+        return Response
+                .ok(GsonProvider.getGson().toJson(typeResponses))
+                .build();
+    }
+
+    @GET
+    @RolesAllowed({AuthenticationResource.ROLE_OWNER})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMyTypes(@Context SecurityContext context) {
+        List<TypeResponse> typeResponses = new ArrayList<>();
+        for (Location location: ManagerProvider.getUserManager().get(context.getUserPrincipal().getName()).getLocations()) {
+            for (Type type: location.getTypes()) {
+                typeResponses.add(type.toResponse());
+            }
         }
         return Response
                 .ok(GsonProvider.getGson().toJson(typeResponses))

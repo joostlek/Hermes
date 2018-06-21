@@ -8,26 +8,19 @@
   <div class="content">
     <form [formGroup]="formGroup">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" [readonly]="!edit">
+        <input matInput placeholder="Name" [value]="type.name" formControlName="name" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Time" formControlName="time" [readonly]="!edit">
+        <input matInput placeholder="Time" [value]="type.time" formControlName="time" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Price" formControlName="price" [readonly]="!edit">
+        <input matInput placeholder="Price" [value]="type.price" formControlName="price" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Amount of images" formControlName="imageCount" [readonly]="!edit">
+        <input matInput placeholder="Amount of images" [value]="type.amountOfImages" formControlName="imageCount" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-      <input matInput placeholder="Location" [value]="type.location['name']" [readonly]="true" *ngIf="!edit || (!(user.locations.length > 1) && edit); else selector">
-      <ng-template #selector>
-        <mat-select placeholder="Location" formControlName="location" [value]="type.location['id']">
-          <mat-option *ngFor="let location of user.locations" [value]="location['id']">
-            {{location['name']}}
-          </mat-option>
-        </mat-select>
-      </ng-template>
+      <input matInput placeholder="Location" [value]="type.location['name']" [disabled]="true">
       </mat-form-field><br>
       <mat-slide-toggle formControlName="active" [disabled]="!edit">Active</mat-slide-toggle><br>
       <mat-slide-toggle formControlName="exclusive" [disabled]="!edit">Exclusive</mat-slide-toggle>

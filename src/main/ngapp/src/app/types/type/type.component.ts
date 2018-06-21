@@ -28,13 +28,13 @@ export class TypeComponent implements OnInit {
     this.getType();
     this.user = JSON.parse(localStorage.getItem('user'));
     this.formGroup = this._FormBuilder.group({
-      name: [this.type.name, Validators.required],
-      time: [this.type.time, Validators.required],
-      price: [this.type.price, Validators.required],
-      imageCount: [this.type.imageCount, Validators.required],
-      location: [this.type.location['id'], Validators.required],
-      active: [this.type.active],
-      exclusive: [this.type.exclusive]
+      name: [Validators.required],
+      time: [Validators.required],
+      price: [Validators.required],
+      imageCount: [Validators.required],
+      location: [Validators.required],
+      active: [],
+      exclusive: []
     })
   }
 
@@ -75,7 +75,7 @@ export class TypeComponent implements OnInit {
     this.type.name = this.formGroup.value['name'];
     this.type.time = +this.formGroup.value['time'];
     this.type.price = this.formGroup.value['price'];
-    this.type.imageCount = this.formGroup.value['imageCount'];
+    this.type.amountOfImages = this.formGroup.value['amountOfImages'];
     this.type.location['id'] = this.formGroup.value['location'];
     this.type.active = this.formGroup.value['active'];
     this.type.exclusive = this.formGroup.value['exclusive'];

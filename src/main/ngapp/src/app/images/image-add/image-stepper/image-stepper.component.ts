@@ -34,6 +34,7 @@ export class ImageStepperComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPromotions();
     this.formGroup = this._formBuilder.group({
       formArray: this._formBuilder.array([
         this._formBuilder.group({
@@ -80,6 +81,11 @@ export class ImageStepperComponent implements OnInit {
   onNewPromotion(event) {
     this.screenService.getScreenByPromotionId(event)
       .subscribe(screens => this.screens = screens)
+  }
+
+  getPromotions() {
+    this.promotionService.getMyPromotions()
+      .subscribe(promotions => this.promotions = promotions)
   }
 }
 

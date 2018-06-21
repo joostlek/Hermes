@@ -1,6 +1,9 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import {TypeTableDataSource, TypeTableItem} from './type-table-datasource';
+import {TypeTableDataSource} from './type-table-datasource';
+import {TypeService} from "@app/_services/type.service";
+import {User} from "@app/_models/user";
+import {Roles} from "@app/_models/roles";
 
 @Component({
   selector: 'type-table',
@@ -8,17 +11,20 @@ import {TypeTableDataSource, TypeTableItem} from './type-table-datasource';
   styleUrls: ['./type-table.component.css']
 })
 export class TypeTableComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @Input() types: TypeTableItem[];
   dataSource: TypeTableDataSource;
-
+  user: User;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'time', 'price', 'active', 'exclusive', 'imageCount', 'location', 'more'];
+  displayedColumns = ['id', 'name', 'time', 'price', 'active', 'exclusive', 'amountOfImages', 'location', 'more'];
 
-  constructor(){}
+  constructor(private typeService: TypeService){
+    this.user = JSON.parse(localStorage.getItem('user'));
+  }
 
   ngOnInit() {
-    this.dataSource = new TypeTableDataSource(this.paginator, this.sort, this.types);
+    if (this.user.role == Roles.ROLE_SUPERUSER) {
+      this.dataSource = new TypeTableDataSource(this.typeService.getTypes());
+    } else {
+      this.dataSource = new TypeTableDataSource(this.typeService.getMyTypes());
+    }
   }
 }

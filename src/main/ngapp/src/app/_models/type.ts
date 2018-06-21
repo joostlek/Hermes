@@ -5,7 +5,7 @@ export class Type {
   price: number;
   active: boolean;
   exclusive: boolean;
-  imageCount: number;
+  amountOfImages: number;
   location: object;
 
 
@@ -17,13 +17,13 @@ export class Type {
     this.price = price;
     this.active = active;
     this.exclusive = exclusive;
-    this.imageCount = imageCount;
+    this.amountOfImages = imageCount;
     this.location = location;
   }
 
   toTable() {
     return {id: this.id, name: this.name, time: this.time, price: this.price, active: this.active,
-      exclusive: this.exclusive, imageCount: this.imageCount, locationId: this.location['id'],
+      exclusive: this.exclusive, imageCount: this.amountOfImages, locationId: this.location['id'],
       locationName: this.location['name']};
   }
 }

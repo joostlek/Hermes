@@ -30,7 +30,7 @@
         <span matPrefix>€&nbsp;</span>
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="# of images" formControlName="imageCount" type="number" required>
+        <input matInput placeholder="# of images" formControlName="amountOfImages" type="number" required>
         <span matSuffix>images</span>
       </mat-form-field><br>
       <mat-slide-toggle formControlName="exclusive">Exclusive</mat-slide-toggle>
@@ -55,7 +55,7 @@
       <input matInput disabled [value]="secondFormGroup.get('price').value | currency:'EUR':undefined" placeholder="price">
     </mat-form-field><br>
     <mat-form-field>
-      <input matInput disabled [value]="secondFormGroup.get('imageCount').value" placeholder="Time">
+      <input matInput disabled [value]="secondFormGroup.get('amountOfImages').value" placeholder="Time">
     </mat-form-field><br>
     <mat-slide-toggle disabled [checked]="firstFormGroup.get('active').value">Active</mat-slide-toggle><br>
     <mat-slide-toggle disabled [checked]="secondFormGroup.get('exclusive').value">Exclusive</mat-slide-toggle>
