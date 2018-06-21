@@ -37,7 +37,7 @@ export class ScreenStepperComponent implements OnInit {
   }
 
   getLocations() {
-    this.locationService.getLocations()
+    this.locationService.getSimpleLocations()
       .subscribe(locations => this.locations = locations)
   }
 
@@ -47,7 +47,8 @@ export class ScreenStepperComponent implements OnInit {
       this.formArray.get([0]).value['screenHeight'],
       this.formArray.get([0]).value['screenWidth'],
       this.formArray.get([0]).value['location'],
-      this.formArray.get([0]).value['thirdParty']
+      this.formArray.get([0]).value['allowAds']
     )
+      .subscribe(_ => console.log(_))
   }
 }

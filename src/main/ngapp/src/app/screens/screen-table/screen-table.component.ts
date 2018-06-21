@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
-import {ScreenTableDataSource, ScreenTableItem} from './screen-table-datasource';
+import {Component, OnInit} from '@angular/core';
+import {ScreenTableDataSource} from './screen-table-datasource';
+import {ScreenService} from "@app/_services/screen.service";
 
 @Component({
   selector: 'screen-table',
@@ -8,15 +8,13 @@ import {ScreenTableDataSource, ScreenTableItem} from './screen-table-datasource'
   styleUrls: ['./screen-table.component.css']
 })
 export class ScreenTableComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @Input() screens: ScreenTableItem[];
   dataSource: ScreenTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'width', 'height', 'location', 'thirdParty', 'more'];
+  displayedColumns = ['id', 'name', 'width', 'height', 'location', 'allowAds', 'more'];
 
+  constructor (private screenService: ScreenService) { }
   ngOnInit() {
-    this.dataSource = new ScreenTableDataSource(this.paginator, this.sort, this.screens);
+    this.dataSource = new ScreenTableDataSource(this.screenService.getScreens());
   }
 }

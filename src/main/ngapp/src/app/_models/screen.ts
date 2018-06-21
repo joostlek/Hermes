@@ -4,7 +4,7 @@ export class Screen {
   height: number;
   width: number;
   location: object;
-  thirdParty: boolean;
+  allowAds: boolean;
 
 
   constructor(id: number, name: string, height: number, width: number, location: object, thirdParty: boolean) {
@@ -13,11 +13,11 @@ export class Screen {
     this.height = height;
     this.width = width;
     this.location = location;
-    this.thirdParty = thirdParty;
+    this.allowAds = thirdParty;
   }
 
   toTable() {
     return {id: this.id, name: this.name, height: this.height, width: this.width, locationId: this.location['id'],
-      locationName: this.location['name'], thirdParty: this.thirdParty};
+      locationName: this.location['name'], thirdParty: this.allowAds};
   }
 }

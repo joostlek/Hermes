@@ -25,9 +25,9 @@ export class ScreenComponent implements OnInit {
   ngOnInit() {
     this.getScreen();
     this.formGroup = this._FormBuilder.group({
-      name: [this.screen.name, Validators.required],
-      height: [this.screen.height, Validators.required],
-      width: [this.screen.width, Validators.required],
+      name: [Validators.required],
+      height: [Validators.required],
+      width: [Validators.required],
     })
   }
 
@@ -68,7 +68,8 @@ export class ScreenComponent implements OnInit {
     this.screen.name = this.formGroup.value['name'];
     this.screen.height = this.formGroup.value['height'];
     this.screen.width = this.formGroup.value['width'];
-    this.screenService.editScreen(this.screen);
+    this.screenService.editScreen(this.screen)
+      .subscribe(_ => console.log(_));
   }
 
 }

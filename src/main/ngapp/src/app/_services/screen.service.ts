@@ -1,51 +1,69 @@
 import { Injectable } from '@angular/core';
 import { Screen } from '@app/_models/screen'
 import {Observable} from "rxjs/internal/Observable";
-import {of} from "rxjs/internal/observable/of";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
 export class ScreenService {
-  SCREENS: Screen[] = [
-    new Screen(1, 'Scherm 1', 1080, 1920, {'id': 1, 'name': 'Cafetaria Vikas'}, true),
-    new Screen(2, 'Scherm 1', 1080, 1920, {'id': 1, 'name': 'Cafetaria Vikas'}, false),
-    new Screen(3, 'Scherm 1', 1080, 1920, {'id': 1, 'name': 'Cafetaria Vikas'}, false),
-  ];
+
   constructor(private http: HttpClient) { }
 
   getScreens(): Observable<Screen[]> {
-    return of(this.SCREENS);
+    let url = 'api/v1/screens/all';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Screen[]>(url, {headers: httpHeaders});
   }
 
-  addScreen(name: string, height: number, width: number, locationId: number, thirdParty: boolean) {
-    this.SCREENS.push(new Screen(this.SCREENS.length + 1, name, height, width, {name: 'CAFETARIA VIKAS', id: locationId}, thirdParty))
+  addScreen(name: string, height: number, width: number, locationId: number, thirdParty: boolean): Observable<Screen> {
+    let screen = {
+      name: name,
+      height: height,
+      width: width,
+      allowAds: thirdParty,
+      location: {
+        id: locationId
+      }
+    };
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    let url = 'api/v1/screens';
+    return this.http.post<Screen>(url, screen, {headers: httpHeaders});
   }
 
   getScreen(id: number): Observable<Screen> {
-    for (let i=0; i < this.SCREENS.length; i++) {
-      if (this.SCREENS[i].id === id) {
-        return of(this.SCREENS[i]);
-      }
-    }
+    let url = 'api/v1/screens/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Screen>(url + id, {headers: httpHeaders});
   }
 
   deleteScreen(screen: Screen) {
-    for (let i=0; i < this.SCREENS.length; i++) {
-      if (this.SCREENS[i].id === screen.id) {
-        this.SCREENS.splice(i,1);
-        return;
-      }
-    }
+    let url = 'api/v1/screens/';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    this.http.request('DELETE', url, {body: {'id': screen.id}, headers: httpHeaders})
+      .subscribe(object => console.log(object));
   }
 
-  editScreen(screen: Screen): void {
-    for (let i=0; i < this.SCREENS.length; i++) {
-      if (this.SCREENS[i].id === screen.id) {
-        this.SCREENS[i] = screen;
-        return;
-      }
-    }
+  editScreen(screen: Screen): Observable<Screen> {
+    let url = 'api/v1/screens';
+    let scr = {
+      id: screen.id,
+      name: screen.name,
+      height: +screen.height,
+      width: +screen.width,
+      allowAds: screen.allowAds
+    };
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.put<Screen>(url, scr, {headers: httpHeaders});
   }
 
   getScreenByPromotionId(id: number): Observable<Screen[]> {

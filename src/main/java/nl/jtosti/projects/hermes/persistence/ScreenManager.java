@@ -25,11 +25,9 @@ public class ScreenManager extends JPABase implements ScreenDAO {
     public Screen update(Screen screen) {
         Screen dbScreen = this.get(screen.getId());
         em.getTransaction().begin();
-        dbScreen.setAllowAds(screen.isAllowAds());
+        dbScreen.setName(screen.getName());
         dbScreen.setHeight(screen.getHeight());
         dbScreen.setWidth(screen.getWidth());
-        dbScreen.setLocation(screen.getLocation());
-        dbScreen.setImages(screen.getImages());
         em.getTransaction().commit();
         return screen;
     }

@@ -2,6 +2,7 @@ package nl.jtosti.projects.hermes.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 
 public class JPABase {
@@ -12,6 +13,7 @@ public class JPABase {
         try {
             entityManagerFactory = Persistence.createEntityManagerFactory(cfg);
             em = entityManagerFactory.createEntityManager();
+            em.setFlushMode(FlushModeType.COMMIT);
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
