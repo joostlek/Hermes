@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "image")
+@SequenceGenerator(name = "IMAGE_SEQ", sequenceName = "image_sequence")
 public class Image {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGE_SEQ")
     @Column(name = "id")
     private int id;
 

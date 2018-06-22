@@ -8,9 +8,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "location")
+@SequenceGenerator(name = "LOCATION_SEQ", sequenceName = "location_sequence")
 public class Location {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOCATION_SEQ")
     @Column(name = "id")
     private int id;
 

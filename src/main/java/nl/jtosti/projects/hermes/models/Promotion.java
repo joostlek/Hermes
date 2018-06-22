@@ -9,9 +9,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "promotion")
+@SequenceGenerator(name = "PROMOTION_SEQ", sequenceName = "promotion_sequence")
 public class Promotion {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROMOTION_SEQ")
     @Column(name = "id")
     private int id;
 
