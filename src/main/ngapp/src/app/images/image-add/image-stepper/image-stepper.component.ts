@@ -5,7 +5,6 @@ import {Promotion} from "@app/_models/promotion";
 import {Screen} from "@app/_models/screen";
 import {ImageService} from "@app/_services/image.service";
 import {User} from "@app/_models/user";
-import {FileUploader} from "ng2-file-upload";
 import { Location } from '@angular/common';
 import {ScreenService} from "@app/_services/screen.service";
 
@@ -21,7 +20,6 @@ export class ImageStepperComponent implements OnInit {
   promotions: Promotion[] = [];
   user: User;
   screens: Screen[] = [];
-  uploader: FileUploader = new FileUploader({url: 'api', itemAlias: 'screen'});
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -48,11 +46,6 @@ export class ImageStepperComponent implements OnInit {
         })
       ])
     });
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      console.log('ImageUpload:uploaded:', item, status, response);
-      alert('File uploaded successfully');
-    };
   }
 
   update_time(event) {
@@ -67,7 +60,7 @@ export class ImageStepperComponent implements OnInit {
       this.user.id,
       1080,
       1920,
-      ' ',
+      this.formArray.get([1]).value['imageURL'],
       this.formArray.get([0]).value['timeSlider'])
       .subscribe(_ => {
         this.goBack();

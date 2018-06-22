@@ -14,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ImageAddRoutingModule } from './image-add-routing.module';
 import { ImageAddComponent } from './image-add.component';
 import { ImageStepperComponent } from './image-stepper/image-stepper.component';
-import {FileSelectDirective} from "ng2-file-upload";
 
 @NgModule({
   imports: [
@@ -33,7 +32,6 @@ import {FileSelectDirective} from "ng2-file-upload";
   declarations: [
     ImageAddComponent,
     ImageStepperComponent,
-    FileSelectDirective
   ]
 })
 export class ImageAddModule { }

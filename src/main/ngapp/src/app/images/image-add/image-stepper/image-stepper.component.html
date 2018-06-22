@@ -26,8 +26,9 @@
     </mat-step>
     <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
       <ng-template matStepLabel>Upload file</ng-template>
-      <button type="button" mat-raised-button color="primary" (click)="file.click()" class="file">Add screen</button>
-      <input hidden type="file" #file formControlName="file" required ng2FileSelect [uploader]="uploader" (onFileSelected)="uploader.uploadAll()">
+      <mat-form-field>
+        <input matInput placeholder="Image url" formControlName="imageURL" required>
+      </mat-form-field><br>
       <div>
         <button mat-raised-button color="primary" class="button" matStepperPrevious>Back</button>
         <button mat-raised-button color="primary" matStepperNext>Next</button>
