@@ -61,9 +61,9 @@ export class AuthService {
     return this.logger.asObservable();
   }
 
-  register(firstName: string, lastName: string, email: string, phoneNumber: string, street: string, houseNumber: string, zipCode: string, city: string, country: string, password: string, middleName?: string): Observable<ActionResponse> {
-    let url = 'api/register';
-    return this.http.post<ActionResponse>(url, {
+  register(firstName: string, lastName: string, email: string, phoneNumber: string, street: string, houseNumber: string, zipCode: string, city: string, country: string, password: string, middleName?: string): Observable<User> {
+    let url = 'api/v1/users';
+    return this.http.post<User>(url, {
       firstName: firstName,
       middleName: middleName,
       lastName: lastName,
@@ -75,7 +75,6 @@ export class AuthService {
       city: city,
       country: country,
       password: password});
-
   }
 
   updateSelf() {

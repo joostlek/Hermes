@@ -6,4 +6,51 @@
     Register
   </label>
 </div>
-<app-register></app-register>
+<form [formGroup]="registerForm">
+  <mat-form-field>
+    <input matInput placeholder="First Name" autocomplete="given-name" formControlName="firstName" required>
+    <mat-error *ngIf="firstName.errors">{{getErrorMessage(firstName)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Middle name" autocomplete="additional-name" formControlName="middleName">
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Last name" autocomplete="family-name" formControlName="lastName" required>
+    <mat-error *ngIf="lastName.errors">{{getErrorMessage(lastName)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Email" autocomplete="email" formControlName="email" required>
+    <mat-error *ngIf="email.errors">{{getErrorMessage(email)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Phone number" autocomplete="tel" formControlName="phoneNumber" required>
+    <mat-error *ngIf="phoneNumber.errors">{{getErrorMessage(phoneNumber)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Street" autocomplete="address-line1" formControlName="street" required>
+    <mat-error *ngIf="street.errors">{{getErrorMessage(street)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="House number" formControlName="houseNumber" required>
+    <mat-error *ngIf="houseNumber.errors">{{getErrorMessage(houseNumber)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Zip code" autocomplete="postal-code" formControlName="zipCode" required>
+    <mat-error *ngIf="zipCode.errors">{{getErrorMessage(zipCode)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="City" autocomplete="address-level2" formControlName="city" required>
+    <mat-error *ngIf="city.errors">{{getErrorMessage(city)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Country" autocomplete="country-name" formControlName="country" required>
+    <mat-error *ngIf="country.errors">{{getErrorMessage(country)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Password" formControlName="password" type="password" required>
+    <mat-error *ngIf="password.errors">{{getErrorMessage(password)}}</mat-error>
+  </mat-form-field><br>
+  <div>
+    <button mat-raised-button color="primary" (click)="finish()">Finish</button>
+  </div>
+</form>
