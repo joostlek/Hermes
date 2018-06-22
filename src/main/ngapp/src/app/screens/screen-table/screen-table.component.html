@@ -1,39 +1,39 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table [dataSource]="dataSource" aria-label="Elements">
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Screen ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Screen ID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="height">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Height</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Height</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.height}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="width">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Width</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Width</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.width}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="location">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="allowAds">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Advertising</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Advertising</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.allowAds}}</mat-cell>
     </ng-container>
 

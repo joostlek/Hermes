@@ -42,7 +42,7 @@ export class ImageStepperComponent implements OnInit {
           selectScreen: ['', Validators.required],
         }),
         this._formBuilder.group({
-          file: ['', Validators.required],
+          imageURL: ['', Validators.required],
         })
       ])
     });

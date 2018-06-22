@@ -1,52 +1,52 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table [dataSource]="dataSource" aria-label="Elements">
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Type ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Type ID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="time">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.time}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="price">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
       <!-- TODO - import the NL locale, so the price can be normal €1.000,00 instead of US format -->
       <mat-cell *matCellDef="let row">{{row.price | currency:'EUR':'symbol':undefined}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="active">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.active}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="exclusive">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Exclusive</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Exclusive</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.exclusive}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="amountOfImages">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of images</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Amount of images</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.amountOfImages}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="location">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
     </ng-container>
 
