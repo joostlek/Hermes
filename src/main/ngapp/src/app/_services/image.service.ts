@@ -9,11 +9,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ImageService {
-  IMAGES: Image[] = [
-    new Image(1, "asd", {name: 'asd', id: 1}, {name: 'Joost Lekkerkerker', id: 1}, [{'naam': 'Scherm 1', 'id': 1}], {height: 1080, width: 1920}, "", 5, true),
-    new Image(2, "asd", {name: 'asd', id: 1}, {name: 'Joost Lekkerkerker', id: 1}, [{'naam': 'Scherm 1', 'id': 1}], {height: 1080, width: 1920}, "", 5, true),
-    new Image(3, "asd", {name: 'asd', id: 1}, {name: 'Joost Lekkerkerker', id: 1}, [{'naam': 'Scherm 1', 'id': 1}], {height: 1080, width: 1920}, "", 5, true),
-  ];
   constructor(private http: HttpClient) { }
 
   getImages(): Observable<Image[]> {
@@ -31,6 +26,26 @@ export class ImageService {
       Authorization: JSON.parse(localStorage.getItem('token'))
     });
     return this.http.get<Image[]>(url, {headers: httpHeaders});
+  }
+
+  getUncheckedImages(): Observable<Image[]> {
+    let url = 'api/v1/images/unchecked';
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.get<Image[]>(url, {headers: httpHeaders});
+  }
+
+  checkImage(id: number, check: boolean): Observable<Image> {
+    let url = 'api/v1/images/unchecked';
+    let body = {
+      active: check,
+      id: id
+    };
+    let httpHeaders = new HttpHeaders({
+      Authorization: JSON.parse(localStorage.getItem('token'))
+    });
+    return this.http.post<Image>(url, body, {headers: httpHeaders});
   }
 
   getImage(id: number): Observable<Image> {

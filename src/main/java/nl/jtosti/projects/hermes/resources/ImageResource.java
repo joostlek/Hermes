@@ -53,7 +53,10 @@ public class ImageResource {
         User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<ImageResponse> imageResponses = new ArrayList<>();
         for (Image image: ManagerProvider.getImageManager().getUncheckedImages(user)) {
-            imageResponses.add(image.toResponse());
+            if (!image.isActive()) {
+                imageResponses.add(image.toResponse());
+
+            }
         }
         return Response
                 .ok(GsonProvider.getGson().toJson(imageResponses))
@@ -66,7 +69,7 @@ public class ImageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response allow(@Context SecurityContext context, String body) {
         return Response
-                .ok(ManagerProvider.getImageManager().updateActive(GsonProvider.getGson().fromJson(body, Image.class)).toResponse())
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getImageManager().updateActive(GsonProvider.getGson().fromJson(body, Image.class)).toResponse()))
                 .build();
     }
 

@@ -10,6 +10,7 @@ import { ImageTableComponent } from './image-table/image-table.component';
 import { ImageComponent } from './image/image.component';
 import { ImagesComponent } from './images.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { AllowimagesComponent } from './allowimages/allowimages.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,6 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatSliderModule,
     ImagesRoutingModule,
   ],
-  declarations: [ImageTableComponent, ImageComponent, ImagesComponent]
+  declarations: [ImageTableComponent, ImageComponent, ImagesComponent, AllowimagesComponent]
 })
 export class ImagesModule { }

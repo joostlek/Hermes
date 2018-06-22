@@ -23,7 +23,7 @@
     <!-- User Column -->
     <ng-container matColumnDef="user">
       <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a href="/users/{{row.owner['id']}}">{{row.owner['firstName']}}</a></mat-cell>
+      <mat-cell *matCellDef="let row">{{row.owner['firstName']}} {{row.owner['lastName']}}</mat-cell>
     </ng-container>
 
     <!-- Height Column -->
@@ -46,7 +46,21 @@
 
     <ng-container matColumnDef="more">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row"><button mat-icon-button color="primary" routerLink="{{row.id}}"><mat-icon>chevron_right</mat-icon></button></mat-cell>
+      <ng-container *ngIf="!allow; else al">
+        <mat-cell *matCellDef="let row"><button mat-icon-button color="primary" routerLink="{{row.id}}"><mat-icon>chevron_right</mat-icon></button></mat-cell>
+      </ng-container>
+      <ng-template #al>
+        <mat-cell *matCellDef="let row">
+          <div>
+            <button mat-icon-button color="primary" [disabled]="row.checked" (click)="checkImage(row, true)">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" [disabled]="row.checked" (click)="checkImage(row, false)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </ng-template>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

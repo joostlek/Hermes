@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import {AuthService} from "@app/_services/auth.service";
-import {ActivatedRouteSnapshot, CanActivate, Router} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router} from "@angular/router";
 import decode from 'jwt-decode';
 import {Roles} from "@app/_models/roles";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuardService implements CanActivate {
+export class RoleGuardService implements CanLoad {
 
   constructor(public auth: AuthService, public router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
+  canLoad(route: Route): boolean {
     const expectedRoles = route.data.roles;
     const token = localStorage.getItem('token');
     const tokenPayload = decode(token);
     if (!this.auth.isAuthenticated() || !RoleGuardService.isAllowed(JSON.parse(localStorage.getItem('user')).role, expectedRoles)) {
-      this.router.navigateByUrl('auth/login');
+      if (JSON.parse(localStorage.getItem('user')) !== null) {
+        this.router.navigateByUrl('/');
+      } else {
+        this.router.navigateByUrl('auth/login');
+      }
       return false;
     }
     return true;
