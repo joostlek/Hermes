@@ -8,17 +8,17 @@
     [opened]="!(isHandset | async)!.matches">
     <mat-toolbar color="primary"></mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="account" *ngIf="loggedIn" (click)="drawer.toggle()">My account</a>
-      <a mat-list-item routerLink="images" *ngIf="hasPermission([roles.ROLE_ADVERTISING])" (click)="drawer.toggle()">Images</a>
-      <a mat-list-item routerLink="images/allow" *ngIf="hasPermission([roles.ROLE_OWNER])" (click)="drawer.toggle()">Allow images</a>
-      <a mat-list-item routerLink="types" *ngIf="hasPermission([roles.ROLE_OWNER])" (click)="drawer.toggle()">Types</a>
-      <a mat-list-item routerLink="promotions" *ngIf="hasPermission([roles.ROLE_ADVERTISING, roles.ROLE_USER])" (click)="drawer.toggle()">Promotions</a>
-      <a mat-list-item routerLink="users" *ngIf="hasPermission([roles.ROLE_SUPERUSER])" (click)="drawer.toggle()">Users</a>
-      <a mat-list-item routerLink="locations" *ngIf="hasPermission([roles.ROLE_OWNER, roles.ROLE_USER])" (click)="drawer.toggle()">Locations</a>
-      <a mat-list-item routerLink="screens" *ngIf="hasPermission([roles.ROLE_SUPERUSER])" (click)="drawer.toggle()">Screens</a>
-      <a mat-list-item routerLink="auth/login" *ngIf="!loggedIn" (click)="drawer.toggle()">Login</a>
-      <a mat-list-item routerLink="register" *ngIf="!loggedIn" (click)="drawer.toggle()">Register</a>
-      <a mat-list-item routerLink="auth/logout" *ngIf="loggedIn" (click)="drawer.toggle()">Logout</a>
+      <a mat-list-item routerLink="account" *ngIf="loggedIn" (click)="isHandset ? drawer.toggle() : ''">My account</a>
+      <a mat-list-item routerLink="images" *ngIf="hasPermission([roles.ROLE_ADVERTISING])" (click)="isHandset ? drawer.toggle() : ''">Images</a>
+      <a mat-list-item routerLink="images/allow" *ngIf="hasPermission([roles.ROLE_OWNER])" (click)="isHandset ? drawer.toggle() : ''">Allow images</a>
+      <a mat-list-item routerLink="types" *ngIf="hasPermission([roles.ROLE_OWNER])" (click)="isHandset ? drawer.toggle() : ''">Types</a>
+      <a mat-list-item routerLink="promotions" *ngIf="hasPermission([roles.ROLE_ADVERTISING, roles.ROLE_USER])" (click)="isHandset ? drawer.toggle() : ''">Promotions</a>
+      <a mat-list-item routerLink="users" *ngIf="hasPermission([roles.ROLE_SUPERUSER])" (click)="isHandset ? drawer.toggle() : ''">Users</a>
+      <a mat-list-item routerLink="locations" *ngIf="hasPermission([roles.ROLE_OWNER, roles.ROLE_USER])" (click)="isHandset ? drawer.toggle() : ''">Locations</a>
+      <a mat-list-item routerLink="screens" *ngIf="hasPermission([roles.ROLE_SUPERUSER])" (click)="isHandset ? drawer.toggle() : ''">Screens</a>
+      <a mat-list-item routerLink="auth/login" *ngIf="!loggedIn" (click)="isHandset ? drawer.toggle() : ''">Login</a>
+      <a mat-list-item routerLink="register" *ngIf="!loggedIn" (click)="isHandset ? drawer.toggle() : ''">Register</a>
+      <a mat-list-item routerLink="auth/logout" *ngIf="loggedIn" (click)="isHandset ? drawer.toggle() : ''">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
