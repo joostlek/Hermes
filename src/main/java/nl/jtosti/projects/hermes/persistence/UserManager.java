@@ -20,7 +20,7 @@ public class UserManager extends JPABase implements UserDAO {
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
-        return user;
+        return this.get(user.getId());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UserManager extends JPABase implements UserDAO {
         dbUser.setCountry(user.getCountry());
         em.getTransaction().commit();
         em.refresh(dbUser);
-        return user;
+        return dbUser;
     }
 
     @Override
