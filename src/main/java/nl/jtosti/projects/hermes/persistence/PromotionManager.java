@@ -18,6 +18,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
         em.getTransaction().begin();
         em.persist(promotion);
         em.getTransaction().commit();
+        em.refresh(promotion.getOwner());
         return promotion;
     }
 

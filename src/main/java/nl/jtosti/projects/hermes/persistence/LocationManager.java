@@ -18,6 +18,7 @@ public class LocationManager extends JPABase implements LocationDAO {
         em.getTransaction().begin();
         em.persist(location);
         em.getTransaction().commit();
+        em.refresh(location.getOwner());
         return location;
     }
 
