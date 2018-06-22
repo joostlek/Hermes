@@ -16,7 +16,7 @@
     <!-- Owner Column -->
     <ng-container matColumnDef="ownerName">
       <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.owner['id']}}">{{row.owner['firstName']}}</a></mat-cell>
+      <mat-cell *matCellDef="let row">{{row.owner['firstName']}} {{row.owner['lastName']}}</mat-cell>
     </ng-container>
 
     <!-- Screens Column -->
