@@ -11,6 +11,7 @@ import {AuthService} from "@app/_services/auth.service";
 export class LoginComponent implements OnInit {
   form: FormGroup;
   hide = true;
+  validLogin: boolean = true;
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router) {
@@ -20,7 +21,18 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  get email() { return this.form.get('email'); }
+
+  get password() { return this.form.get('password'); }
+
   ngOnInit() {
+  }
+
+  getErrorMessage(field) {
+    return field.hasError('required') ? 'You must enter a value' :
+      field.hasError('email') ? 'You must enter a valid email' :
+        field.hasError('pattern') ? 'You must enter a valid value' :
+          '';
   }
 
   login() {
@@ -30,12 +42,16 @@ export class LoginComponent implements OnInit {
         this.authService.login(val.email, val.password)
           .subscribe(
             _ => {
-              this.getMe();
+              if (_ == null) {
+                console.error('nothing found');
+                this.validLogin = false;
+              } else {
+                this.getMe();
+
+              }
             }
           )
       }
-    } else {
-      console.error(this.form.errors);
     }
   }
 

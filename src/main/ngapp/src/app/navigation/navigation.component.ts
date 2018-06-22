@@ -28,7 +28,9 @@ export class NavigationComponent implements OnInit {
   hasPermission(roles: string[]): boolean {
     if (this.loggedIn) {
       this.user = JSON.parse(localStorage.getItem('user'));
-      return RoleGuardService.isAllowed(this.user.role, roles);
+      if (this.user) {
+        return RoleGuardService.isAllowed(this.user.role, roles);
+      }
     }
     return false;
   }

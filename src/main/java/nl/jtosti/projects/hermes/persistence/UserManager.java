@@ -6,6 +6,7 @@ import nl.jtosti.projects.hermes.util.Util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -80,6 +81,10 @@ public class UserManager extends JPABase implements UserDAO {
         query.where(criteriaBuilder.equal(userRoot.get("email"), email),
                 criteriaBuilder.equal(userRoot.get("password"), Util.MD5(password)));
         TypedQuery<User> userQuery = em.createQuery(query);
-        return userQuery.getSingleResult();
+        try {
+            return userQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

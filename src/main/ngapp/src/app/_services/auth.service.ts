@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {User} from "app/_models/user";
 import {Observable, of, Subject} from "rxjs/index";
-import {map} from "rxjs/internal/operators";
+import {catchError, map} from "rxjs/internal/operators";
 import {ActionResponse} from "@app/_models/action-response";
 import {JwtHelperService} from "@auth0/angular-jwt";
 
@@ -16,20 +16,24 @@ export class AuthService {
     this.jwtHelper = new JwtHelperService();
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<string> {
     let url = 'api/v1/authentication';
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
     });
-    return this.http.post<String>(url, new HttpParams()
+    return this.http.post<string>(url, new HttpParams()
         .set('email', email)
         .set('password', password)
         .toString(),
       {headers: httpHeaders})
-      .pipe(map(string => {
+      .pipe(
+        catchError(this.handleError('login')),
+        map(string => {
         if (string) {
           this.logger.next(true);
           localStorage.setItem('token', JSON.stringify('Bearer ' + string));
+        } else {
+          console.log('kek')
         }
         return string;
       }));
@@ -81,5 +85,19 @@ export class AuthService {
     this.getMe()
       .subscribe(user =>
       localStorage.setItem('user', JSON.stringify(user)));
+  }
+
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }
