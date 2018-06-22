@@ -26,20 +26,23 @@ export class LocationComponent implements OnInit {
   ngOnInit() {
     this.getLocation();
 
-    this.formGroup = this._FormBuilder.group({
-      name: [Validators.required],
-      street: [Validators.required],
-      houseNumber: [Validators.required],
-      zipCode: [Validators.required],
-      city: [Validators.required],
-      country: [Validators.required],
-    })
+
   }
 
   getLocation() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.locationService.getLocation(id)
-      .subscribe(location => this.location = location);
+      .subscribe(location => {
+        this.location = location;
+        this.formGroup = this._FormBuilder.group({
+          name: [location.name, Validators.required],
+          street: [location.street, Validators.required],
+          houseNumber: [location.houseNumber, Validators.required],
+          zipCode: [location.zipCode, Validators.required],
+          city: [location.city, Validators.required],
+          country: [location.country, Validators.required],
+        })
+      });
   }
 
   goBack(): void {
@@ -76,7 +79,8 @@ export class LocationComponent implements OnInit {
     this.location.zipCode = this.formGroup.value['zipCode'];
     this.location.city = this.formGroup.value['city'];
     this.location.country = this.formGroup.value['country'];
-    this.locationService.updateLocation(this.location);
+    this.locationService.updateLocation(this.location)
+      .subscribe(_ => console.log(_));
   }
 
 }

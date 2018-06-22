@@ -25,11 +25,15 @@ public class UserManager extends JPABase implements UserDAO {
 
     @Override
     public User get(int id) {
-        return em.getReference(User.class, id);
+        User user = em.getReference(User.class, id);
+        em.refresh(user);
+        return user;
     }
 
     public User get(String id) {
-        return em.getReference(User.class, Integer.parseInt(id));
+        User user = em.getReference(User.class, Integer.parseInt(id));
+        em.refresh(user);
+        return user;
     }
 
     @Override

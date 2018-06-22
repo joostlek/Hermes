@@ -18,7 +18,7 @@ public class TypeManager extends JPABase implements TypeDAO {
         em.getTransaction().begin();
         em.persist(type);
         em.getTransaction().commit();
-        return type;
+        return this.get(type.getId());
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TypeManager extends JPABase implements TypeDAO {
         dbType.setLocation(type.getLocation());
         em.getTransaction().commit();
         em.refresh(dbType);
-        return type;
+        return this.get(type.getId());
     }
 
     @Override

@@ -52,6 +52,7 @@ public class LocationResource {
         User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<LocationResponse> locationResponses = new ArrayList<>();
         for (Location location: user.getLocations()) {
+
             locationResponses.add(location.toResponse());
         }
         return Response
@@ -83,8 +84,9 @@ public class LocationResource {
     @RolesAllowed({AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateLocation(String body) {
+        Location location = ManagerProvider.getLocationManager().update(GsonProvider.getGson().fromJson(body, Location.class));
         return Response
-                .ok(GsonProvider.getGson().toJson(ManagerProvider.getLocationManager().update(GsonProvider.getGson().fromJson(body, Location.class)).toResponse()))
+                .ok(GsonProvider.getGson().toJson(ManagerProvider.getLocationManager().get(location.getId()).toResponse()))
                 .build();
     }
 

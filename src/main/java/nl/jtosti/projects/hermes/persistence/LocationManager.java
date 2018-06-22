@@ -18,8 +18,7 @@ public class LocationManager extends JPABase implements LocationDAO {
         em.getTransaction().begin();
         em.persist(location);
         em.getTransaction().commit();
-        em.refresh(location.getOwner());
-        return location;
+        return this.get(location.getId());
     }
 
     @Override
@@ -34,7 +33,7 @@ public class LocationManager extends JPABase implements LocationDAO {
         dbLocation.setZipCode(location.getZipCode());
         em.getTransaction().commit();
         em.refresh(dbLocation);
-        return location;
+        return this.get(location.getId());
     }
 
     @Override

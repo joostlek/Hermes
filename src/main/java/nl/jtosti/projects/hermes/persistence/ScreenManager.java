@@ -18,7 +18,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
         em.getTransaction().begin();
         em.persist(screen);
         em.getTransaction().commit();
-        return screen;
+        return this.get(screen.getId());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
         dbScreen.setWidth(screen.getWidth());
         em.getTransaction().commit();
         em.refresh(dbScreen);
-        return screen;
+        return this.get(screen.getId());
     }
 
     @Override

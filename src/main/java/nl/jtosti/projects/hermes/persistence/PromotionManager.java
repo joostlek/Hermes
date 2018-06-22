@@ -18,8 +18,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
         em.getTransaction().begin();
         em.persist(promotion);
         em.getTransaction().commit();
-        em.refresh(promotion.getOwner());
-        return promotion;
+        return this.get(promotion.getId());
     }
 
     @Override
@@ -33,7 +32,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
 //        dbPromotion.setImages(promotion.getImages());
         em.getTransaction().commit();
         em.refresh(dbPromotion);
-        return promotion;
+        return this.get(promotion.getId());
     }
 
     @Override

@@ -8,25 +8,25 @@
   <div class="content">
     <form [formGroup]="formGroup">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" [value]="location.name" [readonly]="!edit">
+        <input matInput placeholder="Name" formControlName="name" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
         <input matInput placeholder="Owner" [value]="location.owner['firstName']" disabled>
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Street" formControlName="street" autocomplete="street-address" [value]="location.street" [readonly]="!edit">
+        <input matInput placeholder="Street" formControlName="street" autocomplete="street-address" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="House number" formControlName="houseNumber" [value]="location.houseNumber" [readonly]="!edit">
+        <input matInput placeholder="House number" formControlName="houseNumber" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Zip code" formControlName="zipCode" [value]="location.zipCode" autocomplete="postal-code" [readonly]="!edit">
+        <input matInput placeholder="Zip code" formControlName="zipCode" autocomplete="postal-code" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="city" [value]="location.city" autocomplete="address-level2" [readonly]="!edit">
+        <input matInput placeholder="City" formControlName="city" autocomplete="address-level2" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Country" formControlName="country" [value]="location.country" autocomplete="country-name" [readonly]="!edit">
+        <input matInput placeholder="Country" formControlName="country" autocomplete="country-name" [readonly]="!edit">
       </mat-form-field><br>
       <br>
       <div>
