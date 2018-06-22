@@ -27,21 +27,23 @@ export class TypeComponent implements OnInit {
   ngOnInit() {
     this.getType();
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.formGroup = this._FormBuilder.group({
-      name: [Validators.required],
-      time: [Validators.required],
-      price: [Validators.required],
-      imageCount: [Validators.required],
-      location: [Validators.required],
-      active: [],
-      exclusive: []
-    })
   }
 
   getType() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.typeService.getType(id)
-      .subscribe(type => this.type = type);
+      .subscribe(type => {
+        this.type = type;
+        this.formGroup = this._FormBuilder.group({
+          name: [this.type.name, Validators.required],
+          time: [this.type.time, Validators.required],
+          price: [this.type.price, Validators.required],
+          amountOfImages: [this.type.amountOfImages, Validators.required],
+          location: [{value: this.type.location['name'], disabled: true}],
+          active: [this.type.active],
+          exclusive: [this.type.exclusive]
+        })
+      });
   }
 
   goBack(): void {
@@ -72,14 +74,15 @@ export class TypeComponent implements OnInit {
 
   finishEdit(): void {
     this.edit = false;
+    console.log(this.formGroup.value['active'])
     this.type.name = this.formGroup.value['name'];
     this.type.time = +this.formGroup.value['time'];
     this.type.price = this.formGroup.value['price'];
     this.type.amountOfImages = this.formGroup.value['amountOfImages'];
-    this.type.location['id'] = this.formGroup.value['location'];
-    this.type.active = this.formGroup.value['active'];
+    this.type.active = this.formGroup.get('active').value;
     this.type.exclusive = this.formGroup.value['exclusive'];
-    this.typeService.updateType(this.type);
+    this.typeService.updateType(this.type)
+      .subscribe(_ => console.log(_));
   }
 
 }

@@ -6,4 +6,46 @@
     Add promotion
   </label>
 </div>
-<app-promotion-stepper></app-promotion-stepper>
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <input matInput placeholder="Promotion name" formControlName="promotionName" required>
+    <mat-error *ngIf="promotionName.errors">{{getErrorMessage(promotionName)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-select placeholder="Location" formControlName="location" (selectionChange)="onNewLocation($event.source.value)">
+      <mat-option *ngFor="let location of locations" [value]="location['id']">
+        {{location['name']}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="locationId.errors">{{getErrorMessage(locationId)}}</mat-error>
+  </mat-form-field><br>
+
+  <mat-form-field>
+    <mat-select placeholder="Type" formControlName="type" [disabled]="types.length == 0" (selectionChange)="onNewType($event.source.value)">
+      <mat-option *ngFor="let type of types" [value]="type.id">
+        {{type.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="typeId.errors">{{getErrorMessage(typeId)}}</mat-error>
+  </mat-form-field>
+  <div *ngIf="currentType">
+    Time: {{currentType.time}}<br>
+    Price: {{currentType.price | currency}}<br>
+    Amount of Images: {{currentType.amountOfImages}}<br>
+  </div>
+  <br>
+  <mat-form-field>
+    <input matInput [matDatepicker]="startDate" placeholder="From" (dateInput)="newDate($event)">
+    <mat-datepicker-toggle matSuffix [for]="startDate">
+      <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #startDate></mat-datepicker>
+    <mat-error *ngIf="startDate.errors">{{getErrorMessage(startDate)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="To" disabled [value]="toDate?.toLocaleDateString()">
+  </mat-form-field>
+  <div>
+    <button mat-raised-button color="primary" (click)="finish()">Finish</button>
+  </div>
+</form>

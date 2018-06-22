@@ -36,7 +36,7 @@ export class TypeService {
     let httpHeaders = new HttpHeaders({
       Authorization: JSON.parse(localStorage.getItem('token'))
     });
-    return this.http.get<Type>(url, {headers: httpHeaders});
+    return this.http.get<Type>(url + id, {headers: httpHeaders});
   }
 
   deleteType(type: Type): void {

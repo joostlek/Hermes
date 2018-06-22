@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { PromotionAddRoutingModule } from './promotion-add-routing.module';
 import { PromotionAddComponent } from './promotion-add.component';
-import { PromotionStepperComponent } from './promotion-stepper/promotion-stepper.component';
 import {
   MatButtonModule, MatDatepickerModule,
   MatFormFieldModule, MatIconModule,
@@ -30,6 +29,6 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatIconModule,
     PromotionAddRoutingModule
   ],
-  declarations: [PromotionAddComponent, PromotionStepperComponent]
+  declarations: [PromotionAddComponent]
 })
 export class PromotionAddModule { }

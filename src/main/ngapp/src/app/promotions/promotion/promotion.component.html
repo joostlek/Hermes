@@ -8,16 +8,16 @@
   <div class="content">
     <form [formGroup]="formGroup">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" [value]="promotion.name" [readonly]="!edit">
+        <input matInput placeholder="Name" formControlName="name" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Type" [value]="promotion.type['name']" disabled>
+        <input matInput placeholder="Type" formControlName="type" disabled>
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="User" [value]="promotion.owner['name']" disabled>
+        <input matInput placeholder="User" formControlName="user">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Start Date" [value]="promotion.startDate" disabled>
+        <input matInput placeholder="Start Date" formControlName="startDate">
       </mat-form-field><br>
       <br>
       <div>

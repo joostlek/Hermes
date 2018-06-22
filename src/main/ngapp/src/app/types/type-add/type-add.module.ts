@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { TypeAddRoutingModule } from './type-add-routing.module';
 import { TypeAddComponent } from './type-add.component';
-import { TypeStepperComponent } from './type-stepper/type-stepper.component';
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -28,6 +27,6 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatOptionModule,
     TypeAddRoutingModule
   ],
-  declarations: [TypeAddComponent, TypeStepperComponent]
+  declarations: [TypeAddComponent]
 })
 export class TypeAddModule { }

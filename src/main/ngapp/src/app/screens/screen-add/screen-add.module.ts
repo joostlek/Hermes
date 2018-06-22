@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { ScreenAddRoutingModule } from './screen-add-routing.module';
 import { ScreenAddComponent } from './screen-add.component';
-import { ScreenStepperComponent } from './screen-stepper/screen-stepper.component';
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -29,6 +28,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatSlideToggleModule,
     ScreenAddRoutingModule
   ],
-  declarations: [ScreenAddComponent, ScreenStepperComponent]
+  declarations: [ScreenAddComponent]
 })
 export class ScreenAddModule { }

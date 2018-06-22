@@ -17,23 +17,30 @@ export class PromotionComponent implements OnInit {
   formGroup: FormGroup;
   edit: boolean = false;
 
-  constructor(private route: ActivatedRoute,
-              private promotionService: PromotionService,
-              private location: Location,
-              private _FormBuilder: FormBuilder,
-              public dialog: MatDialog) { }
+  constructor(
+    private route: ActivatedRoute,
+    private promotionService: PromotionService,
+    private location: Location,
+    private _FormBuilder: FormBuilder,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.getPromotion();
-    this.formGroup = this._FormBuilder.group({
-      name: [Validators.required],
-    })
   }
 
   getPromotion() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.promotionService.getPromotion(id)
-      .subscribe(promotion => this.promotion = new Promotion(promotion));
+      .subscribe(promotion => {
+        this.promotion = promotion;
+        this.formGroup = this._FormBuilder.group({
+          name: [promotion.name, Validators.required],
+          type: [{value: promotion.type['name'], disabled: true}],
+          user: [{value: promotion.owner['firstName'], disabled: true}],
+          startDate: [{value: promotion.startDate, disabled: true}]
+        })
+      });
   }
 
   goBack(): void {
