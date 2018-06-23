@@ -24,17 +24,25 @@ export class ScreenComponent implements OnInit {
 
   ngOnInit() {
     this.getScreen();
+  }
+
+  fillForm() {
     this.formGroup = this._FormBuilder.group({
-      name: [Validators.required],
-      height: [Validators.required],
-      width: [Validators.required],
+      name: [this.screen.name, Validators.required],
+      height: [this.screen.height, Validators.required],
+      width: [this.screen.width, Validators.required],
+      location: [{value: this.screen.location['name'], disabled: true}],
+      allowAds: [this.screen.allowAds],
     })
   }
 
   getScreen() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.screenService.getScreen(id)
-      .subscribe(screen => this.screen = screen);
+      .subscribe(screen => {
+        this.screen = screen;
+        this.fillForm();
+      });
   }
 
   goBack(): void {
@@ -44,32 +52,33 @@ export class ScreenComponent implements OnInit {
   askDelete(): void {
     let dialogRef = this.dialog.open(DeleteAlertComponent, {
       width: '300px',
-      data: {delete: this.deleteType, name: this.screen.name}
+      data: {delete: this.deleteScreen, name: this.screen.name}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.deleteType();
+        this.deleteScreen();
       }
     })
   }
 
-  deleteType(): void {
+  deleteScreen(): void {
     this.screenService.deleteScreen(this.screen);
     this.location.back();
   }
 
-  editType(): void {
+  editScreen(): void {
     this.edit = true;
   }
 
   finishEdit(): void {
-    this.edit = false;
     this.screen.name = this.formGroup.value['name'];
     this.screen.height = this.formGroup.value['height'];
     this.screen.width = this.formGroup.value['width'];
     this.screenService.editScreen(this.screen)
-      .subscribe(_ => console.log(_));
+      .subscribe(_ => {
+        this.edit = false;
+      });
   }
 
 }

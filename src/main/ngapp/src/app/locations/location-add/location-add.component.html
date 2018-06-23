@@ -6,4 +6,30 @@
     Add location
   </label>
 </div>
-<app-location-stepper></app-location-stepper>
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <input matInput placeholder="Location name" formControlName="locationName" required>
+    <mat-error *ngIf="locationName.errors">{{getErrorMessage(locationName)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Street" formControlName="street" required>
+    <mat-error *ngIf="street.errors">{{getErrorMessage(street)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="House number" formControlName="houseNumber" required>
+    <mat-error *ngIf="houseNumber.errors">{{getErrorMessage(houseNumber)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Zip code" formControlName="zipCode" required>
+    <mat-error *ngIf="zipCode.errors">{{getErrorMessage(zipCode)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="City" formControlName="city" required>
+    <mat-error *ngIf="city.errors">{{getErrorMessage(city)}}</mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Country" formControlName="country" required>
+    <mat-error *ngIf="country.errors">{{getErrorMessage(country)}}</mat-error>
+  </mat-form-field><br>
+  <button mat-raised-button color="primary" type="submit" (click)="finish()">Finish</button>
+</form>

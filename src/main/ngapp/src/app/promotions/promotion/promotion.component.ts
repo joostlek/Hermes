@@ -70,10 +70,12 @@ export class PromotionComponent implements OnInit {
   }
 
   finishEdit(): void {
-    this.edit = false;
     this.promotion.name = this.formGroup.get('name').value;
     this.promotionService.updatePromotion(this.promotion)
-      .subscribe(result => console.log(result));
+      .subscribe(result => {
+        console.log(result);
+        this.edit = false;
+      });
   }
 
 }

@@ -25,8 +25,6 @@ export class LocationComponent implements OnInit {
 
   ngOnInit() {
     this.getLocation();
-
-
   }
 
   getLocation() {
@@ -36,6 +34,7 @@ export class LocationComponent implements OnInit {
         this.location = location;
         this.formGroup = this._FormBuilder.group({
           name: [location.name, Validators.required],
+          user: [{value: this.location.owner['firstName'], disabled: true}],
           street: [location.street, Validators.required],
           houseNumber: [location.houseNumber, Validators.required],
           zipCode: [location.zipCode, Validators.required],
@@ -67,12 +66,11 @@ export class LocationComponent implements OnInit {
     this.loco.back();
   }
 
-  editType(): void {
+  editLocation(): void {
     this.edit = true;
   }
 
   finishEdit(): void {
-    this.edit = false;
     this.location.name = this.formGroup.value['name'];
     this.location.street = this.formGroup.value['street'];
     this.location.houseNumber = this.formGroup.value['houseNumber'];
@@ -80,7 +78,10 @@ export class LocationComponent implements OnInit {
     this.location.city = this.formGroup.value['city'];
     this.location.country = this.formGroup.value['country'];
     this.locationService.updateLocation(this.location)
-      .subscribe(_ => console.log(_));
+      .subscribe(_ => {
+        console.log(_);
+        this.edit = false;
+      });
   }
 
 }

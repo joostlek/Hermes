@@ -8,22 +8,22 @@
   <div class="content">
     <form [formGroup]="formGroup">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" [value]="screen.name" [readonly]="!edit">
+        <input matInput placeholder="Name" formControlName="name" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Width" formControlName="width" [value]="screen.width" [readonly]="!edit">
+        <input matInput placeholder="Width" formControlName="width" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Height" formControlName="height" [value]="screen.height" [readonly]="!edit">
+        <input matInput placeholder="Height" formControlName="height" [readonly]="!edit">
       </mat-form-field><br>
       <mat-form-field>
-        <input matInput placeholder="Location" [value]="screen.location['name']" disabled>
+        <input matInput placeholder="Location" formControlName="location">
       </mat-form-field><br>
-      <mat-slide-toggle [checked]="screen.allowAds" disabled>Allow advertising</mat-slide-toggle><br>
+      <mat-slide-toggle [checked]="screen.allowAds" [disabled]="!edit" formControlName="allowAds">Allow advertising</mat-slide-toggle><br>
       <br>
       <div>
         <button mat-raised-button color="primary" class="editbutton" (click)="finishEdit()" *ngIf="edit">Save</button>
-        <button mat-raised-button color="primary" class="editbutton" (click)="editType()" *ngIf="!edit">Edit</button>
+        <button mat-raised-button color="primary" class="editbutton" (click)="editScreen()" *ngIf="!edit">Edit</button>
         <button mat-raised-button color="warn" (click)="askDelete()">Delete image</button>
       </div>
     </form>

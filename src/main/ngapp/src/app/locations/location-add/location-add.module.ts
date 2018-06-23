@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { LocationAddRoutingModule } from './location-add-routing.module';
 import { LocationAddComponent } from './location-add.component';
-import { LocationStepperComponent } from './location-stepper/location-stepper.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {
   MatButtonModule,
@@ -27,6 +26,6 @@ import {
     MatStepperModule,
     LocationAddRoutingModule
   ],
-  declarations: [LocationAddComponent, LocationStepperComponent]
+  declarations: [LocationAddComponent]
 })
 export class LocationAddModule { }
