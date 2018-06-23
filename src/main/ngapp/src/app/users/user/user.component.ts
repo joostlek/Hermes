@@ -1,23 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "@app/_models/user";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {UserService} from "@app/_services/user.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class UserComponent implements OnInit {
   user: User;
   formGroup: FormGroup;
+
   constructor(
+    private route: ActivatedRoute,
     private _FormBuilder: FormBuilder,
-  ) {
-    this.user = JSON.parse(localStorage.getItem('user'))
-  }
+    private userService: UserService,
+
+  ) { }
 
   ngOnInit() {
-    this.fillForm();
+    this.getUser();
+  }
+
+  getUser() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.userService.getUser(id)
+      .subscribe(user => {
+        this.user = user;
+        this.fillForm();
+      })
   }
 
   fillForm() {
@@ -34,4 +47,5 @@ export class AccountComponent implements OnInit {
       country: [{value: this.user.country, disabled: true}],
     })
   }
+
 }

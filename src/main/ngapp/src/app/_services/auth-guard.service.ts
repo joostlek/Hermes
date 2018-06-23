@@ -12,6 +12,8 @@ export class AuthGuardService implements CanLoad {
   canLoad(): boolean {
     if (!this.auth.isAuthenticated()) {
       this.router.navigateByUrl('auth/login');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       return false;
     }
     return true;

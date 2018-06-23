@@ -1,32 +1,33 @@
-<form>
+<h1 class="mat-h1">My account</h1>
+<form [formGroup]="formGroup">
   <mat-form-field>
-    <input matInput placeholder="First Name" [value]="user.firstName" disabled>
+    <input matInput placeholder="First Name" formControlName="firstName" disabled>
+  </mat-form-field><br>
+  <mat-form-field *ngIf="user.middleName">
+    <input matInput placeholder="Middle name" formControlName="middleName" disabled>
+  </mat-form-field><br *ngIf="user.middleName">
+  <mat-form-field>
+    <input matInput placeholder="Last name" formControlName="lastName" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="Middle name" [value]="user.middleName" disabled>
+    <input matInput placeholder="Email" formControlName="email" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="Last name" [value]="user.lastName" disabled>
+    <input matInput placeholder="Phone number" formControlName="phoneNumber" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="Email" [value]="user.email" disabled>
+    <input matInput placeholder="Street" formControlName="street" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="Phone number" [value]="user.phoneNumber" disabled>
+    <input matInput placeholder="House number" formControlName="houseNumber" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="Street" [value]="user.street" disabled>
+    <input matInput placeholder="Zip code" formControlName="zipCode" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="House number" [value]="user.houseNumber" disabled>
+    <input matInput placeholder="City" formControlName="city" disabled>
   </mat-form-field><br>
   <mat-form-field>
-    <input matInput placeholder="Zip code" [value]="user.zipCode" disabled>
-  </mat-form-field><br>
-  <mat-form-field>
-    <input matInput placeholder="City" [value]="user.city" disabled>
-  </mat-form-field><br>
-  <mat-form-field>
-    <input matInput placeholder="Country" [value]="user.country" disabled>
+    <input matInput placeholder="Country" formControlName="country" disabled>
   </mat-form-field><br>
 </form>

@@ -19,6 +19,8 @@ export class RoleGuardService implements CanLoad {
       if (JSON.parse(localStorage.getItem('user')) !== null) {
         this.router.navigateByUrl('/');
       } else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         this.router.navigateByUrl('auth/login');
       }
       return false;
@@ -27,13 +29,13 @@ export class RoleGuardService implements CanLoad {
   }
 
   static isAllowed(role, roles): boolean {
-    if (role === Roles.ROLE_SUPERUSER) {
-      return true;
-    }
+    // if (role === Roles.ROLE_SUPERUSER) {
+    //   return true;
+    // }
     if (roles.indexOf(role) > -1) {
       return true;
     } else if (role === Roles.ROLE_OWNER_AD && (roles.indexOf(Roles.ROLE_OWNER) > -1 || roles.indexOf(Roles.ROLE_ADVERTISING) > -1)) {
       return true;
-    } else return roles.indexOf(Roles.ROLE_USER) > -1 && role !== Roles.ROLE_GUEST;
+    } else return roles.indexOf(Roles.ROLE_USER) > -1 && (role !== Roles.ROLE_GUEST && role !== Roles.ROLE_SUPERUSER);
   }
 }
