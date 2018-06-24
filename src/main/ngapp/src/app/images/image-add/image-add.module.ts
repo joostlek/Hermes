@@ -24,8 +24,8 @@ import { ImageAddComponent } from './image-add.component';
     ReactiveFormsModule,
     FormsModule,
     MatSelectModule,
-    MatSliderModule,
     MatIconModule,
+    MatSliderModule,
     ImageAddRoutingModule
   ],
   declarations: [

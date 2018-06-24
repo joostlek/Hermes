@@ -18,7 +18,7 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule, MatSliderModule
 } from '@angular/material';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -48,6 +48,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatSliderModule,
     HttpClientModule,
     AppRoutingModule,
   ],
