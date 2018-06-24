@@ -9,6 +9,7 @@
 <form [formGroup]="formGroup">
   <mat-form-field>
     <input matInput placeholder="Image name" formControlName="imageName" required>
+    <mat-error *ngIf="imageName.errors">{{getErrorMessage(imageName)}}</mat-error>
   </mat-form-field><br>
   <mat-form-field>
     <mat-select placeholder="Promotion" formControlName="selectPromotion" (selectionChange)="onNewPromotion($event.source.value)">
@@ -16,16 +17,19 @@
         {{promotion['name']}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="selectPromotion.errors">{{getErrorMessage(selectPromotion)}}</mat-error>
   </mat-form-field><br>
   <mat-form-field>
-    <mat-select placeholder="Screen" formControlName="selectScreen">
+    <mat-select placeholder="Screen" formControlName="selectScreen" [disabled]="screens.length > 0">
       <mat-option *ngFor="let screen of screens" [value]="screen['id']">
         {{screen['name']}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="selectScreen.errors">{{getErrorMessage(selectScreen)}}</mat-error>
   </mat-form-field><br>
   <mat-form-field>
     <input matInput placeholder="Image url" formControlName="imageURL" required>
+    <mat-error *ngIf="imageURL.errors">{{getErrorMessage(imageURL)}}</mat-error>
   </mat-form-field><br>
   <p>Time on screen</p><br>
   <mat-slider [min]="0" [max]="10" [step]="1" [value]="0" [thumbLabel]="true" (change)="update_time($event.value)"></mat-slider><br>

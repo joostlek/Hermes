@@ -28,7 +28,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="location">
       <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
+      <mat-cell *matCellDef="let row">{{row.location['name']}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->

@@ -15,20 +15,20 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef>Type ID</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/types/{{row.type['id']}}">{{row.type['name']}}</a></mat-cell>
+      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.type['name']}}></mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="user">
-      <mat-header-cell *matHeaderCellDef>User ID</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/users/{{row.owner['id']}}">{{row.owner['firstName']}}</a></mat-cell>
+      <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.owner['firstName']}} {{row.owner['lastName']}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="location">
       <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/locations/{{row.location['id']}}">{{row.location['name']}}</a></mat-cell>
+      <mat-cell *matCellDef="let row">{{row.location['name']}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->

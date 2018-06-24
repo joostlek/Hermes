@@ -52,6 +52,13 @@ export class ImageAddComponent implements OnInit {
     this.location.back();
   }
 
+  getErrorMessage(field) {
+    return field.hasError('required') ? 'You must enter a value' :
+      field.hasError('email') ? 'You must enter a valid email' :
+        field.hasError('pattern') ? 'You must enter a valid value' :
+          '';
+  }
+
   fillForm() {
     this.formGroup = this._FormBuilder.group({
       imageName: ['', Validators.required],
