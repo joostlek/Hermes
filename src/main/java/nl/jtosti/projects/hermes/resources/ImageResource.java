@@ -1,7 +1,6 @@
 package nl.jtosti.projects.hermes.resources;
 
-import nl.jtosti.projects.hermes.models.Image;
-import nl.jtosti.projects.hermes.models.User;
+import nl.jtosti.projects.hermes.models.*;
 import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.ImageResponse;
 import nl.jtosti.projects.hermes.util.GsonProvider;
@@ -35,7 +34,7 @@ public class ImageResource {
     @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyImages(@Context SecurityContext context) {
-        User user = ManagerProvider.getUserManager().get(Integer.parseInt(context.getUserPrincipal().getName()));
+        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<ImageResponse> imageResponses = new ArrayList<>();
         for (Image image: user.getImages()) {
             imageResponses.add(image.toResponse());
@@ -52,10 +51,15 @@ public class ImageResource {
     public Response getUnchecked(@Context SecurityContext context) {
         User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<ImageResponse> imageResponses = new ArrayList<>();
-        for (Image image: ManagerProvider.getImageManager().getUncheckedImages(user)) {
-            if (!image.isActive()) {
-                imageResponses.add(image.toResponse());
-
+        for (Location location: user.getLocations()) {
+            for (Type type: location.getTypes()) {
+                for (Promotion promotion: type.getPromotions()) {
+                    for (Image image: promotion.getImages()) {
+                        if (!image.isActive()) {
+                            imageResponses.add(image.toResponse());
+                        }
+                    }
+                }
             }
         }
         return Response

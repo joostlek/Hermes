@@ -3,7 +3,32 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   <label>
-  Add image
+    Add image
   </label>
 </div>
-<app-image-stepper></app-image-stepper>
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <input matInput placeholder="Image name" formControlName="imageName" required>
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-select placeholder="Promotion" formControlName="selectPromotion" (selectionChange)="onNewPromotion($event.source.value)">
+      <mat-option *ngFor="let promotion of promotions" [value]="promotion['id']">
+        {{promotion['name']}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-select placeholder="Screen" formControlName="selectScreen">
+      <mat-option *ngFor="let screen of screens" [value]="screen['id']">
+        {{screen['name']}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput placeholder="Image url" formControlName="imageURL" required>
+  </mat-form-field><br>
+  <p>Time on screen</p><br>
+  <mat-slider [min]="0" [max]="10" [step]="1" [value]="0" [thumbLabel]="true" (change)="update_time($event.value)"></mat-slider><br>
+  <button mat-raised-button color="primary" (click)="finish()">Finish</button>
+</form>
+

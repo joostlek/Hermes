@@ -18,6 +18,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
         em.getTransaction().begin();
         em.persist(promotion);
         em.getTransaction().commit();
+        em.clear();
         return this.get(promotion.getId());
     }
 
@@ -31,7 +32,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
 //        dbPromotion.setType(promotion.getType());
 //        dbPromotion.setImages(promotion.getImages());
         em.getTransaction().commit();
-        em.refresh(dbPromotion);
+        em.clear();
         return this.get(promotion.getId());
     }
 
@@ -43,6 +44,7 @@ public class PromotionManager extends JPABase implements PromotionDAO {
                 em.getTransaction().begin();
                 em.remove(dbPromotion);
                 em.getTransaction().commit();
+                em.clear();
                 return true;
             }
         } catch (EntityNotFoundException e) {

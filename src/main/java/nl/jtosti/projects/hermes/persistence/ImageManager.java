@@ -5,6 +5,7 @@ import nl.jtosti.projects.hermes.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageManager extends JPABase implements ImageDAO {
@@ -19,6 +20,7 @@ public class ImageManager extends JPABase implements ImageDAO {
         em.getTransaction().begin();
         em.persist(image);
         em.getTransaction().commit();
+        em.clear();
         return this.get(image.getId());
     }
 
@@ -29,7 +31,7 @@ public class ImageManager extends JPABase implements ImageDAO {
         dbImage.setName(image.getName());
         dbImage.setTime(image.getTime());
         em.getTransaction().commit();
-        em.refresh(dbImage);
+        em.clear();
         return this.get(image.getId());
     }
 
@@ -41,6 +43,7 @@ public class ImageManager extends JPABase implements ImageDAO {
                 em.getTransaction().begin();
                 em.remove(dbImage);
                 em.getTransaction().commit();
+                em.clear();
                 return true;
             }
         } catch (EntityNotFoundException e) {
@@ -56,9 +59,10 @@ public class ImageManager extends JPABase implements ImageDAO {
 
     @Override
     public List<Image> getUncheckedImages(User user) {
-        return (List<Image>) em.createQuery("from Image as image where image.promotion = Promotion and Promotion.type = Type and Type.location = Location and Location.owner = ?")
-                .setParameter(0, user)
-                .getResultList();
+//        return (List<Image>) em.createQuery("from Image as image where image.promotion = Promotion and Promotion.type = Type and Type.location = Location and Location.owner = ?")
+//                .setParameter(0, user)
+//                .getResultList();
+        return new ArrayList<>();
     }
 
     @Override

@@ -17,7 +17,7 @@
     <!-- Promotion Column -->
     <ng-container matColumnDef="promotion">
       <mat-header-cell *matHeaderCellDef>Promotion</mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/promotions/{{row.promotion['id']}}">{{row.promotion['name']}}</a></mat-cell>
+      <mat-cell *matCellDef="let row">{{row.promotion['name']}}</mat-cell>
     </ng-container>
 
     <!-- User Column -->

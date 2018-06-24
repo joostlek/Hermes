@@ -18,6 +18,7 @@ public class LocationManager extends JPABase implements LocationDAO {
         em.getTransaction().begin();
         em.persist(location);
         em.getTransaction().commit();
+        em.clear();
         return this.get(location.getId());
     }
 
@@ -32,7 +33,7 @@ public class LocationManager extends JPABase implements LocationDAO {
         dbLocation.setStreet(location.getStreet());
         dbLocation.setZipCode(location.getZipCode());
         em.getTransaction().commit();
-        em.refresh(dbLocation);
+        em.clear();
         return this.get(location.getId());
     }
 
@@ -44,6 +45,7 @@ public class LocationManager extends JPABase implements LocationDAO {
                 em.getTransaction().begin();
                 em.remove(dbLocation);
                 em.getTransaction().commit();
+                em.clear();
                 return true;
             }
         } catch (EntityNotFoundException e) {

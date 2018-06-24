@@ -18,6 +18,7 @@ public class TypeManager extends JPABase implements TypeDAO {
         em.getTransaction().begin();
         em.persist(type);
         em.getTransaction().commit();
+        em.clear();
         return this.get(type.getId());
     }
 
@@ -33,7 +34,7 @@ public class TypeManager extends JPABase implements TypeDAO {
         dbType.setTime(type.getTime());
         dbType.setLocation(type.getLocation());
         em.getTransaction().commit();
-        em.refresh(dbType);
+        em.clear();
         return this.get(type.getId());
     }
 
@@ -45,6 +46,7 @@ public class TypeManager extends JPABase implements TypeDAO {
                 em.getTransaction().begin();
                 em.remove(dbType);
                 em.getTransaction().commit();
+                em.clear();
                 return true;
             }
         } catch (EntityNotFoundException e) {

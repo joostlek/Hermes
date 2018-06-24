@@ -18,6 +18,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
         em.getTransaction().begin();
         em.persist(screen);
         em.getTransaction().commit();
+        em.clear();
         return this.get(screen.getId());
     }
 
@@ -29,7 +30,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
         dbScreen.setHeight(screen.getHeight());
         dbScreen.setWidth(screen.getWidth());
         em.getTransaction().commit();
-        em.refresh(dbScreen);
+        em.clear();
         return this.get(screen.getId());
     }
 
@@ -41,6 +42,7 @@ public class ScreenManager extends JPABase implements ScreenDAO {
                 em.getTransaction().begin();
                 em.remove(dbScreen);
                 em.getTransaction().commit();
+                em.clear();
                 return true;
             }
         } catch (EntityNotFoundException e) {

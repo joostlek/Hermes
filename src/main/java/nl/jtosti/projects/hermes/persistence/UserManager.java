@@ -20,20 +20,17 @@ public class UserManager extends JPABase implements UserDAO {
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
+        em.clear();
         return this.get(user.getId());
     }
 
     @Override
     public User get(int id) {
-        User user = em.getReference(User.class, id);
-        em.refresh(user);
-        return user;
+        return em.find(User.class, id);
     }
 
     public User get(String id) {
-        User user = em.getReference(User.class, Integer.parseInt(id));
-        em.refresh(user);
-        return user;
+        return em.find(User.class, Integer.parseInt(id));
     }
 
     @Override
@@ -51,7 +48,7 @@ public class UserManager extends JPABase implements UserDAO {
         dbUser.setCity(user.getCity());
         dbUser.setCountry(user.getCountry());
         em.getTransaction().commit();
-        em.refresh(dbUser);
+        em.clear();
         return dbUser;
     }
 
@@ -63,6 +60,7 @@ public class UserManager extends JPABase implements UserDAO {
                 em.getTransaction().begin();
                 em.remove(dbUser);
                 em.getTransaction().commit();
+                em.clear();
                 return true;
             }
         } catch (EntityNotFoundException e) {

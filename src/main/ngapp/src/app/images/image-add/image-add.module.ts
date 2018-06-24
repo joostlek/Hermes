@@ -13,7 +13,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ImageAddRoutingModule } from './image-add-routing.module';
 import { ImageAddComponent } from './image-add.component';
-import { ImageStepperComponent } from './image-stepper/image-stepper.component';
 
 @NgModule({
   imports: [
@@ -31,7 +30,6 @@ import { ImageStepperComponent } from './image-stepper/image-stepper.component';
   ],
   declarations: [
     ImageAddComponent,
-    ImageStepperComponent,
   ]
 })
 export class ImageAddModule { }
