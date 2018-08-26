@@ -1,11 +1,15 @@
 pipeline {
     agent { docker { image 'maven:3.5.4-jdk-10' } }
     stages {
-        stage('build') {
+        stage('Init') {
             steps {
                 sh 'mvn --version'
+            }
+        }
+        stage('Build') {
+            steps {
                 sh 'mvn compile'
-                sh 'ls target'
+                sh 'mvn package'
             }
         }
     }
