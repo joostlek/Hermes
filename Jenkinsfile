@@ -10,6 +10,7 @@ pipeline {
             steps {
                 sh 'mvn compile'
                 sh 'mvn package'
+                sh 'ls target'
             }
         }
     }
