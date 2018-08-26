@@ -8,10 +8,13 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn compile'
                 sh 'mvn package'
-                sh 'ls target'
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/*.war', fingerprint: true
         }
     }
 }
