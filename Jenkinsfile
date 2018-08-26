@@ -16,5 +16,9 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'target/*.war', fingerprint: true
         }
+        success {
+            sh 'rm -rf /opt/tomcat/hermes/*'
+            sh 'cp target/*.war /opt/tomcat/hermes/'
+        }
     }
 }
