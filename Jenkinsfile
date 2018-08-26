@@ -18,7 +18,7 @@ pipeline {
         }
         success {
             sh 'rm -rf /opt/tomcat/hermes/*'
-            sh 'cp target/*.war /opt/tomcat/hermes/'
+            sh 'cp target/*.war /opt/tomcat/hermes/ROOT.war'
         }
     }
 }
