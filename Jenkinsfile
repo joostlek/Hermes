@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Init') {
             steps {
+                sh 'whoami'
                 sh 'mvn --version'
             }
         }
