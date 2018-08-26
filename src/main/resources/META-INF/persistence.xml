@@ -19,13 +19,13 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://ec2-54-247-100-44.eu-west-1.compute.amazonaws.com:5432/db408amlssdcd6?sslmode=require" />
-            <property name="javax.persistence.jdbc.user" value="pbadekxcofyxfv" />
-            <property name="javax.persistence.jdbc.password" value="42426cb6d8a0d2533c5667db94e9d353632867f848c23ec74ec3e6d58a622051" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />
+                      value="jdbc:postgresql://localhost:5432/hermes"/>
+            <property name="javax.persistence.jdbc.user" value=""/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
 
-            <property name="hibernate.show_sql" value="true" />	<!-- true: shows each SQL -->
-            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.show_sql" value="true"/>    <!-- true: shows each SQL -->
+            <property name="hibernate.format_sql" value="true"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />  &lt;!&ndash; create: creates database &ndash;&gt;-->
 
         </properties>
