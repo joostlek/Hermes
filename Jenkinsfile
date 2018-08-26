@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'mvn --version'
                 sh 'mvn compile'
-                sh 'ls'
+                sh 'ls target'
             }
         }
     }
