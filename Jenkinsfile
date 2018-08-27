@@ -19,7 +19,7 @@ pipeline {
         }
         success {
             sh 'rm -rf /opt/tomcat/hermes/*'
-            sh 'cp target/Hermes-1.0.war /opt/tomcat/hermes/'
+            sh 'cp -f target/Hermes-1.0.war /opt/tomcat/hermes/'
         }
     }
 }
