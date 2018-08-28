@@ -84,5 +84,7 @@
     <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-utils:2.5.0-b42" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-dbcp:8.0.33" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-juli:8.0.33" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.6.0" level="project" />
   </component>
 </module>
