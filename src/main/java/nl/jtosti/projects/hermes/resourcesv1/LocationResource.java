@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes.resources;
+package nl.jtosti.projects.hermes.resourcesv1;
 
 import nl.jtosti.projects.hermes.models.Location;
 import nl.jtosti.projects.hermes.models.User;
@@ -49,12 +49,12 @@ public class LocationResource {
     @RolesAllowed({AuthenticationResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyLocations(@Context SecurityContext context) {
-        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
+//        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<LocationResponse> locationResponses = new ArrayList<>();
-        for (Location location: user.getLocations()) {
-
-            locationResponses.add(location.toResponse());
-        }
+//        for (Location location: user.getLocations()) {
+//
+//            locationResponses.add(location.toResponse());
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(locationResponses))
                 .build();

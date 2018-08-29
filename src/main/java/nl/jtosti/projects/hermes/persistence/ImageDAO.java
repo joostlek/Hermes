@@ -10,7 +10,7 @@ public interface ImageDAO {
     Image save(Image image);
     Image update(Image image);
     boolean delete(Image image);
-    List<Image> getAll();
+    List<Image> getAllByLocationId(int locationId);
     List<Image> getUncheckedImages(User user);
     Image updateActive(Image image);
 }

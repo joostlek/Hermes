@@ -5,56 +5,73 @@ import nl.jtosti.projects.hermes.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageManager extends JPABase implements ImageDAO {
-    private EntityManager em = super.getConnection();
+
     @Override
     public Image get(int id) {
-        return em.find(Image.class, id);
+        EntityManager entityManager = super.getConnection();
+        Image image = entityManager.find(Image.class, id);
+        entityManager.close();
+        return image;
     }
 
     @Override
     public Image save(Image image) {
-        em.getTransaction().begin();
-        em.persist(image);
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(image.getId());
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(image);
+        transaction.commit();
+        entityManager.close();
+        return image;
     }
 
     @Override
     public Image update(Image image) {
-        em.getTransaction().begin();
-        Image dbImage = this.get(image.getId());
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Image dbImage = entityManager.find(Image.class, image.getId());
+        if (dbImage == null) {
+            entityManager.close();
+            return null;
+        }
         dbImage.setName(image.getName());
         dbImage.setTime(image.getTime());
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(image.getId());
+        transaction.commit();
+        entityManager.close();
+        return image;
     }
 
     @Override
     public boolean delete(Image image) {
-        Image dbImage = this.get(image.getId());
-        try {
-            if (dbImage != null) {
-                em.getTransaction().begin();
-                em.remove(dbImage);
-                em.getTransaction().commit();
-                em.clear();
-                return true;
-            }
-        } catch (EntityNotFoundException e) {
-            System.out.println(image.toString() + " not found");
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Image dbImage = entityManager.find(Image.class, image.getId());
+        if (dbImage == null) {
+            entityManager.close();
+            throw new EntityNotFoundException();
         }
-        return false;
+        entityManager.remove(dbImage);
+        transaction.commit();
+        entityManager.close();
+        return true;
     }
 
     @Override
-    public List<Image> getAll() {
-        return em.createQuery("SELECT i FROM Image i", Image.class).getResultList();
+    public List<Image> getAllByLocationId(int locationId) {
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Image as image where image.promotion = Promotion and Promotion.type = Type and Type.location.id = ?", List.class)
+                .setParameter(0, locationId);
+        List<Image> images = query.getResultList();
+        entityManager.close();
+        return images;
     }
 
     @Override
@@ -68,10 +85,6 @@ public class ImageManager extends JPABase implements ImageDAO {
     @Override
     public Image updateActive(Image image) {
         Image dbImage = this.get(image.getId());
-        em.getTransaction().begin();
-        dbImage.setActive(image.isActive());
-        em.getTransaction().commit();
-        em.refresh(dbImage);
         return this.get(image.getId());
     }
 }

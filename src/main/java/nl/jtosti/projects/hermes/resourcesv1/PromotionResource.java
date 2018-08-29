@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes.resources;
+package nl.jtosti.projects.hermes.resourcesv1;
 
 import nl.jtosti.projects.hermes.models.Promotion;
 import nl.jtosti.projects.hermes.models.User;
@@ -35,11 +35,11 @@ public class PromotionResource {
     @RolesAllowed({AuthenticationResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyPromotions(@Context SecurityContext context) {
-        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
+//        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<PromotionResponse> promotionResponses = new ArrayList<>();
-        for (Promotion promotion: user.getPromotions()) {
-            promotionResponses.add(promotion.toResponse());
-        }
+//        for (Promotion promotion: user.getPromotions()) {
+//            promotionResponses.add(promotion.toResponse());
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(promotionResponses))
                 .build();

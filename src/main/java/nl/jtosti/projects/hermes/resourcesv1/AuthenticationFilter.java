@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes.resources;
+package nl.jtosti.projects.hermes.resourcesv1;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

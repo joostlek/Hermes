@@ -4,89 +4,90 @@ package nl.jtosti.projects.hermes.persistence;
 import nl.jtosti.projects.hermes.models.User;
 import nl.jtosti.projects.hermes.util.Util;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserManager extends JPABase implements UserDAO {
-    private EntityManager em = super.getConnection();
-    @Override
-    public User save(User user) {
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(user.getId());
-    }
 
     @Override
     public User get(int id) {
-        return em.find(User.class, id);
+        EntityManager entityManager = super.getConnection();
+        User user = entityManager.find(User.class, id);
+        entityManager.close();
+        return user;
     }
 
-    public User get(String id) {
-        return em.find(User.class, Integer.parseInt(id));
+    @Override
+    public User save(User user) {
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(user);
+        transaction.commit();
+        entityManager.close();
+        return user;
     }
 
     @Override
     public User update(User user) {
-        User dbUser = this.get(user.getId());
-        em.getTransaction().begin();
-        dbUser.setFirstName(user.getFirstName());
-        dbUser.setMiddleName(user.getMiddleName());
-        dbUser.setLastName(user.getLastName());
-        dbUser.setEmail(user.getEmail());
-        dbUser.setPhoneNumber(user.getPhoneNumber());
-        dbUser.setStreet(user.getStreet());
-        dbUser.setHouseNumber(user.getHouseNumber());
-        dbUser.setZipCode(user.getZipCode());
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        User dbUser = entityManager.find(User.class, user.getId());
+        if (dbUser == null) {
+            entityManager.close();
+            return null;
+        }
         dbUser.setCity(user.getCity());
-        dbUser.setCountry(user.getCountry());
-        em.getTransaction().commit();
-        em.clear();
-        return dbUser;
+        transaction.commit();
+        entityManager.close();
+        return user;
     }
 
     @Override
     public boolean delete(User user) {
-        User dbUser = this.get(user.getId());
-        try {
-            if (dbUser.getId() != 0) {
-                em.getTransaction().begin();
-                em.remove(dbUser);
-                em.getTransaction().commit();
-                em.clear();
-                return true;
-            }
-        } catch (EntityNotFoundException e) {
-            System.out.println(user.toString() + " not found");
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        User dbUser = entityManager.find(User.class, user.getId());
+        if (dbUser == null) {
+            entityManager.close();
+            throw new EntityNotFoundException();
         }
-        return false;
+        entityManager.remove(dbUser);
+        transaction.commit();
+        entityManager.close();
+        return true;
     }
 
     @Override
     public List<User> getAll() {
-        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
+//        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        return null;
+    }
+
+    @Override
+    public List<User> getAllByLocationId(int locationId) {
+        return null;
     }
 
     @Override
     public User getUserByLogin(String email, String password) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-        Root<User> userRoot = query.from(User.class);
-        query.select(userRoot);
-        query.where(criteriaBuilder.equal(userRoot.get("email"), email),
-                criteriaBuilder.equal(userRoot.get("password"), Util.MD5(password)));
-        TypedQuery<User> userQuery = em.createQuery(query);
-        try {
-            return userQuery.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+//        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+//        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+//        Root<User> userRoot = query.from(User.class);
+//        query.select(userRoot);
+//        query.where(criteriaBuilder.equal(userRoot.get("email"), email),
+//                criteriaBuilder.equal(userRoot.get("password"), Util.MD5(password)));
+//        TypedQuery<User> userQuery = em.createQuery(query);
+//        try {
+//            return userQuery.getSingleResult();
+//        } catch (NoResultException e) {
+//            return null;
+//        }
+        return null;
     }
 }

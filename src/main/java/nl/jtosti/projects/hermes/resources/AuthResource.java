@@ -14,22 +14,15 @@ import javax.ws.rs.core.Response;
 import java.security.Key;
 import java.util.Calendar;
 
-@Path("/authentication")
-public class AuthenticationResource {
-    public static final String ROLE_OWNER_AD = "OwnerAd";
-    public static final String ROLE_SUPERUSER = "Superuser";
-    public static final String ROLE_ADVERTISING = "Advertiser";
-    public static final String ROLE_OWNER = "Owner";
-    public static final String ROLE_USER = "User";
-    public static final String ROLE_GUEST = "Guest";
-
+@Path("/auth")
+public class AuthResource {
     final static public Key key = MacProvider.generateKey();
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response authenticateUser(@FormParam("email") String email,
-                                     @FormParam("password") String password){
+                                     @FormParam("password") String password) {
         try {
             User user = ManagerProvider.getUserManager().getUserByLogin(email, password);
             if (user == null) {

@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes.resources;
+package nl.jtosti.projects.hermes.resourcesv1;
 
 import nl.jtosti.projects.hermes.models.Location;
 import nl.jtosti.projects.hermes.models.Type;
@@ -36,11 +36,11 @@ public class TypeResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyTypes(@Context SecurityContext context) {
         List<TypeResponse> typeResponses = new ArrayList<>();
-        for (Location location: ManagerProvider.getUserManager().get(context.getUserPrincipal().getName()).getLocations()) {
-            for (Type type: location.getTypes()) {
-                typeResponses.add(type.toResponse());
-            }
-        }
+//        for (Location location: ManagerProvider.getUserManager().get(context.getUserPrincipal().getName()).getLocations()) {
+//            for (Type type: location.getTypes()) {
+//                typeResponses.add(type.toResponse());
+//            }
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(typeResponses))
                 .build();

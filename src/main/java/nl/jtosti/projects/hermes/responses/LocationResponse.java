@@ -30,7 +30,7 @@ public class LocationResponse {
         this.zipCode = location.getZipCode();
         this.city = location.getCity();
         this.country = location.getCountry();
-        this.owner = location.getOwner().toResponse(true);
+//        this.owner = location.getOwner().toResponse(true);
         this.types = new ArrayList<>();
         this.screens = new ArrayList<>();
         if (location.getTypes() != null) {

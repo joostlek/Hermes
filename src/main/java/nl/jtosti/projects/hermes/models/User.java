@@ -1,12 +1,13 @@
 package nl.jtosti.projects.hermes.models;
 
 import nl.jtosti.projects.hermes.responses.UserResponse;
-import nl.jtosti.projects.hermes.resources.AuthenticationResource;
+import nl.jtosti.projects.hermes.resourcesv1.AuthenticationResource;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -51,14 +52,14 @@ public class User {
     @ColumnTransformer(write = "md5(?)")
     private String password;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Location> locations;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLocation> locations = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Promotion> promotions;
+    private List<Promotion> promotions = new ArrayList<>();
 
     public User() {
     }
@@ -74,9 +75,6 @@ public class User {
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;
-        this.locations = new ArrayList<>();
-        this.images = new ArrayList<>();
-        this.promotions = new ArrayList<>();
     }
 
     public int getId() {
@@ -167,16 +165,16 @@ public class User {
         this.country = country;
     }
 
-    public List<Location> getLocations() {
+    public List<UserLocation> getLocations() {
         return locations;
     }
 
-    public void setLocations(List<Location> locations) {
+    public void setLocations(List<UserLocation> locations) {
         this.locations = locations;
     }
 
-    public void addLocation(Location location) {
-        this.locations.add(location);
+    public void addLocation(Location location, Roles role) {
+        this.locations.add(new UserLocation(this, location, role));
     }
 
     public List<Image> getImages() {
@@ -218,12 +216,7 @@ public class User {
     }
 
     public String getFullName() {
-        return this.middleName != null ? this.firstName + " "  + this.middleName + " " + this.lastName : this.firstName + " " + this.lastName;
-    }
-
-    @Override
-    public String toString() {
-        return "<User " + this.getFullName() + ">";
+        return this.middleName != null ? this.firstName + " " + this.middleName + " " + this.lastName : this.firstName + " " + this.lastName;
     }
 
     public UserResponse toResponse() {
@@ -232,5 +225,45 @@ public class User {
 
     public UserResponse toResponse(boolean simple) {
         return new UserResponse(this, true);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(middleName, user.middleName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(phoneNumber, user.phoneNumber) &&
+                Objects.equals(street, user.street) &&
+                Objects.equals(houseNumber, user.houseNumber) &&
+                Objects.equals(zipCode, user.zipCode) &&
+                Objects.equals(city, user.city) &&
+                Objects.equals(country, user.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, middleName, lastName, email, phoneNumber, street, houseNumber, zipCode, city, country);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }

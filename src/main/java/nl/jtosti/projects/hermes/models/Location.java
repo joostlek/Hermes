@@ -33,29 +33,30 @@ public class Location {
     @Column(name = "country", nullable = false)
     private String country;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", nullable = false)
-    private User owner;
+    @OneToMany(
+            mappedBy = "location",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<UserLocation> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Type> types;
+    private List<Type> types = new ArrayList<>();
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Screen> screens;
+    private List<Screen> screens = new ArrayList<>();
 
     public Location() {
     }
 
-    public Location(String name, String street, String houseNumber, String zipCode, String city, String country, User owner) {
+    public Location(String name, String street, String houseNumber, String zipCode, String city, String country, User manager) {
         this.name = name;
         this.street = street;
         this.houseNumber = houseNumber;
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;
-        this.owner = owner;
-        this.types = new ArrayList<>();
-        this.screens = new ArrayList<>();
+        this.addUser(manager, Roles.MANAGER);
     }
 
     public int getId() {
@@ -114,12 +115,16 @@ public class Location {
         this.country = country;
     }
 
-    public User getOwner() {
-        return owner;
+    public List<UserLocation> getUsers() {
+        return users;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setUsers(List<UserLocation> users) {
+        this.users = users;
+    }
+
+    public void addUser(User user, Roles role) {
+        this.users.add(new UserLocation(user, this, role));
     }
 
     public List<Type> getTypes() {

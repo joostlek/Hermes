@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes.resources;
+package nl.jtosti.projects.hermes.resourcesv1;
 
 import nl.jtosti.projects.hermes.models.User;
 

@@ -25,8 +25,10 @@ public class JPABase {
                 configOverrides.put("javax.persistence.jdbc.driver", env.get(envName));
             } else if (envName.contains("DB_DIALECT")) {
                 configOverrides.put("hibernate.dialect", env.get(envName));
-            } else if (envName.contains("db_SHOW_SQL")) {
+            } else if (envName.contains("DB_SHOW_SQL")) {
                 configOverrides.put("hibernate.show_sql", env.get(envName));
+            } else if (envName.contains("DB_AUTO_DDL")) {
+                configOverrides.put("hibernate.hbm2ddl.auto", env.get(envName));
             }
         }
         try {

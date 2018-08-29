@@ -44,7 +44,7 @@ export class PromotionTableDataSource extends DataSource<Promotion> {
 
   /**
    *  Called when the table is being destroyed. Use this function, to clean up
-   * any open connections or free any held resources that were set up during connect.
+   * any open connections or free any held resourcesv1 that were set up during connect.
    */
   disconnect(
   ) {

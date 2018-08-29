@@ -1,4 +1,4 @@
-package nl.jtosti.projects.hermes.resources;
+package nl.jtosti.projects.hermes.resourcesv1;
 
 import nl.jtosti.projects.hermes.models.*;
 import nl.jtosti.projects.hermes.persistence.ManagerProvider;
@@ -22,9 +22,9 @@ public class ImageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getImages() {
         List<ImageResponse> imageResponses = new ArrayList<>();
-        for (Image image: ManagerProvider.getImageManager().getAll()) {
-            imageResponses.add(image.toResponse());
-        }
+//        for (Image image: ManagerProvider.getImageManager().getAll()) {
+//            imageResponses.add(image.toResponse());
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(imageResponses))
                 .build();
@@ -34,11 +34,11 @@ public class ImageResource {
     @RolesAllowed({AuthenticationResource.ROLE_ADVERTISING})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyImages(@Context SecurityContext context) {
-        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
+//        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<ImageResponse> imageResponses = new ArrayList<>();
-        for (Image image: user.getImages()) {
-            imageResponses.add(image.toResponse());
-        }
+//        for (Image image: user.getImages()) {
+//            imageResponses.add(image.toResponse());
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(imageResponses))
                 .build();
@@ -49,19 +49,19 @@ public class ImageResource {
     @RolesAllowed({AuthenticationResource.ROLE_OWNER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUnchecked(@Context SecurityContext context) {
-        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
+//        User user = ManagerProvider.getUserManager().get(context.getUserPrincipal().getName());
         List<ImageResponse> imageResponses = new ArrayList<>();
-        for (Location location: user.getLocations()) {
-            for (Type type: location.getTypes()) {
-                for (Promotion promotion: type.getPromotions()) {
-                    for (Image image: promotion.getImages()) {
-                        if (!image.isActive()) {
-                            imageResponses.add(image.toResponse());
-                        }
-                    }
-                }
-            }
-        }
+//        for (Location location: user.getLocations()) {
+//            for (Type type: location.getTypes()) {
+//                for (Promotion promotion: type.getPromotions()) {
+//                    for (Image image: promotion.getImages()) {
+//                        if (!image.isActive()) {
+//                            imageResponses.add(image.toResponse());
+//                        }
+//                    }
+//                }
+//            }
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(imageResponses))
                 .build();

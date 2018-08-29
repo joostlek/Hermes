@@ -48,11 +48,11 @@ public class UserResponse {
         this.locations = new ArrayList<>();
         this.images = new ArrayList<>();
         this.promotions = new ArrayList<>();
-        if (user.getLocations() != null) {
-            for (Location location: user.getLocations()) {
-                this.addLocation(location.toResponse(true));
-            }
-        }
+//        if (user.getLocations() != null) {
+//            for (Location location: user.getLocations()) {
+//                this.addLocation(location.toResponse(true));
+//            }
+//        }
         if (user.getImages() != null) {
             for (Image image: user.getImages()) {
                 this.addImage(image.toResponse(true));
