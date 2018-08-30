@@ -10,4 +10,6 @@ public interface PromotionDAO {
     Promotion update(Promotion promotion);
     boolean delete(Promotion promotion);
     List<Promotion> getAll();
+    List<Promotion> getPromotionsByLocationId(int locationId);
+    List<Promotion> getPromotionsByUserId(int userId);
 }

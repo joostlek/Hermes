@@ -4,57 +4,88 @@ import nl.jtosti.projects.hermes.models.Promotion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 public class PromotionManager extends JPABase implements PromotionDAO {
-    private EntityManager em = super.getConnection();
+
     @Override
     public Promotion get(int id) {
-        return em.find(Promotion.class, id);
+        EntityManager entityManager = super.getConnection();
+        Promotion promotion = entityManager.find(Promotion.class, id);
+        entityManager.close();
+        if (promotion == null) {
+            throw new EntityNotFoundException();
+        }
+        return promotion;
     }
 
     @Override
     public Promotion save(Promotion promotion) {
-        em.getTransaction().begin();
-        em.persist(promotion);
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(promotion.getId());
+        return super.persist(promotion);
     }
 
     @Override
     public Promotion update(Promotion promotion) {
-        em.getTransaction().begin();
-        Promotion dbPromotion = this.get(promotion.getId());
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Promotion dbPromotion = entityManager.find(Promotion.class, promotion.getId());
+        if (dbPromotion == null) {
+            transaction.rollback();
+            entityManager.close();
+            throw new EntityNotFoundException();
+        }
         dbPromotion.setName(promotion.getName());
-//        dbPromotion.setStartDate(promotion.getStartDate());
-//        dbPromotion.setOwner(promotion.getOwner());
-//        dbPromotion.setType(promotion.getType());
-//        dbPromotion.setImages(promotion.getImages());
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(promotion.getId());
+        transaction.commit();
+        entityManager.close();
+        return promotion;
     }
 
     @Override
     public boolean delete(Promotion promotion) {
-        Promotion dbPromotion = this.get(promotion.getId());
-        try {
-            if (dbPromotion != null) {
-                em.getTransaction().begin();
-                em.remove(dbPromotion);
-                em.getTransaction().commit();
-                em.clear();
-                return true;
-            }
-        } catch (EntityNotFoundException e) {
-            System.out.println(promotion.toString() + " not found");
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Promotion dbPromotion = entityManager.find(Promotion.class, promotion.getId());
+        if (dbPromotion == null) {
+            transaction.rollback();
+            entityManager.close();
+            throw new EntityNotFoundException();
         }
-        return false;
+        entityManager.remove(promotion);
+        transaction.commit();
+        entityManager.close();
+        return true;
     }
 
     @Override
     public List<Promotion> getAll() {
-        return em.createQuery("SELECT p FROM Promotion p", Promotion.class).getResultList();
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Promotion");
+        List<Promotion> promotions = query.getResultList();
+        entityManager.close();
+        return promotions;
+    }
+
+    @Override
+    public List<Promotion> getPromotionsByLocationId(int locationId) {
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Promotion where Promotion.type.location.id = ?")
+                .setParameter(0, locationId);
+        List<Promotion> promotions = query.getResultList();
+        entityManager.close();
+        return promotions;
+    }
+
+    @Override
+    public List<Promotion> getPromotionsByUserId(int userId) {
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Promotion where Promotion.owner = ?")
+                .setParameter(0, userId);
+        List<Promotion> promotions = query.getResultList();
+        entityManager.close();
+        return promotions;
     }
 }
