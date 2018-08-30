@@ -36,9 +36,16 @@ public class UserManager extends JPABase implements UserDAO {
         User dbUser = entityManager.find(User.class, user.getId());
         if (dbUser == null) {
             entityManager.close();
-            return null;
+            throw new EntityNotFoundException();
         }
+        dbUser.setFirstName(user.getFirstName());
+        dbUser.setMiddleName(!user.getMiddleName().equals("") ? user.getMiddleName() : null);
+        dbUser.setLastName(user.getLastName());
+        dbUser.setStreet(user.getStreet());
+        dbUser.setHouseNumber(user.getHouseNumber());
+        dbUser.setZipCode(user.getZipCode());
         dbUser.setCity(user.getCity());
+        dbUser.setCountry(user.getCountry());
         transaction.commit();
         entityManager.close();
         return user;
