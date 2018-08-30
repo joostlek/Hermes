@@ -4,28 +4,38 @@ import nl.jtosti.projects.hermes.models.Type;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 public class TypeManager extends JPABase implements TypeDAO {
-    private EntityManager em = super.getConnection();
+
     @Override
     public Type get(int id) {
-        return em.find(Type.class, id);
+        EntityManager entityManager = super.getConnection();
+        Type type = entityManager.find(Type.class, id);
+        entityManager.close();
+        if (type == null) {
+            throw new EntityNotFoundException();
+        }
+        return type;
     }
 
     @Override
     public Type save(Type type) {
-        em.getTransaction().begin();
-        em.persist(type);
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(type.getId());
+        return super.persist(type);
     }
 
     @Override
     public Type update(Type type) {
-        Type dbType = this.get(type.getId());
-        em.getTransaction().begin();
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Type dbType = entityManager.find(Type.class, type.getId());
+        if (dbType == null) {
+            entityManager.close();
+            throw new EntityNotFoundException();
+        }
         dbType.setActive(type.isActive());
         dbType.setAmountOfImages(type.getAmountOfImages());
         dbType.setExclusive(type.isExclusive());
@@ -33,30 +43,36 @@ public class TypeManager extends JPABase implements TypeDAO {
         dbType.setPrice(type.getPrice());
         dbType.setTime(type.getTime());
         dbType.setLocation(type.getLocation());
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(type.getId());
+        transaction.commit();
+        entityManager.close();
+        return type;
     }
 
     @Override
     public boolean delete(Type type) {
-        Type dbType = this.get(type.getId());
-        try {
-            if (dbType != null) {
-                em.getTransaction().begin();
-                em.remove(dbType);
-                em.getTransaction().commit();
-                em.clear();
-                return true;
-            }
-        } catch (EntityNotFoundException e) {
-            System.out.println(type.toString() + " not found");
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Type dbType = entityManager.find(Type.class, type.getId());
+        if (dbType == null) {
+            entityManager.close();
+            throw new EntityNotFoundException();
         }
-        return false;
+        entityManager.remove(dbType);
+        transaction.commit();
+        entityManager.close();
+        return true;
     }
 
     @Override
-    public List<Type> getAll() {
-        return em.createQuery("SELECT t FROM Type t", Type.class).getResultList();
+    public List<Type> getAllByLocationId(int locationId) {
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Type where Type.location.id = ?")
+                .setParameter(0, locationId);
+        List<Type> types = query.getResultList();
+        entityManager.close();
+        return types;
     }
+
+
 }

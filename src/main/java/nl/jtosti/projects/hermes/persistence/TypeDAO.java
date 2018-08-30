@@ -9,5 +9,5 @@ public interface TypeDAO {
     Type save(Type type);
     Type update(Type type);
     boolean delete(Type type);
-    List<Type> getAll();
+    List<Type> getAllByLocationId(int locationId);
 }
