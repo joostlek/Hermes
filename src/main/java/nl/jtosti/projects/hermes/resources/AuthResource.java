@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import nl.jtosti.projects.hermes.models.Roles;
 import nl.jtosti.projects.hermes.models.User;
 import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.util.GsonProvider;
@@ -16,6 +17,12 @@ import java.util.Calendar;
 
 @Path("/auth")
 public class AuthResource {
+    public static final String ROLE_GUEST = "GUEST";
+    public static final String ROLE_SUPERUSER = "SUPERUSER";
+    public static final String ROLE_MANAGER = "MANAGER";
+    public static final String ROLE_ADVERTISER = "ADVERTISER";
+    public static final String ROLE_USER = "USER";
+
     final static public Key key = MacProvider.generateKey();
 
     @POST

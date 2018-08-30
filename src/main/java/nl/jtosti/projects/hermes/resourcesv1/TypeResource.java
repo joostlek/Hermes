@@ -23,9 +23,9 @@ public class TypeResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTypes() {
         List<TypeResponse> typeResponses = new ArrayList<>();
-        for (Type type: ManagerProvider.getTypeManager().getAll()) {
-            typeResponses.add(type.toResponse());
-        }
+//        for (Type type: ManagerProvider.getTypeManager().getAll()) {
+//            typeResponses.add(type.toResponse());
+//        }
         return Response
                 .ok(GsonProvider.getGson().toJson(typeResponses))
                 .build();

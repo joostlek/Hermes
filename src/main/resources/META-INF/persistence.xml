@@ -26,6 +26,7 @@
 
             <property name="hibernate.show_sql" value="true"/>    <!-- true: shows each SQL -->
             <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />  &lt;!&ndash; create: creates database &ndash;&gt;-->
 
         </properties>
