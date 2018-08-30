@@ -1,9 +1,6 @@
 package nl.jtosti.projects.hermes.persistence;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.FlushModeType;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,5 +37,15 @@ public class JPABase {
             throw new ExceptionInInitializerError(ex);
         }
         return em;
+    }
+
+    public <T> T persist(T object) {
+        EntityManager entityManager = this.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(object);
+        transaction.commit();
+        entityManager.close();
+        return object;
     }
 }

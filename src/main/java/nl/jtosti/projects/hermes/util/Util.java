@@ -14,4 +14,8 @@ public class Util {
         }
         return null;
     }
+
+    public static String toDatabase(String password) {
+        return MD5(password);
+    }
 }

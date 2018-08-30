@@ -17,18 +17,15 @@ public class UserManager extends JPABase implements UserDAO {
         EntityManager entityManager = super.getConnection();
         User user = entityManager.find(User.class, id);
         entityManager.close();
+        if (user == null) {
+            throw new EntityNotFoundException();
+        }
         return user;
     }
 
     @Override
     public User save(User user) {
-        EntityManager entityManager = super.getConnection();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(user);
-        transaction.commit();
-        entityManager.close();
-        return user;
+        return super.persist(user);
     }
 
     @Override
@@ -65,29 +62,40 @@ public class UserManager extends JPABase implements UserDAO {
 
     @Override
     public List<User> getAll() {
-//        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
-        return null;
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("select u from User u", User.class);
+        List<User> users = query.getResultList();
+        entityManager.close();
+        return users;
     }
 
     @Override
     public List<User> getAllByLocationId(int locationId) {
-        return null;
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("select UserLocation.user from UserLocation where UserLocation.location.id = ?")
+                .setParameter(0, locationId);
+        List<User> users = query.getResultList();
+        entityManager.close();
+        return users;
     }
 
     @Override
     public User getUserByLogin(String email, String password) {
-//        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-//        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-//        Root<User> userRoot = query.from(User.class);
-//        query.select(userRoot);
-//        query.where(criteriaBuilder.equal(userRoot.get("email"), email),
-//                criteriaBuilder.equal(userRoot.get("password"), Util.MD5(password)));
-//        TypedQuery<User> userQuery = em.createQuery(query);
-//        try {
-//            return userQuery.getSingleResult();
-//        } catch (NoResultException e) {
-//            return null;
-//        }
-        return null;
+        EntityManager entityManager = super.getConnection();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+        Root<User> userRoot = query.from(User.class);
+        query.select(userRoot);
+        query.where(criteriaBuilder.equal(userRoot.get("email"), email),
+                criteriaBuilder.equal(userRoot.get("password"), Util.toDatabase(password)));
+        TypedQuery<User> userQuery = entityManager.createQuery(query);
+        try {
+            User user = userQuery.getSingleResult();
+            entityManager.close();
+            return user;
+        } catch (NoResultException e) {
+            entityManager.close();
+            return null;
+        }
     }
 }
