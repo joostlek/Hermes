@@ -9,5 +9,6 @@ public interface ScreenDAO {
     Screen save(Screen screen);
     Screen update(Screen screen);
     boolean delete(Screen screen);
+    List<Screen> getAllByLocationId(int locationId);
     List<Screen> getAll();
 }

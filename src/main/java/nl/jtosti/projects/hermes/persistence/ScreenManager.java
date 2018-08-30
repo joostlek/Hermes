@@ -4,55 +4,80 @@ import nl.jtosti.projects.hermes.models.Screen;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 public class ScreenManager extends JPABase implements ScreenDAO {
-    private EntityManager em = super.getConnection();
+
     @Override
     public Screen get(int id) {
-        return em.find(Screen.class, id);
+        EntityManager entityManager = super.getConnection();
+        Screen screen = entityManager.find(Screen.class, id);
+        entityManager.close();
+        if (screen == null) {
+            throw new EntityNotFoundException();
+        }
+        return screen;
     }
 
     @Override
     public Screen save(Screen screen) {
-        em.getTransaction().begin();
-        em.persist(screen);
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(screen.getId());
+        return super.persist(screen);
     }
 
     @Override
     public Screen update(Screen screen) {
-        Screen dbScreen = this.get(screen.getId());
-        em.getTransaction().begin();
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Screen dbScreen = entityManager.find(Screen.class, screen.getId());
+        if (dbScreen == null) {
+            transaction.rollback();
+            entityManager.close();
+            throw new EntityNotFoundException();
+        }
         dbScreen.setName(screen.getName());
         dbScreen.setHeight(screen.getHeight());
         dbScreen.setWidth(screen.getWidth());
-        em.getTransaction().commit();
-        em.clear();
-        return this.get(screen.getId());
+        transaction.commit();
+        entityManager.close();
+        return screen;
     }
 
     @Override
     public boolean delete(Screen screen) {
-        Screen dbScreen = this.get(screen.getId());
-        try {
-            if (dbScreen != null) {
-                em.getTransaction().begin();
-                em.remove(dbScreen);
-                em.getTransaction().commit();
-                em.clear();
-                return true;
-            }
-        } catch (EntityNotFoundException e) {
-            System.out.println(screen.toString() + " not found");
+        EntityManager entityManager = super.getConnection();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Screen dbScreen = entityManager.find(Screen.class, screen.getId());
+        if (dbScreen == null) {
+            transaction.rollback();
+            entityManager.close();
+            throw new EntityNotFoundException();
         }
-        return false;
+        entityManager.remove(dbScreen);
+        transaction.commit();
+        entityManager.close();
+        return true;
+    }
+
+    @Override
+    public List<Screen> getAllByLocationId(int locationId) {
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Screen where location.id = ?")
+                .setParameter(0, locationId);
+        List<Screen> screens = query.getResultList();
+        entityManager.close();
+        return screens;
     }
 
     @Override
     public List<Screen> getAll() {
-        return em.createQuery("SELECT s FROM Screen s", Screen.class).getResultList();
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("from Screen");
+        List<Screen> screens = query.getResultList();
+        entityManager.close();
+        return screens;
     }
 }
