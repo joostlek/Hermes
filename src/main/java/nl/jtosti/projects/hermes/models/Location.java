@@ -163,4 +163,13 @@ public class Location {
     public LocationResponse toResponse() {
         return new LocationResponse(this);
     }
+
+    public User getOwner() {
+        for (UserLocation userLocation : this.users) {
+            if (userLocation.getRole().equals(Roles.MANAGER)) {
+                return userLocation.getUser();
+            }
+        }
+        return null;
+    }
 }

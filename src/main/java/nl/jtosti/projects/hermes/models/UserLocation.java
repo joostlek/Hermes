@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.models;
 
+import nl.jtosti.projects.hermes.responses.UserLocationResponse;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -89,5 +91,13 @@ public class UserLocation {
     @Override
     public int hashCode() {
         return Objects.hash(id, user, location, createdOn, role);
+    }
+
+    public UserLocationResponse toResponse(boolean user) {
+        return new UserLocationResponse(this, true);
+    }
+
+    public UserLocationResponse toResponse() {
+        return new UserLocationResponse(this);
     }
 }

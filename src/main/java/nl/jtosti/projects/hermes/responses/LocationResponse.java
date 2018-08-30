@@ -30,16 +30,16 @@ public class LocationResponse {
         this.zipCode = location.getZipCode();
         this.city = location.getCity();
         this.country = location.getCountry();
-//        this.owner = location.getOwner().toResponse(true);
+        this.owner = location.getOwner().toResponse(true);
         this.types = new ArrayList<>();
         this.screens = new ArrayList<>();
         if (location.getTypes() != null) {
-            for (Type type: location.getTypes()) {
+            for (Type type : location.getTypes()) {
                 addType(type.toResponse(true));
             }
         }
         if (location.getScreens() != null) {
-            for (Screen screen: location.getScreens()) {
+            for (Screen screen : location.getScreens()) {
                 addScreen(screen.toResponse(true));
             }
         }

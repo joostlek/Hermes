@@ -27,7 +27,7 @@ public class ScreenResponse {
         this.location = screen.getLocation().toResponse(true);
         this.images = new ArrayList<>();
         if (screen.getImages() != null) {
-            for (Image image: screen.getImages()) {
+            for (Image image : screen.getImages()) {
                 addImage(image.toResponse(true));
             }
         }

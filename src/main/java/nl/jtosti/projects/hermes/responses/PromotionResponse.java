@@ -26,7 +26,7 @@ public class PromotionResponse {
         this.type = promotion.getType().toResponse(true);
         this.images = new ArrayList<>();
         if (promotion.getImages() != null) {
-            for (Image image: promotion.getImages()) {
+            for (Image image : promotion.getImages()) {
                 addImage(image.toResponse(true));
             }
         }
