@@ -11,6 +11,7 @@ public interface ImageDAO {
     Image update(Image image);
     boolean delete(Image image);
     List<Image> getAllByLocationId(int locationId);
-    List<Image> getUncheckedImages(User user);
+    List<Image> getUncheckedImagesByLocationId(int locationId);
     Image updateActive(Image image);
+    List<Image> getActiveByScreenId(int screenId);
 }
