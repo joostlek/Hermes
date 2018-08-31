@@ -101,8 +101,8 @@ public class UserResource {
                     .build();
         }
         try {
-            boolean succes = ManagerProvider.getUserManager().delete(user);
-            if (succes) {
+            boolean success = ManagerProvider.getUserManager().delete(user);
+            if (success) {
                 return Response
                         .ok()
                         .build();
