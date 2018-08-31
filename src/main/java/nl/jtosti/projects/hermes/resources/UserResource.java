@@ -81,7 +81,7 @@ public class UserResource {
         User user = GsonProvider.getGson().fromJson(body, User.class);
         if (user == null) {
             return Response
-                    .status(Response.Status.BAD_REQUEST)
+                    .status(Response.Status.NOT_FOUND)
                     .build();
         }
         User createdUser = ManagerProvider.getUserManager().save(user);
@@ -90,5 +90,31 @@ public class UserResource {
                 .build();
     }
 
-
+    @DELETE
+    @Path("/{id: \\d+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteUser(@PathParam("id") int id) {
+        User user = ManagerProvider.getUserManager().get(id);
+        if (user == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        try {
+            boolean succes = ManagerProvider.getUserManager().delete(user);
+            if (succes) {
+                return Response
+                        .ok()
+                        .build();
+            } else {
+                return Response
+                        .status(Response.Status.NOT_MODIFIED)
+                        .build();
+            }
+        } catch (EntityNotFoundException e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+    }
 }
