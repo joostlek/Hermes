@@ -11,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class UserResource {
         try {
             User user = ManagerProvider.getUserManager().get(id);
             return Response
-                    .ok(GsonProvider.getGson().toJson(user))
+                    .ok(GsonProvider.getGson().toJson(user.toResponse()))
                     .build();
         } catch (EntityNotFoundException e) {
             return Response
@@ -55,7 +56,7 @@ public class UserResource {
     @RolesAllowed({AuthResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(@Context SecContext context, @PathParam("id") int id, String body) {
+    public Response updateUser(@Context SecurityContext context, @PathParam("id") int id, String body) {
         if (!context.getUserPrincipal().getName().equals(Integer.toString(id))) {
             return Response
                     .status(Response.Status.UNAUTHORIZED)
@@ -69,7 +70,7 @@ public class UserResource {
         }
         User updatedUser = ManagerProvider.getUserManager().update(user);
         return Response
-                .ok(GsonProvider.getGson().toJson(updatedUser))
+                .ok(GsonProvider.getGson().toJson(updatedUser.toResponse()))
                 .build();
     }
 
