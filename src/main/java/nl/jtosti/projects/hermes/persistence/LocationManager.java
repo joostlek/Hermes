@@ -1,6 +1,7 @@
 package nl.jtosti.projects.hermes.persistence;
 
 import nl.jtosti.projects.hermes.models.Location;
+import nl.jtosti.projects.hermes.models.UserLocation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -77,10 +78,21 @@ public class LocationManager extends JPABase implements LocationDAO {
     @Override
     public List<Location> getLocationsByUserId(int userId) {
         EntityManager entityManager = super.getConnection();
-        Query query = entityManager.createQuery("select UserLocation.location from UserLocation where UserLocation.user.id = ?")
+        Query query = entityManager.createQuery("select UserLocation.location from UserLocation where UserLocation.user.id = ?", Location.class)
                 .setParameter(0, userId);
         List<Location> locations = query.getResultList();
         entityManager.close();
         return locations;
+    }
+
+    @Override
+    public boolean isUserAssociated(int locationId, int userId) {
+        EntityManager entityManager = super.getConnection();
+        Query query = entityManager.createQuery("select UserLocation from UserLocation where location.id = ? and user.id = ?")
+                .setParameter(0, locationId)
+                .setParameter(1, userId);
+        UserLocation userLocation = (UserLocation) query.getSingleResult();
+        entityManager.close();
+        return userLocation != null;
     }
 }

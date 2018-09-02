@@ -11,4 +11,5 @@ public interface LocationDAO {
     boolean delete(Location location);
     List<Location> getAll();
     List<Location> getLocationsByUserId(int userId);
+    boolean isUserAssociated(int locationId, int userId);
 }
