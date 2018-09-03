@@ -80,10 +80,11 @@ public class PromotionManager extends JPABase implements PromotionDAO {
     }
 
     @Override
-    public List<Promotion> getPromotionsByUserId(int userId) {
+    public List<Promotion> getPromotionsByLocationIdByUserId(int locationId, int userId) {
         EntityManager entityManager = super.getConnection();
-        Query query = entityManager.createQuery("from Promotion where Promotion.owner = ?")
-                .setParameter(0, userId);
+        Query query = entityManager.createQuery("from Promotion where Promotion.owner.id = ? and Promotion.type.location.id = ?")
+                .setParameter(0, userId)
+                .setParameter(1, locationId);
         List<Promotion> promotions = query.getResultList();
         entityManager.close();
         return promotions;

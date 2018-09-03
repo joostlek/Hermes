@@ -11,5 +11,5 @@ public interface PromotionDAO {
     boolean delete(Promotion promotion);
     List<Promotion> getAll();
     List<Promotion> getPromotionsByLocationId(int locationId);
-    List<Promotion> getPromotionsByUserId(int userId);
+    List<Promotion> getPromotionsByLocationIdByUserId(int locationId, int userId);
 }
