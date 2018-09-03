@@ -1,5 +1,7 @@
 package nl.jtosti.projects.hermes.resources;
 
+import com.google.gson.JsonSyntaxException;
+import nl.jtosti.projects.hermes.models.Type;
 import nl.jtosti.projects.hermes.models.User;
 import nl.jtosti.projects.hermes.persistence.ManagerProvider;
 import nl.jtosti.projects.hermes.responses.UserResponse;
@@ -7,6 +9,7 @@ import nl.jtosti.projects.hermes.util.GsonProvider;
 
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.RollbackException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -46,32 +49,45 @@ public class UserResource {
                     .build();
         } catch (EntityNotFoundException e) {
             return Response
-                    .status(404)
+                    .status(Response.Status.NOT_FOUND)
                     .build();
         }
     }
 
     @PUT
-    @Path("{id: \\d+}")
+    @Path("/{id: \\d+}")
     @RolesAllowed({AuthResource.ROLE_USER})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(@Context SecurityContext context, @PathParam("id") int id, String body) {
-        if (!context.getUserPrincipal().getName().equals(Integer.toString(id))) {
-            return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .build();
-        }
-        User user = GsonProvider.getGson().fromJson(body, User.class);
-        if (user == null) {
+        try {
+            if (id == Integer.parseInt(context.getUserPrincipal().getName())) {
+                User user = ManagerProvider.getUserManager().get(id);
+                User user1 = GsonProvider.getGson().fromJson(body, User.class);
+                if (user.getId() == user1.getId()) {
+                    user = ManagerProvider.getUserManager().update(user1);
+                    return Response
+                            .ok(GsonProvider.getGson().toJson(user))
+                            .build();
+                } else {
+                    return Response
+                            .status(Response.Status.UNAUTHORIZED)
+                            .build();
+                }
+            } else {
+                return Response
+                        .status(Response.Status.UNAUTHORIZED)
+                        .build();
+            }
+        } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .build();
+        } catch (JsonSyntaxException e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
         }
-        User updatedUser = ManagerProvider.getUserManager().update(user);
-        return Response
-                .ok(GsonProvider.getGson().toJson(updatedUser.toResponse()))
-                .build();
     }
 
     @POST
@@ -79,29 +95,41 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(String body) {
-        User user = GsonProvider.getGson().fromJson(body, User.class);
-        if (user == null) {
+        try {
+            User user = GsonProvider.getGson().fromJson(body, User.class);
+            User createdUser = ManagerProvider.getUserManager().save(user);
             return Response
-                    .status(Response.Status.NOT_FOUND)
+                    .ok(GsonProvider.getGson().toJson(createdUser))
                     .build();
+        } catch (JsonSyntaxException e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        } catch (RollbackException e) {
+            System.out.println(e.getCause().getCause().getCause().getMessage());
+            if (e.getCause().getCause().getCause().toString().contains("email")) {
+                return Response
+                        .status(Response.Status.CONFLICT)
+                        .build();
+            } else {
+                return Response
+                        .status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .build();
+            }
         }
-        User createdUser = ManagerProvider.getUserManager().save(user);
-        return Response
-                .ok(GsonProvider.getGson().toJson(createdUser))
-                .build();
     }
 
     @DELETE
     @Path("/{id: \\d+}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteUser(@PathParam("id") int id) {
-        User user = ManagerProvider.getUserManager().get(id);
-        if (user == null) {
-            return Response
-                    .status(Response.Status.NOT_FOUND)
-                    .build();
-        }
+    public Response deleteUser(@Context SecurityContext context, @PathParam("id") int id) {
         try {
+            if (id != Integer.parseInt(context.getUserPrincipal().getName())) {
+                return Response
+                        .status(Response.Status.UNAUTHORIZED)
+                        .build();
+            }
+            User user = ManagerProvider.getUserManager().get(id);
             boolean success = ManagerProvider.getUserManager().delete(user);
             if (success) {
                 return Response

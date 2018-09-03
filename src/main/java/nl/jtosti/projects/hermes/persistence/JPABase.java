@@ -39,7 +39,7 @@ public class JPABase {
         return em;
     }
 
-    public <T> T persist(T object) {
+    <T> T persist(T object) {
         EntityManager entityManager = this.getConnection();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();

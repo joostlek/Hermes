@@ -2,7 +2,6 @@ package nl.jtosti.projects.hermes.resources;
 
 import nl.jtosti.projects.hermes.models.Roles;
 import nl.jtosti.projects.hermes.models.User;
-import nl.jtosti.projects.hermes.resourcesv1.AuthenticationResource;
 
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
