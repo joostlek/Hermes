@@ -143,6 +143,10 @@ public class Image {
         return "<Image " + this.name + ">";
     }
 
+    public ImageResponse toScreenResponse() {
+        return this.toResponse();
+    }
+
     public ImageResponse toResponse() {
         return new ImageResponse(this);
     }
