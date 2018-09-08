@@ -14,6 +14,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.security.Key;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 @Path("/auth")
 public class AuthResource {
@@ -43,7 +45,9 @@ public class AuthResource {
                     .setExpiration(expiration.getTime())
                     .signWith(SignatureAlgorithm.HS512, key)
                     .compact();
-            return Response.ok(GsonProvider.getGson().toJson(token)).build();
+            Map<String, String> res = new HashMap<>();
+            res.put(token, token);
+            return Response.ok(GsonProvider.getGson().toJson(res)).build();
         } catch (JwtException | IllegalArgumentException e) {
             System.out.println(e.toString());
             return Response.status(Response.Status.UNAUTHORIZED).build();
