@@ -13,8 +13,8 @@ const routes: Routes = [{
     path: 'dashboard',
     component: ECommerceComponent,
   }, {
-    path: 'iot-dashboard',
-    component: DashboardComponent,
+    path: 'location',
+    loadChildren: './location-dashboard/location-dashboard.module#LocationDashboardModule',
   }, {
     path: 'ui-features',
     loadChildren: './ui-features/ui-features.module#UiFeaturesModule',

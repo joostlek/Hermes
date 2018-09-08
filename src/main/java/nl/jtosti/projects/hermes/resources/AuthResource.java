@@ -29,9 +29,12 @@ public class AuthResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response authenticateUser(@FormParam("email") String email,
-                                     @FormParam("password") String password) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response authenticateUser(String body) {
+        Map<String,Object> map = new HashMap<>();
+        map = (Map<String,Object>) GsonProvider.getGson().fromJson(body, map.getClass());
+        String email = (String) map.get("email");
+        String password = (String) map.get("password");
         try {
             User user = ManagerProvider.getUserManager().getUserByLogin(email, password);
             if (user == null) {
@@ -46,7 +49,7 @@ public class AuthResource {
                     .signWith(SignatureAlgorithm.HS512, key)
                     .compact();
             Map<String, String> res = new HashMap<>();
-            res.put(token, token);
+            res.put("token", token);
             return Response.ok(GsonProvider.getGson().toJson(res)).build();
         } catch (JwtException | IllegalArgumentException e) {
             System.out.println(e.toString());

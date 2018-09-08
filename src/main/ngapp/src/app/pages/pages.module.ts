@@ -24,8 +24,8 @@ const PAGES_COMPONENTS = [
     ...PAGES_COMPONENTS,
   ],
   providers: [
-    DataModule.forRoot().providers
-  ]
+    DataModule.forRoot().providers,
+  ],
 })
 export class PagesModule {
 }

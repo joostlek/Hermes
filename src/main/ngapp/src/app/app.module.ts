@@ -14,6 +14,18 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy} from '@nebular/auth';
+
+
+
+const formSetting: any = {
+  redirectDelay: 0,
+  strategy: 'email',
+  alwaysFail: true,
+  showMessages: {
+    success: false,
+  },
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +38,43 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+
+
+    NbAuthModule.forRoot({
+        strategies: [
+          NbPasswordAuthStrategy.setup({
+            name: 'email',
+            token: {
+              class: NbAuthJWTToken,
+              key: 'token',
+            },
+            baseEndpoint: 'http://localhost:4200/api/v2',
+            login: {
+              endpoint: '/auth',
+              method: 'post',
+            },
+            register: {
+              endpoint: '/user',
+            },
+          }),
+        ],
+        forms: {
+          // login: formSetting,
+          // register: formSetting,
+          // requestPassword: formSetting,
+          // resetPassword: formSetting,
+          // logout: {
+          //   redirectDelay: 0,
+          // },
+          validation: {
+            password: {
+              required: true,
+              minLength: 0,
+            },
+          },
+        },
+      },
+    ),
   ],
   bootstrap: [AppComponent],
   providers: [
