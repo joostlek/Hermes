@@ -12,9 +12,9 @@
     size="medium"
     [class.right]="position === 'normal'"
     [class.left]="position === 'inverse'">
-    <nb-action icon="ion-log-out" class="" (click)="toggleSettings()"></nb-action>
+    <nb-action icon="ion-log-out" class="" (click)="logout()"></nb-action>
     <nb-action *nbIsGranted="['view', 'user']" >
-      <nb-user [name]="user?.name" [picture]="user?.picture"></nb-user>
+      <nb-user [name]="user?.getFullName()" [picture]="user?.photoUrl"></nb-user>
     </nb-action>
   </nb-actions>
 </div>

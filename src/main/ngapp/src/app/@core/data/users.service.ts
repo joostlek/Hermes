@@ -1,11 +1,17 @@
-import {Observable, of as observableOf} from 'rxjs';
+import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
+import {User} from './domain/user';
+import {Location} from './domain/location';
+import {filter, share} from 'rxjs/operators';
 
 
 let counter = 0;
 
 @Injectable()
 export class UserService {
+
+  protected currentUser$: BehaviorSubject<User> = new BehaviorSubject(null);
 
   private users = {
     nick: {name: 'Nick Jones', picture: 'assets/images/nick.png'},
@@ -18,7 +24,15 @@ export class UserService {
 
   private userArray: any[];
 
-  constructor() {
+  constructor(private authService: NbAuthService) {
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+        if (token.isValid()) {
+          this.updateCurrentUser(token.getPayload()['sub']);
+        } else {
+          this.currentUser$.next(null);
+        }
+      });
     // this.userArray = Object.values(this.users);
   }
 
@@ -33,5 +47,28 @@ export class UserService {
   getUser(): Observable<any> {
     counter = (counter + 1) % this.userArray.length;
     return observableOf(this.userArray[counter]);
+  }
+
+  getUserById(id: number): Observable<User> {
+    return observableOf(new User(1, 'Joost', undefined, 'Lekkerkerker', 'a@a.com', 'SUPERUSER', '', [], [], [], '', '', '', '', '', ''));
+  }
+
+  updateCurrentUser(id: number): void {
+    this.getUserById(id)
+      .subscribe((user: User) => {
+        this.pushUser(user);
+      });
+  }
+
+  pushUser(user: User): void {
+    this.currentUser$.next(user);
+  }
+
+  onUserLogin(): Observable<User> {
+    return this.currentUser$
+      .pipe(
+        filter(value => !!value),
+        share(),
+      );
   }
 }

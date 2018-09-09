@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {NbMenuItem} from '@nebular/theme';
 import {UserService} from '../@core/data/users.service';
 import {Location} from '../@core/data/domain/location';
-import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 @Component({
   selector: 'ngx-pages',
@@ -27,6 +27,7 @@ export class PagesComponent {
       });
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
+        console.log('lel');
         this.token = token.toString();
         this.menu = this.getItemList();
       });

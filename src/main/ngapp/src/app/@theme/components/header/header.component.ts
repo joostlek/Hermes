@@ -4,6 +4,8 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
+import {User} from '../../../@core/data/domain/user';
+import {NbAuthService} from '@nebular/auth';
 
 @Component({
   selector: 'ngx-header',
@@ -14,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
 
-  user: any;
+  user: User;
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
@@ -22,12 +24,15 @@ export class HeaderComponent implements OnInit {
               private menuService: NbMenuService,
               private userService: UserService,
               private analyticsService: AnalyticsService,
-              private layoutService: LayoutService) {
+              private layoutService: LayoutService,
+              private authService: NbAuthService) {
   }
 
   ngOnInit() {
-    this.userService.getUsers()
-      .subscribe((users: any) => this.user = users.nick);
+    // this.userService.getUsers()
+    //   .subscribe((users: any) => this.user = users.nick);
+    this.userService.onUserLogin()
+      .subscribe((user: User) => this.user = user);
   }
 
   toggleSidebar(): boolean {
@@ -49,5 +54,9 @@ export class HeaderComponent implements OnInit {
 
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
+  }
+
+  logout() {
+    this.authService.logout('email').subscribe(() => {});
   }
 }

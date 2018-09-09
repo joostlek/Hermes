@@ -28,6 +28,7 @@ public class AuthResource {
     final static public Key key = MacProvider.generateKey();
 
     @POST
+    @Path("login")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response authenticateUser(String body) {
@@ -55,5 +56,13 @@ public class AuthResource {
             System.out.println(e.toString());
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+    }
+
+    @POST
+    @Path("logout")
+    public Response logOut(String body) {
+        return Response
+                .ok()
+                .build();
     }
 }

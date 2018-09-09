@@ -48,13 +48,17 @@ const formSetting: any = {
               class: NbAuthJWTToken,
               key: 'token',
             },
-            baseEndpoint: 'http://localhost:4200/api/v2',
+            baseEndpoint: 'http://localhost:4200/api/v2/auth/',
             login: {
-              endpoint: '/auth',
+              endpoint: 'login',
               method: 'post',
             },
             register: {
-              endpoint: '/user',
+              endpoint: 'user',
+            },
+            logout: {
+              endpoint: 'logout',
+              method: 'post',
             },
           }),
         ],
@@ -63,9 +67,9 @@ const formSetting: any = {
           // register: formSetting,
           // requestPassword: formSetting,
           // resetPassword: formSetting,
-          // logout: {
-          //   redirectDelay: 0,
-          // },
+          logout: {
+            redirectDelay: 0,
+          },
           validation: {
             password: {
               required: true,
