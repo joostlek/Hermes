@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActionsComponent} from './actions/actions.component';
+
 
 @Component({
   selector: 'ngx-location-dashboard',

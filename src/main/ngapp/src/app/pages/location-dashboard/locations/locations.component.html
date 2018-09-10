@@ -1,0 +1,20 @@
+<nb-card accent="success">
+  <nb-card-header>
+    <span>Your Locations</span>
+  </nb-card-header>
+  <nb-card-body>
+    <ul class="location-list">
+      <li *ngFor="let location of user.locations" (click)="selectLocation(location['location']['id'])">
+        <div class="location-name">
+          {{ location['location']['name'] }}
+        </div>
+        <div class="location-role">
+          <div class="value">{{ getRoleName(location['role']) }}</div>
+        </div>
+        <div class="location-select">
+          <i class="nb-arrow-right"></i>
+        </div>
+      </li>
+    </ul>
+  </nb-card-body>
+</nb-card>

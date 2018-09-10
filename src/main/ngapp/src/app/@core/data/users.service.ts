@@ -2,7 +2,6 @@ import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 import {User} from './domain/user';
-import {Location} from './domain/location';
 import {filter, share} from 'rxjs/operators';
 
 
@@ -50,7 +49,9 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<User> {
-    return observableOf(new User(1, 'Joost', undefined, 'Lekkerkerker', 'a@a.com', 'SUPERUSER', '', [], [], [], '', '', '', '', '', ''));
+    return observableOf(new User(1, 'Joost', undefined, 'Lekkerkerker', 'a@a.com',
+      'SUPERUSER', '', [JSON.parse('{"location": {"id": 1, "name": "Cafetaria Vikas"},"role": "MANAGER"}')],
+      [], [], '', '', '', '', '', ''));
   }
 
   updateCurrentUser(id: number): void {
@@ -70,5 +71,9 @@ export class UserService {
         filter(value => !!value),
         share(),
       );
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser$.getValue();
   }
 }

@@ -1,0 +1,72 @@
+@import '../../../@theme/styles/themes';
+@import '~@nebular/theme/styles/global/typography/typography';
+
+@include nb-install-component() {
+  nb-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+  }
+
+  nb-card-body {
+    padding: 0;
+  }
+
+  .location-list {
+    padding: 0;
+    margin: 0;
+  }
+
+  .location-list li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    color: nb-theme(color-fg);
+    padding: nb-theme(card-padding);
+    cursor: pointer;
+    border-bottom:
+      nb-theme(list-item-border-width)
+      nb-theme(card-header-border-type)
+      nb-theme(separator);
+
+    &:first-child {
+      border-top:
+        nb-theme(list-item-border-width)
+        nb-theme(card-header-border-type)
+        nb-theme(separator);
+    }
+
+    &:hover {
+      background-color: nb-theme(layout-bg);
+
+      &::before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 6px;
+        left: 0;
+        top: 0;
+        background-color: nb-theme(color-success);
+        border-radius: nb-theme(radius);
+      }
+    }
+  }
+
+  .location-select {
+    color: nb-theme(color-fg-heading);
+    font-size: 2.0rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .location-name {
+    //margin-top: 0.5rem;
+    font-size: 1.25rem;
+    color: nb-theme(color-success);
+  }
+}
