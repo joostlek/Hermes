@@ -1,0 +1,12 @@
+<nb-card [ngClass]="{'off': false}">
+  <div class="icon-container">
+    <div class="icon success">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <div class="details">
+    <div class="amount">{{ amount }}</div>
+    <div class="title">{{ name }}</div>
+  </div>
+</nb-card>
