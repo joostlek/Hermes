@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionsComponent} from './actions/actions.component';
+import {LocationService} from '../../@core/data/location.service';
 
 
 @Component({
@@ -9,7 +10,9 @@ import { ActionsComponent} from './actions/actions.component';
 })
 export class LocationDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private locationService: LocationService) {
+    this.locationService.pushCurrentLocation(null);
+  }
 
   ngOnInit() {
   }

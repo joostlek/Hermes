@@ -20,7 +20,6 @@ export class LocationService {
   onCurrentLocationChange(): Observable<Location> {
     return this.currentLocation$
       .pipe(
-        filter(value => !!value),
         share(),
       );
   }
@@ -34,7 +33,7 @@ export class LocationService {
   }
 
   getLocationById(id: number): Observable<Location> {
-    return observableOf(new Location(1, '', {}, [], '', '', '', '', ''));
+    return observableOf(new Location(1, 'Cafetaria Vikas', {}, [], '', '', '', '', ''));
   }
 
   pushCurrentLocation(location: Location): boolean {

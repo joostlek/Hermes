@@ -3,7 +3,8 @@ import {Component} from '@angular/core';
 import {NbMenuItem} from '@nebular/theme';
 import {UserService} from '../@core/data/users.service';
 import {Location} from '../@core/data/domain/location';
-import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
+import {User} from '../@core/data/domain/user';
+import {LocationService} from '../@core/data/location.service';
 
 @Component({
   selector: 'ngx-pages',
@@ -15,91 +16,130 @@ import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
   `,
 })
 export class PagesComponent {
-  user: any;
-  token: string;
+  user: User;
+  location: Location;
+  role = '';
 
   constructor(private userService: UserService,
-              private authService: NbAuthService) {
-    this.userService.getUsers()
-      .subscribe((users: any) => {
-        this.user = users.nick;
-        this.menu = this.getItemList();
+              private locationService: LocationService) {
+    this.userService.onUserLogin()
+      .subscribe((user: User) => {
+        this.user = user;
+        this.updateMenu();
       });
-    this.authService.onTokenChange()
-      .subscribe((token: NbAuthJWTToken) => {
-        console.log('lel');
-        this.token = token.toString();
-        this.menu = this.getItemList();
+    this.locationService.onCurrentLocationChange()
+      .subscribe((location: Location) => {
+        this.location = location;
+        this.updateMenu();
       });
+    this.updateMenu();
   }
+
   menu = [];
 
+  updateMenu(): void {
+    this.getCurrentRole();
+    this.menu = this.getItemList();
+  }
+
+  getCurrentRole(): void {
+    if (this.location != null && this.user != null) {
+      for (let i = 0; i < this.user.locations.length; i++) {
+        if (this.user.locations[i]['location']['id'] === this.location.id) {
+          this.role = this.user.locations[i]['role'];
+        }
+      }
+    } else {
+      this.role = '';
+    }
+  }
+
   getItemList(): NbMenuItem[] {
-    return [
+    const res: NbMenuItem[] = [];
+    res.push(
       {
         title: 'Change locations',
         icon: 'nb-shuffle',
         link: '/pages/location',
-        home: true,
-      },
-      {
-        title: 'Cafetaria Vikas',
+        home: this.location == null,
+      });
+    if (this.location != null) {
+      res.push({
+        title: this.location.name,
         icon: 'nb-location',
         link: '/pages/dashboard',
-      },
-      {
-        title: 'Manage',
-        icon: 'nb-edit',
-        link: '/pages/ui-features',
-        children: [
+        home: this.location != null,
+      });
+      if (this.role === 'MANAGER') {
+        res.push(
           {
-            title: 'Buttons',
-            link: '/pages/ui-features/buttons',
-          },
+            title: 'Manage',
+            icon: 'nb-edit',
+            children: [
+              {
+                title: 'Images',
+                link: '/pages/manage/images'
+              },
+              {
+                title: 'Promotions',
+                link: '/pages/manage/promotions'
+              },
+              {
+                title: 'Types',
+                link: '/pages/manage/types'
+              },
+              {
+                title: 'Invoices',
+                link: '/pages/manage/invoices'
+              },
+              {
+                title: 'Advertisers',
+                link: '/pages/manage/advertisers'
+              },
+            ],
+          });
+      }
+      if (this.role === 'MANAGER' || this.role === 'ADVERTISER') {
+        res.push(
           {
-            title: 'Grid',
-            link: '/pages/ui-features/grid',
-          },
-          {
-            title: 'Icons',
-            link: '/pages/ui-features/icons',
-          },
-          {
-            title: 'Modals',
-            link: '/pages/ui-features/modals',
-          },
-          {
-            title: 'Popovers',
-            link: '/pages/ui-features/popovers',
-          },
-          {
-            title: 'Typography',
-            link: '/pages/ui-features/typography',
-          },
-          {
-            title: 'Animated Searches',
-            link: '/pages/ui-features/search-fields',
-          },
-          {
-            title: 'Tabs',
-            link: '/pages/ui-features/tabs',
-          },
-        ],
-      },
-      {
-        title: 'Advertise',
-        icon: 'nb-bar-chart',
-        children: [
-          {
-            title: 'Form Inputs',
-            link: '/pages/forms/inputs',
-          },
-          {
-            title: 'Form Layouts',
-            link: '/pages/forms/layouts',
-          },
-        ],
-      },
-    ];
+            title: 'Advertise',
+            icon: 'nb-bar-chart',
+            children: [
+              {
+                title: 'Promotions',
+                link: '/pages/advertise/promotions',
+              },
+              {
+                title: 'Images',
+                link: '/pages/advertise/images',
+              },
+              {
+                title: 'Invoices',
+                link: '/pages/advertise/invoices',
+              },
+            ],
+          }
+        );
+      }
+    }
+    if (this.user != null && this.user.role === 'SUPERUSER') {
+      res.push(
+        {
+          title: 'Superuser',
+          icon: 'nb-star',
+          children: [
+            {
+              title: 'Users',
+              link: '/pages/users',
+            },
+            {
+              title: 'Screens',
+              link: '/pages/screens',
+            }
+          ]
+        }
+      );
+    }
+    return res;
   }
 }
