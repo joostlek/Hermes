@@ -13,6 +13,7 @@ before_install:
 - chmod +x mvnw
 
 addons:
+  chrome: stable
   sonarcloud:
     organization: "joostlek-github"
     token: $SONAR_TOKEN
