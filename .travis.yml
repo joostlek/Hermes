@@ -1,0 +1,41 @@
+sudo: required
+language: java
+jdk: openjdk10
+
+services:
+- docker
+- postgresql
+
+before_script:
+- psql -c 'create database travis_ci_test;' -U postgres
+
+before_install:
+- chmod +x mvnw
+
+addons:
+  sonarcloud:
+    organization: "joostlek-github"
+    token: $SONAR_TOKEN
+
+script:
+- ./mvnw clean install -B
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=joostlek_Hermes -Dsonar.organization=joostlek-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+
+cache:
+  directories:
+  - '$HOME/.m2/repository'
+  - '$HOME/.sonar/cache'
+
+after_success:
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+- export IMAGE_NAME=joostlek/hermes
+- docker build -t $IMAGE_NAME:${TRAVIS_COMMIT::7} .
+- docker tag $IMAGE_NAME:{$TRAVIS_COMMIT::7} $IMAGE_NAME:$TAG
+- docker push $IMAGE_NAME
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app:
+    master: joostlekhermes
