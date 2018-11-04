@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp "target/dependency/*" webapp.runner.launch.Main --port $PORT target/*.war
+web java -Dserver.port=$PORT -Dspring.profiles.active=heroku $JAVA_OPTS -jar target/hermes-0.0.1-SNAPSHOT-exec.jar
