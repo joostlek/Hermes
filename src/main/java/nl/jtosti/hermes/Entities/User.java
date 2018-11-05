@@ -14,7 +14,8 @@ public class User {
     private String firstName;
     private String lastName;
 
-    protected User() {}
+    protected User() {
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
