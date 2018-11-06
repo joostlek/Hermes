@@ -3,25 +3,22 @@ package nl.jtosti.hermes.Entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
 @ToString
 @EqualsAndHashCode
-public class Location {
+@AllArgsConstructor
+public class Screen {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String name;
+    private String naam;
+    private int width;
+    private int height;
 
-    @OneToMany(mappedBy = "location")
-    private List<Screen> screens = new ArrayList<>();
-
-    @Column(name = "owner")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User owner;
+    private Location location;
 }
