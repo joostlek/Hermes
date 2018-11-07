@@ -14,6 +14,10 @@ before_script:
 before_install:
 - chmod +x mvnw
 
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::7}
+
 addons:
   apt:
     sources:
@@ -38,8 +42,8 @@ after_success:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - export IMAGE_NAME=joostlek/hermes
-- docker build -t $IMAGE_NAME:${TRAVIS_COMMIT::7} .
-- docker tag $IMAGE_NAME:{$TRAVIS_COMMIT::7} $IMAGE_NAME:$TAG
+- docker build -t $IMAGE_NAME:$COMMIT .
+- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME
 
 deploy:
