@@ -1,22 +1,14 @@
 package nl.jtosti.hermes.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
-@EqualsAndHashCode
 public class Location {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "location_generator", sequenceName = "location_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_generator")
     private Long id;
     private String name;
 
@@ -25,6 +17,53 @@ public class Location {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
+
+    public Location() {
+    }
+
+    public Location(String name, User owner) {
+        this.name = name;
+        this.owner = owner;
+        this.screens = new ArrayList<>();
+    }
+
+    public Location(String name, List<Screen> screens, User owner) {
+        this.name = name;
+        this.screens = screens;
+        this.owner = owner;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Screen> getScreens() {
+        return screens;
+    }
+
+    public void setScreens(List<Screen> screens) {
+        this.screens = screens;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     @Override
     public String toString() {

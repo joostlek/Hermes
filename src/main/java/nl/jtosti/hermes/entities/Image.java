@@ -10,10 +10,11 @@ import java.util.Date;
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "image_generator", sequenceName = "image_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_generator")
     private Long id;
     private String url;
-    private String naam;
+    private String name;
 
     @CreationTimestamp
     private Date created;
@@ -28,6 +29,15 @@ public class Image {
     private User owner;
 
     public Image() {
+    }
+
+    public Image(String url, String name, Date created, Date updated, Screen screen, User owner) {
+        this.url = url;
+        this.name = name;
+        this.created = created;
+        this.updated = updated;
+        this.screen = screen;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -46,12 +56,12 @@ public class Image {
         this.url = url;
     }
 
-    public String getNaam() {
-        return naam;
+    public String getName() {
+        return name;
     }
 
-    public void setNaam(String naam) {
-        this.naam = naam;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getCreated() {
