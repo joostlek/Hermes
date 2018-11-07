@@ -21,6 +21,8 @@ public class User {
     private String lastName;
     @OneToMany(mappedBy = "owner")
     private List<Location> locations = new ArrayList<>();
+    @OneToMany(mappedBy = "owner")
+    private List<Image> images = new ArrayList<>();
 
     protected User() {
     }
