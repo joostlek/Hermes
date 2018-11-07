@@ -1,6 +1,9 @@
 package nl.jtosti.hermes.Entities;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +13,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@ToString
 @EqualsAndHashCode
 public class Location {
     @Id
@@ -21,7 +23,11 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private List<Screen> screens = new ArrayList<>();
 
-    @Column(name = "owner")
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
+
+    @Override
+    public String toString() {
+        return "<Location " + Long.toString(id) + ": " + name + ">";
+    }
 }
