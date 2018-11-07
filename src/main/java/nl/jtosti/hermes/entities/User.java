@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.Entities;
+package nl.jtosti.hermes.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "ussers")
+@Entity(name = "users")
 @Getter
 @Setter
 @EqualsAndHashCode

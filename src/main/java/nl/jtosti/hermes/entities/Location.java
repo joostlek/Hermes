@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.Entities;
+package nl.jtosti.hermes.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

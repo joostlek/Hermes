@@ -1,6 +1,6 @@
 package nl.jtosti.hermes;
 
-import nl.jtosti.hermes.Entities.User;
+import nl.jtosti.hermes.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
