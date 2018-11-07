@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.entities;
 
 import lombok.*;
+import nl.jtosti.hermes.Image;
 
 import javax.persistence.*;
 import java.util.ArrayList;
