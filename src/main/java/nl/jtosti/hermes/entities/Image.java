@@ -1,7 +1,5 @@
-package nl.jtosti.hermes;
+package nl.jtosti.hermes.entities;
 
-import nl.jtosti.hermes.entities.Screen;
-import nl.jtosti.hermes.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

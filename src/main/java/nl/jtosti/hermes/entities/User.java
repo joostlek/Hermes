@@ -3,7 +3,6 @@ package nl.jtosti.hermes.entities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import nl.jtosti.hermes.Image;
 
 import javax.persistence.*;
 import java.util.ArrayList;
