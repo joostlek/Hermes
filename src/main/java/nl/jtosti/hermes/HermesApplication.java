@@ -2,6 +2,7 @@ package nl.jtosti.hermes;
 
 import javafx.application.Application;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

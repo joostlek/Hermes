@@ -1,4 +1,4 @@
-package nl.jtosti.hermes;
+package nl.jtosti.hermes.repositories;
 
 import nl.jtosti.hermes.entities.User;
 import org.springframework.data.repository.CrudRepository;
