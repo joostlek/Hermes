@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.repositories;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,5 +17,8 @@ public class LocationRepositoryTest {
     @Autowired
     private LocationRepository locationRepository;
 
+    @Test
+    public void test() {
 
+    }
 }
