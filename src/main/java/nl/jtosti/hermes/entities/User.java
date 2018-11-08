@@ -81,4 +81,15 @@ public class User {
     public String toString() {
         return "<User " + Long.toString(id) + ": " + firstName + " " + lastName + ">";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (!(obj instanceof User)) {
+            return false;
+        }
+        User user = (User) obj;
+        return this.firstName.equals(user.getFirstName()) && this.lastName.equals(user.getLastName()) && this.id.equals(user.getId());
+    }
 }

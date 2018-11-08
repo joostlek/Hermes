@@ -28,7 +28,7 @@ public class UserRepositoryTest {
 
         User found = userRepository.findByLastName(user.getLastName()).get(0);
 
-        assertThat(found.getFirstName()).isEqualTo(user.getFirstName());
+        assertThat(found).isEqualTo(user);
     }
 
 
