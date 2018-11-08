@@ -103,4 +103,9 @@ public class User {
         User user = (User) obj;
         return this.firstName.equals(user.getFirstName()) && this.lastName.equals(user.getLastName()) && this.id.equals(user.getId()) && this.email.equals(user.getEmail());
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
