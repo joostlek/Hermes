@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -34,15 +34,17 @@ public class UserControllerTest {
     @Test
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
         User user = new User("Alex", "Jones", "alex.jones@alex.com");
-        List<User> allUsers = Collections.singletonList(user);
+        User user1 = new User("Jane", "Jones", "jane.jones@jones.com");
+        List<User> allUsers = Arrays.asList(user, user1);
         given(service.getAllUsers()).willReturn(allUsers);
 
         mvc.perform(get("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].firstName", is(user.getFirstName())));
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$[1].firstName", is(user1.getFirstName())));
     }
 
 }
