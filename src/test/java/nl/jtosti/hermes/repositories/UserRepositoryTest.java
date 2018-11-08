@@ -22,11 +22,11 @@ public class UserRepositoryTest {
 
     @Test
     public void findByLastName() {
-        User user = new User("Alex", "Jones");
+        User user = new User("Alex", "Jones", "alex.jones@jones.com");
         entityManager.persist(user);
         entityManager.flush();
 
-        User found = userRepository.findByLastName(user.getLastName()).get(0);
+        User found = userRepository.findByEmail(user.getEmail());
 
         assertThat(found).isEqualTo(user);
     }

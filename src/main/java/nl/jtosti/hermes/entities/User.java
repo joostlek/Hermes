@@ -13,6 +13,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
 
     @OneToMany(mappedBy = "owner")
     private List<Location> locations = new ArrayList<>();
@@ -23,16 +24,18 @@ public class User {
     protected User() {
     }
 
-    public User(String firstName, String lastName) {
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.locations = new ArrayList<>();
         this.images = new ArrayList<>();
     }
 
-    public User(String firstName, String lastName, List<Location> locations, List<Image> images) {
+    public User(String firstName, String lastName, String email, List<Location> locations, List<Image> images) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.locations = locations;
         this.images = images;
     }
@@ -59,6 +62,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Location> getLocations() {
@@ -90,6 +101,6 @@ public class User {
             return false;
         }
         User user = (User) obj;
-        return this.firstName.equals(user.getFirstName()) && this.lastName.equals(user.getLastName()) && this.id.equals(user.getId());
+        return this.firstName.equals(user.getFirstName()) && this.lastName.equals(user.getLastName()) && this.id.equals(user.getId()) && this.email.equals(user.getEmail());
     }
 }
