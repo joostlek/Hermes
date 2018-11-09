@@ -28,14 +28,12 @@ public class Image {
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
 
-    public Image() {
+    protected Image() {
     }
 
-    public Image(String url, String name, Date created, Date updated, Screen screen, User owner) {
+    public Image(String name, String url, Screen screen, User owner) {
         this.url = url;
         this.name = name;
-        this.created = created;
-        this.updated = updated;
         this.screen = screen;
         this.owner = owner;
     }
@@ -68,16 +66,8 @@ public class Image {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Screen getScreen() {
@@ -94,5 +84,30 @@ public class Image {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        if (this.id == null) {
+            return String.format("<Image: %s>", this.name);
+        } else {
+            return String.format("<Image %s: %s>", this.id, this.name);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (!(obj instanceof Image)) {
+            return false;
+        }
+        Image image = (Image) obj;
+        return this.name.equals(image.getName()) && this.id.equals(image.getId()) && this.url.equals(image.getUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
