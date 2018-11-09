@@ -20,14 +20,14 @@ public class Screen {
     @OneToMany(mappedBy = "screen")
     private List<Image> images = new ArrayList<>();
 
-    public Screen() {
+    protected Screen() {
     }
 
-    public Screen(String name, int width, int height) {
+    public Screen(String name, int width, int height, Location location) {
         this.name = name;
         this.width = width;
         this.height = height;
-        this.images = new ArrayList<>();
+        this.location = location;
     }
 
     public Screen(String name, int width, int height, Location location, List<Image> images) {
@@ -86,8 +86,32 @@ public class Screen {
         this.images = images;
     }
 
+    void addImage(Image image) {
+        this.images.add(image);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (!(obj instanceof Screen)) {
+            return false;
+        }
+        Screen screen = (Screen) obj;
+        return this.id.equals(screen.getId()) && this.height == screen.getHeight() && this.width == screen.getWidth() && this.name.equals(screen.getName());
+    }
+
     @Override
     public String toString() {
-        return "<Screen " + Long.toString(id) + ": " + name + ">";
+        if (this.id == null) {
+            return String.format("<Screen: %s>", this.name);
+        } else {
+            return String.format("<Screen %s: %s>", this.id, this.name);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

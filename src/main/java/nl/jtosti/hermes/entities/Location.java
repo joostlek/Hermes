@@ -24,7 +24,6 @@ public class Location {
     public Location(String name, User owner) {
         this.name = name;
         this.owner = owner;
-        this.screens = new ArrayList<>();
     }
 
     public Location(String name, User owner, List<Screen> screens) {
