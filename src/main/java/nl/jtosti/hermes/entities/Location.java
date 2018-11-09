@@ -18,7 +18,7 @@ public class Location {
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
 
-    public Location() {
+    protected Location() {
     }
 
     public Location(String name, User owner) {
@@ -27,10 +27,10 @@ public class Location {
         this.screens = new ArrayList<>();
     }
 
-    public Location(String name, List<Screen> screens, User owner) {
+    public Location(String name, User owner, List<Screen> screens) {
         this.name = name;
-        this.screens = screens;
         this.owner = owner;
+        this.screens = screens;
     }
 
     public Long getId() {
@@ -57,6 +57,10 @@ public class Location {
         this.screens = screens;
     }
 
+    public void addScreen(Screen screen) {
+        this.screens.add(screen);
+    }
+
     public User getOwner() {
         return owner;
     }
@@ -67,6 +71,26 @@ public class Location {
 
     @Override
     public String toString() {
-        return "<Location " + Long.toString(id) + ": " + name + ">";
+        if (this.id == null) {
+            return String.format("<Location: %s>", name);
+        } else {
+            return String.format("<Location %s: %s>", id, name);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (!(obj instanceof Location)) {
+            return false;
+        }
+        Location location = (Location) obj;
+        return this.id.equals(location.getId()) && this.name.equals(location.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
