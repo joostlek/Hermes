@@ -88,11 +88,9 @@ class LocationTest {
     @Test
     @DisplayName("Test toString")
     void testToString() {
-        String name = "Alex Coffee";
-        location = new Location(name, user);
-        assertThat(location.toString()).isEqualTo(String.format("<Location: %s>", name));
+        location = new Location("Alex Coffee", user);
+        assertThat(location.toString()).isEqualTo(String.format("<Location: %s>", location.getName()));
         location.setId(1L);
-        assertThat(location.toString()).isEqualTo(String.format("<Location %s: %s>", location.getId(), name));
-
+        assertThat(location.toString()).isEqualTo(String.format("<Location %s: %s>", location.getId(), location.getName()));
     }
 }
