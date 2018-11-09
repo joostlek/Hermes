@@ -75,7 +75,29 @@ class UserTest {
         assertThat(user.equals(user1)).isTrue();
         assertThat(user.equals(image)).isFalse();
 
+        user1.setEmail("JJ@J.com");
+        assertThat(user.equals(user1)).isFalse();
         user1.setId(Integer.toUnsignedLong(2));
         assertThat(user.equals(user1)).isFalse();
+        user1.setLastName("Jane");
+        assertThat(user.equals(user1)).isFalse();
+        user1.setFirstName("Jay");
+        assertThat(user.equals(user1)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Test hashcode")
+    void testHashCode() {
+        user = new User("Alex", "Jones", "Alex.jones@alex.com");
+        assertThat(user.hashCode()).isEqualTo(user.hashCode());
+    }
+
+    @Test
+    @DisplayName("Test toString")
+    void testToString() {
+        user = new User("Alex", "Jones", "Alex.jones@alex.com");
+        assertThat(user.toString()).isEqualTo(String.format("<User: %s %s>", user.getFirstName(), user.getLastName()));
+        user.setId(Integer.toUnsignedLong(1));
+        assertThat(user.toString()).isEqualTo(String.format("<User %s: %s %s>", user.getId(), user.getFirstName(), user.getLastName()));
     }
 }

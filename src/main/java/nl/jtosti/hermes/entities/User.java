@@ -40,12 +40,12 @@ public class User {
         this.images = images;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -80,6 +80,10 @@ public class User {
         this.locations = locations;
     }
 
+    public void addLocation(Location location) {
+        this.locations.add(location);
+    }
+
     public List<Image> getImages() {
         return images;
     }
@@ -90,7 +94,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "<User " + Long.toString(id) + ": " + firstName + " " + lastName + ">";
+        if (this.id == null) {
+            return String.format("<User: %s %s>", this.firstName, this.lastName);
+        } else {
+            return String.format("<User %s: %s %s>", this.id, this.firstName, this.lastName);
+        }
     }
 
     @Override
