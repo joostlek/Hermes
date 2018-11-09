@@ -61,6 +61,15 @@ class UserTest {
         assertThat(user.getEmail()).isEqualTo(email);
         assertThat(user.getLocations().get(0)).isEqualTo(location);
         assertThat(user.getImages().get(0)).isEqualTo(image);
+
+
+        user = new User("Alex", "Jones", "alex.jones@alex.com", new ArrayList<>(), new ArrayList<>());
+
+        user.addLocation(location);
+        user.addImage(image);
+
+        assertThat(user.getLocations().get(0)).isEqualTo(location);
+        assertThat(user.getImages().get(0)).isEqualTo(image);
     }
 
     @Test

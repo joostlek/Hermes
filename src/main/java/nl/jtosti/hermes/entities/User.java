@@ -92,6 +92,10 @@ public class User {
         this.images = images;
     }
 
+    void addImage(Image image) {
+        this.images.add(image);
+    }
+
     @Override
     public String toString() {
         if (this.id == null) {
