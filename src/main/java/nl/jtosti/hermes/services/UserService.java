@@ -9,7 +9,7 @@ public interface UserService {
 
     public List<User> getAllUsers();
 
-    public boolean exists(String username);
+    public boolean exists(String email);
 
     public User save(User user);
 

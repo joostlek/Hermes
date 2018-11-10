@@ -3,6 +3,7 @@ package nl.jtosti.hermes.entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "users")
 public class User {
@@ -113,7 +114,7 @@ public class User {
             return false;
         }
         User user = (User) obj;
-        return this.firstName.equals(user.getFirstName()) && this.lastName.equals(user.getLastName()) && this.id.equals(user.getId()) && this.email.equals(user.getEmail());
+        return this.firstName.equals(user.getFirstName()) && this.lastName.equals(user.getLastName()) && Objects.equals(this.id, user.getId()) && this.email.equals(user.getEmail());
     }
 
     @Override
