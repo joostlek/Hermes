@@ -3,6 +3,7 @@ package nl.jtosti.hermes.entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Location {
@@ -85,7 +86,7 @@ public class Location {
             return false;
         }
         Location location = (Location) obj;
-        return this.id.equals(location.getId()) && this.name.equals(location.getName());
+        return Objects.equals(this.id, location.getId()) && this.name.equals(location.getName());
     }
 
     @Override
