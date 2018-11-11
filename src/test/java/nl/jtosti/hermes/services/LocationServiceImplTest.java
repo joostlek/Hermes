@@ -40,7 +40,7 @@ public class LocationServiceImplTest {
         Location location2 = new Location("Jays coffee", user);
         location1.setId(3L);
 
-        Mockito.when(locationRepository.findAllByOwner_IdOrderByIdAsc(1L)).thenReturn(Arrays.asList(location, location1));
+        Mockito.when(locationRepository.findAllByOwnerIdOrderByIdAsc(1L)).thenReturn(Arrays.asList(location, location1));
         Mockito.when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
         Mockito.when(locationRepository.findAll()).thenReturn(Arrays.asList(location, location1, location2));
         Mockito.when(locationRepository.save(any(Location.class))).thenReturn(location);

@@ -10,5 +10,5 @@ import java.util.List;
 public interface LocationRepository extends CrudRepository<Location, Long> {
     List<Location> findAll();
 
-    List<Location> findAllByOwner_IdOrderByIdAsc(Long id);
+    List<Location> findAllByOwnerIdOrderByIdAsc(Long id);
 }

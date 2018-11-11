@@ -32,7 +32,7 @@ public class LocationRepositoryTest {
         Location location = entityManager.persistAndFlush(new Location("Alex coffee", user));
         Location location1 = entityManager.persistAndFlush(new Location("Jane coffee", user));
 
-        List<Location> locations = locationRepository.findAllByOwner_IdOrderByIdAsc(user.getId());
+        List<Location> locations = locationRepository.findAllByOwnerIdOrderByIdAsc(user.getId());
 
         assertThat(locations).hasSize(2);
         assertThat(locations.get(0).getName()).isEqualTo(location.getName());

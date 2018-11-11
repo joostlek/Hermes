@@ -37,6 +37,6 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<Location> getLocationsByUserId(Long id) {
-        return locationRepository.findAllByOwner_IdOrderByIdAsc(id);
+        return locationRepository.findAllByOwnerIdOrderByIdAsc(id);
     }
 }
