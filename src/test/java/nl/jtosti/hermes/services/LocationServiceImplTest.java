@@ -2,11 +2,11 @@ package nl.jtosti.hermes.services;
 
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.exceptions.LocationNotFoundException;
 import nl.jtosti.hermes.repositories.LocationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 public class LocationServiceImplTest {
@@ -40,12 +41,12 @@ public class LocationServiceImplTest {
         Location location2 = new Location("Jays coffee", user);
         location1.setId(3L);
 
-        Mockito.when(locationRepository.findAllByOwnerIdOrderByIdAsc(1L)).thenReturn(Arrays.asList(location, location1));
-        Mockito.when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
-        Mockito.when(locationRepository.findAll()).thenReturn(Arrays.asList(location, location1, location2));
-        Mockito.when(locationRepository.save(any(Location.class))).thenReturn(location);
-        Mockito.when(locationRepository.existsById(1L)).thenReturn(true);
-        Mockito.when(locationRepository.existsById(4L)).thenReturn(false);
+        when(locationRepository.findAllByOwnerIdOrderByIdAsc(1L)).thenReturn(Arrays.asList(location, location1));
+        when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
+        when(locationRepository.findAll()).thenReturn(Arrays.asList(location, location1, location2));
+        when(locationRepository.save(any(Location.class))).thenReturn(location);
+        when(locationRepository.existsById(1L)).thenReturn(true);
+        when(locationRepository.existsById(4L)).thenReturn(false);
     }
 
     @Test
@@ -55,7 +56,13 @@ public class LocationServiceImplTest {
 
     @Test
     public void whenGivenInvalidId_thenReturnNull() {
-        assertThat(locationService.getLocationById(4L)).isNull();
+        try {
+            locationService.getLocationById(4L);
+//          The assertion below would fail, so the statement above would need to throw the exception
+            assertThat(true).isFalse();
+        } catch (LocationNotFoundException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Could not find location 4");
+        }
     }
 
     @Test
@@ -66,6 +73,29 @@ public class LocationServiceImplTest {
         assertThat(locations).hasSize(2);
         assertThat(locations.get(0).getName()).isEqualTo("Alex coffee");
         assertThat(locations.get(1).getName()).isEqualTo("Jane coffee");
+    }
+
+    @Test
+    public void whenGivenLocation_thenUpdateLocation() {
+        User user = new User("Alex", "Jones", "alex.jones@alex.com");
+        Location location = new Location("Alex coffee", user);
+        Location location1 = new Location("Jane coffee", user);
+
+        when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
+        when(locationRepository.save(location1)).thenReturn(location1);
+
+        assertThat(locationService.update(location1, 1L)).isEqualTo(location1);
+    }
+
+    @Test
+    public void whenInvalidUpdateId_throwException() {
+        try {
+            locationService.update(new Location("Alex coffee", new User("Alex", "Coffee", "alex.jones@alex.com")), 4L);
+//          The assertion below would fail, so the statement above would need to throw the exception
+            assertThat(true).isFalse();
+        } catch (LocationNotFoundException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Could not find location 4");
+        }
     }
 
     @Test
@@ -89,6 +119,11 @@ public class LocationServiceImplTest {
         Location location = new Location("Alex Coffee", new User("Alex", "Jones", "alex.jones@alex.com"));
         location = locationService.save(location);
         assertThat(location.getId()).isNotNull();
+    }
+
+    @Test
+    public void whenGivenLocationId_thenDeleteLocation() {
+        locationService.delete(1L);
     }
 
     @TestConfiguration
