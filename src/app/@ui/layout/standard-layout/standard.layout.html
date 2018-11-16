@@ -1,0 +1,30 @@
+<clr-main-container>
+    <clr-header>
+        <header class="header-6">
+            <div class="branding">
+                <span class="title">Hermes</span>
+            </div>
+            <div class="header-nav" [clr-nav-level]="1">
+                <a href="javascript://" class="active nav-link nav-text">Dashboard</a>
+                <a href="javascript://" class="nav-link nav-text">Interactive Analytics</a>
+            </div>
+            <div class="header-actions">
+                <clr-dropdown>
+                    <button class="nav-icon" clrDropdownTrigger>
+                        <clr-icon shape="cog"></clr-icon>
+                        <clr-icon shape="caret down"></clr-icon>
+                    </button>
+                    <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                        <a href="..." clrDropdownItem>About</a>
+                        <a href="..." clrDropdownItem>Preferences</a>
+                        <a href="..." clrDropdownItem>Log out</a>
+                    </clr-dropdown-menu>
+                </clr-dropdown>
+            </div>
+        </header>
+    </clr-header>
+    <div class="content-container">
+        <ng-content select="app-sidebar"></ng-content>
+        <ng-content></ng-content>
+    </div>
+</clr-main-container>

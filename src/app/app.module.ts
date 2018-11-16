@@ -4,6 +4,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
 import {ClarityModule} from '@clr/angular';
+import {AppRoutingModule} from './app-routing.module';
+import {UiModule} from './@ui/ui.module';
 
 @NgModule({
     declarations: [
@@ -13,6 +15,8 @@ import {ClarityModule} from '@clr/angular';
         BrowserModule,
         BrowserAnimationsModule,
         ClarityModule,
+        UiModule,
+        AppRoutingModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-    {path: '', loadChildren: 'app/pages/pages.module#PagesModule'},
+    {path: '', loadChildren: './pages/pages.module#PagesModule'},
 ];
 
 const config: ExtraOptions = {
@@ -11,7 +11,7 @@ const config: ExtraOptions = {
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, config),
+        RouterModule.forRoot(routes),
     ],
     exports: [RouterModule],
 })
