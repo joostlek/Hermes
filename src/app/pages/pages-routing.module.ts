@@ -5,6 +5,12 @@ import {PagesComponent} from './pages.component';
 const routes: Routes = [
     {
         path: '', component: PagesComponent,
+        children: [
+            {
+                path: 'u',
+                loadChildren: './users/users.module#UsersModule'
+            }
+        ]
     }
 ];
 
