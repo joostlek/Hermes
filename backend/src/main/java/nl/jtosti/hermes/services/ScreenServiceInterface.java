@@ -14,4 +14,8 @@ public interface ScreenServiceInterface {
     public boolean exists(Long id);
 
     public Screen save(Screen screen);
+
+    public Screen updateScreen(Screen screen, Long id);
+
+    public void deleteScreen(Long id);
 }
