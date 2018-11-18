@@ -46,12 +46,13 @@ after_success:
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - export IMAGE_NAME=joostlek/hermes
 - docker build -t $IMAGE_NAME:$COMMIT .
-- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG registry.heroku.com/$HEROKU_APP_NAME/web
+- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME
 
 deploy:
   provider: script
   script:
+    docker tag $IMAGE_NAME:$COMMIT registry.heroku.com/$HEROKU_APP_NAME/web
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
   on:
     branch: master
