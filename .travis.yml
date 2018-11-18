@@ -33,7 +33,7 @@ addons:
 
 script:
 #- ./mvnw clean install -B
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=joostlek_Hermes -Dsonar.organization=joostlek-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+- ./backend/mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=joostlek_Hermes -Dsonar.organization=joostlek-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
 
 cache:
   yarn: true
