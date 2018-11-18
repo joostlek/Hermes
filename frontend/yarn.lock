@@ -186,7 +186,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/language-service@~7.0.3":
+"@angular/language-service@~7.0.4":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.0.4.tgz#db221f183725ff54c1188aec7acb2948e29f4c50"
   integrity sha512-CuJ2Ii97sNoN1HOZOLxG1lEHsQFi8K/RSB/k2suWPKzdM53ldSkKoYRac38zW/uqNABYItgvxb7w0Vi7HhxLsg==
