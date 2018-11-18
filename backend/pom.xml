@@ -159,6 +159,7 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>
