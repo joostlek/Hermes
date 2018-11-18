@@ -22,10 +22,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class LocationServiceImplTest {
+public class LocationServiceTest {
 
     @Autowired
-    private LocationService locationService;
+    private LocationServiceInterface locationServiceInterface;
 
     @MockBean
     private LocationRepository locationRepository;
@@ -51,13 +51,13 @@ public class LocationServiceImplTest {
 
     @Test
     public void whenGivenValidId_thenReturnLocation() {
-        assertThat(locationService.getLocationById(1L).getName()).isEqualTo("Alex coffee");
+        assertThat(locationServiceInterface.getLocationById(1L).getName()).isEqualTo("Alex coffee");
     }
 
     @Test
     public void whenGivenInvalidId_thenReturnNull() {
         try {
-            locationService.getLocationById(4L);
+            locationServiceInterface.getLocationById(4L);
 //          The assertion below would fail, so the statement above would need to throw the exception
             assertThat(true).isFalse();
         } catch (LocationNotFoundException ex) {
@@ -68,7 +68,7 @@ public class LocationServiceImplTest {
     @Test
     public void whenGivenUserId_thenReturnLocationList() {
         Long id = 1L;
-        List<Location> locations = locationService.getLocationsByUserId(id);
+        List<Location> locations = locationServiceInterface.getLocationsByUserId(id);
 
         assertThat(locations).hasSize(2);
         assertThat(locations.get(0).getName()).isEqualTo("Alex coffee");
@@ -84,13 +84,13 @@ public class LocationServiceImplTest {
         when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
         when(locationRepository.save(location1)).thenReturn(location1);
 
-        assertThat(locationService.update(location1, 1L)).isEqualTo(location1);
+        assertThat(locationServiceInterface.update(location1, 1L)).isEqualTo(location1);
     }
 
     @Test
     public void whenInvalidUpdateId_throwException() {
         try {
-            locationService.update(new Location("Alex coffee", new User("Alex", "Coffee", "alex.jones@alex.com")), 4L);
+            locationServiceInterface.update(new Location("Alex coffee", new User("Alex", "Coffee", "alex.jones@alex.com")), 4L);
 //          The assertion below would fail, so the statement above would need to throw the exception
             assertThat(true).isFalse();
         } catch (LocationNotFoundException ex) {
@@ -100,7 +100,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void returnAllLocations() {
-        List<Location> locations = locationService.getAllLocations();
+        List<Location> locations = locationServiceInterface.getAllLocations();
 
         assertThat(locations).hasSize(3);
         assertThat(locations.get(0).getName()).isEqualTo("Alex coffee");
@@ -110,27 +110,27 @@ public class LocationServiceImplTest {
 
     @Test
     public void whenGivenLocationId_thenReturnBoolean() {
-        assertThat(locationService.exists(1L)).isTrue();
-        assertThat(locationService.exists(4L)).isFalse();
+        assertThat(locationServiceInterface.exists(1L)).isTrue();
+        assertThat(locationServiceInterface.exists(4L)).isFalse();
     }
 
     @Test
     public void whenGivenLocation_thenSaveLocation() {
         Location location = new Location("Alex Coffee", new User("Alex", "Jones", "alex.jones@alex.com"));
-        location = locationService.save(location);
+        location = locationServiceInterface.save(location);
         assertThat(location.getId()).isNotNull();
     }
 
     @Test
     public void whenGivenLocationId_thenDeleteLocation() {
-        locationService.delete(1L);
+        locationServiceInterface.delete(1L);
     }
 
     @TestConfiguration
     static class LocationServiceImplTestContextConfiguration {
         @Bean
-        public LocationService locationService() {
-            return new LocationServiceImpl();
+        public LocationServiceInterface locationService() {
+            return new LocationService();
         }
     }
 }

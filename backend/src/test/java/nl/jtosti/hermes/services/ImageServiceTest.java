@@ -24,10 +24,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class ImageServiceImplTest {
+public class ImageServiceTest {
 
     @Autowired
-    private ImageService imageService;
+    private ImageServiceInterface imageServiceInterface;
 
     @MockBean
     private ImageRepository imageRepository;
@@ -55,12 +55,12 @@ public class ImageServiceImplTest {
 
         when(imageRepository.findById(1L)).thenReturn(Optional.of(image));
 
-        assertThat(imageService.getImageById(1L)).isEqualTo(image);
+        assertThat(imageServiceInterface.getImageById(1L)).isEqualTo(image);
     }
 
     @Test
     public void whenGivenInvalidId_thenReturnNull() {
-        assertThat(imageService.getImageById(2L)).isNull();
+        assertThat(imageServiceInterface.getImageById(2L)).isNull();
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ImageServiceImplTest {
 
         when(imageRepository.findAll()).thenReturn(Arrays.asList(image, image1));
 
-        List<Image> images = imageService.getAllImages();
+        List<Image> images = imageServiceInterface.getAllImages();
 
         assertThat(images).hasSize(2);
         assertThat(images.get(0)).isEqualTo(image);
@@ -84,7 +84,7 @@ public class ImageServiceImplTest {
 
         when(imageRepository.findAllByScreenId(1L)).thenReturn(Arrays.asList(image, image1));
 
-        List<Image> images = imageService.getImagesByScreenId(1L);
+        List<Image> images = imageServiceInterface.getImagesByScreenId(1L);
 
         assertThat(images).hasSize(2);
         assertThat(images.get(0).getScreen().getId()).isEqualTo(1L);
@@ -98,7 +98,7 @@ public class ImageServiceImplTest {
 
         when(imageRepository.findAllByOwnerId(1L)).thenReturn(Arrays.asList(image, image1));
 
-        List<Image> images = imageService.getImagesByUserId(1L);
+        List<Image> images = imageServiceInterface.getImagesByUserId(1L);
 
         assertThat(images).hasSize(2);
         assertThat(images.get(0).getOwner().getId()).isEqualTo(1L);
@@ -110,8 +110,8 @@ public class ImageServiceImplTest {
         when(imageRepository.existsById(1L)).thenReturn(true);
         when(imageRepository.existsById(2L)).thenReturn(false);
 
-        assertThat(imageService.exists(1L)).isTrue();
-        assertThat(imageService.exists(2L)).isFalse();
+        assertThat(imageServiceInterface.exists(1L)).isTrue();
+        assertThat(imageServiceInterface.exists(2L)).isFalse();
     }
 
     @Test
@@ -122,15 +122,15 @@ public class ImageServiceImplTest {
         when(imageRepository.save(any(Image.class))).thenReturn(image);
 
         Image image1 = new Image("Image 1", "", screen, user);
-        image1 = imageService.save(image1);
+        image1 = imageServiceInterface.save(image1);
         assertThat(image1.getId()).isNotNull();
     }
 
     @TestConfiguration
     static class ImageServiceImplTestContextConfiguration {
         @Bean
-        public ImageService imageService() {
-            return new ImageServiceImpl();
+        public ImageServiceInterface imageService() {
+            return new ImageService();
         }
     }
 }

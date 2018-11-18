@@ -1,7 +1,7 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.Location;
-import nl.jtosti.hermes.services.LocationService;
+import nl.jtosti.hermes.services.LocationServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/locations")
 public class LocationController {
-    private LocationService locationService;
+    private LocationServiceInterface locationService;
 
-    LocationController(LocationService locationService) {
+    LocationController(LocationServiceInterface locationService) {
         this.locationService = locationService;
     }
 

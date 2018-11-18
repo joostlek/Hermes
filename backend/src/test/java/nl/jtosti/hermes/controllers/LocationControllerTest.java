@@ -3,7 +3,7 @@ package nl.jtosti.hermes.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.User;
-import nl.jtosti.hermes.services.LocationService;
+import nl.jtosti.hermes.services.LocationServiceInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class LocationControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private LocationService locationService;
+    private LocationServiceInterface locationServiceInterface;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 
@@ -47,7 +47,7 @@ public class LocationControllerTest {
         Location location = new Location("Alex coffee", user);
         Location location1 = new Location("Jane coffee", user);
         List<Location> locations = Arrays.asList(location, location1);
-        given(locationService.getAllLocations()).willReturn(locations);
+        given(locationServiceInterface.getAllLocations()).willReturn(locations);
 
         mvc.perform(get("/locations")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +61,7 @@ public class LocationControllerTest {
     @Test
     public void givenLocation_whenGetLocation_thenReturnJsonObject() throws Exception {
         Location location = new Location("Alex coffee", user);
-        given(locationService.getLocationById(1L)).willReturn(location);
+        given(locationServiceInterface.getLocationById(1L)).willReturn(location);
 
         mvc.perform(get("/locations/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ public class LocationControllerTest {
     @Test
     public void whenNewLocation_thenSaveUser() throws Exception {
         Location location = new Location("Alex coffee", user);
-        when(locationService.save(any(Location.class))).thenReturn(location);
+        when(locationServiceInterface.save(any(Location.class))).thenReturn(location);
 
         mvc.perform(post("/locations")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -87,7 +87,7 @@ public class LocationControllerTest {
     @Test
     public void whenUpdateLocation_thenReturnUpdatedLocation() throws Exception {
         Location location = new Location("Alex coffee", user);
-        when(locationService.update(any(Location.class), eq(1L))).thenReturn(location);
+        when(locationServiceInterface.update(any(Location.class), eq(1L))).thenReturn(location);
 
         mvc.perform(put("/locations/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

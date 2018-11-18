@@ -1,7 +1,7 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.User;
-import nl.jtosti.hermes.services.UserService;
+import nl.jtosti.hermes.services.UserServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private UserServiceInterface userService;
 
-    UserController(UserService userService) {
+    UserController(UserServiceInterface userService) {
         this.userService = userService;
     }
 

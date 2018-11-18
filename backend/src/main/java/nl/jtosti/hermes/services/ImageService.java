@@ -1,19 +1,47 @@
 package nl.jtosti.hermes.services;
 
 import nl.jtosti.hermes.entities.Image;
+import nl.jtosti.hermes.repositories.ImageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-public interface ImageService {
-    public Image getImageById(Long id);
+@Service
+@Transactional
+public class ImageService implements ImageServiceInterface {
 
-    public List<Image> getAllImages();
+    @Autowired
+    private ImageRepository imageRepository;
 
-    public List<Image> getImagesByScreenId(Long id);
+    @Override
+    public Image getImageById(Long id) {
+        return imageRepository.findById(id).orElse(null);
+    }
 
-    public List<Image> getImagesByUserId(Long id);
+    @Override
+    public List<Image> getAllImages() {
+        return imageRepository.findAll();
+    }
 
-    public boolean exists(Long id);
+    @Override
+    public List<Image> getImagesByScreenId(Long id) {
+        return imageRepository.findAllByScreenId(id);
+    }
 
-    public Image save(Image image);
+    @Override
+    public List<Image> getImagesByUserId(Long id) {
+        return imageRepository.findAllByOwnerId(id);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return imageRepository.existsById(id);
+    }
+
+    @Override
+    public Image save(Image image) {
+        return imageRepository.save(image);
+    }
 }

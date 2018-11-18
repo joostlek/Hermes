@@ -23,10 +23,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class ScreenServiceImplTest {
+public class ScreenServiceTest {
 
     @Autowired
-    private ScreenService screenService;
+    private ScreenServiceInterface screenServiceInterface;
 
     @MockBean
     private ScreenRepository screenRepository;
@@ -46,12 +46,12 @@ public class ScreenServiceImplTest {
         screen.setId(1L);
         when(screenRepository.findById(1L)).thenReturn(Optional.of(screen));
 
-        assertThat(screenService.getScreenById(1L)).isEqualTo(screen);
+        assertThat(screenServiceInterface.getScreenById(1L)).isEqualTo(screen);
     }
 
     @Test
     public void whenGivenInvalidId_thenReturnNull() {
-        assertThat(screenService.getScreenById(2L)).isNull();
+        assertThat(screenServiceInterface.getScreenById(2L)).isNull();
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ScreenServiceImplTest {
         Screen screen1 = new Screen("Screen 2", 1920, 1080, location);
         when(screenRepository.findAll()).thenReturn(Arrays.asList(screen, screen1));
 
-        List<Screen> screens = screenService.getAllScreens();
+        List<Screen> screens = screenServiceInterface.getAllScreens();
 
         assertThat(screens).hasSize(2);
         assertThat(screens.get(0)).isEqualTo(screen);
@@ -72,8 +72,8 @@ public class ScreenServiceImplTest {
         when(screenRepository.existsById(1L)).thenReturn(true);
         when(screenRepository.existsById(2L)).thenReturn(false);
 
-        assertThat(screenService.exists(1L)).isTrue();
-        assertThat(screenService.exists(2L)).isFalse();
+        assertThat(screenServiceInterface.exists(1L)).isTrue();
+        assertThat(screenServiceInterface.exists(2L)).isFalse();
     }
 
     @Test
@@ -83,7 +83,7 @@ public class ScreenServiceImplTest {
 
         when(screenRepository.findAllByLocationId(1L)).thenReturn(Arrays.asList(screen, screen1));
 
-        List<Screen> screens = screenService.getScreensByLocationId(1L);
+        List<Screen> screens = screenServiceInterface.getScreensByLocationId(1L);
         assertThat(screens).hasSize(2);
         assertThat(screens.get(0).getLocation().getId()).isEqualTo(1L);
         assertThat(screens.get(1).getLocation().getId()).isEqualTo(1L);
@@ -96,15 +96,15 @@ public class ScreenServiceImplTest {
         when(screenRepository.save(any(Screen.class))).thenReturn(screen);
 
         Screen screen1 = new Screen("Screen 1", 1920, 1080, location);
-        screen1 = screenService.save(screen1);
+        screen1 = screenServiceInterface.save(screen1);
         assertThat(screen1.getId()).isNotNull();
     }
 
     @TestConfiguration
     static class ScreenServiceImplTestContextConfiguration {
         @Bean
-        public ScreenService screenService() {
-            return new ScreenServiceImpl();
+        public ScreenServiceInterface screenService() {
+            return new ScreenService();
         }
     }
 }

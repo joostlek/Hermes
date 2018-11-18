@@ -2,7 +2,7 @@ package nl.jtosti.hermes.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.User;
-import nl.jtosti.hermes.services.UserService;
+import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private UserService service;
+    private UserServiceInterface service;
 
     @Test
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {

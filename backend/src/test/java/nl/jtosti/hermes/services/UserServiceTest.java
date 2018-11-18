@@ -21,10 +21,10 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class UserServiceImplTest {
+public class UserServiceTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceInterface userServiceInterface;
     @MockBean
     private UserRepository userRepository;
 
@@ -45,7 +45,7 @@ public class UserServiceImplTest {
         User user = new User("Alex", "Jones", "alex.jones@alex.com");
         when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
 
-        User found = userService.getUserByEmail(user.getEmail());
+        User found = userServiceInterface.getUserByEmail(user.getEmail());
         assertThat(found).isEqualTo(user);
     }
 
@@ -55,7 +55,7 @@ public class UserServiceImplTest {
         User user1 = new User("Jay", "Jones", "jay.jones@jay.com");
         when(userRepository.findAll()).thenReturn(Arrays.asList(user, user1));
 
-        List<User> found = userService.getAllUsers();
+        List<User> found = userServiceInterface.getAllUsers();
         assertThat(found).hasSize(2);
         assertThat(found.get(0)).isEqualTo(user);
         assertThat(found.get(1)).isEqualTo(user1);
@@ -63,28 +63,28 @@ public class UserServiceImplTest {
 
     @Test
     public void whenSaveUser_thenReturnUser() {
-        User user = userService.save(new User("Alex", "Jones", "alex.jones@alex.com"));
+        User user = userServiceInterface.save(new User("Alex", "Jones", "alex.jones@alex.com"));
         assertThat(user.getEmail()).isEqualTo("alex.jones@alex.com");
     }
 
     @Test
     public void whenUserExists_thenReturnTrue() {
         String email = "alex.jones@alex.com";
-        assertThat(userService.exists(email)).isTrue();
-        assertThat(userService.exists("jay.jones@alex.com")).isFalse();
+        assertThat(userServiceInterface.exists(email)).isTrue();
+        assertThat(userServiceInterface.exists("jay.jones@alex.com")).isFalse();
     }
 
     @Test
     public void whenGivenUserId_thenReturnUser() {
         Long id = 1L;
         String email = "jay.jones@jay.com";
-        assertThat(userService.getUserById(id).getEmail()).isEqualTo(email);
+        assertThat(userServiceInterface.getUserById(id).getEmail()).isEqualTo(email);
     }
 
     @Test
     public void whenGivenInvalidId_shouldThrowError() {
         try {
-            userService.getUserById(2L);
+            userServiceInterface.getUserById(2L);
 //          Making sure the test actually fails if it returned something
             assertThat(true).isFalse();
         } catch (UserNotFoundException ex) {
@@ -95,7 +95,7 @@ public class UserServiceImplTest {
     @Test
     public void whenUpdatingInvalidId_shouldThrowError() {
         try {
-            userService.updateUser(new User("Alex", "Jones", "alex.jones@alex.com"), 2L);
+            userServiceInterface.updateUser(new User("Alex", "Jones", "alex.jones@alex.com"), 2L);
 //          Making sure the test actually fails if it returned something
             assertThat(true).isFalse();
         } catch (UserNotFoundException ex) {
@@ -111,20 +111,20 @@ public class UserServiceImplTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userRepository.save(user1)).thenReturn(user1);
 
-        assertThat(userService.updateUser(user1, 1L)).isEqualTo(user1);
+        assertThat(userServiceInterface.updateUser(user1, 1L)).isEqualTo(user1);
     }
 
     @Test
     public void whenDeletingUser_doNothing() {
-        userService.deleteUser(1L);
+        userServiceInterface.deleteUser(1L);
     }
 
 
     @TestConfiguration
     static class UserServiceImplTestContextConfiguration {
         @Bean
-        public UserService userService() {
-            return new UserServiceImpl();
+        public UserServiceInterface userService() {
+            return new UserService();
         }
     }
 
