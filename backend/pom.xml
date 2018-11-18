@@ -143,8 +143,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>nl.jtosti</groupId>
+            <artifactId>frontend</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -234,6 +238,12 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>../target/frontend</directory>
+                <targetPath>static</targetPath>
+            </resource>
+        </resources>
     </build>
 
 </project>
