@@ -13,6 +13,9 @@ before_script:
 
 before_install:
 - chmod +x mvnw
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker login -u _ -p $HEROKU_API_KEY registry.heroku.com
 
 env:
   global:
@@ -30,10 +33,10 @@ addons:
 
 script:
 - ./mvnw clean install -B
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=joostlek_Hermes -Dsonar.organization=joostlek-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.sources=src/app,src/main/java -Dsonar.tests=src/test/java,e2e/src,src/app -Dsonar.exclusions=**/*.spec.ts -Dsonar.test.inclusions=**/*.spec.ts
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=joostlek_Hermes -Dsonar.organization=joostlek-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
 
 cache:
-  npm: true
+  yarn: true
   directories:
   - '$HOME/.m2/repository'
   - '$HOME/.sonar/cache'
@@ -43,11 +46,12 @@ after_success:
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - export IMAGE_NAME=joostlek/hermes
 - docker build -t $IMAGE_NAME:$COMMIT .
-- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG registry.heroku.com/$HEROKU_APP_NAME/web
 - docker push $IMAGE_NAME
 
 deploy:
-  provider: heroku
-  api_key: $HEROKU_API_KEY
-  app:
-    master: joostlekhermes
+  provider: script
+  script:
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+  on:
+    branch: master
