@@ -16,4 +16,8 @@ public interface ImageServiceInterface {
     public boolean exists(Long id);
 
     public Image save(Image image);
+
+    public Image update(Image image, Long id);
+
+    public void delete(Long id);
 }

@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.services;
 
 import nl.jtosti.hermes.entities.Image;
+import nl.jtosti.hermes.exceptions.ImageNotFoundException;
 import nl.jtosti.hermes.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,23 @@ public class ImageService implements ImageServiceInterface {
     @Override
     public Image save(Image image) {
         return imageRepository.save(image);
+    }
+
+    @Override
+    public Image update(Image newImage, Long id) {
+        return imageRepository.findById(id)
+                .map(image -> {
+                    image.setName(newImage.getName());
+                    image.setUrl(newImage.getUrl());
+                    return imageRepository.save(image);
+                })
+                .orElseThrow(
+                        () -> new ImageNotFoundException(id)
+                );
+    }
+
+    @Override
+    public void delete(Long id) {
+        imageRepository.deleteById(id);
     }
 }
