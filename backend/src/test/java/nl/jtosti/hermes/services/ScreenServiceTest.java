@@ -3,6 +3,7 @@ package nl.jtosti.hermes.services;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.exceptions.ScreenNotFoundException;
 import nl.jtosti.hermes.repositories.ScreenRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,6 +99,33 @@ public class ScreenServiceTest {
         Screen screen1 = new Screen("Screen 1", 1920, 1080, location);
         screen1 = screenService.save(screen1);
         assertThat(screen1.getId()).isNotNull();
+    }
+
+    @Test
+    public void whenUpdateScreen_thenReturnUpdatedScreen() {
+        Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        Screen screen1 = new Screen("Screen 11", 1020, 1980, location);
+
+        when(screenRepository.findById(1L)).thenReturn(Optional.of(screen));
+        when(screenRepository.save(screen1)).thenReturn(screen1);
+
+        assertThat(screenService.updateScreen(screen1, 1L)).isEqualTo(screen1);
+    }
+
+    @Test
+    public void whenUpdateScreen_withFalseId_shouldThrowError() {
+        Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        try {
+            screenService.updateScreen(screen, 1L);
+            assertThat(true).isFalse();
+        } catch (ScreenNotFoundException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Could not find screen 1");
+        }
+    }
+
+    @Test
+    public void whenDeleteScreen_thenDoNothing() {
+        screenService.deleteScreen(1L);
     }
 
     @TestConfiguration
