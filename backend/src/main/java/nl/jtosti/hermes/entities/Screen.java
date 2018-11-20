@@ -3,6 +3,7 @@ package nl.jtosti.hermes.entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Screen {
@@ -98,7 +99,7 @@ public class Screen {
             return false;
         }
         Screen screen = (Screen) obj;
-        return this.id.equals(screen.getId()) && this.height == screen.getHeight() && this.width == screen.getWidth() && this.name.equals(screen.getName());
+        return Objects.equals(this.id, screen.getId()) && this.height == screen.getHeight() && this.width == screen.getWidth() && this.name.equals(screen.getName());
     }
 
     @Override
