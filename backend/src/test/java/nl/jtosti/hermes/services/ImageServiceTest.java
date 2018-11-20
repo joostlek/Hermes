@@ -4,6 +4,7 @@ import nl.jtosti.hermes.entities.Image;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.exceptions.ImageNotFoundException;
 import nl.jtosti.hermes.repositories.ImageRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -124,6 +125,33 @@ public class ImageServiceTest {
         Image image1 = new Image("Image 1", "", screen, user);
         image1 = imageService.save(image1);
         assertThat(image1.getId()).isNotNull();
+    }
+
+    @Test
+    public void whenUpdateImage_thenReturnUpdatedImage() {
+        Image image = new Image("Image 1", "", screen, user);
+        Image image1 = new Image("Image 11", "1", screen, user);
+
+        when(imageRepository.findById(1L)).thenReturn(Optional.of(image));
+        when(imageRepository.save(image1)).thenReturn(image1);
+
+        assertThat(imageService.update(image1, 1L)).isEqualTo(image1);
+    }
+
+    @Test
+    public void whenUpdateImage_withFalseId_shouldThrowError() {
+        Image image = new Image("Image 1", "", screen, user);
+        try {
+            imageService.update(image, 1L);
+            assertThat(true).isFalse();
+        } catch (ImageNotFoundException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Could not find image 1");
+        }
+    }
+
+    @Test
+    public void whenDeleteImage_thenDoNothing() {
+        imageService.delete(1L);
     }
 
     @TestConfiguration
