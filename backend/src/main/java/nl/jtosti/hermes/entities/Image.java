@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Image {
@@ -103,7 +104,7 @@ public class Image {
             return false;
         }
         Image image = (Image) obj;
-        return this.name.equals(image.getName()) && this.id.equals(image.getId()) && this.url.equals(image.getUrl());
+        return this.name.equals(image.getName()) && Objects.equals(this.id, image.getId()) && this.url.equals(image.getUrl());
     }
 
     @Override
