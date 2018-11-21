@@ -37,4 +37,9 @@ public class ScreenController {
     public Screen updateScreen(@RequestBody Screen screen, @PathVariable("id") Long id) {
         return screenService.updateScreen(screen, id);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteScreen(@PathVariable("id") Long id) {
+        screenService.deleteScreen(id);
+    }
 }
