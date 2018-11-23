@@ -21,6 +21,9 @@ env:
   global:
   - COMMIT=${TRAVIS_COMMIT::7}
 
+git:
+  depth: 9999999
+
 addons:
   apt:
     sources:
