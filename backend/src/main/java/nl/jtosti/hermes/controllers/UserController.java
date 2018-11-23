@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.entities.dto.UserDTO;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public User addNewUser(@RequestBody User user) {
-        return userService.save(user);
+    public User addNewUser(@RequestBody UserDTO user) {
+        return userService.save(user.toUser());
     }
 
     @GetMapping("{id}")
@@ -32,8 +33,9 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public User updateUser(@RequestBody User user, @PathVariable Long id) {
-        return userService.updateUser(user, id);
+    public User updateUser(@RequestBody UserDTO user, @PathVariable Long id) {
+        user.setId(id);
+        return userService.updateUser(user.toUser());
     }
 
     @DeleteMapping("{id}")

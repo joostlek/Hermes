@@ -94,8 +94,10 @@ public class UserServiceTest {
 
     @Test
     public void whenUpdatingInvalidId_shouldThrowError() {
+        User user = new User("Alex", "Jones", "alex.jones@alex.com");
+        user.setId(2L);
         try {
-            userService.updateUser(new User("Alex", "Jones", "alex.jones@alex.com"), 2L);
+            userService.updateUser(user);
 //          Making sure the test actually fails if it returned something
             assertThat(true).isFalse();
         } catch (UserNotFoundException ex) {
@@ -108,10 +110,13 @@ public class UserServiceTest {
         User user = new User("Alex", "Jones", "alex.jones@alex.com");
         User user1 = new User("Jay", "Jones", "jay.jones@jay.com");
 
+        user.setId(1L);
+        user1.setId(1L);
+
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userRepository.save(user1)).thenReturn(user1);
 
-        assertThat(userService.updateUser(user1, 1L)).isEqualTo(user1);
+        assertThat(userService.updateUser(user1)).isEqualTo(user1);
     }
 
     @Test

@@ -44,8 +44,8 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public User updateUser(User newUser, Long id) {
-        return userRepository.findById(id)
+    public User updateUser(User newUser) {
+        return userRepository.findById(newUser.getId())
                 .map(user -> {
                     user.setFirstName(newUser.getFirstName());
                     user.setLastName(newUser.getLastName());
@@ -53,7 +53,7 @@ public class UserService implements UserServiceInterface {
                     return save(user);
                 })
                 .orElseThrow(
-                        () -> new UserNotFoundException(id)
+                        () -> new UserNotFoundException(newUser.getId())
                 );
     }
 

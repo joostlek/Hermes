@@ -18,7 +18,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -58,7 +57,7 @@ public class UserControllerTest {
         User user1 = new User("Jane", "Jones", "jane.jones@jones.com");
         user.setId(1L);
 
-        when(service.updateUser(any(User.class), eq(1L))).thenReturn(user);
+        when(service.updateUser(any(User.class))).thenReturn(user);
 
         mvc.perform(put("/users/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

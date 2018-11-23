@@ -15,7 +15,7 @@ public interface UserServiceInterface {
 
     public User getUserByEmail(String email);
 
-    public User updateUser(User user, Long id);
+    User updateUser(User newUser);
 
     public void deleteUser(Long id);
 }
