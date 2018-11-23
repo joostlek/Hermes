@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -23,10 +24,12 @@ public class Image {
     @UpdateTimestamp
     private Date updated;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"images", "location"})
     private Screen screen;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"images", "locations"})
     private User owner;
 
     protected Image() {

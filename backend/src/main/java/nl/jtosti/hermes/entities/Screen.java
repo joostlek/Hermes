@@ -1,5 +1,7 @@
 package nl.jtosti.hermes.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,12 @@ public class Screen {
     private int width;
     private int height;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"screens", "owner"})
     private Location location;
 
     @OneToMany(mappedBy = "screen")
+    @JsonIgnoreProperties({"screen", "owner"})
     private List<Image> images = new ArrayList<>();
 
     protected Screen() {
