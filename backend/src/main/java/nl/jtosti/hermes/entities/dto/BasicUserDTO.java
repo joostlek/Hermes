@@ -1,14 +1,10 @@
 package nl.jtosti.hermes.entities.dto;
 
-import java.util.List;
-
-public class UserDTO {
+public class BasicUserDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
-    private List<BasicLocationDTO> locations;
-    private List<BasicImageDTO> images;
 
     public Long getId() {
         return id;
@@ -40,21 +36,5 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<BasicLocationDTO> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<BasicLocationDTO> locations) {
-        this.locations = locations;
-    }
-
-    public List<BasicImageDTO> getImages() {
-        return images;
-    }
-
-    public void setImages(List<BasicImageDTO> images) {
-        this.images = images;
     }
 }

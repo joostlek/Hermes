@@ -1,7 +1,6 @@
 package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import nl.jtosti.hermes.entities.dto.UserDTO;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -44,13 +43,6 @@ public class User {
         this.email = email;
         this.locations = locations;
         this.images = images;
-    }
-
-    public User(UserDTO dto) {
-        this.id = dto.getId();
-        this.firstName = dto.getFirstName();
-        this.lastName = dto.getLastName();
-        this.email = dto.getEmail();
     }
 
     public Long getId() {
