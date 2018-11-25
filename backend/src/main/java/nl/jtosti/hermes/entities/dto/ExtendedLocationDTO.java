@@ -1,13 +1,13 @@
 package nl.jtosti.hermes.entities.dto;
 
 public class ExtendedLocationDTO extends LocationDTO {
-    private BasicUserDTO owner;
+    private UserDTO owner;
 
-    public BasicUserDTO getOwner() {
+    public UserDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(BasicUserDTO owner) {
+    public void setOwner(UserDTO owner) {
         this.owner = owner;
     }
 }

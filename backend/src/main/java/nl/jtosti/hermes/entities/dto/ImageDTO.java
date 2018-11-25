@@ -5,7 +5,7 @@ public class ImageDTO {
     private String name;
     private String url;
     private BasicScreenDTO screen;
-    private BasicUserDTO owner;
+    private UserDTO owner;
 
     public Long getId() {
         return id;
@@ -39,11 +39,11 @@ public class ImageDTO {
         this.screen = screen;
     }
 
-    public BasicUserDTO getOwner() {
+    public UserDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(BasicUserDTO owner) {
+    public void setOwner(UserDTO owner) {
         this.owner = owner;
     }
 }
