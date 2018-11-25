@@ -42,14 +42,14 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
-    public Location update(Location newLocation, Long id) {
-        return locationRepository.findById(id)
+    public Location update(Location newLocation) {
+        return locationRepository.findById(newLocation.getId())
                 .map(location -> {
                     location.setName(newLocation.getName());
                     return save(location);
                 })
                 .orElseThrow(
-                        () -> new LocationNotFoundException(id)
+                        () -> new LocationNotFoundException(newLocation.getId())
                 );
     }
 
