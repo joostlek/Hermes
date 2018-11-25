@@ -4,7 +4,7 @@ public class ImageDTO {
     private Long id;
     private String name;
     private String url;
-    private BasicScreenDTO screen;
+    private ScreenDTO screen;
     private UserDTO owner;
 
     public Long getId() {
@@ -31,11 +31,11 @@ public class ImageDTO {
         this.url = url;
     }
 
-    public BasicScreenDTO getScreen() {
+    public ScreenDTO getScreen() {
         return screen;
     }
 
-    public void setScreen(BasicScreenDTO screen) {
+    public void setScreen(ScreenDTO screen) {
         this.screen = screen;
     }
 

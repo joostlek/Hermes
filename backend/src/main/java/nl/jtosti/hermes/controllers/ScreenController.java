@@ -1,11 +1,14 @@
 package nl.jtosti.hermes.controllers;
 
+import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
+import nl.jtosti.hermes.entities.dto.ExtendedScreenDTO;
 import nl.jtosti.hermes.entities.dto.ScreenDTO;
 import nl.jtosti.hermes.services.LocationService;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,44 +30,62 @@ public class ScreenController {
     }
 
     @GetMapping("/screens")
+    @ResponseStatus(HttpStatus.OK)
     public List<ScreenDTO> getAllScreens() {
         List<Screen> screens = screenService.getAllScreens();
         return screens.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/screens")
-    public ScreenDTO addScreen(@RequestBody ScreenDTO screenDTO) {
+    @PostMapping("/locations/{locationId}/screens")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ScreenDTO addScreen(@RequestBody ScreenDTO screenDTO, @PathVariable Long locationId) {
         Screen screen = convertToEntity(screenDTO);
+        Location location = locationService.getLocationById(locationId);
+        screen.setLocation(location);
         Screen newScreen = screenService.save(screen);
-        return convertToDto(newScreen);
+        return convertToExtendedDTO(newScreen);
+    }
+
+    @GetMapping("/locations/{locationId}/screens")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ScreenDTO> getScreensByLocationId(@PathVariable Long locationId) {
+        List<Screen> screens = screenService.getScreensByLocationId(locationId);
+        return screens.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/screens/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ScreenDTO getOneScreen(@PathVariable("id") Long id) {
-        return convertToDto(screenService.getScreenById(id));
+        return convertToExtendedDTO(screenService.getScreenById(id));
     }
 
     @PutMapping("/screens/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ScreenDTO updateScreen(@RequestBody ScreenDTO screenDTO, @PathVariable("id") Long id) {
         Screen screen = convertToEntity(screenDTO);
         Screen updatedScreen = screenService.updateScreen(screen);
-        return convertToDto(updatedScreen);
+        return convertToExtendedDTO(updatedScreen);
     }
 
     @DeleteMapping("/screens/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteScreen(@PathVariable("id") Long id) {
         screenService.deleteScreen(id);
     }
 
-    private ScreenDTO convertToDto(Screen screen) {
+    private ExtendedScreenDTO convertToExtendedDTO(Screen screen) {
+        return modelMapper.map(screen, ExtendedScreenDTO.class);
+    }
+
+    private ScreenDTO convertToDTO(Screen screen) {
         return modelMapper.map(screen, ScreenDTO.class);
     }
 
     private Screen convertToEntity(ScreenDTO screenDTO) {
-        Screen screen = modelMapper.map(screenDTO, Screen.class);
-        screen.setLocation(locationService.getLocationById(screenDTO.getLocation().getId()));
-        return screen;
+        return modelMapper.map(screenDTO, Screen.class);
     }
 }
