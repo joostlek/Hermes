@@ -3,7 +3,7 @@ package nl.jtosti.hermes.entities.dto;
 public class ScreenDTO {
     private Long id;
     private String name;
-    private BasicLocationDTO location;
+    private LocationDTO location;
 
     public Long getId() {
         return id;
@@ -21,11 +21,11 @@ public class ScreenDTO {
         this.name = name;
     }
 
-    public BasicLocationDTO getLocation() {
+    public LocationDTO getLocation() {
         return location;
     }
 
-    public void setLocation(BasicLocationDTO location) {
+    public void setLocation(LocationDTO location) {
         this.location = location;
     }
 }

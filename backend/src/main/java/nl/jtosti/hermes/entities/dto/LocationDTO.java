@@ -3,7 +3,6 @@ package nl.jtosti.hermes.entities.dto;
 public class LocationDTO {
     private Long id;
     private String name;
-    private BasicUserDTO owner;
 
     public Long getId() {
         return id;
@@ -19,13 +18,5 @@ public class LocationDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BasicUserDTO getOwner() {
-        return owner;
-    }
-
-    public void setOwner(BasicUserDTO owner) {
-        this.owner = owner;
     }
 }
