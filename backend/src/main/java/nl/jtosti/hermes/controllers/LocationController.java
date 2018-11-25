@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/locations")
 public class LocationController {
     private final ModelMapper modelMapper;
     private final UserService userService;
@@ -26,7 +25,7 @@ public class LocationController {
         this.userService = userService;
     }
 
-    @GetMapping("")
+    @GetMapping("/locations")
     public List<LocationDTO> getAllLocations() {
         List<Location> locations = locationService.getAllLocations();
         return locations.stream()
@@ -34,26 +33,26 @@ public class LocationController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("")
+    @PostMapping("/locations")
     public LocationDTO addLocation(@RequestBody LocationDTO locationDTO) {
         Location location = convertToEntity(locationDTO);
         Location newLocation = locationService.save(location);
         return convertToDto(newLocation);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/locations/{id}")
     public LocationDTO getSingleLocation(@PathVariable Long id) {
         return convertToDto(locationService.getLocationById(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/locations/{id}")
     public LocationDTO updateLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long id) {
         Location location = convertToEntity(locationDTO);
         Location updatedLocation = locationService.update(location);
         return convertToDto(updatedLocation);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/locations/{id}")
     public void deleteLocation(@PathVariable Long id) {
         locationService.delete(id);
     }

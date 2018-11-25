@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/screens")
 public class ScreenController {
 
     private final ModelMapper modelMapper;
@@ -27,7 +26,7 @@ public class ScreenController {
         this.locationService = locationService;
     }
 
-    @GetMapping("")
+    @GetMapping("/screens")
     public List<ScreenDTO> getAllScreens() {
         List<Screen> screens = screenService.getAllScreens();
         return screens.stream()
@@ -35,26 +34,26 @@ public class ScreenController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("")
+    @PostMapping("/screens")
     public ScreenDTO addScreen(@RequestBody ScreenDTO screenDTO) {
         Screen screen = convertToEntity(screenDTO);
         Screen newScreen = screenService.save(screen);
         return convertToDto(newScreen);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/screens/{id}")
     public ScreenDTO getOneScreen(@PathVariable("id") Long id) {
         return convertToDto(screenService.getScreenById(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/screens/{id}")
     public ScreenDTO updateScreen(@RequestBody ScreenDTO screenDTO, @PathVariable("id") Long id) {
         Screen screen = convertToEntity(screenDTO);
         Screen updatedScreen = screenService.updateScreen(screen);
         return convertToDto(updatedScreen);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/screens/{id}")
     public void deleteScreen(@PathVariable("id") Long id) {
         screenService.deleteScreen(id);
     }

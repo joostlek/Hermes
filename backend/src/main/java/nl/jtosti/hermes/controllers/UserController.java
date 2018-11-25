@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
     private final ModelMapper modelMapper;
@@ -24,7 +23,7 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("")
+    @GetMapping("/users")
     public List<UserDTO> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return users.stream()
@@ -32,25 +31,25 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("")
-    public UserDTO addNewUser(@RequestBody UserDTO userDTO) {
+    @PostMapping("/users")
+    public UserDTO addUser(@RequestBody UserDTO userDTO) {
         User user = convertToEntity(userDTO);
         User userCreated = userService.save(user);
         return convertToDto(userCreated);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/users/{id}")
     public UserDTO getOneUser(@PathVariable Long id) {
         return convertToDto(userService.getUserById(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/users/{id}")
     public User updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         User user = convertToEntity(userDTO);
         return userService.updateUser(user);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }

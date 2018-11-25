@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/images")
 public class ImageController {
     private final ImageServiceInterface imageService;
 
@@ -33,7 +32,7 @@ public class ImageController {
         this.userService = userService;
     }
 
-    @GetMapping("")
+    @GetMapping("/images")
     public List<ImageDTO> getAllImages() {
         List<Image> images = imageService.getAllImages();
         return images.stream()
@@ -41,24 +40,24 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/images/{id}")
     public ImageDTO getOneImage(@PathVariable Long id) {
         return convertToDto(imageService.getImageById(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/images/{id}")
     public ImageDTO updateImage(@RequestBody ImageDTO imageDTO, @PathVariable Long id) {
         Image image = convertToEntity(imageDTO);
         Image newImage = imageService.update(image);
         return convertToDto(newImage);
     }
 
-    @PostMapping("")
+    @PostMapping("/images")
     public Image saveImage(@RequestBody Image image) {
         return imageService.save(image);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/images/{id}")
     public void deleteImage(@PathVariable Long id) {
         imageService.delete(id);
     }
