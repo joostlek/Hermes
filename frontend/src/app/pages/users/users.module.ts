@@ -5,11 +5,13 @@ import {ClarityModule} from '@clr/angular';
 import {UserTableComponent} from './user-table/user-table.component';
 import {UsersRoutingModule} from './users-routing.module';
 import {UsersComponent} from './users.component';
+import {DataModule} from '../../@core/data/data.module';
 
 @NgModule({
     declarations: [UsersComponent, UserTableComponent],
     imports: [
         CommonModule,
+        DataModule,
         ClarityModule,
         UsersRoutingModule,
     ],
