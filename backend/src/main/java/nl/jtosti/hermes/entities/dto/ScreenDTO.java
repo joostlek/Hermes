@@ -1,12 +1,8 @@
 package nl.jtosti.hermes.entities.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ScreenDTO {
     private Long id;
     private String name;
-    private List<BasicImageDTO> images = new ArrayList<>();
     private BasicLocationDTO location;
 
     public Long getId() {
@@ -23,14 +19,6 @@ public class ScreenDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<BasicImageDTO> getImages() {
-        return images;
-    }
-
-    public void setImages(List<BasicImageDTO> images) {
-        this.images = images;
     }
 
     public BasicLocationDTO getLocation() {
