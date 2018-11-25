@@ -25,7 +25,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllByOrderByIdAsc();
     }
 
     @Override
