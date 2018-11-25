@@ -1,45 +1,66 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.Screen;
+import nl.jtosti.hermes.entities.dto.ScreenDTO;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/screens")
 public class ScreenController {
 
+    private final ModelMapper modelMapper;
+
     private final ScreenServiceInterface screenService;
 
     @Autowired
-    public ScreenController(ScreenServiceInterface screenService) {
+    public ScreenController(ScreenServiceInterface screenService, ModelMapper modelMapper) {
         this.screenService = screenService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("")
-    public List<Screen> getAllScreens() {
-        return screenService.getAllScreens();
+    public List<ScreenDTO> getAllScreens() {
+        List<Screen> screens = screenService.getAllScreens();
+        return screens.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("")
-    public Screen addScreen(@RequestBody Screen screen) {
-        return screenService.save(screen);
+    public ScreenDTO addScreen(@RequestBody ScreenDTO screenDTO) {
+        Screen screen = convertToEntity(screenDTO);
+        Screen newScreen = screenService.save(screen);
+        return convertToDto(newScreen);
     }
 
     @GetMapping("{id}")
-    public Screen getOneScreen(@PathVariable("id") Long id) {
-        return screenService.getScreenById(id);
+    public ScreenDTO getOneScreen(@PathVariable("id") Long id) {
+        return convertToDto(screenService.getScreenById(id));
     }
 
     @PutMapping("{id}")
-    public Screen updateScreen(@RequestBody Screen screen, @PathVariable("id") Long id) {
-        return screenService.updateScreen(screen, id);
+    public ScreenDTO updateScreen(@RequestBody ScreenDTO screenDTO, @PathVariable("id") Long id) {
+        Screen screen = convertToEntity(screenDTO);
+        Screen updatedScreen = screenService.updateScreen(screen);
+        return convertToDto(updatedScreen);
     }
 
     @DeleteMapping("{id}")
     public void deleteScreen(@PathVariable("id") Long id) {
         screenService.deleteScreen(id);
+    }
+
+    private ScreenDTO convertToDto(Screen screen) {
+        return modelMapper.map(screen, ScreenDTO.class);
+    }
+
+    private Screen convertToEntity(ScreenDTO screenDTO) {
+        return modelMapper.map(screenDTO, Screen.class);
     }
 }

@@ -15,7 +15,7 @@ public interface ScreenServiceInterface {
 
     public Screen save(Screen screen);
 
-    public Screen updateScreen(Screen screen, Long id);
+    public Screen updateScreen(Screen screen);
 
     public void deleteScreen(Long id);
 }

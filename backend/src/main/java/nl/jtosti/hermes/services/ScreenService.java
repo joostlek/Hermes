@@ -42,8 +42,8 @@ public class ScreenService implements ScreenServiceInterface {
     }
 
     @Override
-    public Screen updateScreen(Screen newScreen, Long id) {
-        return screenRepository.findById(id)
+    public Screen updateScreen(Screen newScreen) {
+        return screenRepository.findById(newScreen.getId())
                 .map(screen -> {
                     screen.setHeight(newScreen.getHeight());
                     screen.setWidth(newScreen.getWidth());
@@ -51,7 +51,7 @@ public class ScreenService implements ScreenServiceInterface {
                     return screenRepository.save(screen);
                 })
                 .orElseThrow(
-                        () -> new ScreenNotFoundException(id)
+                        () -> new ScreenNotFoundException(newScreen.getId())
                 );
     }
 
