@@ -52,7 +52,9 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         User user = convertToEntity(userDTO);
-        return convertToExtendedDTO(userService.updateUser(user));
+        user.setId(id);
+        User updatedUser = userService.updateUser(user);
+        return convertToExtendedDTO(updatedUser);
     }
 
     @DeleteMapping("/users/{id}")

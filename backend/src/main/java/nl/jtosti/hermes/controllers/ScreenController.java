@@ -67,6 +67,7 @@ public class ScreenController {
     @ResponseStatus(HttpStatus.OK)
     public ScreenDTO updateScreen(@RequestBody ScreenDTO screenDTO, @PathVariable("id") Long id) {
         Screen screen = convertToEntity(screenDTO);
+        screen.setId(id);
         Screen updatedScreen = screenService.updateScreen(screen);
         return convertToExtendedDTO(updatedScreen);
     }
