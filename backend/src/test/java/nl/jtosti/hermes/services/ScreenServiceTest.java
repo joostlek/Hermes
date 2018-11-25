@@ -109,14 +109,14 @@ public class ScreenServiceTest {
         when(screenRepository.findById(1L)).thenReturn(Optional.of(screen));
         when(screenRepository.save(screen1)).thenReturn(screen1);
 
-        assertThat(screenService.updateScreen(screen1, 1L)).isEqualTo(screen1);
+        assertThat(screenService.updateScreen(screen1)).isEqualTo(screen1);
     }
 
     @Test
     public void whenUpdateScreen_withFalseId_shouldThrowError() {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
         try {
-            screenService.updateScreen(screen, 1L);
+            screenService.updateScreen(screen);
             assertThat(true).isFalse();
         } catch (ScreenNotFoundException ex) {
             assertThat(ex.getMessage()).isEqualTo("Could not find screen 1");

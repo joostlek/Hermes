@@ -1,8 +1,10 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.Location;
+import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.LocationDTO;
 import nl.jtosti.hermes.services.LocationServiceInterface;
+import nl.jtosti.hermes.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +16,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/locations")
 public class LocationController {
     private final ModelMapper modelMapper;
+    private final UserService userService;
     private LocationServiceInterface locationService;
 
     @Autowired
-    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper) {
+    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, UserService userService) {
         this.locationService = locationService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
     @GetMapping("")
@@ -59,6 +63,9 @@ public class LocationController {
     }
 
     private Location convertToEntity(LocationDTO locationDTO) {
-        return modelMapper.map(locationDTO, Location.class);
+        Location location = modelMapper.map(locationDTO, Location.class);
+        User owner = userService.getUserById(locationDTO.getOwner().getId());
+        location.setOwner(owner);
+        return location;
     }
 }

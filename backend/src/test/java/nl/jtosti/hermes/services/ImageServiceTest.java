@@ -135,14 +135,14 @@ public class ImageServiceTest {
         when(imageRepository.findById(1L)).thenReturn(Optional.of(image));
         when(imageRepository.save(image1)).thenReturn(image1);
 
-        assertThat(imageService.update(image1, 1L)).isEqualTo(image1);
+        assertThat(imageService.update(image1)).isEqualTo(image1);
     }
 
     @Test
     public void whenUpdateImage_withFalseId_shouldThrowError() {
         Image image = new Image("Image 1", "", screen, user);
         try {
-            imageService.update(image, 1L);
+            imageService.update(image);
             assertThat(true).isFalse();
         } catch (ImageNotFoundException ex) {
             assertThat(ex.getMessage()).isEqualTo("Could not find image 1");

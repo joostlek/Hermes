@@ -19,7 +19,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -87,7 +86,7 @@ public class LocationControllerTest {
     @Test
     public void whenUpdateLocation_thenReturnUpdatedLocation() throws Exception {
         Location location = new Location("Alex coffee", user);
-        when(locationServiceInterface.update(any(Location.class), eq(1L))).thenReturn(location);
+        when(locationServiceInterface.update(any(Location.class))).thenReturn(location);
 
         mvc.perform(put("/locations/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

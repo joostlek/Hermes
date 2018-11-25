@@ -47,15 +47,15 @@ public class ImageService implements ImageServiceInterface {
     }
 
     @Override
-    public Image update(Image newImage, Long id) {
-        return imageRepository.findById(id)
+    public Image update(Image newImage) {
+        return imageRepository.findById(newImage.getId())
                 .map(image -> {
                     image.setName(newImage.getName());
                     image.setUrl(newImage.getUrl());
                     return imageRepository.save(image);
                 })
                 .orElseThrow(
-                        () -> new ImageNotFoundException(id)
+                        () -> new ImageNotFoundException(newImage.getId())
                 );
     }
 

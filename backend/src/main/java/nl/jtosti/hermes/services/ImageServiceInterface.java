@@ -17,7 +17,7 @@ public interface ImageServiceInterface {
 
     public Image save(Image image);
 
-    public Image update(Image image, Long id);
+    public Image update(Image image);
 
     public void delete(Long id);
 }

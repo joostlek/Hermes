@@ -2,6 +2,7 @@ package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.dto.ScreenDTO;
+import nl.jtosti.hermes.services.LocationService;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ import java.util.stream.Collectors;
 public class ScreenController {
 
     private final ModelMapper modelMapper;
-
     private final ScreenServiceInterface screenService;
+    private final LocationService locationService;
+
 
     @Autowired
-    public ScreenController(ScreenServiceInterface screenService, ModelMapper modelMapper) {
+    public ScreenController(ScreenServiceInterface screenService, ModelMapper modelMapper, LocationService locationService) {
         this.screenService = screenService;
         this.modelMapper = modelMapper;
+        this.locationService = locationService;
     }
 
     @GetMapping("")
@@ -61,6 +64,8 @@ public class ScreenController {
     }
 
     private Screen convertToEntity(ScreenDTO screenDTO) {
-        return modelMapper.map(screenDTO, Screen.class);
+        Screen screen = modelMapper.map(screenDTO, Screen.class);
+        screen.setLocation(locationService.getLocationById(screenDTO.getLocation().getId()));
+        return screen;
     }
 }

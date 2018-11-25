@@ -84,13 +84,13 @@ public class LocationServiceTest {
         when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
         when(locationRepository.save(location1)).thenReturn(location1);
 
-        assertThat(locationService.update(location1, 1L)).isEqualTo(location1);
+        assertThat(locationService.update(location1)).isEqualTo(location1);
     }
 
     @Test
     public void whenInvalidUpdateId_throwException() {
         try {
-            locationService.update(new Location("Alex coffee", new User("Alex", "Coffee", "alex.jones@alex.com")), 4L);
+            locationService.update(new Location("Alex coffee", new User("Alex", "Coffee", "alex.jones@alex.com")));
 //          The assertion below would fail, so the statement above would need to throw the exception
             assertThat(true).isFalse();
         } catch (LocationNotFoundException ex) {

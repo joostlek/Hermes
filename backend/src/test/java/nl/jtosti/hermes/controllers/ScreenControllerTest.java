@@ -20,7 +20,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -93,7 +92,7 @@ public class ScreenControllerTest {
     @Test
     public void whenUpdateScreen_thenReturnUpdatedScreen() throws Exception {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
-        when(screenService.updateScreen(any(Screen.class), eq(1L))).thenReturn(screen);
+        when(screenService.updateScreen(any(Screen.class))).thenReturn(screen);
 
         mvc.perform(put("/screens/1")
                 .with(csrf())
