@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.entities.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDTO {
@@ -7,8 +8,8 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private List<BasicLocationDTO> locations;
-    private List<BasicImageDTO> images;
+    private List<BasicLocationDTO> locations = new ArrayList<>();
+    private List<BasicImageDTO> images = new ArrayList<>();
 
     public Long getId() {
         return id;

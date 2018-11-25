@@ -1,12 +1,13 @@
 package nl.jtosti.hermes.entities.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDTO {
     private Long id;
     private String name;
     private BasicUserDTO owner;
-    private List<BasicScreenDTO> screens;
+    private List<BasicScreenDTO> screens = new ArrayList<>();
 
     public Long getId() {
         return id;
