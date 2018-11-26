@@ -71,7 +71,7 @@ public class LocationController {
     }
 
     @DeleteMapping("/locations/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public void deleteLocation(@PathVariable Long id) {
         locationService.delete(id);
     }
