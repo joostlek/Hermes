@@ -4,14 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.services.LocationServiceInterface;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -29,9 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(ScreenController.class)
-public class ScreenControllerTest {
+@DisplayName("Screen Controller")
+@Tag("Controller")
+class ScreenControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
@@ -41,12 +46,16 @@ public class ScreenControllerTest {
     @MockBean
     private ScreenServiceInterface screenService;
 
+    @MockBean
+    private LocationServiceInterface locationService;
+
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 
     private Location location = new Location("Alex Coffee", user);
 
     @Test
-    public void givenScreens_whenGetScreens_thenReturnJsonArray() throws Exception {
+    @DisplayName("Get all screens")
+    void shouldReturnAllScreens_whenGetAllScreens() throws Exception {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
         Screen screen1 = new Screen("Screen 2", 1920, 1080, location);
 
@@ -60,38 +69,90 @@ public class ScreenControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is(screen.getName())))
-                .andExpect(jsonPath("$[1].name", is(screen1.getName())));
+                .andExpect(jsonPath("$[0].width", is(screen.getWidth())))
+                .andExpect(jsonPath("$[0].height", is(screen.getHeight())))
+                .andExpect(jsonPath("$[0].location").doesNotExist())
+                .andExpect(jsonPath("$[1].name", is(screen1.getName())))
+                .andExpect(jsonPath("$[1].width", is(screen.getWidth())))
+                .andExpect(jsonPath("$[1].height", is(screen.getHeight())))
+                .andExpect(jsonPath("$[1].location").doesNotExist());
     }
 
     @Test
-    public void givenScreen_whenGetScreen_thenReturnJsonObject() throws Exception {
+    @DisplayName("Get all screens by location")
+    void shouldReturnScreens_whenGetAllScreensByLocationId() throws Exception {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        Screen screen1 = new Screen("Screen 2", 1920, 1080, location);
+
+        List<Screen> screens = Arrays.asList(screen, screen1);
+
+        given(screenService.getScreensByLocationId(1L)).willReturn(screens);
+
+        mvc.perform(get("/locations/1/screens")
+                .with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", is(screen.getName())))
+                .andExpect(jsonPath("$[0].width", is(screen.getWidth())))
+                .andExpect(jsonPath("$[0].height", is(screen.getHeight())))
+                .andExpect(jsonPath("$[0].location").doesNotExist())
+                .andExpect(jsonPath("$[1].name", is(screen1.getName())))
+                .andExpect(jsonPath("$[1].width", is(screen.getWidth())))
+                .andExpect(jsonPath("$[1].height", is(screen.getHeight())))
+                .andExpect(jsonPath("$[1].location").doesNotExist());
+    }
+
+    @Test
+    @DisplayName("Get single screen")
+    void shouldReturnScreen_whenGetSingleScreen() throws Exception {
+        Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        screen.setId(1L);
+
         when(screenService.getScreenById(1L)).thenReturn(screen);
 
         mvc.perform(get("/screens/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(screen.getName())));
+                .andExpect(jsonPath("$.id", is(screen.getId().intValue())))
+                .andExpect(jsonPath("$.name", is(screen.getName())))
+                .andExpect(jsonPath("$.width", is(screen.getWidth())))
+                .andExpect(jsonPath("$.height", is(screen.getHeight())))
+                .andExpect(jsonPath("$.location").exists())
+                .andExpect(jsonPath("$.location.id", is(location.getId())))
+                .andExpect(jsonPath("$.location.name", is(location.getName())))
+                .andExpect(jsonPath("$.location.screens").doesNotExist())
+                .andExpect(jsonPath("$.location.owner").doesNotExist());
     }
 
     @Test
-    public void whenNewScreen_thenSaveScreen() throws Exception {
+    @DisplayName("Add screen")
+    void shouldReturnSavedScreen_whenSaveScreen() throws Exception {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        screen.setId(1L);
+
+        when(locationService.getLocationById(1L)).thenReturn(location);
         when(screenService.save(any(Screen.class))).thenReturn(screen);
 
-        mvc.perform(post("/screens")
+        mvc.perform(post("/locations/1/screens")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writer().writeValueAsString(screen))
                 .with(csrf())
                 .with(user("user")))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(screen.getName())));
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", is(screen.getId().intValue())))
+                .andExpect(jsonPath("$.name", is(screen.getName())))
+                .andExpect(jsonPath("$.width", is(screen.getWidth())))
+                .andExpect(jsonPath("$.height", is(screen.getHeight())));
     }
 
     @Test
-    public void whenUpdateScreen_thenReturnUpdatedScreen() throws Exception {
+    @DisplayName("Update screen")
+    void shouldReturnUpdatedScreen_whenUpdateScreen() throws Exception {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        screen.setId(1L);
+
         when(screenService.updateScreen(any(Screen.class))).thenReturn(screen);
 
         mvc.perform(put("/screens/1")
@@ -100,11 +161,15 @@ public class ScreenControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writer().writeValueAsString(screen)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(screen.getName())));
+                .andExpect(jsonPath("$.id", is(screen.getId().intValue())))
+                .andExpect(jsonPath("$.name", is(screen.getName())))
+                .andExpect(jsonPath("$.width", is(screen.getWidth())))
+                .andExpect(jsonPath("$.height", is(screen.getHeight())));
     }
 
     @Test
-    public void whenDeleteScreen() throws Exception {
+    @DisplayName("Delete screen")
+    void shouldDoNothing_whenDeleteScreen() throws Exception {
         mvc.perform(delete("/screens/1")
                 .with(user("user"))
                 .with(csrf())

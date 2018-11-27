@@ -1,13 +1,17 @@
 package nl.jtosti.hermes.advices;
 
 import nl.jtosti.hermes.exceptions.ImageNotFoundException;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class ImageNotFoundAdviceTest {
+@DisplayName("Image not found advice")
+@Tag("Advices")
+class ImageNotFoundAdviceTest {
     @Test
-    public void testThrow() {
+    void testThrow() {
         ImageNotFoundAdvice imageNotFoundAdvice = new ImageNotFoundAdvice();
         ImageNotFoundException exception = new ImageNotFoundException(1L);
         try {

@@ -18,7 +18,7 @@ public class ScreenService implements ScreenServiceInterface {
 
     @Override
     public Screen getScreenById(Long id) {
-        return screenRepository.findById(id).orElse(null);
+        return screenRepository.findById(id).orElseThrow(() -> new ScreenNotFoundException(id));
     }
 
     @Override

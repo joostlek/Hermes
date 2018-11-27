@@ -1,11 +1,15 @@
 package nl.jtosti.hermes.exceptions;
 
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class UserNotFoundExceptionTest {
+@DisplayName("User not found exception")
+@Tag("Exceptions")
+class UserNotFoundExceptionTest {
 
     @Test
     void testThrow() {

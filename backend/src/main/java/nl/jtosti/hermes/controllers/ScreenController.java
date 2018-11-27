@@ -4,7 +4,7 @@ import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.dto.ExtendedScreenDTO;
 import nl.jtosti.hermes.entities.dto.ScreenDTO;
-import nl.jtosti.hermes.services.LocationService;
+import nl.jtosti.hermes.services.LocationServiceInterface;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ public class ScreenController {
 
     private final ModelMapper modelMapper;
     private final ScreenServiceInterface screenService;
-    private final LocationService locationService;
+    private final LocationServiceInterface locationService;
 
 
     @Autowired
-    public ScreenController(ScreenServiceInterface screenService, ModelMapper modelMapper, LocationService locationService) {
+    public ScreenController(ScreenServiceInterface screenService, ModelMapper modelMapper, LocationServiceInterface locationService) {
         this.screenService = screenService;
         this.modelMapper = modelMapper;
         this.locationService = locationService;
@@ -53,7 +53,7 @@ public class ScreenController {
     public List<ScreenDTO> getScreensByLocationId(@PathVariable Long locationId) {
         List<Screen> screens = screenService.getScreensByLocationId(locationId);
         return screens.stream()
-                .map(this::convertToExtendedDTO)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 

@@ -18,7 +18,7 @@ public class ImageService implements ImageServiceInterface {
 
     @Override
     public Image getImageById(Long id) {
-        return imageRepository.findById(id).orElse(null);
+        return imageRepository.findById(id).orElseThrow(() -> new ImageNotFoundException(id));
     }
 
     @Override

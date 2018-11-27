@@ -6,8 +6,8 @@ import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.ExtendedImageDTO;
 import nl.jtosti.hermes.entities.dto.ImageDTO;
 import nl.jtosti.hermes.services.ImageServiceInterface;
-import nl.jtosti.hermes.services.ScreenService;
-import nl.jtosti.hermes.services.UserService;
+import nl.jtosti.hermes.services.ScreenServiceInterface;
+import nl.jtosti.hermes.services.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,12 @@ public class ImageController {
 
     private final ModelMapper modelMapper;
 
-    private final ScreenService screenService;
+    private final ScreenServiceInterface screenService;
 
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
     @Autowired
-    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenService screenService, UserService userService) {
+    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.screenService = screenService;
