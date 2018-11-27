@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Image} from '../../../@core/data/domain/image';
 
 @Component({
     selector: 'app-image-table',
@@ -6,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./image-table.component.css']
 })
 export class ImageTableComponent implements OnInit {
-    images: object[] = [];
+    @Input('images') images: Image[];
 
     constructor() {
     }

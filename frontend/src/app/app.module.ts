@@ -6,12 +6,14 @@ import {ClarityModule} from '@clr/angular';
 import {UiModule} from './@ui/ui.module';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
         AppComponent,
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         BrowserAnimationsModule,
         ClarityModule,
