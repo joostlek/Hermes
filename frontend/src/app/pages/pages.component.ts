@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SelectorService} from '../@core/data/selector.service';
 import {LocationService} from '../@core/data/location.service';
+import {Location} from '../@core/data/domain/location';
 
 @Component({
     selector: 'app-pages',

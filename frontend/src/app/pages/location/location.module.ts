@@ -1,0 +1,21 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+
+import {LocationRoutingModule} from './location-routing.module';
+import {LocationComponent} from './location.component';
+import {ClarityModule} from '@clr/angular';
+import {DataModule} from '../../@core/data/data.module';
+import {ScreensModule} from '../screens/screens.module';
+
+@NgModule({
+    declarations: [LocationComponent],
+    imports: [
+        CommonModule,
+        ClarityModule,
+        DataModule,
+        LocationRoutingModule,
+        ScreensModule,
+    ],
+})
+export class LocationModule {
+}

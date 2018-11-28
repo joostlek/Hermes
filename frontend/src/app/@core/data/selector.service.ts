@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
+import {Location} from './domain/location';
+import {LocationService} from './location.service';
 
 @Injectable({
     providedIn: 'root',
@@ -7,10 +9,13 @@ import {Subject} from 'rxjs';
 export class SelectorService {
     selectedLocation: Subject<Location> = new Subject<Location>();
 
-    constructor() {
+    constructor(
+        private locationService: LocationService,
+    ) {
     }
 
     updateLocation(data: Location) {
-        this.selectedLocation.next(data);
+        this.locationService.getLocationById(data.id)
+            .subscribe((location) => this.selectedLocation.next(location));
     }
 }

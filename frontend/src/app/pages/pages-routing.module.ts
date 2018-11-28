@@ -4,15 +4,34 @@ import {PagesComponent} from './pages.component';
 
 const routes: Routes = [
     {
-        path: '', component: PagesComponent,
+        path: '',
+        component: PagesComponent,
         children: [
             {
-                path: 'u',
+                path: 'users',
                 loadChildren: './users/users.module#UsersModule',
             },
             {
-                path: 'i',
+                path: 'images',
                 loadChildren: './images/images.module#ImagesModule',
+            },
+            {
+                path: 'locations',
+                loadChildren: './locations/locations.module#LocationsModule',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: './locations/locations.module#LocationsModule',
+                    },
+                    {
+                        path: ':id',
+                        loadChildren: './location/location.module#LocationModule',
+                    },
+                ],
+            },
+            {
+                path: 'screens',
+                loadChildren: './screens/screens.module#ScreensModule',
             },
         ],
     },
