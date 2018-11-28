@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {SelectorService} from '../@core/data/selector.service';
+import {LocationService} from '../@core/data/location.service';
 
 @Component({
     selector: 'app-pages',
@@ -9,11 +11,34 @@ import {Component, OnInit} from '@angular/core';
     },
 })
 export class PagesComponent implements OnInit {
+    locations: Location[] = [];
+    selectedLocation: Location;
 
-    constructor() {
+    constructor(private selectorService: SelectorService,
+                private locationService: LocationService) {
     }
 
     ngOnInit() {
+        this.getLocations();
+        this.getSelectedLocation();
+    }
+
+    getLocations() {
+        this.locationService.getAllLocations()
+            .subscribe((locations) => this.locations = locations);
+    }
+
+    updateLocation(location: Location) {
+        this.selectorService.updateLocation(location);
+    }
+
+    getSelectedLocation() {
+        this.selectorService.selectedLocation
+            .subscribe((location) => this.selectedLocation = location);
+    }
+
+    isLocationSelected(): boolean {
+        return this.selectedLocation != null;
     }
 
 }

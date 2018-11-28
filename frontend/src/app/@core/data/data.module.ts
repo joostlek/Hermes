@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {ImageService} from './image.service';
 import {LocationService} from './location.service';
 import {UserService} from './user.service';
+import {SelectorService} from './selector.service';
 
 @NgModule({
     declarations: [],
@@ -15,6 +16,7 @@ import {UserService} from './user.service';
         LocationService,
         UserService,
         ImageService,
+        SelectorService,
     ],
 })
 export class DataModule {

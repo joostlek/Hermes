@@ -3,6 +3,13 @@
     <section class="sidenav-content">
 
         <section class="nav-group collapsible">
+            <input id="tab3" type="checkbox">
+            <label for="tab3">Location: <span *ngIf="selectedLocation != null">{{selectedLocation.name}}</span></label>
+            <ul class="nav-list" *ngFor="let location of locations">
+                <li><a class="nav-link" (click)="updateLocation(location)">{{location.name}}</a></li>
+            </ul>
+        </section>
+        <section class="nav-group collapsible" *ngIf="isLocationSelected()">
             <input id="tab2" type="checkbox">
             <label for="tab2">Manage</label>
             <ul class="nav-list">
@@ -12,7 +19,7 @@
                        [routerLinkActiveOptions]="{exact: true}">Images</a></li>
             </ul>
         </section>
-        <section class="nav-group collapsible">
+        <section class="nav-group collapsible" *ngIf="isLocationSelected()">
             <input id="tab1" type="checkbox">
             <label for="tab1">Components</label>
             <ul class="nav-list">
