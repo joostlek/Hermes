@@ -3,14 +3,15 @@ import {CommonModule} from '@angular/common';
 
 import {ImagesRoutingModule} from './images-routing.module';
 import {ImagesComponent} from './images.component';
-import {ImageTableComponent} from './image-table/image-table.component';
 import {ClarityModule} from '@clr/angular';
+import {UiModule} from '../../@ui/ui.module';
 
 @NgModule({
-    declarations: [ImagesComponent, ImageTableComponent],
+    declarations: [ImagesComponent],
     imports: [
         CommonModule,
         ClarityModule,
+        UiModule,
         ImagesRoutingModule,
     ],
 })
