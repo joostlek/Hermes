@@ -1,0 +1,42 @@
+<section class="dox-content" *ngIf="user != null">
+    <h2>{{user.firstName}} {{user.lastName}}</h2>
+    <clr-tabs>
+        <clr-tab>
+            <button clrTabLink>Information</button>
+            <ng-template [(clrIfActive)]="informationActive">
+                <clr-tab-content>
+                    <table class="table table-vertical">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{user.firstName}} {{user.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{user.email}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+
+        <clr-tab>
+            <button clrTabLink>Images</button>
+            <ng-template [(clrIfActive)]="imagesActive">
+                <clr-tab-content>
+                    <app-image-table [images]="images"></app-image-table>
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+
+        <clr-tab *ngIf="locations.length > 0">
+            <button clrTabLink>Locations</button>
+            <ng-template [(clrIfActive)]="locationsActive">
+                <clr-tab-content>
+                    <app-location-table [locations]="locations"></app-location-table>
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+    </clr-tabs>
+</section>

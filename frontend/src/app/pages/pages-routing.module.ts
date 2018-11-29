@@ -9,19 +9,33 @@ const routes: Routes = [
         children: [
             {
                 path: 'users',
-                loadChildren: './users/users.module#UsersModule',
+                children: [
+                    {
+                        path: ':id',
+                        loadChildren: './user/user.module#UserModule',
+                    },
+                    {
+                        path: '',
+                        loadChildren: './users/users.module#UsersModule',
+                    },
+                ],
             },
             {
                 path: 'images',
                 loadChildren: './images/images.module#ImagesModule',
             },
             {
-                path: 'locations/:id',
-                loadChildren: './location/location.module#LocationModule',
-            },
-            {
                 path: 'locations',
-                loadChildren: './locations/locations.module#LocationsModule',
+                children: [
+                    {
+                        path: ':id',
+                        loadChildren: './location/location.module#LocationModule',
+                    },
+                    {
+                        path: '',
+                        loadChildren: './locations/locations.module#LocationsModule',
+                    },
+                ],
             },
             {
                 path: 'screens',

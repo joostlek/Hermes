@@ -4,18 +4,18 @@ import {NgModule} from '@angular/core';
 import {ClarityModule} from '@clr/angular';
 import {DataModule} from '../../@core/data/data.module';
 import {UiModule} from '../../@ui/ui.module';
-import {UsersRoutingModule} from './users-routing.module';
-import {UsersComponent} from './users.component';
+import {UserRoutingModule} from './user-routing.module';
+import {UserComponent} from './user.component';
 
 @NgModule({
-    declarations: [UsersComponent],
+    declarations: [UserComponent],
     imports: [
         CommonModule,
         DataModule,
-        ClarityModule,
         UiModule,
-        UsersRoutingModule,
+        ClarityModule,
+        UserRoutingModule,
     ],
 })
-export class UsersModule {
+export class UserModule {
 }

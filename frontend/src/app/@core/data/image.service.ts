@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Image} from './domain/image';
 import {Screen} from './domain/screen';
+import {User} from './domain/user';
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +27,13 @@ export class ImageService {
 
     getImagesByScreenId(screenId: number): Observable<Image[]> {
         return this.http.get<Image[]>('api/screens/' + screenId + '/images');
+    }
+
+    getImagesByUser(user: User): Observable<Image[]> {
+        return this.getImagesByUserId(user.id);
+    }
+
+    getImagesByUserId(userId: number): Observable<Image[]> {
+        return this.http.get<Image[]>('api/users/' + userId + '/images');
     }
 }
