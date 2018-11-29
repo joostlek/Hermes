@@ -4,7 +4,7 @@
 
     <clr-dg-row *clrDgItems="let location of locations">
         <clr-dg-cell>{{location.id}}</clr-dg-cell>
-        <clr-dg-cell>{{location.name}}</clr-dg-cell>
+        <clr-dg-cell><a routerLink="/locations/{{location.id}}">{{location.name}}</a></clr-dg-cell>
     </clr-dg-row>
 
     <clr-dg-footer>

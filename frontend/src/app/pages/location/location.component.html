@@ -13,7 +13,8 @@
                         </tr>
                         <tr>
                             <th>Owner</th>
-                            <td>{{location.owner.firstName}} {{location.owner.lastName}}</td>
+                            <td><a routerLink="/users/{{location.owner.id}}">{{location.owner.firstName}}
+                                {{location.owner.lastName}}</a></td>
                         </tr>
                         </tbody>
                     </table>
