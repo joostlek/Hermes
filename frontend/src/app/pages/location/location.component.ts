@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '../../@core/data/domain/location';
-import {LocationService} from '../../@core/data/location.service';
 import {Screen} from '../../@core/data/domain/screen';
+import {LocationService} from '../../@core/data/location.service';
 import {ScreenService} from '../../@core/data/screen.service';
 
 @Component({
@@ -13,6 +13,8 @@ import {ScreenService} from '../../@core/data/screen.service';
 export class LocationComponent implements OnInit {
     location: Location;
     screens: Screen[] = [];
+    informationActive = true;
+    screensActive = false;
 
     constructor(
         private route: ActivatedRoute,

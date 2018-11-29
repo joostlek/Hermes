@@ -1,5 +1,40 @@
 <section class="dox-content" *ngIf="location != null">
     <h2>{{location.name}}</h2>
-    kek
-    <app-screen-table [screens]="screens"></app-screen-table>
+    <clr-tabs>
+        <clr-tab>
+            <button clrTabLink>Information</button>
+            <ng-template [(clrIfActive)]="informationActive">
+                <clr-tab-content>
+                    <app-screen-table [screens]="screens"></app-screen-table>
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+
+        <clr-tab>
+            <button clrTabLink>Screens</button>
+            <ng-template [(clrIfActive)]="screensActive">
+                <clr-tab-content>
+                    ...
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+
+        <clr-tab>
+            <button clrTabLink>Cloud</button>
+            <ng-template [(clrIfActive)]="screensActive">
+                <clr-tab-content>
+                    ...
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+
+        <clr-tab>
+            <button clrTabLink>Infrastructure</button>
+            <ng-template [(clrIfActive)]="screensActive">
+                <clr-tab-content>
+                    ...
+                </clr-tab-content>
+            </ng-template>
+        </clr-tab>
+    </clr-tabs>
 </section>

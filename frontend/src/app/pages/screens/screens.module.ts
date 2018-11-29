@@ -1,23 +1,21 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 
-import {ScreensRoutingModule} from './screens-routing.module';
-import {ScreensComponent} from './screens.component';
-import {ScreenTableComponent} from './screen-table/screen-table.component';
 import {ClarityModule} from '@clr/angular';
 import {DataModule} from '../../@core/data/data.module';
+import {ScreensRoutingModule} from './screens-routing.module';
+import {ScreensComponent} from './screens.component';
+import {UiModule} from '../../@ui/ui.module';
 
 @NgModule({
-    declarations: [ScreensComponent, ScreenTableComponent],
+    declarations: [ScreensComponent],
     imports: [
         CommonModule,
         ClarityModule,
+        UiModule,
         DataModule,
-        ScreensRoutingModule
+        ScreensRoutingModule,
     ],
-    exports: [
-        ScreenTableComponent,
-    ]
 })
 export class ScreensModule {
 }

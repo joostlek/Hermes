@@ -16,18 +16,12 @@ const routes: Routes = [
                 loadChildren: './images/images.module#ImagesModule',
             },
             {
+                path: 'locations/:id',
+                loadChildren: './location/location.module#LocationModule',
+            },
+            {
                 path: 'locations',
                 loadChildren: './locations/locations.module#LocationsModule',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: './locations/locations.module#LocationsModule',
-                    },
-                    {
-                        path: ':id',
-                        loadChildren: './location/location.module#LocationModule',
-                    },
-                ],
             },
             {
                 path: 'screens',

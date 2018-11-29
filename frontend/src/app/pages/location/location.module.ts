@@ -5,7 +5,7 @@ import {LocationRoutingModule} from './location-routing.module';
 import {LocationComponent} from './location.component';
 import {ClarityModule} from '@clr/angular';
 import {DataModule} from '../../@core/data/data.module';
-import {ScreensModule} from '../screens/screens.module';
+import {UiModule} from '../../@ui/ui.module';
 
 @NgModule({
     declarations: [LocationComponent],
@@ -13,8 +13,8 @@ import {ScreensModule} from '../screens/screens.module';
         CommonModule,
         ClarityModule,
         DataModule,
+        UiModule,
         LocationRoutingModule,
-        ScreensModule,
     ],
 })
 export class LocationModule {
