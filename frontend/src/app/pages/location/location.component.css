@@ -10,3 +10,7 @@ ul.nav {
 :host {
     width: 100%;
 }
+
+.back {
+    cursor: pointer;
+}

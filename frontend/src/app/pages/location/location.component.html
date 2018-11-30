@@ -1,5 +1,7 @@
 <section class="dox-content" *ngIf="location != null">
-    <h2>{{location.name}}</h2>
+    <h2>
+        <clr-icon shape="arrow left" size="24" (click)="goBack()" class="back"></clr-icon>
+        {{location.name}}</h2>
     <clr-tabs>
         <clr-tab>
             <button clrTabLink>Information</button>

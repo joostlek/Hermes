@@ -1,3 +1,4 @@
+import {Location as NgLocation} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '../../@core/data/domain/location';
@@ -20,6 +21,7 @@ export class LocationComponent implements OnInit {
         private route: ActivatedRoute,
         private locationService: LocationService,
         private screenService: ScreenService,
+        private ngLocation: NgLocation,
     ) {
     }
 
@@ -46,6 +48,10 @@ export class LocationComponent implements OnInit {
     getScreens(): void {
         this.screenService.getScreensByLocation(this.location)
             .subscribe((screens) => this.screens = screens);
+    }
+
+    goBack(): void {
+        this.ngLocation.back();
     }
 
 }
