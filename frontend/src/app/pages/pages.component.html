@@ -5,8 +5,11 @@
         <section class="nav-group collapsible">
             <input id="tab3" type="checkbox">
             <label for="tab3">Location: <span *ngIf="selectedLocation != null">{{selectedLocation.name}}</span></label>
-            <ul class="nav-list" *ngFor="let location of locations">
-                <li><a class="nav-link" (click)="updateLocation(location)">{{location.name}}</a></li>
+            <ul class="nav-list">
+                <ng-container *ngFor="let location of locations | slice : 0 : 5">
+                    <li><a class="nav-link" (click)="updateLocation(location)">{{location.name}}</a></li>
+                </ng-container>
+                <li><a class="nav-link" routerLink="/locations">View more locations</a></li>
             </ul>
         </section>
         <section class="nav-group collapsible" *ngIf="isLocationSelected()">

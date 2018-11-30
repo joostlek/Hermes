@@ -1,11 +1,12 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 
-import {ClarityModule} from '@clr/angular';
+import {ReactiveFormsModule} from '@angular/forms';
+import {ClarityModule, ClrFormsNextModule} from '@clr/angular';
 import {DataModule} from '../../@core/data/data.module';
+import {UiModule} from '../../@ui/ui.module';
 import {LocationsRoutingModule} from './locations-routing.module';
 import {LocationsComponent} from './locations.component';
-import {UiModule} from '../../@ui/ui.module';
 
 @NgModule({
     declarations: [LocationsComponent],
@@ -14,6 +15,9 @@ import {UiModule} from '../../@ui/ui.module';
         ClarityModule,
         DataModule,
         UiModule,
+        ReactiveFormsModule,
+        ClrFormsNextModule,
+
         LocationsRoutingModule,
     ],
 })

@@ -27,4 +27,9 @@ export class LocationService {
     getLocationsByUserId(userId: number): Observable<Location[]> {
         return this.http.get<Location[]>('api/users/' + userId + '/locations');
     }
+
+    addLocation(name: string): Observable<Location> {
+        const location = new Location(name);
+        return this.http.post<Location>('api/users/1/locations', location);
+    }
 }

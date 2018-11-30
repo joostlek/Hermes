@@ -6,4 +6,8 @@ export class Location {
     name: string;
     screens: Screen[];
     owner: User;
+
+    constructor(name: string) {
+        this.name = name;
+    }
 }
