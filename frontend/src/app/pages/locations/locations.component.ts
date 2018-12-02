@@ -42,6 +42,7 @@ export class LocationsComponent implements OnInit {
                 (err) => {
                     this.dataGridError = err;
                     this.dataGridErrorFlag = true;
+                    throw err;
                 });
     }
 
