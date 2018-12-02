@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -7,6 +7,7 @@ import {UiModule} from './@ui/ui.module';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
+import {ErrorsHandler} from './@core/errors/errors-handler';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,13 @@ import {HttpClientModule} from '@angular/common/http';
         UiModule,
         AppRoutingModule,
     ],
-    providers: [],
+    providers: [
+        ErrorsHandler,
+        {
+            provide: ErrorHandler,
+            useClass: ErrorsHandler,
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {
