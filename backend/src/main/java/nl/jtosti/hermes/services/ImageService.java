@@ -37,6 +37,11 @@ public class ImageService implements ImageServiceInterface {
     }
 
     @Override
+    public List<Image> getImagesByLocationId(Long id) {
+        return imageRepository.findAllByScreenLocationId(id);
+    }
+
+    @Override
     public boolean exists(Long id) {
         return imageRepository.existsById(id);
     }

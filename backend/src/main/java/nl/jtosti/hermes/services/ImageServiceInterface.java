@@ -13,6 +13,8 @@ public interface ImageServiceInterface {
 
     public List<Image> getImagesByUserId(Long id);
 
+    public List<Image> getImagesByLocationId(Long id);
+
     public boolean exists(Long id);
 
     public Image save(Image image);

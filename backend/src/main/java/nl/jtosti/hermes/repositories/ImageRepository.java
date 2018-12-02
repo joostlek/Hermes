@@ -13,4 +13,6 @@ public interface ImageRepository extends CrudRepository<Image, Long> {
     List<Image> findAllByOwnerId(Long id);
 
     List<Image> findAllByScreenId(Long id);
+
+    List<Image> findAllByScreenLocationId(Long id);
 }
