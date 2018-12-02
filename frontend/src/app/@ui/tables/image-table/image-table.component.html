@@ -2,12 +2,21 @@
     <clr-dg-column>Image ID</clr-dg-column>
     <clr-dg-column>Name</clr-dg-column>
     <clr-dg-column>URL</clr-dg-column>
+    <clr-dg-column>Screen name</clr-dg-column>
+
+    <clr-dg-placeholder>{{ error ? 'An error occurred, please check your connection' : 'No images for this location found!'}}</clr-dg-placeholder>
 
     <clr-dg-row *ngFor="let image of images">
         <clr-dg-cell>{{image.id}}</clr-dg-cell>
         <clr-dg-cell>{{image.name}}</clr-dg-cell>
         <clr-dg-cell>{{image.url}}</clr-dg-cell>
+        <clr-dg-cell>{{image.screen.name}}</clr-dg-cell>
     </clr-dg-row>
 
-    <clr-dg-footer>images.length</clr-dg-footer>
+    <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="10">
+            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+            of {{pagination.totalItems}} images
+        </clr-dg-pagination>
+    </clr-dg-footer>
 </clr-datagrid>

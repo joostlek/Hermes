@@ -8,6 +8,7 @@ import {Image} from '../../../@core/data/domain/image';
 })
 export class ImageTableComponent implements OnInit {
     @Input('images') images: Image[];
+    @Input('error') error: boolean;
 
     constructor() {
     }

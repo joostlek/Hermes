@@ -36,4 +36,8 @@ export class ImageService {
     getImagesByUserId(userId: number): Observable<Image[]> {
         return this.http.get<Image[]>('api/users/' + userId + '/images');
     }
+
+    getImagesByLocationIdByUserId(locationId: number, userId: number): Observable<Image[]> {
+        return this.http.get<Image[]>('api/users/' + userId + '/locations/' + locationId + '/images');
+    }
 }
