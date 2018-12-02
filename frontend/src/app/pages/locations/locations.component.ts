@@ -19,6 +19,8 @@ export class LocationsComponent implements OnInit {
     loadingFlag = false;
     errorFlag = false;
     error: any;
+    dataGridError: any;
+    dataGridErrorFlag = false;
 
     firstPage = new FormGroup({
         name: new FormControl('', [Validators.required]),
@@ -36,7 +38,11 @@ export class LocationsComponent implements OnInit {
 
     getLocations(): void {
         this.locationService.getAllLocations()
-            .subscribe((locations) => this.locations = locations);
+            .subscribe((locations) => this.locations = locations,
+                (err) => {
+                    this.dataGridError = err;
+                    this.dataGridErrorFlag = true;
+                });
     }
 
     createLocation(): void {
