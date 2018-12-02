@@ -57,4 +57,9 @@ public class LocationService implements LocationServiceInterface {
     public void delete(Long id) {
         locationRepository.deleteById(id);
     }
+
+    @Override
+    public List<Location> getPersonalLocationsByUserId(Long id) {
+        return locationRepository.findPersonalLocationsByUserId(id);
+    }
 }

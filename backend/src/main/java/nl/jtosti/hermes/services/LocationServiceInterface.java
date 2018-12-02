@@ -18,4 +18,6 @@ public interface LocationServiceInterface {
     public Location update(Location location);
 
     public void delete(Long id);
+
+    public List<Location> getPersonalLocationsByUserId(Long id);
 }

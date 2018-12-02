@@ -55,6 +55,15 @@ public class LocationController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/users/{userId}/personal-locations")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LocationDTO> getPersonalLocationByUserId(@PathVariable Long userId) {
+        List<Location> locations = locationService.getPersonalLocationsByUserId(userId);
+        return locations.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/locations/{id}")
     @ResponseStatus(HttpStatus.OK)
     public LocationDTO getSingleLocation(@PathVariable Long id) {
