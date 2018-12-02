@@ -24,12 +24,12 @@
     "@angular/platform-browser-dynamic": "~7.0.3",
     "@angular/router": "~7.0.3",
     "@clr/angular": "^0.13.9",
+    "@clr/icons": "^0.13.9",
+    "@clr/ui": "^0.13.9",
+    "@webcomponents/custom-elements": "^1.0.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
-    "zone.js": "~0.8.26",
-    "@clr/ui": "^0.13.9",
-    "@clr/icons": "^0.13.9",
-    "@webcomponents/custom-elements": "^1.0.0"
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",
@@ -52,6 +52,7 @@
     "ts-node": "~7.0.0",
     "tslint": "^5.11.0",
     "tslint-sonarts": "^1.8.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "rxjs-tslint-rules": "^4.13.0"
   }
 }

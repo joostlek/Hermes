@@ -4,7 +4,8 @@
   ],
   "extends": [
     "tslint:recommended",
-    "tslint-sonarts"
+    "tslint-sonarts",
+    "rxjs-tslint-rules"
   ],
   "rules": {
     "arrow-return-shorthand": true,
@@ -130,6 +131,9 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true
+    "directive-class-suffix": true,
+    "rxjs-no-unsafe-takeuntil": {
+      "severity": "error"
+    }
   }
 }
