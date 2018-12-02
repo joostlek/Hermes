@@ -8,6 +8,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ErrorsHandler} from './@core/errors/errors-handler';
+import {DataModule} from './@core/data/data.module';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import {ErrorsHandler} from './@core/errors/errors-handler';
     imports: [
         HttpClientModule,
         BrowserModule,
+        DataModule,
         BrowserAnimationsModule,
         ClarityModule,
         UiModule,

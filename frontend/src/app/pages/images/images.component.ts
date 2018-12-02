@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {filter, startWith, takeUntil} from 'rxjs/operators';
 import {Image} from '../../@core/data/domain/image';
 import {Location} from '../../@core/data/domain/location';
 import {ImageService} from '../../@core/data/image.service';
@@ -26,11 +26,18 @@ export class ImagesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.getLocation();
+        this.setSubscription();
+    }
+
+    private setSubscription(): void {
+        this.ngUnsubscribe.subscribe(() => this.ngTempUnsubscribe.next());
     }
 
     getLocation(): void {
         this.selectorService.selectedLocation
             .pipe(
+                startWith(this.selectorService.location),
+                filter((location) => location !== null),
                 takeUntil(this.ngUnsubscribe),
             )
             .subscribe((location) => {

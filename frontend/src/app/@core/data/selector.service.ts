@@ -12,9 +12,11 @@ export class SelectorService {
         private locationService: LocationService,
     ) {
         this.setLocationListener();
+        this.selectedLocation.subscribe((location) => this.location = location);
         this.getLocation();
     }
 
+    location: Location = null;
     selectedLocation: Subject<Location> = new Subject<Location>();
 
     private static setLocation(location: Location): void {
