@@ -15,6 +15,8 @@ public interface ImageServiceInterface {
 
     public List<Image> getImagesByLocationId(Long id);
 
+    public List<Image> getImagesByLocationIdByUserId(Long locationId, Long userId);
+
     public boolean exists(Long id);
 
     public Image save(Image image);
