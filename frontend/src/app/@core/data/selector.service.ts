@@ -7,15 +7,41 @@ import {LocationService} from './location.service';
     providedIn: 'root',
 })
 export class SelectorService {
-    selectedLocation: Subject<Location> = new Subject<Location>();
 
     constructor(
         private locationService: LocationService,
     ) {
+        this.setLocationListener();
+        this.getLocation();
+    }
+
+    selectedLocation: Subject<Location> = new Subject<Location>();
+
+    private static setLocation(location: Location): void {
+        sessionStorage.setItem('selected location', location.id.toString());
+    }
+
+    private setLocationListener(): void {
+        this.selectedLocation.subscribe(
+            (location) => {
+                SelectorService.setLocation(location);
+            },
+        );
     }
 
     updateLocation(data: Location) {
-        this.locationService.getLocationById(data.id)
+        this.updateLocationById(data.id);
+    }
+
+    private updateLocationById(id: number): void {
+        this.locationService.getLocationById(id)
             .subscribe((location) => this.selectedLocation.next(location));
+    }
+
+    getLocation(): void {
+        const id = +sessionStorage.getItem('selected location');
+        if (id !== null) {
+            this.updateLocationById(id);
+        }
     }
 }
