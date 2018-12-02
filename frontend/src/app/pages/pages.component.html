@@ -17,18 +17,8 @@
             <input id="tab2" type="checkbox">
             <label for="tab2">Manage</label>
             <ul class="nav-list">
-                <li><a class="nav-link" routerLink="/users" routerLinkActive="active"
-                       [routerLinkActiveOptions]="{exact: true}">Users</a></li>
                 <li><a class="nav-link" routerLink="/images" routerLinkActive="active"
                        [routerLinkActiveOptions]="{exact: true}">Images</a></li>
-                <li><a class="nav-link" routerLink="/locations" routerLinkActive="active"
-                       [routerLinkActiveOptions]="{exact: true}">Locations</a></li>
-            </ul>
-        </section>
-        <section class="nav-group collapsible" *ngIf="isLocationSelected()">
-            <input id="tab1" type="checkbox">
-            <label for="tab1">Components</label>
-            <ul class="nav-list">
             </ul>
         </section>
     </section>
