@@ -1,5 +1,9 @@
 <section class="dox-content">
     <h2>Images</h2>
+    <clr-button-group class="btn-outline-primary btn-sm">
+        <clr-button (click)="wizardOpen = !wizardOpen">Create</clr-button>
+        <clr-button>Favorite</clr-button>
+    </clr-button-group>
     <div class="app-table">
         <app-image-table [images]="images" [error]="dataGridErrorFlag"></app-image-table>
     </div>

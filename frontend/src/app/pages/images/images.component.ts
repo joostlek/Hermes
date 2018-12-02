@@ -12,7 +12,6 @@ import {SelectorService} from '../../@core/data/selector.service';
     styleUrls: ['./images.component.css'],
 })
 export class ImagesComponent implements OnInit, OnDestroy {
-
     constructor(
         private imageService: ImageService,
         private selectorService: SelectorService,
@@ -23,6 +22,7 @@ export class ImagesComponent implements OnInit, OnDestroy {
     private ngUnsubscribe = new Subject();
     private ngTempUnsubscribe = new Subject();
     images: Image[] = [];
+    wizardOpen = false;
 
     ngOnInit() {
         this.getLocation();
