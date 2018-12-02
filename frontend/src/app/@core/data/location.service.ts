@@ -32,4 +32,12 @@ export class LocationService {
         const location = new Location(name);
         return this.http.post<Location>('api/users/1/locations', location);
     }
+
+    getPersonalLocationsByUser(user: User): Observable<Location[]> {
+        return this.getPersonalLocationsByUserId(user.id);
+    }
+
+    getPersonalLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/personal-locations');
+    }
 }

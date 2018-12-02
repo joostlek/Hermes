@@ -7,7 +7,8 @@
             <label for="tab3">Location: <span *ngIf="selectedLocation != null">{{selectedLocation.name}}</span></label>
             <ul class="nav-list">
                 <ng-container *ngFor="let location of locations | slice : 0 : 5">
-                    <li><a class="nav-link" (click)="updateLocation(location)">{{location.name}}</a></li>
+                    <li><a class="nav-link" (click)="updateLocation(location)"
+                           [ngClass]="{'active': selectedLocation.id === location.id}">{{location.name}}</a></li>
                 </ng-container>
                 <li><a class="nav-link" routerLink="/locations">View more locations</a></li>
             </ul>

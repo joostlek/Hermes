@@ -25,7 +25,7 @@ export class PagesComponent implements OnInit {
     }
 
     getLocations() {
-        this.locationService.getAllLocations()
+        this.locationService.getPersonalLocationsByUserId(1)
             .subscribe((locations) => this.locations = locations);
     }
 
