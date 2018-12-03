@@ -40,4 +40,9 @@ export class ImageService {
     getImagesByLocationIdByUserId(locationId: number, userId: number): Observable<Image[]> {
         return this.http.get<Image[]>('api/users/' + userId + '/locations/' + locationId + '/images');
     }
+
+    addImage(name: string, url: string, screenId: number, userId: number): Observable<Image> {
+        const image = new Image(name, url);
+        return this.http.post<Image>('/api/users/' + userId + '/images?screenId=' + screenId, image);
+    }
 }

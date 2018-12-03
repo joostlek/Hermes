@@ -1,7 +1,7 @@
 <section class="dox-content">
     <h2>Images</h2>
     <clr-button-group class="btn-outline-primary btn-sm">
-        <clr-button (click)="wizardOpen = !wizardOpen">Create</clr-button>
+        <clr-button (click)="openWizard()">Create</clr-button>
         <clr-button>Favorite</clr-button>
     </clr-button-group>
     <div class="app-table">
@@ -25,6 +25,12 @@
                 <clr-control-helper>The name of the location</clr-control-helper>
                 <clr-control-error>This field is required!</clr-control-error>
             </clr-input-container>
+            <clr-select-container>
+                <label>Screen</label>
+                <select clrSelect name="screen" formControlName="screenId">
+                    <option *ngFor="let screen of screens" value="{{screen.id}}">{{screen.name}}</option>
+                </select>
+            </clr-select-container>
         </form>
     </clr-wizard-page>
 
@@ -43,7 +49,7 @@
 
     <clr-wizard-page #finalPage
                      clrWizardPagePreventDefault="true"
-                     (clrWizardPageOnCommit)="createLocation()"
+                     (clrWizardPageOnCommit)="createImage()"
                      (clrWizardPageOnCancel)="doCancel()"
                      (clrWizardPagePrevious)="goBack()">
         <ng-template clrPageTitle>Finalizing</ng-template>

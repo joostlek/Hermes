@@ -7,4 +7,10 @@ export class Image {
     url: string;
     owner: User;
     screen: Screen;
+
+
+    constructor(name: string, url: string) {
+        this.name = name;
+        this.url = url;
+    }
 }
