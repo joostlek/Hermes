@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ClrWizard, ClrWizardPage} from '@clr/angular';
+import {ClrLoadingState, ClrWizard, ClrWizardPage} from '@clr/angular';
 import {Subject} from 'rxjs';
 import {filter, startWith, takeUntil} from 'rxjs/operators';
 import {Image} from '../../@core/data/domain/image';
@@ -33,6 +33,7 @@ export class ImagesComponent implements OnInit, OnDestroy {
     loadingFlag = false;
     errorFlag = false;
     error: any;
+    fileUploadButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     fileToUpload: File = null;
 
@@ -89,10 +90,21 @@ export class ImagesComponent implements OnInit, OnDestroy {
     }
 
     fileUpload(files: FileList): void {
+        this.fileUploadButtonState = ClrLoadingState.LOADING;
         this.fileToUpload = files.item(0);
-        this.fileUploadService.uploadFile(this.fileToUpload)
-            .subscribe((fileUrl) => {
-                return this.secondPage.setValue({url: fileUrl});
-            });
+        if (this.fileToUpload === null) {
+            this.fileUploadButtonState = ClrLoadingState.ERROR;
+        } else {
+            this.fileUploadService.uploadFile(this.fileToUpload)
+                .subscribe((fileUrl) => {
+                        this.fileUploadButtonState = ClrLoadingState.SUCCESS;
+                        return this.secondPage.setValue({url: fileUrl});
+                    },
+                    (err) => {
+                        this.fileUploadButtonState = ClrLoadingState.ERROR;
+                        throw err;
+                    });
+
+        }
     }
 }

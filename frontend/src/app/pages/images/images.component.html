@@ -32,9 +32,11 @@
         <ng-template clrPageTitle>Page 2</ng-template>
         <form clrform [formGroup]="secondPage">
             <clr-input-container>
-                <button class="btn btn-primary" (click)="fileInput.click()">Select file</button>
                 <input placeholder="url" type="text" name="url" clrInput formControlName="url"/>
             </clr-input-container>
+            <button class="btn btn-primary" (click)="fileInput.click()" [clrLoading]="fileUploadButtonState">Select
+                file
+            </button>
             <input type="file" name="file" (change)="fileUpload($event.target.files)" style="display: none" #fileInput>
         </form>
     </clr-wizard-page>
