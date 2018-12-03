@@ -1,10 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ClrWizard, ClrWizardPage} from '@clr/angular';
 import {Subject} from 'rxjs';
 import {filter, startWith, takeUntil} from 'rxjs/operators';
 import {Image} from '../../@core/data/domain/image';
 import {Location} from '../../@core/data/domain/location';
 import {ImageService} from '../../@core/data/image.service';
 import {SelectorService} from '../../@core/data/selector.service';
+import {FileUploadService} from '../../@core/data/file-upload.service';
 
 @Component({
     selector: 'app-images',
@@ -12,9 +15,13 @@ import {SelectorService} from '../../@core/data/selector.service';
     styleUrls: ['./images.component.css'],
 })
 export class ImagesComponent implements OnInit, OnDestroy {
+    @ViewChild('wizardlg') wizard: ClrWizard;
+    @ViewChild('finalPage') finalPage: ClrWizardPage;
+
     constructor(
         private imageService: ImageService,
         private selectorService: SelectorService,
+        private fileUploadService: FileUploadService,
     ) {
     }
 
@@ -23,6 +30,19 @@ export class ImagesComponent implements OnInit, OnDestroy {
     private ngTempUnsubscribe = new Subject();
     images: Image[] = [];
     wizardOpen = false;
+    loadingFlag = false;
+    errorFlag = false;
+    error: any;
+
+    fileToUpload: File = null;
+
+    firstPage = new FormGroup({
+        name: new FormControl('', [Validators.required]),
+    });
+
+    secondPage = new FormGroup({
+        url: new FormControl({value: '', disabled: true}, [Validators.required]),
+    });
 
     ngOnInit() {
         this.getLocation();
@@ -66,5 +86,13 @@ export class ImagesComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+    fileUpload(files: FileList): void {
+        this.fileToUpload = files.item(0);
+        this.fileUploadService.uploadFile(this.fileToUpload)
+            .subscribe((fileUrl) => {
+                return this.secondPage.setValue({url: fileUrl});
+            });
     }
 }
