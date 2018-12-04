@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Location} from './domain/location';
 import {LocationService} from './location.service';
+import {filter} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -24,11 +25,15 @@ export class SelectorService {
     }
 
     private setLocationListener(): void {
-        this.selectedLocation.subscribe(
-            (location) => {
-                SelectorService.setLocation(location);
-            },
-        );
+        this.selectedLocation
+            .pipe(
+                filter((location) => location !== null),
+            )
+            .subscribe(
+                (location) => {
+                    SelectorService.setLocation(location);
+                },
+            );
     }
 
     updateLocation(data: Location) {

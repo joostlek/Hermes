@@ -42,4 +42,11 @@ export class PagesComponent implements OnInit {
         return this.selectedLocation != null;
     }
 
+    isGivenLocationIdSelected(id: number): boolean {
+        if (this.selectedLocation === null || this.selectedLocation === undefined) {
+            return false;
+        }
+        return this.selectedLocation.id === id;
+    }
+
 }
