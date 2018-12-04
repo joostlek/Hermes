@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
-
 @RestController
 public class FileController {
     private final StorageServiceInterface storageService;
@@ -25,8 +23,8 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)
     public FileDTO uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            Path path = storageService.store(file);
-            return new FileDTO(path.toString());
+            String path = storageService.store(file);
+            return new FileDTO(path);
         } catch (Exception e) {
             throw new RuntimeException("Fail");
         }

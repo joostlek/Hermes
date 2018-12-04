@@ -17,11 +17,12 @@ public class StorageService implements StorageServiceInterface {
     private final Path rootLocation = Paths.get("upload-dir");
 
     @Override
-    public Path store(MultipartFile file) {
+    public String store(MultipartFile file) {
         try {
-            Path path = this.rootLocation.resolve(file.getOriginalFilename());
+            String fileName = "1";
+            Path path = this.rootLocation.resolve(fileName);
             Files.copy(file.getInputStream(), path);
-            return path;
+            return fileName;
         } catch (Exception e) {
             throw new RuntimeException("Fail");
         }
