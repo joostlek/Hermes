@@ -35,6 +35,12 @@
         <sonar.links.homepage>https://jtosti.nl</sonar.links.homepage>
         <sonar.links.scm>https://github.com/joostlek/Hermes</sonar.links.scm>
     </properties>
+    <ciManagement>
+        <url>https://travis-ci.com/joostlek/Hermes</url>
+    </ciManagement>
+    <scm>
+        <url>https://github.com/joostlek/Hermes</url>
+    </scm>
 
     <dependencies>
         <dependency>
