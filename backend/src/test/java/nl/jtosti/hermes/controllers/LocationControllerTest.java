@@ -5,6 +5,7 @@ import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.exceptions.UserNotFoundException;
 import nl.jtosti.hermes.services.LocationServiceInterface;
+import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -47,6 +48,9 @@ class LocationControllerTest {
 
     @MockBean
     private UserServiceInterface userService;
+
+    @MockBean
+    private StorageServiceInterface storageService;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 

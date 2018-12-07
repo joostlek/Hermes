@@ -3,6 +3,7 @@ package nl.jtosti.hermes.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.ExtendedUserDTO;
+import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -45,6 +46,9 @@ class UserControllerTest {
 
     @MockBean
     private UserServiceInterface service;
+
+    @MockBean
+    private StorageServiceInterface storageService;
 
     @Test
     @DisplayName("Get all users")

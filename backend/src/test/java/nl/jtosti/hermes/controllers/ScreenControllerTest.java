@@ -6,6 +6,7 @@ import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.services.LocationServiceInterface;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
+import nl.jtosti.hermes.services.StorageServiceInterface;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,9 @@ class ScreenControllerTest {
 
     @MockBean
     private LocationServiceInterface locationService;
+
+    @MockBean
+    private StorageServiceInterface storageService;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 

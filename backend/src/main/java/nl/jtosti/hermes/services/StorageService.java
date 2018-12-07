@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -19,10 +23,13 @@ public class StorageService implements StorageServiceInterface {
     @Override
     public String store(MultipartFile file) {
         try {
-            String fileName = "1";
-            Path path = this.rootLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), path);
-            return fileName;
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            String fileName = Long.toString(Math.round(Math.random() * 1000000));
+            Path path = this.rootLocation.resolve(fileName + ".png");
+            BufferedImage image = ImageIO.read(file.getInputStream());
+            ImageIO.write(image, "png", stream);
+            Files.copy(new ByteArrayInputStream(stream.toByteArray()), path);
+            return fileName + ".png";
         } catch (Exception e) {
             throw new RuntimeException("Fail");
         }

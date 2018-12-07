@@ -7,6 +7,7 @@ import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.services.ImageServiceInterface;
 import nl.jtosti.hermes.services.ScreenService;
+import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -52,6 +53,9 @@ class ImageControllerTest {
 
     @MockBean
     private ImageServiceInterface imageService;
+
+    @MockBean
+    private StorageServiceInterface storageService;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 
