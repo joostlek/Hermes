@@ -120,6 +120,23 @@ class LocationServiceTest {
     }
 
     @Test
+    @DisplayName("Get all locations")
+    void shouldReturnAllPersonalLocations_whenGetAllPersonalLocations() {
+        Location location = new Location("Alex coffee", user);
+        location.setId(1L);
+        Location location1 = new Location("Jane coffee", user);
+        location1.setId(2L);
+        List<Location> locationList = Arrays.asList(location, location1);
+        given(locationRepository.findPersonalLocationsByUserId(1L)).willReturn(locationList);
+
+        List<Location> locations = locationService.getPersonalLocationsByUserId(1L);
+
+        assertThat(locations).hasSize(2);
+        assertThat(locations.get(0)).isEqualTo(location);
+        assertThat(locations.get(1)).isEqualTo(location1);
+    }
+
+    @Test
     @DisplayName("Location exists")
     void shouldReturnTrue_whenLocationExists() {
         when(locationRepository.existsById(1L)).thenReturn(true);

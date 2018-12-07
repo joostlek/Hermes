@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 @Service
 public class StorageService implements StorageServiceInterface {
@@ -24,7 +25,7 @@ public class StorageService implements StorageServiceInterface {
     public String store(MultipartFile file) {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            String fileName = Long.toString(Math.round(Math.random() * 1000000));
+            String fileName = Long.toString(new Date().getTime());
             Path path = this.rootLocation.resolve(fileName + ".png");
             BufferedImage image = ImageIO.read(file.getInputStream());
             ImageIO.write(image, "png", stream);

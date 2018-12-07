@@ -100,6 +100,33 @@ class LocationControllerTest {
     }
 
     @Test
+    @DisplayName("Get all personal locations from an user")
+    void shouldReturnOwnLocations_whenGetPersonalLocationsByUserId() throws Exception {
+        Location location = new Location("Alex coffee", user);
+        location.setId(1L);
+        Location location1 = new Location("Jane coffee", user);
+        location1.setId(2L);
+        List<Location> locations = Arrays.asList(location, location1);
+
+        given(locationService.getPersonalLocationsByUserId(1L)).willReturn(locations);
+
+        mvc.perform(get("/users/1/personal-locations")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .with(user("user")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(location.getId().intValue())))
+                .andExpect(jsonPath("$[0].name", is(location.getName())))
+                .andExpect(jsonPath("$[0].images").doesNotExist())
+                .andExpect(jsonPath("$[0].owner").doesNotExist())
+                .andExpect(jsonPath("$[1].id", is(location1.getId().intValue())))
+                .andExpect(jsonPath("$[1].name", is(location1.getName())))
+                .andExpect(jsonPath("$[1].images").doesNotExist())
+                .andExpect(jsonPath("$[1].owner").doesNotExist());
+
+    }
+
+    @Test
     @DisplayName("Get single location")
     void shouldReturnSingleLocation_whenGetLocation() throws Exception {
         Location location = new Location("Alex coffee", user);

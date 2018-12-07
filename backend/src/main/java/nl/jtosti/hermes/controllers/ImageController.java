@@ -72,7 +72,7 @@ public class ImageController {
 
     @GetMapping("/users/{userId}/locations/{locationId}/images")
     @ResponseStatus(HttpStatus.OK)
-    public List<ImageDTO> getImagesByLocationId(@PathVariable Long userId, @PathVariable Long locationId) {
+    public List<ImageDTO> getImagesByLocationIdByUserId(@PathVariable Long userId, @PathVariable Long locationId) {
         List<Image> images = imageService.getImagesByLocationIdByUserId(locationId, userId);
         return images.stream()
                 .map(this::convertToExtendedDTO)

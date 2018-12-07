@@ -79,6 +79,36 @@ class ImageServiceTest {
     }
 
     @Test
+    @DisplayName("Get all images by location id")
+    void shouldReturnAllImages_whenGetAllImagesByLocationId() {
+        Image image = new Image("Image 1", "", screen, user);
+        Image image1 = new Image("Image 2", "", screen, user);
+
+        when(imageRepository.findAllByScreenLocationId(1L)).thenReturn(Arrays.asList(image, image1));
+
+        List<Image> images = imageService.getImagesByLocationId(1L);
+
+        assertThat(images).hasSize(2);
+        assertThat(images.get(0)).isEqualTo(image);
+        assertThat(images.get(1)).isEqualTo(image1);
+    }
+
+    @Test
+    @DisplayName("Get all images by user id by location id")
+    void shouldReturnAllImages_whenGetAllImagesByUserIdByLocationId() {
+        Image image = new Image("Image 1", "", screen, user);
+        Image image1 = new Image("Image 2", "", screen, user);
+
+        when(imageRepository.findAllByScreenLocationIdAndOwnerId(1L, 1L)).thenReturn(Arrays.asList(image, image1));
+
+        List<Image> images = imageService.getImagesByLocationIdByUserId(1L, 1L);
+
+        assertThat(images).hasSize(2);
+        assertThat(images.get(0)).isEqualTo(image);
+        assertThat(images.get(1)).isEqualTo(image1);
+    }
+
+    @Test
     @DisplayName("Get all images by screen id")
     void shouldReturnScreenImages_whenGetAllImagesByScreenId() {
         Image image = new Image("Image 1", "", screen, user);

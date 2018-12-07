@@ -156,6 +156,72 @@ class ImageControllerTest {
     }
 
     @Test
+    @DisplayName("Get images by user ID by location ID")
+    void shouldReturnImages_whenGetImagesByUserIdAndLocationId() throws Exception {
+        Image image = new Image("Image 1", "3", screen, user);
+        image.setId(1L);
+        Image image1 = new Image("Image 2", "2", screen, user);
+        image1.setId(2L);
+        List<Image> images = Arrays.asList(image, image1);
+
+        given(imageService.getImagesByLocationIdByUserId(1L, 1L)).willReturn(images);
+
+        mvc.perform(get("/users/1/locations/1/images")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(image.getId().intValue())))
+                .andExpect(jsonPath("$[0].name", is(image.getName())))
+                .andExpect(jsonPath("$[0].url", is(image.getUrl())))
+                .andExpect(jsonPath("$[0].screen").exists())
+                .andExpect(jsonPath("$[0].screen.name", is(screen.getName())))
+                .andExpect(jsonPath("$[0].owner").exists())
+                .andExpect(jsonPath("$[0].owner.firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$[1].id", is(image1.getId().intValue())))
+                .andExpect(jsonPath("$[1].name", is(image1.getName())))
+                .andExpect(jsonPath("$[1].url", is(image1.getUrl())))
+                .andExpect(jsonPath("$[1].screen").exists())
+                .andExpect(jsonPath("$[1].screen.name", is(screen.getName())))
+                .andExpect(jsonPath("$[1].owner").exists())
+                .andExpect(jsonPath("$[1].owner.firstName", is(user.getFirstName())));
+
+    }
+
+    @Test
+    @DisplayName("Get images by location ID")
+    void shouldReturnImages_whenGetImagesByLocationId() throws Exception {
+        Image image = new Image("Image 1", "3", screen, user);
+        image.setId(1L);
+        Image image1 = new Image("Image 2", "2", screen, user);
+        image1.setId(2L);
+        List<Image> images = Arrays.asList(image, image1);
+
+        given(imageService.getImagesByLocationId(1L)).willReturn(images);
+
+        mvc.perform(get("/locations/1/images")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(image.getId().intValue())))
+                .andExpect(jsonPath("$[0].name", is(image.getName())))
+                .andExpect(jsonPath("$[0].url", is(image.getUrl())))
+                .andExpect(jsonPath("$[0].screen").exists())
+                .andExpect(jsonPath("$[0].screen.name", is(screen.getName())))
+                .andExpect(jsonPath("$[0].owner").exists())
+                .andExpect(jsonPath("$[0].owner.firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$[1].id", is(image1.getId().intValue())))
+                .andExpect(jsonPath("$[1].name", is(image1.getName())))
+                .andExpect(jsonPath("$[1].url", is(image1.getUrl())))
+                .andExpect(jsonPath("$[1].screen").exists())
+                .andExpect(jsonPath("$[1].screen.name", is(screen.getName())))
+                .andExpect(jsonPath("$[1].owner").exists())
+                .andExpect(jsonPath("$[1].owner.firstName", is(user.getFirstName())));
+
+    }
+
+    @Test
     @DisplayName("Get single image")
     void shouldReturnImage_whenGetSingleImage() throws Exception {
         Image image = new Image("Image 1", "asd", screen, user);
