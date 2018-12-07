@@ -32,6 +32,8 @@
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.links.homepage>https://jtosti.nl</sonar.links.homepage>
+        <sonar.links.scm>https://github.com/joostlek/Hermes</sonar.links.scm>
     </properties>
 
     <dependencies>
@@ -50,6 +52,11 @@
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.5.0.1254</version>
             </plugin>
         </plugins>
     </build>
