@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.dto.FileDTO;
+import nl.jtosti.hermes.exceptions.FileStoreException;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -26,7 +27,7 @@ public class FileController {
             String path = storageService.store(file);
             return new FileDTO(path);
         } catch (Exception e) {
-            throw new RuntimeException("Fail");
+            throw new FileStoreException("uploadFile");
         }
     }
 

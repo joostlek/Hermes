@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.services;
 
+import nl.jtosti.hermes.exceptions.FileStoreException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class StorageService implements StorageServiceInterface {
             Files.copy(new ByteArrayInputStream(stream.toByteArray()), path);
             return fileName + ".png";
         } catch (Exception e) {
-            throw new RuntimeException("Fail");
+            throw new FileStoreException("store");
         }
     }
 
@@ -44,10 +45,10 @@ public class StorageService implements StorageServiceInterface {
             if (resource.exists() && resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("Fail");
+                throw new FileStoreException("load.!exists");
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Fail");
+            throw new FileStoreException("MalformedURL");
         }
     }
 
@@ -61,7 +62,7 @@ public class StorageService implements StorageServiceInterface {
         try {
             Files.createDirectory(rootLocation);
         } catch (IOException e) {
-            throw new RuntimeException("Fail");
+            throw new FileStoreException("init");
         }
     }
 }
