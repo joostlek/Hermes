@@ -2,6 +2,7 @@ package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.ExtendedUserDTO;
+import nl.jtosti.hermes.entities.dto.NewUserDTO;
 import nl.jtosti.hermes.entities.dto.UserDTO;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -34,9 +35,9 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/users")
+    @PostMapping("/auth/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO addUser(@RequestBody UserDTO userDTO) {
+    public UserDTO addUser(@RequestBody NewUserDTO userDTO) {
         User user = convertToEntity(userDTO);
         User userCreated = userService.save(user);
         return convertToExtendedDTO(userCreated);
@@ -73,5 +74,13 @@ public class UserController {
 
     private User convertToEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
+    }
+
+    private User convertToEntity(NewUserDTO userDTO) {
+        userDTO.validate();
+        return new User(userDTO.getFirstName(),
+                userDTO.getLastName(),
+                userDTO.getEmail(),
+                userDTO.getPassword());
     }
 }

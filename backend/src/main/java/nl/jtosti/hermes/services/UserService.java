@@ -30,7 +30,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public boolean exists(String email) {
-        return userRepository.findByEmail(email) != null;
+        return userRepository.findByEmail(email).orElse(null) != null;
     }
 
     @Override
@@ -40,7 +40,8 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new UserNotFoundException(email));
     }
 
     @Override

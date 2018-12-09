@@ -35,7 +35,7 @@ public class UserRepositoryTest {
         entityManager.persist(user);
         entityManager.flush();
 
-        User found = userRepository.findByEmail(user.getEmail());
+        User found = userRepository.findByEmail(user.getEmail()).orElse(null);
 
         assertThat(found).isEqualTo(user);
     }

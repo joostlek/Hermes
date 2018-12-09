@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.security.JwtTokenProvider;
 import nl.jtosti.hermes.services.LocationServiceInterface;
+import nl.jtosti.hermes.services.LoginService;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +51,12 @@ class ScreenControllerTest {
 
     @MockBean
     private LocationServiceInterface locationService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private LoginService loginService;
 
     @MockBean
     private StorageServiceInterface storageService;

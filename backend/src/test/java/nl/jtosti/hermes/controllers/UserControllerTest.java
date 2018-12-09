@@ -3,6 +3,8 @@ package nl.jtosti.hermes.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.ExtendedUserDTO;
+import nl.jtosti.hermes.security.JwtTokenProvider;
+import nl.jtosti.hermes.services.LoginService;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +51,12 @@ class UserControllerTest {
 
     @MockBean
     private StorageServiceInterface storageService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private LoginService loginService;
 
     @Test
     @DisplayName("Get all users")
@@ -112,7 +120,7 @@ class UserControllerTest {
 
         when(service.save(any(User.class))).thenReturn(user);
 
-        mvc.perform(post("/users")
+        mvc.perform(post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writer().writeValueAsString(user1))
                 .with(user("user"))

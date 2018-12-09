@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.exceptions.UserNotFoundException;
+import nl.jtosti.hermes.security.JwtTokenProvider;
 import nl.jtosti.hermes.services.LocationServiceInterface;
+import nl.jtosti.hermes.services.LoginService;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +50,12 @@ class LocationControllerTest {
 
     @MockBean
     private UserServiceInterface userService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private LoginService loginService;
 
     @MockBean
     private StorageServiceInterface storageService;
