@@ -6,7 +6,10 @@ import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.security.JwtTokenProvider;
-import nl.jtosti.hermes.services.*;
+import nl.jtosti.hermes.services.ImageServiceInterface;
+import nl.jtosti.hermes.services.ScreenService;
+import nl.jtosti.hermes.services.StorageServiceInterface;
+import nl.jtosti.hermes.services.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -51,9 +54,6 @@ class ImageControllerTest {
 
     @MockBean
     private JwtTokenProvider jwtTokenProvider;
-
-    @MockBean
-    private LoginService loginService;
 
     @MockBean
     private ImageServiceInterface imageService;

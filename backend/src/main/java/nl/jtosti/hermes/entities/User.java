@@ -2,21 +2,17 @@ package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Entity(name = "users")
-public class User implements UserDetails {
+public class User {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
 
@@ -102,44 +98,12 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
     public List<String> getRoles() {
@@ -197,5 +161,9 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    public UserDetails toUserDetails() {
+        return new ApplicationUser(this.email, this.getPassword(), this.roles);
     }
 }

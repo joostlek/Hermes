@@ -6,7 +6,6 @@ import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.security.JwtTokenProvider;
 import nl.jtosti.hermes.services.LocationServiceInterface;
-import nl.jtosti.hermes.services.LoginService;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -56,7 +56,7 @@ class ScreenControllerTest {
     private JwtTokenProvider jwtTokenProvider;
 
     @MockBean
-    private LoginService loginService;
+    private UserDetailsService userDetailsService;
 
     @MockBean
     private StorageServiceInterface storageService;

@@ -22,18 +22,13 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    private Key key = MacProvider.generateKey();
-
     private final UserDetailsService userDetailsService;
-
-    @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "secret";
-
+    private Key key = MacProvider.generateKey();
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 3600000; // 1h
 
     @Autowired
-    public JwtTokenProvider(@Qualifier("loginService") UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Qualifier("userService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -42,11 +37,11 @@ public class JwtTokenProvider {
         claims.put("roles", roles);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
-        return Jwts.builder()//
-                .setClaims(claims)//
-                .setIssuedAt(now)//
-                .setExpiration(validity)//
-                .signWith(key)//
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(key)
                 .compact();
     }
 
