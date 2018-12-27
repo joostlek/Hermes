@@ -77,10 +77,12 @@ public class UserController {
     }
 
     private User convertToEntity(NewUserDTO userDTO) {
-        userDTO.validate();
-        return new User(userDTO.getFirstName(),
-                userDTO.getLastName(),
-                userDTO.getEmail(),
-                userDTO.getPassword());
+        if (userDTO.getPassword() != null) {
+            return new User(userDTO.getFirstName(),
+                    userDTO.getLastName(),
+                    userDTO.getEmail(),
+                    userDTO.getPassword());
+        }
+        throw new RuntimeException();
     }
 }
