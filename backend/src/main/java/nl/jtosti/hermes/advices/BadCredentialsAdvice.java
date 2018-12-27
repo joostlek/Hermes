@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class BadCredentialsAdvice {
     @ResponseBody
     @ExceptionHandler(BadCredentialsException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     String badCredentialsHandler(BadCredentialsException ex) {
         return "{\"message\": \"Invalid username/password supplied\"}";
     }
