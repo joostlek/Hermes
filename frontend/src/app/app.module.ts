@@ -6,9 +6,10 @@ import {ClarityModule} from '@clr/angular';
 import {UiModule} from './@ui/ui.module';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ErrorsHandler} from './@core/errors/errors-handler';
 import {DataModule} from './@core/data/data.module';
+import {AuthInterceptor} from './@core/interceptor/auth-interceptor';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,11 @@ import {DataModule} from './@core/data/data.module';
         {
             provide: ErrorHandler,
             useClass: ErrorsHandler,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
         },
     ],
     bootstrap: [AppComponent],

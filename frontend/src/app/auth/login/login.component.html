@@ -1,0 +1,20 @@
+<div class="login-wrapper">
+    <form class="login" (submit)="authenticate()">
+        <section class="title">
+            <h3 class="welcome">Welcome to</h3>
+            Hermes
+            <h5 class="hint">Use your Company ID to sign in or create one now</h5>
+        </section>
+        <div class="login-group">
+            <input class="username" type="text" id="login_username" placeholder="Username" name="email"
+                   [(ngModel)]="credentials.username">
+            <input class="password" type="password" id="login_password" placeholder="Password" name="password"
+                   [(ngModel)]="credentials.password">
+            <div class="error active" *ngIf="errorMessage">
+                {{errorMessage}}
+            </div>
+            <button type="submit" class="btn btn-primary">NEXT</button>
+            <a href="javascript://" class="signup">Sign up for a Company ID</a>
+        </div>
+    </form>
+</div>
