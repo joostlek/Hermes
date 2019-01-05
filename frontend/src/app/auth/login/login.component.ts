@@ -10,7 +10,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-    credentials = {};
+    credentials = {
+        username: '',
+        password: '',
+    };
     errorMessage: string;
 
     constructor(
