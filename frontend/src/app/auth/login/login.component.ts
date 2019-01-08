@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
     }
 
     authenticate() {
-        localStorage.removeItem('token');
         this.auth.authenticate(this.credentials, () => {
             this.router.navigateByUrl('/');
         }, (error: HttpErrorResponse) => {
