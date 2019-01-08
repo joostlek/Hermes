@@ -4,13 +4,16 @@ import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.ExtendedLocationDTO;
 import nl.jtosti.hermes.entities.dto.LocationDTO;
+import nl.jtosti.hermes.exceptions.NotIdentifiedAsUserException;
 import nl.jtosti.hermes.services.LocationServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +31,7 @@ public class LocationController {
     }
 
     @GetMapping("/locations")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public List<LocationDTO> getAllLocations() {
         List<Location> locations = locationService.getAllLocations();
@@ -37,16 +41,21 @@ public class LocationController {
     }
 
     @PostMapping("/users/{userId}/locations")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.CREATED)
-    public LocationDTO addLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long userId) {
+    public LocationDTO addLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long userId, Principal principal) {
         Location location = convertToEntity(locationDTO);
         User owner = userService.getUserById(userId);
+        if (!owner.getEmail().equals(principal.getName())) {
+            throw new NotIdentifiedAsUserException(userId);
+        }
         location.setOwner(owner);
         Location newLocation = locationService.save(location);
         return convertToExtendedDTO(newLocation);
     }
 
     @GetMapping("/users/{userId}/locations")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public List<LocationDTO> getLocationByUserId(@PathVariable Long userId) {
         List<Location> locations = locationService.getLocationsByUserId(userId);
@@ -56,6 +65,7 @@ public class LocationController {
     }
 
     @GetMapping("/users/{userId}/personal-locations")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public List<LocationDTO> getPersonalLocationByUserId(@PathVariable Long userId) {
         List<Location> locations = locationService.getPersonalLocationsByUserId(userId);
@@ -65,12 +75,14 @@ public class LocationController {
     }
 
     @GetMapping("/locations/{id}")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public LocationDTO getSingleLocation(@PathVariable Long id) {
         return convertToExtendedDTO(locationService.getLocationById(id));
     }
 
     @PutMapping("/locations/{id}")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public LocationDTO updateLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long id) {
         Location location = convertToEntity(locationDTO);
@@ -80,6 +92,7 @@ public class LocationController {
     }
 
     @DeleteMapping("/locations/{id}")
+    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public void deleteLocation(@PathVariable Long id) {
         locationService.delete(id);
