@@ -21,4 +21,9 @@ export class AuthService {
                 return callback && callback();
             }, errorCallback);
     }
+
+    logout(): void {
+        localStorage.removeItem('token');
+        this.authenticated = false;
+    }
 }
