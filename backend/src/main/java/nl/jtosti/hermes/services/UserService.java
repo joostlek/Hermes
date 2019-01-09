@@ -4,8 +4,6 @@ import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.exceptions.UserNotFoundException;
 import nl.jtosti.hermes.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserService implements UserServiceInterface, UserDetailsService {
+public class UserService implements UserServiceInterface {
 
     @Autowired
     private UserRepository userRepository;
@@ -67,8 +65,4 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) {
-        return this.getUserByEmail(email).toUserDetails();
-    }
 }

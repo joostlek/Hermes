@@ -1,9 +1,11 @@
 package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -118,5 +120,9 @@ public class Screen {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    public UserDetails toUserDetails() {
+        return new ApplicationUser(Long.toString(this.id), "screen", Collections.singletonList("SCREEN"));
     }
 }
