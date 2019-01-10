@@ -2,17 +2,18 @@ package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Screen {
+public class Screen implements UserDetails {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
 
@@ -114,6 +115,11 @@ public class Screen {
         this.toReceivePassword = toReceivePassword;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>();
+    }
+
     public String getPassword() {
         return password;
     }
@@ -121,6 +127,31 @@ public class Screen {
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
         this.setToReceivePassword(false);
+    }
+
+    @Override
+    public String getUsername() {
+        return Long.toString(this.id);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !isToReceivePassword();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
@@ -148,7 +179,4 @@ public class Screen {
         return super.hashCode();
     }
 
-    public UserDetails toUserDetails() {
-        return new ApplicationUser(Long.toString(this.id), this.getPassword(), Collections.singletonList("SCREEN"));
-    }
 }
