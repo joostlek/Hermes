@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.controllers;
 
+import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.UserType;
 import nl.jtosti.hermes.entities.dto.AuthScreenDTO;
@@ -13,6 +14,7 @@ import nl.jtosti.hermes.security.requests.ScreenRegisterRequest;
 import nl.jtosti.hermes.security.requests.UserAuthenticationRequest;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -39,12 +41,15 @@ public class AuthController {
     private final AuthenticationProviderFactory authenticationProviderFactory;
     private final ScreenServiceInterface screenService;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public AuthController(JwtTokenProvider jwtTokenProvider, UserServiceInterface userService, AuthenticationProviderFactory authenticationProviderFactory, ScreenServiceInterface screenService) {
+    public AuthController(JwtTokenProvider jwtTokenProvider, UserServiceInterface userService, AuthenticationProviderFactory authenticationProviderFactory, ScreenServiceInterface screenService, ModelMapper modelMapper) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
         this.authenticationProviderFactory = authenticationProviderFactory;
         this.screenService = screenService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/signin")
@@ -75,8 +80,7 @@ public class AuthController {
             assert authenticationProvider != null;
             authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(username, Collections.singletonList("SCREEN"), jwtTokenProvider);
-            AuthScreenDTO screenDTO = new AuthScreenDTO(screenService.getScreenById(Long.parseLong(username)), jwtTokenFactory.getToken());
-            return ok(screenDTO);
+            return ok(toAuthScreenDTO(screenService.getScreenById(Long.parseLong(username)), jwtTokenFactory.getToken()));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         } catch (Exception e) {
@@ -102,5 +106,11 @@ public class AuthController {
                 .collect(toList())
         );
         return ok(model);
+    }
+
+    private AuthScreenDTO toAuthScreenDTO(Screen screen, String token) {
+        AuthScreenDTO screenDTO = modelMapper.map(screen, AuthScreenDTO.class);
+        screenDTO.setToken(token);
+        return screenDTO;
     }
 }
