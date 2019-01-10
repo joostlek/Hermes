@@ -1,8 +1,10 @@
 package nl.jtosti.hermes.services;
 
 import nl.jtosti.hermes.entities.Screen;
+import nl.jtosti.hermes.exceptions.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.exceptions.ScreenNotFoundException;
 import nl.jtosti.hermes.repositories.ScreenRepository;
+import nl.jtosti.hermes.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +60,17 @@ public class ScreenService implements ScreenServiceInterface {
     @Override
     public void deleteScreen(Long id) {
         screenRepository.deleteById(id);
+    }
+
+    @Override
+    public String registerScreen(Long id) {
+        Screen screen = this.getScreenById(id);
+        if (!screen.isToReceivePassword()) {
+            throw new ScreenIsNotToReceivePasswordException(id);
+        }
+        String password = PasswordGenerator.generatePassword();
+        screen.setPassword(password);
+        this.save(screen);
+        return password;
     }
 }

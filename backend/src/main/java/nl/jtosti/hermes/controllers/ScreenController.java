@@ -44,6 +44,7 @@ public class ScreenController {
         Screen screen = convertToEntity(screenDTO);
         Location location = locationService.getLocationById(locationId);
         screen.setLocation(location);
+        screen.setToReceivePassword(true);
         Screen newScreen = screenService.save(screen);
         return convertToExtendedDTO(newScreen);
     }

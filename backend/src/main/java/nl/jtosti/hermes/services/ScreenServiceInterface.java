@@ -18,4 +18,6 @@ public interface ScreenServiceInterface {
     public Screen updateScreen(Screen screen);
 
     public void deleteScreen(Long id);
+
+    String registerScreen(Long id);
 }

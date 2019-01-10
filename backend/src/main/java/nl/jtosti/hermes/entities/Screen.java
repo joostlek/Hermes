@@ -1,7 +1,9 @@
 package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import nl.jtosti.hermes.security.Argon2PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +13,9 @@ import java.util.Objects;
 
 @Entity
 public class Screen {
+
+    public static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
+
     @Id
     @SequenceGenerator(name = "screen_generator", sequenceName = "screen_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "screen_generator")
@@ -18,6 +23,8 @@ public class Screen {
     private String name;
     private int width;
     private int height;
+    private boolean toReceivePassword;
+    private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"screens", "owner"})
@@ -35,6 +42,7 @@ public class Screen {
         this.width = width;
         this.height = height;
         this.location = location;
+        this.toReceivePassword = true;
     }
 
     public Screen(String name, int width, int height, Location location, List<Image> images) {
@@ -43,6 +51,7 @@ public class Screen {
         this.height = height;
         this.location = location;
         this.images = images;
+        this.toReceivePassword = true;
     }
 
     public Long getId() {
@@ -97,6 +106,23 @@ public class Screen {
         this.images.add(image);
     }
 
+    public boolean isToReceivePassword() {
+        return toReceivePassword;
+    }
+
+    public void setToReceivePassword(boolean toReceivePassword) {
+        this.toReceivePassword = toReceivePassword;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = PASSWORD_ENCODER.encode(password);
+        this.setToReceivePassword(false);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -123,6 +149,6 @@ public class Screen {
     }
 
     public UserDetails toUserDetails() {
-        return new ApplicationUser(Long.toString(this.id), "screen", Collections.singletonList("SCREEN"));
+        return new ApplicationUser(Long.toString(this.id), this.getPassword(), Collections.singletonList("SCREEN"));
     }
 }

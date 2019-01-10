@@ -1,10 +1,14 @@
 package nl.jtosti.hermes.controllers;
 
 import nl.jtosti.hermes.entities.UserType;
-import nl.jtosti.hermes.security.AuthenticationProviderFactory;
-import nl.jtosti.hermes.security.AuthenticationRequest;
-import nl.jtosti.hermes.security.JwtTokenFactory;
-import nl.jtosti.hermes.security.JwtTokenProvider;
+import nl.jtosti.hermes.entities.dto.PasswordDTO;
+import nl.jtosti.hermes.security.jwt.JwtTokenFactory;
+import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
+import nl.jtosti.hermes.security.providers.AuthenticationProviderFactory;
+import nl.jtosti.hermes.security.requests.ScreenAuthenticationRequest;
+import nl.jtosti.hermes.security.requests.ScreenRegisterRequest;
+import nl.jtosti.hermes.security.requests.UserAuthenticationRequest;
+import nl.jtosti.hermes.services.ScreenServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +33,19 @@ import static org.springframework.http.ResponseEntity.ok;
 public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserServiceInterface userService;
-
     private final AuthenticationProviderFactory authenticationProviderFactory;
+    private final ScreenServiceInterface screenService;
 
     @Autowired
-    public AuthController(JwtTokenProvider jwtTokenProvider, UserServiceInterface userService, AuthenticationProviderFactory authenticationProviderFactory) {
+    public AuthController(JwtTokenProvider jwtTokenProvider, UserServiceInterface userService, AuthenticationProviderFactory authenticationProviderFactory, ScreenServiceInterface screenService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
         this.authenticationProviderFactory = authenticationProviderFactory;
+        this.screenService = screenService;
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody AuthenticationRequest data) {
+    public ResponseEntity signin(@RequestBody UserAuthenticationRequest data) {
         try {
             String username = data.getUsername();
             authenticationProviderFactory.setUserType(UserType.USER);
@@ -57,7 +62,7 @@ public class AuthController {
     }
 
     @PostMapping("/screens/signin")
-    public ResponseEntity screenSignIn(@RequestBody AuthenticationRequest data) {
+    public ResponseEntity screenSignIn(@RequestBody ScreenAuthenticationRequest data) {
         try {
             String username = data.getUsername();
             authenticationProviderFactory.setUserType(UserType.SCREEN);
@@ -69,8 +74,16 @@ public class AuthController {
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getClass().toString());
         }
+    }
+
+    @PostMapping("/screens/register")
+    public ResponseEntity screenRegister(@RequestBody ScreenRegisterRequest registerRequest) {
+        Long screenId = registerRequest.getScreenId();
+        String password = screenService.registerScreen(screenId);
+        PasswordDTO passwordDTO = new PasswordDTO(password);
+        return ok(passwordDTO);
     }
 
     @GetMapping("/me")
