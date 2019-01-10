@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.security.providers;
 
 import nl.jtosti.hermes.entities.Screen;
+import nl.jtosti.hermes.exceptions.ScreenPasswordExpiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -29,6 +30,9 @@ public class ScreenAuthenticationProvider implements AuthenticationProvider {
         String screenId = authentication.getName();
         String password = authentication.getCredentials().toString();
         UserDetails userDetails = screenLoginService.loadUserByUsername(screenId);
+        if (!userDetails.isCredentialsNonExpired()) {
+            throw new ScreenPasswordExpiredException();
+        }
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString());
         } else {
