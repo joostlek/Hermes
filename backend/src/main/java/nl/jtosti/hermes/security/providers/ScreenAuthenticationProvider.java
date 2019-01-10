@@ -1,28 +1,39 @@
 package nl.jtosti.hermes.security.providers;
 
-import nl.jtosti.hermes.security.jwt.InvalidJwtAuthenticationException;
-import nl.jtosti.hermes.services.ScreenServiceInterface;
+import nl.jtosti.hermes.entities.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 @Component
 public class ScreenAuthenticationProvider implements AuthenticationProvider {
+    private final UserDetailsService screenLoginService;
+
+    private final PasswordEncoder passwordEncoder = Screen.PASSWORD_ENCODER;
+
     @Autowired
-    private ScreenServiceInterface screenService;
+    public ScreenAuthenticationProvider(@Qualifier("screenLoginService") UserDetailsService screenLoginService) {
+        this.screenLoginService = screenLoginService;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        if (screenService.getScreenById(Long.parseLong(authentication.getName())) != null) {
-            return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), Collections.emptyList());
+        String screenId = authentication.getName();
+        String password = authentication.getCredentials().toString();
+        UserDetails userDetails = screenLoginService.loadUserByUsername(screenId);
+        if (passwordEncoder.matches(password, userDetails.getPassword())) {
+            return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString());
+        } else {
+            throw new BadCredentialsException("");
         }
-        System.out.println(authentication.getName());
-        throw new InvalidJwtAuthenticationException("e");
     }
 
     @Override
