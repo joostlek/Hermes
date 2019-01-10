@@ -1,6 +1,9 @@
 package nl.jtosti.hermes.controllers;
 
+import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.UserType;
+import nl.jtosti.hermes.entities.dto.AuthScreenDTO;
+import nl.jtosti.hermes.entities.dto.AuthUserDTO;
 import nl.jtosti.hermes.entities.dto.PasswordDTO;
 import nl.jtosti.hermes.security.jwt.JwtTokenFactory;
 import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
@@ -52,8 +55,10 @@ public class AuthController {
             AuthenticationProvider authenticationProvider = authenticationProviderFactory.getObject();
             assert authenticationProvider != null;
             authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(userService.getUserByEmail(username).getRoles(), username, jwtTokenProvider);
-            return ok(jwtTokenFactory.getResponse());
+            User user = userService.getUserByEmail(username);
+            JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(username, user.getRoles(), jwtTokenProvider);
+            AuthUserDTO userDTO = new AuthUserDTO(user, jwtTokenFactory.getToken());
+            return ok(userDTO);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         } catch (Exception e) {
@@ -69,8 +74,9 @@ public class AuthController {
             AuthenticationProvider authenticationProvider = authenticationProviderFactory.getObject();
             assert authenticationProvider != null;
             authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(Collections.singletonList("SCREEN"), username, jwtTokenProvider);
-            return ok(jwtTokenFactory.getResponse());
+            JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(username, Collections.singletonList("SCREEN"), jwtTokenProvider);
+            AuthScreenDTO screenDTO = new AuthScreenDTO(screenService.getScreenById(Long.parseLong(username)), jwtTokenFactory.getToken());
+            return ok(screenDTO);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         } catch (Exception e) {
