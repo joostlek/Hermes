@@ -5,6 +5,7 @@ import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.security.JwtTokenProvider;
+import nl.jtosti.hermes.security.UserAuthenticationProvider;
 import nl.jtosti.hermes.services.LocationServiceInterface;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import nl.jtosti.hermes.services.StorageServiceInterface;
@@ -60,6 +61,9 @@ class ScreenControllerTest {
 
     @MockBean
     private StorageServiceInterface storageService;
+
+    @MockBean
+    private UserAuthenticationProvider authenticationProvider;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 

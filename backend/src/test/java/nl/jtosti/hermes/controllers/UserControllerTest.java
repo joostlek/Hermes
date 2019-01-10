@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.entities.dto.ExtendedUserDTO;
 import nl.jtosti.hermes.security.JwtTokenProvider;
+import nl.jtosti.hermes.security.UserAuthenticationProvider;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +58,9 @@ class UserControllerTest {
 
     @MockBean
     private UserDetailsService userDetailsService;
+
+    @MockBean
+    private UserAuthenticationProvider authenticationProvider;
 
     @Test
     @DisplayName("Get all users")

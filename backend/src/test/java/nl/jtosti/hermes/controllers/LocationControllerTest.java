@@ -5,6 +5,7 @@ import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.exceptions.UserNotFoundException;
 import nl.jtosti.hermes.security.JwtTokenProvider;
+import nl.jtosti.hermes.security.UserAuthenticationProvider;
 import nl.jtosti.hermes.services.LocationServiceInterface;
 import nl.jtosti.hermes.services.StorageServiceInterface;
 import nl.jtosti.hermes.services.UserServiceInterface;
@@ -59,6 +60,9 @@ class LocationControllerTest {
 
     @MockBean
     private StorageServiceInterface storageService;
+
+    @MockBean
+    private UserAuthenticationProvider authenticationProvider;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 
@@ -171,18 +175,19 @@ class LocationControllerTest {
     @DisplayName("Add location")
     void shouldReturnSavedLocation_whenSaveLocation() throws Exception {
         Location location = new Location("Alex coffee", user);
+        user.setId(1L);
 
         when(userService.getUserById(1L)).thenReturn(user);
         when(locationService.save(any(Location.class))).thenReturn(location);
 
         mvc.perform(post("/users/1/locations")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .with(user("user"))
+                .with(user("alex.jones@alex.com"))
                 .with(csrf())
                 .content(objectMapper.writer().writeValueAsString(location)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(location.getName())))
-                .andExpect(jsonPath("$.owner.id", is(location.getOwner().getId())))
+                .andExpect(jsonPath("$.owner.id", is(location.getOwner().getId().intValue())))
                 .andExpect(jsonPath("$.owner.firstName", is(location.getOwner().getFirstName())))
                 .andExpect(jsonPath("$.owner.lastName", is(location.getOwner().getLastName())))
                 .andExpect(jsonPath("$.owner.email", is(location.getOwner().getEmail())));
