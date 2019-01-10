@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.security;
+package nl.jtosti.hermes.security.jwt;
 
 import java.util.HashMap;
 import java.util.List;

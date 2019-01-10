@@ -1,5 +1,8 @@
 package nl.jtosti.hermes.security;
 
+import nl.jtosti.hermes.security.jwt.JwtConfigurer;
+import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
+import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

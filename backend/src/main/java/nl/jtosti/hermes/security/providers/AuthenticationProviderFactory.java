@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.security;
+package nl.jtosti.hermes.security.providers;
 
 import nl.jtosti.hermes.entities.UserType;
 import org.springframework.beans.factory.FactoryBean;

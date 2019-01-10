@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.security;
+package nl.jtosti.hermes.security.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 

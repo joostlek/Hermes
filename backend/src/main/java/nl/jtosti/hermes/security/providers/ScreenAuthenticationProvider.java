@@ -1,5 +1,6 @@
-package nl.jtosti.hermes.security;
+package nl.jtosti.hermes.security.providers;
 
+import nl.jtosti.hermes.security.jwt.InvalidJwtAuthenticationException;
 import nl.jtosti.hermes.services.ScreenServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
