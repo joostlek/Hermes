@@ -1,19 +1,10 @@
 package nl.jtosti.hermes.entities.dto;
 
-import nl.jtosti.hermes.entities.User;
-
 public class UserDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
-
-    public UserDTO(User user) {
-        this.id = user.getId();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-    }
 
     public Long getId() {
         return id;

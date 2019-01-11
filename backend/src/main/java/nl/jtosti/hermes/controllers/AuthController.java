@@ -62,8 +62,7 @@ public class AuthController {
             authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             User user = userService.getUserByEmail(username);
             JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(username, user.getRoles(), jwtTokenProvider);
-            AuthUserDTO userDTO = new AuthUserDTO(user, jwtTokenFactory.getToken());
-            return ok(userDTO);
+            return ok(toAuthUserDTO(user, jwtTokenFactory.getToken()));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         } catch (Exception e) {
@@ -112,5 +111,11 @@ public class AuthController {
         AuthScreenDTO screenDTO = modelMapper.map(screen, AuthScreenDTO.class);
         screenDTO.setToken(token);
         return screenDTO;
+    }
+
+    private AuthUserDTO toAuthUserDTO(User user, String token) {
+        AuthUserDTO userDTO = modelMapper.map(user, AuthUserDTO.class);
+        userDTO.setToken(token);
+        return userDTO;
     }
 }
