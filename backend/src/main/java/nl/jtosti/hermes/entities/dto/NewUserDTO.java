@@ -37,16 +37,4 @@ public class NewUserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public void validate() {
-        if (this.firstName == null) {
-            throw new RuntimeException();
-        } else if (this.lastName == null) {
-            throw new RuntimeException();
-        } else if (this.email == null) {
-            throw new RuntimeException();
-        } else if (this.password == null) {
-            throw new RuntimeException();
-        }
-    }
 }

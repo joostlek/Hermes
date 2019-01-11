@@ -83,6 +83,6 @@ public class UserController {
                     userDTO.getEmail(),
                     userDTO.getPassword());
         }
-        throw new RuntimeException();
+        return null;
     }
 }
