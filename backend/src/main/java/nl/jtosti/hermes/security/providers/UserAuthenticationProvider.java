@@ -1,6 +1,5 @@
 package nl.jtosti.hermes.security.providers;
 
-import nl.jtosti.hermes.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,11 +17,12 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
 
-    private final PasswordEncoder passwordEncoder = User.PASSWORD_ENCODER;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserAuthenticationProvider(@Qualifier("userLoginService") UserDetailsService userDetailsService) {
+    public UserAuthenticationProvider(@Qualifier("userLoginService") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
