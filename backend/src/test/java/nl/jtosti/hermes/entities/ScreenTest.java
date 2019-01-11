@@ -2,6 +2,8 @@ package nl.jtosti.hermes.entities;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -127,5 +129,26 @@ class ScreenTest {
         screen.setPassword(password);
         assertThat(screen.isToReceivePassword()).isFalse();
         assertThat(screen.getPassword()).isNotEqualTo(password);
+    }
+
+    @Test
+    @DisplayName("Convert to UserDetails")
+    void shouldConvertToUserDetails() {
+        String password = "test";
+        screen = new Screen("Screen 1", 1920, 1080, location);
+        screen.setId(1L);
+        UserDetails userDetails = screen.toUserDetails();
+        assertThat(userDetails).isInstanceOf(ApplicationScreen.class);
+        assertThat(userDetails.getUsername()).isEqualTo(screen.getId().toString());
+        assertThat(userDetails.isCredentialsNonExpired()).isFalse();
+        screen.setPassword(password);
+        userDetails = screen.toUserDetails();
+        assertThat(userDetails.getPassword()).isEqualTo(screen.getPassword());
+        assertThat(userDetails.isCredentialsNonExpired()).isTrue();
+        assertThat(userDetails.isEnabled()).isTrue();
+        assertThat(userDetails.isAccountNonExpired()).isTrue();
+        assertThat(userDetails.isAccountNonLocked()).isTrue();
+        assertThat(userDetails.getAuthorities().size()).isEqualTo(1);
+        assertThat(userDetails.getAuthorities().iterator().next()).isEqualTo(new SimpleGrantedAuthority("SCREEN"));
     }
 }
