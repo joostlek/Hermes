@@ -14,6 +14,6 @@ public class ScreenLoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return screenService.getScreenById(Long.parseLong(s));
+        return screenService.getScreenById(Long.parseLong(s)).toUserDetails();
     }
 }
