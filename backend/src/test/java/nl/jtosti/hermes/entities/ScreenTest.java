@@ -117,4 +117,15 @@ class ScreenTest {
         screen.setId(1L);
         assertThat(screen.toString()).isEqualTo(String.format("<Screen %s: %s>", screen.getId(), screen.getName()));
     }
+
+    @Test
+    @DisplayName("Test setting password")
+    void testSetPassword() {
+        String password = "test";
+        screen = new Screen("Screen 1", 1920, 1080, location);
+        assertThat(screen.isToReceivePassword()).isTrue();
+        screen.setPassword(password);
+        assertThat(screen.isToReceivePassword()).isFalse();
+        assertThat(screen.getPassword()).isNotEqualTo(password);
+    }
 }
