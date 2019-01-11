@@ -131,6 +131,17 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Get unknown email")
+    void shouldThrowUserNotFoundException_whenGetUnknownEmail() {
+        try {
+            userService.getUserByEmail("Jane.jones@alex.com");
+            assertThat(true).isFalse();
+        } catch (UserNotFoundException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Could not find user linked to Jane.jones@alex.com");
+        }
+    }
+
+    @Test
     @DisplayName("Delete user")
     void shouldDoNothing_whenDeleteUser() {
         userService.deleteUser(1L);
