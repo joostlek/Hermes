@@ -52,7 +52,7 @@ class UserLoginServiceTest {
     }
 
     @Test
-    void shouldThrowScreenNotFoundException_whenGetUnknownScreenId() {
+    void shouldThrowUserNotFoundException_whenGetUnknownUserId() {
         when(userService.getUserByEmail("Jane.jones@alex.com")).thenThrow(new UserNotFoundException("Jane.jones@alex.com"));
 
         try {
