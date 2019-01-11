@@ -5,17 +5,21 @@ import java.util.Random;
 
 public class PasswordGenerator {
     private static final int LENGTH = 20;
-    private static char[] SYMBOLS = ("^$*.[]{}()?-\"!@#%&/\\,><':;|_~`").toCharArray();
-    private static char[] LOWERCASE = ("abcdefghijklmnopqrstuvwxyz").toCharArray();
-    private static char[] UPPERCASE = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
-    private static char[] NUMBERS = ("0123456789").toCharArray();
-    private static char[] ALL_CHARS = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789^$*.[]{}()?-\"!@#%&/\\,><':;|_~`").toCharArray();
+    private static final char[] SYMBOLS = ("^$*.[]{}()?-\"!@#%&/\\,><':;|_~`").toCharArray();
+    private static final char[] LOWERCASE = ("abcdefghijklmnopqrstuvwxyz").toCharArray();
+    private static final char[] UPPERCASE = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
+    private static final char[] NUMBERS = ("0123456789").toCharArray();
+    private static final char[] ALL_CHARS = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789^$*.[]{}()?-\"!@#%&/\\,><':;|_~`").toCharArray();
     private static Random rand = new SecureRandom();
 
-    public static String getPassword(int length) {
-        assert length >= 4;
-        char[] password = new char[length];
+    private PasswordGenerator() {
+    }
 
+    public static String getPassword(int length) {
+        if (length <= 4) {
+            throw new IllegalArgumentException("Password length must be bigger than 4");
+        }
+        char[] password = new char[length];
         //get the requirements out of the way
         password[0] = LOWERCASE[rand.nextInt(LOWERCASE.length)];
         password[1] = UPPERCASE[rand.nextInt(UPPERCASE.length)];
