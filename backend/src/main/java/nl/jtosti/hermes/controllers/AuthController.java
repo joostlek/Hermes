@@ -65,8 +65,6 @@ public class AuthController {
             return ok(toAuthUserDTO(user, jwtTokenFactory.getToken()));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
-        } catch (Exception e) {
-            throw new BadCredentialsException("");
         }
     }
 
@@ -82,8 +80,6 @@ public class AuthController {
             return ok(toAuthScreenDTO(screenService.getScreenById(Long.parseLong(username)), jwtTokenFactory.getToken()));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
-        } catch (Exception e) {
-            throw new RuntimeException(e.getClass().toString());
         }
     }
 

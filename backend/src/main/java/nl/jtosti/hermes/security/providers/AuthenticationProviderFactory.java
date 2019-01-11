@@ -17,12 +17,11 @@ public class AuthenticationProviderFactory implements FactoryBean<Authentication
     private ScreenAuthenticationProvider screenAuthenticationProvider;
 
     @Override
-    public AuthenticationProvider getObject() throws Exception {
-        switch (userType) {
-            case SCREEN:
-                return this.screenAuthenticationProvider;
-            case USER:
-                return this.userAuthenticationProvider;
+    public AuthenticationProvider getObject() {
+        if (userType == UserType.SCREEN) {
+            return this.screenAuthenticationProvider;
+        } else if (userType == UserType.USER) {
+            return this.userAuthenticationProvider;
         }
         return null;
     }

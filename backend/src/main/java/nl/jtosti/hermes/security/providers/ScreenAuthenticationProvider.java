@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class ScreenAuthenticationProvider implements AuthenticationProvider {
     private final UserDetailsService screenLoginService;
 
-    private final PasswordEncoder passwordEncoder = Screen.PASSWORD_ENCODER;
+    private final static PasswordEncoder passwordEncoder = Screen.PASSWORD_ENCODER;
 
     @Autowired
     public ScreenAuthenticationProvider(@Qualifier("screenLoginService") UserDetailsService screenLoginService) {
@@ -26,7 +25,7 @@ public class ScreenAuthenticationProvider implements AuthenticationProvider {
     }
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) {
         String screenId = authentication.getName();
         String password = authentication.getCredentials().toString();
         UserDetails userDetails = screenLoginService.loadUserByUsername(screenId);
