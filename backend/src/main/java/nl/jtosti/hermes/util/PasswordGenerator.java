@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 public class PasswordGenerator {
+    private static final int LENGTH = 20;
     private static char[] SYMBOLS = ("^$*.[]{}()?-\"!@#%&/\\,><':;|_~`").toCharArray();
     private static char[] LOWERCASE = ("abcdefghijklmnopqrstuvwxyz").toCharArray();
     private static char[] UPPERCASE = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
@@ -38,6 +39,6 @@ public class PasswordGenerator {
     }
 
     public static String generatePassword() {
-        return getPassword(20);
+        return getPassword(LENGTH);
     }
 }
