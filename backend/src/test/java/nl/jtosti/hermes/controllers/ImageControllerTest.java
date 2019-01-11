@@ -280,6 +280,7 @@ class ImageControllerTest {
     @Test
     @DisplayName("Update image")
     void shouldReturnUpdatedImage_whenUpdateImage() throws Exception {
+        screen.setId(1L);
         Image image = new Image("Image 1", "asd", screen, user);
         image.setId(1L);
         Image image1 = new Image("Image 2", "asdasd", screen, user);
@@ -291,7 +292,7 @@ class ImageControllerTest {
         mvc.perform(put("/images/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .with(csrf())
-                .with(user("user"))
+                .with(user("1"))
                 .content(objectMapper.writer().writeValueAsString(image1)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(image1.getId().intValue())))
