@@ -8,9 +8,9 @@ import nl.jtosti.hermes.entities.User;
 import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
 import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
 import nl.jtosti.hermes.services.ImageServiceInterface;
-import nl.jtosti.hermes.services.ScreenService;
+import nl.jtosti.hermes.services.ScreenServiceInterface;
 import nl.jtosti.hermes.services.StorageServiceInterface;
-import nl.jtosti.hermes.services.UserService;
+import nl.jtosti.hermes.services.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -45,10 +45,10 @@ class ImageControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    private ScreenService screenService;
+    private ScreenServiceInterface screenService;
 
     @MockBean
-    private UserService userService;
+    private UserServiceInterface userService;
 
     @Autowired
     private MockMvc mvc;
