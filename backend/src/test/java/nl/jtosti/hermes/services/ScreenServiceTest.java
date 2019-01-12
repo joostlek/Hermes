@@ -1,8 +1,10 @@
 package nl.jtosti.hermes.services;
 
+import nl.jtosti.hermes.HermesApplication;
 import nl.jtosti.hermes.entities.Location;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.entities.User;
+import nl.jtosti.hermes.exceptions.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.exceptions.ScreenNotFoundException;
 import nl.jtosti.hermes.repositories.ScreenRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -10,9 +12,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
@@ -24,12 +28,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = HermesApplication.class)
 @DisplayName("Screen Service")
 @Tag("services")
 class ScreenServiceTest {
 
     @Autowired
     private ScreenServiceInterface screenService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @MockBean
     private ScreenRepository screenRepository;
@@ -126,6 +134,36 @@ class ScreenServiceTest {
         when(screenRepository.save(screen1)).thenReturn(screen1);
 
         assertThat(screenService.updateScreen(screen1)).isEqualTo(screen1);
+    }
+
+    @Test
+    @DisplayName("Register screen")
+    void shouldCreatePassword_whenRegisterScreen() {
+        Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        screen.setId(1L);
+        when(screenRepository.findById(1L)).thenReturn(Optional.of(screen));
+
+        assertThat(screen.isToReceivePassword()).isTrue();
+        String password = screenService.registerScreen(1L);
+        assertThat(passwordEncoder.matches(password, screen.getPassword())).isTrue();
+    }
+
+    @Test
+    @DisplayName("Register already registered screen")
+    void shouldThrowScreenIsNotToReceivePasswordException_whenScreenIsNotToReceivePassword() {
+        Screen screen = new Screen("Screen 1", 1920, 1080, location);
+        screen.setId(1L);
+        when(screenRepository.findById(1L)).thenReturn(Optional.of(screen));
+
+        assertThat(screen.isToReceivePassword()).isTrue();
+        String password = screenService.registerScreen(1L);
+        assertThat(screen.isToReceivePassword()).isFalse();
+        try {
+            screenService.registerScreen(1L);
+            assertThat(true).isFalse();
+        } catch (ScreenIsNotToReceivePasswordException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Screen 1 is not set to receive password");
+        }
     }
 
     @Test
