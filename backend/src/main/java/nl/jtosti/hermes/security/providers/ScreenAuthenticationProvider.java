@@ -1,6 +1,5 @@
 package nl.jtosti.hermes.security.providers;
 
-import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.exceptions.ScreenPasswordExpiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,11 +16,12 @@ import org.springframework.stereotype.Component;
 public class ScreenAuthenticationProvider implements AuthenticationProvider {
     private final UserDetailsService screenLoginService;
 
-    private final static PasswordEncoder passwordEncoder = Screen.PASSWORD_ENCODER;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ScreenAuthenticationProvider(@Qualifier("screenLoginService") UserDetailsService screenLoginService) {
+    public ScreenAuthenticationProvider(@Qualifier("screenLoginService") UserDetailsService screenLoginService, PasswordEncoder passwordEncoder) {
         this.screenLoginService = screenLoginService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
