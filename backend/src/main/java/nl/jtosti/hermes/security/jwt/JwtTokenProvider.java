@@ -26,6 +26,8 @@ public class JwtTokenProvider {
     private Key key = MacProvider.generateKey();
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 3600000; // 1h
+    @Value("${security.jwt.token.refresh-expire-length:3600000}")
+    private long refreshValidityInMilliseconds = 3600000;
 
     @Autowired
     public JwtTokenProvider(UserLoginService userDetailsService) {
@@ -33,10 +35,11 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String username, List<String> roles) {
+        Date now = new Date();
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", roles);
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        claims.put("uxp", new Date(now.getTime() + validityInMilliseconds).getTime() / 1000);
+        Date validity = new Date(now.getTime() + refreshValidityInMilliseconds);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -65,9 +68,20 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
+            long expireDate = Integer.toUnsignedLong((int) claims.getBody().get("uxp")) * 1000;
+            return new Date(expireDate).after(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
         }
+    }
+
+    public boolean validateRefreshToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+            return claims.getBody().getExpiration().after(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
+        }
+
     }
 }

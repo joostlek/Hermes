@@ -91,6 +91,14 @@ public class AuthController {
         return ok(passwordDTO);
     }
 
+    @GetMapping("/refresh")
+    public AuthUserDTO refreshToken(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        User user = userService.getUserByEmail(username);
+        JwtTokenFactory jwtTokenFactory = new JwtTokenFactory(username, user.getRoles(), jwtTokenProvider);
+        return toAuthUserDTO(user, jwtTokenFactory.getToken());
+    }
+
     @GetMapping("/me")
     public ResponseEntity currentUser(@AuthenticationPrincipal UserDetails userDetails) {
         Map<Object, Object> model = new HashMap<>();
