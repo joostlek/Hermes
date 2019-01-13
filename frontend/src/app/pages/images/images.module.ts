@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {ImagesRoutingModule} from './images-routing.module';
 import {ImagesComponent} from './images.component';
-import {ClarityModule, ClrFormsNextModule} from '@clr/angular';
+import {ClarityModule, ClrFormsModule} from '@clr/angular';
 import {UiModule} from '../../@ui/ui.module';
 import {ReactiveFormsModule} from '@angular/forms';
 
@@ -13,7 +13,7 @@ import {ReactiveFormsModule} from '@angular/forms';
         CommonModule,
         ClarityModule,
         ReactiveFormsModule,
-        ClrFormsNextModule,
+        ClrFormsModule,
         UiModule,
         ImagesRoutingModule,
     ],
