@@ -15,7 +15,11 @@ public class Image {
     @SequenceGenerator(name = "image_generator", sequenceName = "image_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_generator")
     private Long id;
+
+    @Column(nullable = false)
     private String url;
+
+    @Column(nullable = false)
     private String name;
 
     @CreationTimestamp
@@ -28,7 +32,7 @@ public class Image {
     @JsonIgnoreProperties({"images", "location"})
     private Screen screen;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonIgnoreProperties({"images", "locations"})
     private User owner;
 

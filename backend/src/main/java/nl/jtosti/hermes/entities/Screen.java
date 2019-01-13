@@ -19,13 +19,23 @@ public class Screen {
     @SequenceGenerator(name = "screen_generator", sequenceName = "screen_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "screen_generator")
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private int width;
+
+    @Column(nullable = false)
     private int height;
+
+    @Column(nullable = false)
     private boolean toReceivePassword;
+
+    @Column
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonIgnoreProperties({"screens", "owner"})
     private Location location;
 

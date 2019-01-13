@@ -13,13 +13,15 @@ public class Location {
     @SequenceGenerator(name = "location_generator", sequenceName = "location_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_generator")
     private Long id;
+
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "location")
     @JsonIgnoreProperties({"location", "images"})
     private List<Screen> screens = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonIgnoreProperties({"locations", "images"})
     private User owner;
 
