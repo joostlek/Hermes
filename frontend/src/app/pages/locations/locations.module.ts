@@ -17,7 +17,6 @@ import {LocationsComponent} from './locations.component';
         UiModule,
         ReactiveFormsModule,
         ClrFormsModule,
-
         LocationsRoutingModule,
     ],
 })
