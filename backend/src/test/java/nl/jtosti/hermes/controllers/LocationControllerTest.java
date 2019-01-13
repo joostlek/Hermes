@@ -194,6 +194,23 @@ class LocationControllerTest {
     }
 
     @Test
+    @DisplayName("Add location")
+    void shouldThrowNotIdentifiedAsUserException_whenAddLocationWithDifferentUsername() throws Exception {
+        Location location = new Location("Alex coffee", user);
+        user.setId(1L);
+
+        when(userService.getUserById(1L)).thenReturn(user);
+        when(locationService.save(any(Location.class))).thenReturn(location);
+
+        mvc.perform(post("/users/1/locations")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .with(user("aleex.jones@alex.com"))
+                .with(csrf())
+                .content(objectMapper.writer().writeValueAsString(location)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     @DisplayName("Update location")
     void shouldReturnUpdatedLocation_whenUpdateLocation() throws Exception {
         Location location = new Location("Alex coffee", user);
