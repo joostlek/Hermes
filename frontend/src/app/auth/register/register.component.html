@@ -1,3 +1,36 @@
-<form class="login">
-
+<form class="login" clrForm [formGroup]="registerForm" clrLayout="vertical" (submit)="register()">
+    <section class="title">
+        <h3 class="welcome">Welcome to</h3>
+        Hermes
+        <h5 class="hint">Please fill out the following information</h5>
+    </section>
+    <div class="login-group">
+        <clr-input-container>
+            <label>First name</label>
+            <input clrInput type="text" placeholder="First name" formControlName="firstName">
+            <clr-control-error>This is incorrect</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+            <label>Last name</label>
+            <input clrInput type="text" placeholder="Last name" formControlName="lastName">
+            <clr-control-error>This is incorrect</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+            <label>Email</label>
+            <input clrInput type="text" placeholder="Email" formControlName="email">
+            <clr-control-error>This is incorrect</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+            <label>Password</label>
+            <input clrInput type="password" placeholder="Password" formControlName="password">
+            <clr-control-error>This is incorrect</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+            <label>Repeat password</label>
+            <input clrInput type="password" placeholder="Repeat password" formControlName="repeatPassword">
+            <clr-control-error>This is incorrect</clr-control-error>
+        </clr-input-container>
+        <button type="submit" class="btn btn-primary" [clrLoading]="registerButtonState">REGISTER</button>
+        <a routerLink="../login" class="signup">Or login using an existing account</a>
+    </div>
 </form>

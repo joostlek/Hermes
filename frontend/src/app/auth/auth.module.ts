@@ -7,7 +7,7 @@ import {UiModule} from '../@ui/ui.module';
 import {AuthRoutingModule} from './auth-routing.module';
 import {AuthComponent} from './auth.component';
 import {LoginComponent} from './login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LogoutComponent} from './logout/logout.component';
 import {RegisterComponent} from './register/register.component';
 
@@ -17,6 +17,7 @@ import {RegisterComponent} from './register/register.component';
         CommonModule,
         ClarityModule,
         DataModule,
+        ReactiveFormsModule,
         FormsModule,
         UiModule,
         AuthRoutingModule,
