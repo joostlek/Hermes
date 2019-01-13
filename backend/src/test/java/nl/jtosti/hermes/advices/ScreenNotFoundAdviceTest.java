@@ -17,7 +17,7 @@ class ScreenNotFoundAdviceTest {
         try {
             throw exception;
         } catch (ScreenNotFoundException ex) {
-            assertThat(screenNotFoundAdvice.screenNotFoundHandler(ex)).isEqualTo("Could not find screen 1");
+            assertThat(screenNotFoundAdvice.screenNotFoundHandler(ex).getMessage()).isEqualTo("Could not find screen 1");
         }
     }
 

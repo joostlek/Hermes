@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ public class BadCredentialsAdvice {
     @ResponseBody
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    String badCredentialsHandler(BadCredentialsException ex) {
-        return "{\"message\": \"Invalid username/password supplied\"}";
+    ErrorDTO badCredentialsHandler(BadCredentialsException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 }

@@ -17,7 +17,7 @@ class UserNotFoundAdviceTest {
         try {
             throw exception;
         } catch (UserNotFoundException ex) {
-            assertThat(userNotFoundAdvice.userNotFoundHandler(ex)).isEqualTo("Could not find user 1");
+            assertThat(userNotFoundAdvice.userNotFoundHandler(ex).getMessage()).isEqualTo("Could not find user 1");
         }
     }
 }

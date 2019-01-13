@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import nl.jtosti.hermes.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ public class UserNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String userNotFoundHandler(UserNotFoundException ex) {
-        return ex.getMessage();
+    ErrorDTO userNotFoundHandler(UserNotFoundException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 }

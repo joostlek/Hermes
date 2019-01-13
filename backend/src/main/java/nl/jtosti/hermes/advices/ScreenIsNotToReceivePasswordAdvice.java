@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import nl.jtosti.hermes.exceptions.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.exceptions.ScreenNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ public class ScreenIsNotToReceivePasswordAdvice {
     @ResponseBody
     @ExceptionHandler(ScreenNotFoundException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    String screenIsNotToReceivePasswordAdviceHandler(ScreenIsNotToReceivePasswordException ex) {
-        return ex.getMessage();
+    ErrorDTO screenIsNotToReceivePasswordAdviceHandler(ScreenIsNotToReceivePasswordException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 }

@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import nl.jtosti.hermes.exceptions.ScreenNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ public class ScreenNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(ScreenNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String screenNotFoundHandler(ScreenNotFoundException ex) {
-        return ex.getMessage();
+    ErrorDTO screenNotFoundHandler(ScreenNotFoundException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 }

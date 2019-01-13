@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import nl.jtosti.hermes.exceptions.ImageNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ public class ImageNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(ImageNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String imageNotFoundHandler(ImageNotFoundException ex) {
-        return ex.getMessage();
+    ErrorDTO imageNotFoundHandler(ImageNotFoundException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 }

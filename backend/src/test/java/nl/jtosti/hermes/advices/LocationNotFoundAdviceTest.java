@@ -17,7 +17,7 @@ class LocationNotFoundAdviceTest {
         try {
             throw exception;
         } catch (LocationNotFoundException ex) {
-            assertThat(locationNotFoundAdvice.locationNotFoundHandler(ex)).isEqualTo("Could not find location 1");
+            assertThat(locationNotFoundAdvice.locationNotFoundHandler(ex).getMessage()).isEqualTo("Could not find location 1");
         }
     }
 }

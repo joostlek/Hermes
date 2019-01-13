@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import nl.jtosti.hermes.exceptions.ScreenPasswordExpiredException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,8 +13,8 @@ public class ScreenPasswordExpiredAdvice {
     @ResponseBody
     @ExceptionHandler(ScreenPasswordExpiredException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    String screenPasswordExpiredAdvice(ScreenPasswordExpiredException ex) {
-        return ex.getMessage();
+    ErrorDTO screenPasswordExpiredAdvice(ScreenPasswordExpiredException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 
 }

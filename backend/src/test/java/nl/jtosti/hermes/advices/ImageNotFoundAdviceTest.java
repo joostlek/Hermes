@@ -17,7 +17,7 @@ class ImageNotFoundAdviceTest {
         try {
             throw exception;
         } catch (ImageNotFoundException ex) {
-            assertThat(imageNotFoundAdvice.imageNotFoundHandler(ex)).isEqualTo("Could not find image 1");
+            assertThat(imageNotFoundAdvice.imageNotFoundHandler(ex).getMessage()).isEqualTo("Could not find image 1");
         }
     }
 

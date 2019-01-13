@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.advices;
 
+import nl.jtosti.hermes.entities.dto.ErrorDTO;
 import nl.jtosti.hermes.exceptions.LocationNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ public class LocationNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(LocationNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String locationNotFoundHandler(LocationNotFoundException ex) {
-        return ex.getMessage();
+    ErrorDTO locationNotFoundHandler(LocationNotFoundException ex) {
+        return new ErrorDTO(ex.getMessage());
     }
 }
