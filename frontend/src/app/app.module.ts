@@ -10,10 +10,12 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ErrorsHandler} from './@core/errors/errors-handler';
 import {DataModule} from './@core/data/data.module';
 import {AuthInterceptor} from './@core/interceptor/auth-interceptor';
+import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-password.directive';
 
 @NgModule({
     declarations: [
         AppComponent,
+        RepeatPasswordValidatorDirective,
     ],
     imports: [
         HttpClientModule,
