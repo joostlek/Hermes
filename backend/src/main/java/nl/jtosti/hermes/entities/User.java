@@ -2,12 +2,15 @@ package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +32,12 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @CreationTimestamp
+    private Date created;
+
+    @UpdateTimestamp
+    private Date updated;
 
     @Column(nullable = false)
     private String password;
@@ -104,6 +113,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getUpdated() {
+        return updated;
     }
 
     public String getPassword() {

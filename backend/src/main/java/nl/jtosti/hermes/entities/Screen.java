@@ -2,11 +2,14 @@ package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +31,12 @@ public class Screen {
 
     @Column(nullable = false)
     private int height;
+
+    @CreationTimestamp
+    private Date created;
+
+    @UpdateTimestamp
+    private Date updated;
 
     @Column(nullable = false)
     private boolean toReceivePassword;
@@ -93,6 +102,14 @@ public class Screen {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getUpdated() {
+        return updated;
     }
 
     public Location getLocation() {

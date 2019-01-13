@@ -1,9 +1,12 @@
 package nl.jtosti.hermes.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +19,12 @@ public class Location {
 
     @Column(nullable = false)
     private String name;
+
+    @CreationTimestamp
+    private Date created;
+
+    @UpdateTimestamp
+    private Date updated;
 
     @OneToMany(mappedBy = "location")
     @JsonIgnoreProperties({"location", "images"})
@@ -53,6 +62,14 @@ public class Location {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getUpdated() {
+        return updated;
     }
 
     public List<Screen> getScreens() {
