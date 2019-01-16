@@ -19,7 +19,7 @@ public class UserAuthService implements UserAuthServiceInterface {
     private AuthenticationProvider authenticationProvider;
 
     @Autowired
-    private UserService userService;
+    private UserServiceInterface userService;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
