@@ -3,6 +3,7 @@ package nl.jtosti.hermes.services;
 import nl.jtosti.hermes.entities.Screen;
 import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
 import nl.jtosti.hermes.security.requests.ScreenAuthenticationRequest;
+import nl.jtosti.hermes.security.requests.ScreenRegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -38,6 +39,12 @@ public class ScreenAuthService implements ScreenAuthServiceInterface {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
 
+    }
+
+    @Override
+    public String register(ScreenRegisterRequest request) {
+        Long screenId = request.getScreenId();
+        return screenService.registerScreen(screenId);
     }
 
     private String getToken(Screen screen) {
