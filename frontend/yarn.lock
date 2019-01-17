@@ -6121,10 +6121,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs-tslint-rules@^4.13.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.13.0.tgz#9c8dce5bc22c5fa8b9a60a7ac7f8cf9a875461bb"
-  integrity sha512-DMq33D4KdPZQemaApMtbqQTWMr8w0iGNzirnZQVY4LBdsyHxhPZz/sRvqs6e5Va+rGI3sMrhRJHWHIAakRTYAg==
+rxjs-tslint-rules@^4.14.4:
+  version "4.14.4"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.14.4.tgz#1d7ba88a68963a494488a8114ac66507bf2b0df3"
+  integrity sha512-FVF8nqJ1NWFrgbqGpZTZVIw5ENJGkbbGKeEQE0zxYNrgCX20Z/v8TtTQaqkTk2WngofZfi7vq0Kb+NvTu3zTmA==
   dependencies:
     "@phenomnomnominal/tsquery" "^3.0.0"
     decamelize "^2.0.0"
