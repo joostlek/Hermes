@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Location} from '../@core/data/domain/location';
 import {LocationService} from '../@core/data/location.service';
 import {SelectorService} from '../@core/data/selector.service';
+import {CurrentUserService} from '../@core/data/current-user.service';
+import {User} from '../@core/data/domain/user';
 
 @Component({
     selector: 'app-pages',
@@ -14,14 +16,24 @@ import {SelectorService} from '../@core/data/selector.service';
 export class PagesComponent implements OnInit {
     locations: Location[] = [];
     selectedLocation: Location;
+    user: User;
 
     constructor(private selectorService: SelectorService,
-                private locationService: LocationService) {
+                private locationService: LocationService,
+                private currentUserService: CurrentUserService) {
     }
 
     ngOnInit() {
         this.getLocations();
         this.getSelectedLocation();
+        this.getCurrentUser();
+    }
+
+    getCurrentUser() {
+        this.currentUserService.getCurrentUser()
+            .subscribe((user: User) => {
+                this.user = user;
+            });
     }
 
     getLocations() {

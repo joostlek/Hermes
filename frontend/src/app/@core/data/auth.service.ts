@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {Registration} from './domain/registration';
 import {TokenService} from './token.service';
+import {CurrentUserService} from './current-user.service';
 
 @Injectable({
     providedIn: 'root',
@@ -14,6 +15,7 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private token: TokenService,
+        private currentUserService: CurrentUserService,
     ) {
     }
 
@@ -23,6 +25,7 @@ export class AuthService {
             .subscribe((response) => {
                 this.authenticated = !!response['token'];
                 this.token.storeToken(response['token']);
+                this.currentUserService.updateCurrentUser();
                 return callback && callback();
             }, errorCallback);
     }
@@ -37,6 +40,7 @@ export class AuthService {
 
     logout(): void {
         this.token.removeToken();
+        this.currentUserService.removeCurrentUser();
         this.authenticated = false;
     }
 
