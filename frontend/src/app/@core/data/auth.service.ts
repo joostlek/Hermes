@@ -18,7 +18,7 @@ export class AuthService {
 
     authenticate(credentials, callback, errorCallback) {
         this.token.removeToken();
-        this.http.post('api/auth/signin', credentials)
+        this.http.post('api/auth/user/signin', credentials)
             .subscribe((response) => {
                 this.authenticated = !!response['token'];
                 this.token.storeToken(response['token']);
