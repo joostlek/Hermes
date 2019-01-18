@@ -66,7 +66,7 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @GetMapping
+    @GetMapping("/users/me")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         return convertToDTO(userService.getUserByEmail(userDetails.getUsername()));
