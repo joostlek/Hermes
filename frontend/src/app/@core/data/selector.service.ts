@@ -1,54 +1,39 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {Location} from './domain/location';
-import {LocationService} from './location.service';
-import {filter} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SelectorService {
+    private location$ = new BehaviorSubject(null);
 
-    constructor(
-        private locationService: LocationService,
-    ) {
-        this.setLocationListener();
-        this.selectedLocation.subscribe((location) => this.location = location);
-        this.getLocation();
+    constructor() {
+        this.addSessionStorageListener();
     }
 
-    location: Location = null;
-    selectedLocation: Subject<Location> = new Subject<Location>();
-
-    private static setLocation(location: Location): void {
-        sessionStorage.setItem('selected location', location.id.toString());
+    updateSelectedLocation(location: Location): void {
+        this.location$.next(location);
     }
 
-    private setLocationListener(): void {
-        this.selectedLocation
-            .pipe(
-                filter((location) => location !== null),
-            )
-            .subscribe(
-                (location) => {
-                    SelectorService.setLocation(location);
-                },
-            );
-    }
-
-    updateLocation(data: Location) {
-        this.updateLocationById(data.id);
-    }
-
-    private updateLocationById(id: number): void {
-        this.locationService.getLocationById(id)
-            .subscribe((location) => this.selectedLocation.next(location));
-    }
-
-    getLocation(): void {
-        const id = +sessionStorage.getItem('selected location');
-        if (id !== null) {
-            this.updateLocationById(id);
+    getSelectedLocation(): BehaviorSubject<Location> {
+        if (this.location$.getValue() !== null && sessionStorage.getItem('selectedLocation')) {
+            this.location$.next(JSON.parse(sessionStorage.getItem('selectedLocation')));
         }
+        return this.location$;
+    }
+
+    removeSelectedLocation(): void {
+        this.location$.next(null);
+    }
+
+    private addSessionStorageListener() {
+        this.location$.subscribe((location: Location) => {
+            if (location !== null) {
+                sessionStorage.setItem('selectedLocation', JSON.stringify(location));
+            } else {
+                sessionStorage.removeItem('selectedLocation');
+            }
+        });
     }
 }

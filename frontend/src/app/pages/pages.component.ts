@@ -42,11 +42,11 @@ export class PagesComponent implements OnInit {
     }
 
     updateLocation(location: Location) {
-        this.selectorService.updateLocation(location);
+        this.selectorService.updateSelectedLocation(location);
     }
 
     getSelectedLocation() {
-        this.selectorService.selectedLocation
+        this.selectorService.getSelectedLocation()
             .subscribe((location) => this.selectedLocation = location);
     }
 

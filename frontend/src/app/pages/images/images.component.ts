@@ -65,9 +65,8 @@ export class ImagesComponent implements OnInit, OnDestroy {
     }
 
     getSelectedLocation(): void {
-        this.selectorService.selectedLocation
+        this.selectorService.getSelectedLocation()
             .pipe(
-                startWith(this.selectorService.location),
                 filter((location) => location !== null),
                 takeUntil(this.ngUnsubscribe),
             )
