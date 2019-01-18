@@ -8,6 +8,8 @@ import nl.jtosti.hermes.services.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,6 +64,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public UserDTO getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return convertToDTO(userService.getUserByEmail(userDetails.getUsername()));
     }
 
     private ExtendedUserDTO convertToExtendedDTO(User user) {
