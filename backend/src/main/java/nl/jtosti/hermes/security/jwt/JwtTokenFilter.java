@@ -22,12 +22,8 @@ public class JwtTokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) servletRequest);
-        System.out.println(((HttpServletRequest) servletRequest).getRequestURI());
         if (token != null) {
-            System.out.println(jwtTokenProvider.validateToken(token));
-            if (jwtTokenProvider.validateToken(token) || (((HttpServletRequest) servletRequest).getRequestURI().endsWith("/auth/refresh") && jwtTokenProvider.validateRefreshToken(token))) {
-
-                System.out.println(((HttpServletRequest) servletRequest).getRequestURI());
+            if (jwtTokenProvider.validateToken(token) || (((HttpServletRequest) servletRequest).getRequestURI().endsWith("/auth/user/refresh") && jwtTokenProvider.validateRefreshToken(token))) {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }

@@ -41,6 +41,10 @@ const routes: Routes = [
                 path: 'screens',
                 loadChildren: './screens/screens.module#ScreensModule',
             },
+            {
+                path: 'profile',
+                loadChildren: './personal-page/personal-page.module#PersonalPageModule',
+            },
         ],
     },
 ];

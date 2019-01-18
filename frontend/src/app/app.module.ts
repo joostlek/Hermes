@@ -9,8 +9,9 @@ import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ErrorsHandler} from './@core/errors/errors-handler';
 import {DataModule} from './@core/data/data.module';
-import {AuthInterceptor} from './@core/interceptor/auth-interceptor';
 import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-password.directive';
+import {RefreshTokenInterceptor} from './@core/interceptor/refresh-token-interceptor';
+import {JsonInterceptor} from './@core/interceptor/json-interceptor';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,12 @@ import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-passwo
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
+            useClass: RefreshTokenInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JsonInterceptor,
             multi: true,
         },
     ],
