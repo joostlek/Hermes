@@ -6,6 +6,10 @@ export class User {
     firstName: string;
     lastName: string;
     email: string;
+    created: Date;
+    updated: Date;
     images: Image[];
     locations: Location[];
+
+
 }

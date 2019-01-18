@@ -11,6 +11,7 @@ import {ErrorsHandler} from './@core/errors/errors-handler';
 import {DataModule} from './@core/data/data.module';
 import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-password.directive';
 import {RefreshTokenInterceptor} from './@core/interceptor/refresh-token-interceptor';
+import {JsonInterceptor} from './@core/interceptor/json-interceptor';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,11 @@ import {RefreshTokenInterceptor} from './@core/interceptor/refresh-token-interce
         {
             provide: HTTP_INTERCEPTORS,
             useClass: RefreshTokenInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JsonInterceptor,
             multi: true,
         },
     ],

@@ -1,3 +1,17 @@
-<p>
-    personal-page works!
-</p>
+<section class="dox-content">
+    <h2>My profile</h2>
+    <h6>Created {{intervalCreated?.toString()}} ago</h6>
+    <h6 *ngIf="showUpdated">Updated {{intervalUpdated?.toString()}} ago</h6>
+    <table class="table table-vertical">
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <td>{{user?.firstName}} {{user?.lastName}}</td>
+        </tr>
+        <tr>
+            <th>Email address</th>
+            <td>{{user?.email}}</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
