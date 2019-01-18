@@ -69,7 +69,7 @@ public class UserController {
     @GetMapping("/users/me")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return convertToDTO(userService.getUserByEmail(userDetails.getUsername()));
+        return convertToExtendedDTO(userService.getUserByEmail(userDetails.getUsername()));
     }
 
     private ExtendedUserDTO convertToExtendedDTO(User user) {
