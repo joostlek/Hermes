@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
 import {Registration} from './domain/registration';
 import {TokenService} from './token.service';
 
@@ -24,6 +25,14 @@ export class AuthService {
                 this.token.storeToken(response['token']);
                 return callback && callback();
             }, errorCallback);
+    }
+
+    refresh() {
+        return this.http.get('api/auth/user/refresh')
+            .pipe(map((response) => {
+                this.authenticated = !!response['token'];
+                this.token.storeToken(response['token']);
+            }));
     }
 
     logout(): void {
