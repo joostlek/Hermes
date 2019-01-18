@@ -9,7 +9,11 @@ export class SelectorService {
     private location$ = new BehaviorSubject(null);
 
     constructor() {
-        this.addSessionStorageListener();
+        this.getSelectedLocation().subscribe(
+            () => {
+                this.addSessionStorageListener();
+            },
+        );
     }
 
     updateSelectedLocation(location: Location): void {
@@ -17,7 +21,7 @@ export class SelectorService {
     }
 
     getSelectedLocation(): BehaviorSubject<Location> {
-        if (this.location$.getValue() !== null && sessionStorage.getItem('selectedLocation')) {
+        if (this.location$.getValue() === null && sessionStorage.getItem('selectedLocation')) {
             this.location$.next(JSON.parse(sessionStorage.getItem('selectedLocation')));
         }
         return this.location$;
