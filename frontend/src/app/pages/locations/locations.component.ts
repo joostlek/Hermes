@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {ClrWizard, ClrWizardPage} from '@clr/angular';
 import {Location} from '../../@core/data/domain/location';
 import {LocationService} from '../../@core/data/location.service';
-import {SelectorService} from '../../@core/data/selector.service';
 
 @Component({
     selector: 'app-locations',
@@ -30,7 +29,6 @@ export class LocationsComponent implements OnInit {
     constructor(
         private locationService: LocationService,
         private router: Router,
-        private selectorService: SelectorService,
     ) {
     }
 

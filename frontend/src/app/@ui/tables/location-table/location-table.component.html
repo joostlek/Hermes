@@ -1,14 +1,11 @@
 <clr-datagrid>
     <clr-dg-column>Location ID</clr-dg-column>
     <clr-dg-column>Name</clr-dg-column>
-    <clr-dg-column *ngIf="select !== undefined">Select</clr-dg-column>
     <clr-dg-placeholder>{{ error ? 'An error occurred, please check your connection' : 'No locations found'}}</clr-dg-placeholder>
 
     <clr-dg-row *clrDgItems="let location of locations">
         <clr-dg-cell>{{location.id}}</clr-dg-cell>
         <clr-dg-cell><a routerLink="/locations/{{location.id}}">{{location.name}}</a></clr-dg-cell>
-        <clr-dg-cell *ngIf="select !== undefined" (click)="onSelect(location)" style="cursor: pointer">Select location
-        </clr-dg-cell>
     </clr-dg-row>
 
     <clr-dg-footer>
