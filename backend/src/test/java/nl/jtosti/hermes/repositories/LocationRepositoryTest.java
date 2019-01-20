@@ -38,8 +38,8 @@ public class LocationRepositoryTest {
 
         assertThat(user.getId()).isNotNull();
 
-        Location location = entityManager.persistAndFlush(new Location("Alex coffee", user));
-        Location location1 = entityManager.persistAndFlush(new Location("Jane coffee", user));
+        Location location = entityManager.persistAndFlush(new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user));
+        Location location1 = entityManager.persistAndFlush(new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user));
 
         List<Location> locations = locationRepository.findAllByOwnerIdOrderByIdAsc(user.getId());
 

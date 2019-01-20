@@ -36,7 +36,7 @@ class ScreenLoginServiceTest {
 
     private User user = new User("Alex", "Jones", "Alex.jones@alex.com");
 
-    private Location location = new Location("Alex coffee", user);
+    private Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
     @Test
     void shouldReturnUserDetails_whenGetScreenById() {

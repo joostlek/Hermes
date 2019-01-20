@@ -69,8 +69,8 @@ class LocationControllerTest {
     @Test
     @DisplayName("Get all locations")
     void shouldReturnLocations_whenGetAllLocations() throws Exception {
-        Location location = new Location("Alex coffee", user);
-        Location location1 = new Location("Jane coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         List<Location> locations = Arrays.asList(location, location1);
 
         given(locationService.getAllLocations()).willReturn(locations);
@@ -87,9 +87,9 @@ class LocationControllerTest {
     @Test
     @DisplayName("Get all locations from an user")
     void shouldReturnOwnLocations_whenGetLocationsByUserId() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.setId(1L);
-        Location location1 = new Location("Jane coffee", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location1.setId(2L);
         List<Location> locations = Arrays.asList(location, location1);
 
@@ -114,9 +114,9 @@ class LocationControllerTest {
     @Test
     @DisplayName("Get all personal locations from an user")
     void shouldReturnOwnLocations_whenGetPersonalLocationsByUserId() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.setId(1L);
-        Location location1 = new Location("Jane coffee", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location1.setId(2L);
         List<Location> locations = Arrays.asList(location, location1);
 
@@ -141,7 +141,7 @@ class LocationControllerTest {
     @Test
     @DisplayName("Get single location")
     void shouldReturnSingleLocation_whenGetLocation() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
         given(locationService.getLocationById(1L)).willReturn(location);
 
@@ -159,7 +159,7 @@ class LocationControllerTest {
     @Test
     @DisplayName("Add location to non-existant user")
     void shouldReturnNotFound_whenSaveLocationWithInvalidOwner() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
         when(userService.getUserById(333L)).thenThrow(UserNotFoundException.class);
 
@@ -174,7 +174,7 @@ class LocationControllerTest {
     @Test
     @DisplayName("Add location")
     void shouldReturnSavedLocation_whenSaveLocation() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         user.setId(1L);
 
         when(userService.getUserById(1L)).thenReturn(user);
@@ -196,7 +196,7 @@ class LocationControllerTest {
     @Test
     @DisplayName("Add location")
     void shouldThrowNotIdentifiedAsUserException_whenAddLocationWithDifferentUsername() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         user.setId(1L);
 
         when(userService.getUserById(1L)).thenReturn(user);
@@ -213,7 +213,7 @@ class LocationControllerTest {
     @Test
     @DisplayName("Update location")
     void shouldReturnUpdatedLocation_whenUpdateLocation() throws Exception {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
         when(locationService.update(any(Location.class))).thenReturn(location);
 

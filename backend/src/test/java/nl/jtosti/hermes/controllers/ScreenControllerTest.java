@@ -67,7 +67,7 @@ class ScreenControllerTest {
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 
-    private Location location = new Location("Alex Coffee", user);
+    private Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
     @Test
     @DisplayName("Get all screens")
