@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ClrWizard, ClrWizardPage} from '@clr/angular';
 import {Location} from '../../@core/data/domain/location';
 import {LocationService} from '../../@core/data/location.service';
+import {SelectorService} from '../../@core/data/selector.service';
 
 @Component({
     selector: 'app-locations',
@@ -28,6 +29,7 @@ export class LocationsComponent implements OnInit {
 
     constructor(
         private locationService: LocationService,
+        private selectorService: SelectorService,
         private router: Router,
     ) {
     }
@@ -87,6 +89,10 @@ export class LocationsComponent implements OnInit {
     doFinish(): void {
         this.wizard.forceFinish();
         this.reset();
+    }
+
+    updateLocation(location: Location) {
+        this.selectorService.updateSelectedLocation(location);
     }
 
 }

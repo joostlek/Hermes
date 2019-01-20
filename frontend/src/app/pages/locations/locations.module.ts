@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {ClarityModule, ClrFormsModule} from '@clr/angular';
-import {DataModule} from '../../@core/data/data.module';
 import {UiModule} from '../../@ui/ui.module';
 import {LocationsRoutingModule} from './locations-routing.module';
 import {LocationsComponent} from './locations.component';
@@ -13,7 +12,6 @@ import {LocationsComponent} from './locations.component';
     imports: [
         CommonModule,
         ClarityModule,
-        DataModule,
         UiModule,
         ReactiveFormsModule,
         ClrFormsModule,
