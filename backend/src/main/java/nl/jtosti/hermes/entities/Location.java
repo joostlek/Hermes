@@ -26,6 +26,21 @@ public class Location {
     @UpdateTimestamp
     private Date updated;
 
+    @Column(nullable = false)
+    private String street;
+
+    @Column(nullable = false)
+    private String houseNumber;
+
+    @Column(nullable = false)
+    private String zipCode;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String country;
+
     @OneToMany(mappedBy = "location")
     @JsonIgnoreProperties({"location", "images"})
     private List<Screen> screens = new ArrayList<>();
@@ -37,13 +52,23 @@ public class Location {
     protected Location() {
     }
 
-    public Location(String name, User owner) {
+    public Location(String name, String street, String houseNumber, String zipCode, String city, String country, User owner) {
         this.name = name;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
         this.owner = owner;
     }
 
-    public Location(String name, User owner, List<Screen> screens) {
+    public Location(String name, String street, String houseNumber, String zipCode, String city, String country, List<Screen> screens, User owner) {
         this.name = name;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
         this.owner = owner;
         this.screens = screens;
     }
@@ -70,6 +95,46 @@ public class Location {
 
     public Date getUpdated() {
         return updated;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public List<Screen> getScreens() {
