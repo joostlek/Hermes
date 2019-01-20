@@ -61,6 +61,7 @@ class LocationTest {
         assertThat(location.getScreens().get(0)).isEqualTo(screen);
         assertThat(location.getName()).isEqualTo(name);
 
+        location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.addScreen(screen);
 
         assertThat(location.getScreens().get(0)).isEqualTo(screen);

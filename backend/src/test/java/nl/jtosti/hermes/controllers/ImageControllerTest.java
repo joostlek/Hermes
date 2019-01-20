@@ -67,7 +67,7 @@ class ImageControllerTest {
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com");
 
-    private Location location = new Location("Alex coffee", user);
+    private Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
     private Screen screen = new Screen("Screen 1", 1920, 1080, location);
 

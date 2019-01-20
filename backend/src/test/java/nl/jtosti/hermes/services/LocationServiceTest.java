@@ -39,7 +39,7 @@ class LocationServiceTest {
     @Test
     @DisplayName("Get single location")
     void shouldReturnLocation_whenGetSingleLocation() {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
 
         when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
 
@@ -61,8 +61,8 @@ class LocationServiceTest {
     @Test
     @DisplayName("Get locations by user id")
     void shouldReturnUserLocations_whenGetLocationsByUserId() {
-        Location location = new Location("Alex Coffee", user);
-        Location location1 = new Location("Jane Coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         List<Location> locationList = Arrays.asList(location, location1);
 
         given(locationRepository.findAllByOwnerIdOrderByIdAsc(1L)).willReturn(locationList);
@@ -77,9 +77,9 @@ class LocationServiceTest {
     @Test
     @DisplayName("Update location")
     void shouldReturnUpdatedLocation_whenUpdateLocation() {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.setId(1L);
-        Location location1 = new Location("Jane coffee", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location1.setId(1L);
 
         when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
@@ -91,7 +91,7 @@ class LocationServiceTest {
     @Test
     @DisplayName("Update invalid user throws exception")
     void shouldThrowException_whenUpdateInvalidLocation() {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.setId(4L);
         try {
             locationService.update(location);
@@ -105,9 +105,9 @@ class LocationServiceTest {
     @Test
     @DisplayName("Get all locations")
     void shouldReturnAllLocations_whenGetAllLocations() {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.setId(1L);
-        Location location1 = new Location("Jane coffee", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location1.setId(2L);
         List<Location> locationList = Arrays.asList(location, location1);
         given(locationRepository.findAll()).willReturn(locationList);
@@ -122,9 +122,9 @@ class LocationServiceTest {
     @Test
     @DisplayName("Get all locations")
     void shouldReturnAllPersonalLocations_whenGetAllPersonalLocations() {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location.setId(1L);
-        Location location1 = new Location("Jane coffee", user);
+        Location location1 = new Location("Jane coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         location1.setId(2L);
         List<Location> locationList = Arrays.asList(location, location1);
         given(locationRepository.findPersonalLocationsByUserId(1L)).willReturn(locationList);
@@ -153,7 +153,7 @@ class LocationServiceTest {
     @Test
     @DisplayName("Add location")
     void shouldReturnSavedLocation_whenSaveLocation() {
-        Location location = new Location("Alex coffee", user);
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", user);
         when(locationRepository.save(any(Location.class))).thenReturn(location);
 
         Location newLocation = locationService.save(location);
