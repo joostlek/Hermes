@@ -33,13 +33,8 @@
                     <input id="tab3" type="checkbox">
                     <label for="tab3">Location: <span>{{selectedLocation?.name}}</span></label>
                     <ul class="nav-list">
-                        <ng-container *ngFor="let location of locations | slice : 0 : 5">
-                            <li><a class="nav-link" (click)="updateLocation(location)"
-                                   [ngClass]="{'active': isGivenLocationIdSelected(location.id)}">{{location.name}}</a>
-                            </li>
-                        </ng-container>
-                        <li><a class="nav-link" routerLink="/locations" routerLinkActive="active">View more
-                            locations</a></li>
+                        <li><a class="nav-link" routerLink="/locations" routerLinkActive="active">Change location</a>
+                        </li>
                     </ul>
                 </section>
                 <section class="nav-group collapsible" *ngIf="isLocationSelected()">

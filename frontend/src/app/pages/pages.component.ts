@@ -47,7 +47,9 @@ export class PagesComponent implements OnInit {
 
     getSelectedLocation() {
         this.selectorService.getSelectedLocation()
-            .subscribe((location) => this.selectedLocation = location);
+            .subscribe((location) => {
+                this.selectedLocation = location;
+            });
     }
 
     isLocationSelected(): boolean {

@@ -5,3 +5,7 @@
 clr-button-group {
     padding-top: 12px;
 }
+
+.action {
+    cursor: pointer;
+}

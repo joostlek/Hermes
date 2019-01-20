@@ -5,7 +5,25 @@
         <clr-button>Favorite</clr-button>
     </clr-button-group>
     <div class="app-table">
-        <app-location-table [locations]="locations" [error]="dataGridErrorFlag"></app-location-table>
+        <clr-datagrid>
+            <clr-dg-column>Location ID</clr-dg-column>
+            <clr-dg-column>Name</clr-dg-column>
+            <clr-dg-column>Action</clr-dg-column>
+            <clr-dg-placeholder>{{ error ? 'An error occurred, please check your connection' : 'No locations found'}}</clr-dg-placeholder>
+
+            <clr-dg-row *clrDgItems="let location of locations">
+                <clr-dg-cell>{{location.id}}</clr-dg-cell>
+                <clr-dg-cell><a routerLink="/locations/{{location.id}}">{{location.name}}</a></clr-dg-cell>
+                <clr-dg-cell (click)="updateLocation(location)" class="action">Select location</clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-footer>
+                <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                    of {{pagination.totalItems}} locations
+                </clr-dg-pagination>
+            </clr-dg-footer>
+        </clr-datagrid>
     </div>
 </section>
 
