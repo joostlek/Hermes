@@ -13,7 +13,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 class ScreenTest {
     private Screen screen;
 
-    private Location location = new Location("Alex Coffee", new User());
+    private Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", new User());
 
     @Test
     @DisplayName("Test no args constructor")
@@ -55,7 +55,7 @@ class ScreenTest {
         int width = 1000;
         int height = 1000;
 
-        Location location = new Location("Jane Coffee", new User());
+        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", new User());
 
         screen.setName(name);
         screen.setHeight(height);
