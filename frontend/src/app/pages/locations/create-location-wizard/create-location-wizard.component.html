@@ -1,0 +1,48 @@
+<clr-wizard #wizardlg [(clrWizardOpen)]="open" clrWizardSize="lg">
+    <clr-wizard-title>Create location</clr-wizard-title>
+
+    <clr-wizard-button [type]="'cancel'" (click)="reset()">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+    <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+
+    <clr-wizard-page [clrWizardPageNextDisabled]="firstPage.invalid">
+        <ng-template clrPageTitle>Basic information</ng-template>
+        <form clrForm [formGroup]="firstPage">
+            <clr-input-container>
+                <label>Location name</label>
+                <input placeholder="Location name" clrInput formControlName="name" name="name" type="text"/>
+                <clr-control-helper>The name of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Page 2</ng-template>
+        ...
+    </clr-wizard-page>
+
+    <clr-wizard-page #finalPage
+                     clrWizardPagePreventDefault="true"
+                     (clrWizardPageOnCommit)="createLocation()"
+                     (clrWizardPageOnCancel)="doCancel()"
+                     (clrWizardPagePrevious)="goBack()">
+        <ng-template clrPageTitle>Finalizing</ng-template>
+        <div class="spinner" *ngIf="loadingFlag">
+            Loading...
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorFlag">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">
+                            {{error.status}} - {{error.message}}
+                        </span>
+                </div>
+            </div>
+        </div>
+    </clr-wizard-page>
+</clr-wizard>

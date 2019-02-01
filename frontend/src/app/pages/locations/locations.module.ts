@@ -6,9 +6,10 @@ import {ClarityModule, ClrFormsModule} from '@clr/angular';
 import {UiModule} from '../../@ui/ui.module';
 import {LocationsRoutingModule} from './locations-routing.module';
 import {LocationsComponent} from './locations.component';
+import {CreateLocationWizardComponent} from './create-location-wizard/create-location-wizard.component';
 
 @NgModule({
-    declarations: [LocationsComponent],
+    declarations: [LocationsComponent, CreateLocationWizardComponent],
     imports: [
         CommonModule,
         ClarityModule,
