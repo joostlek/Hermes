@@ -1,15 +1,18 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {EMPTY, Observable} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {CurrentUserService} from './current-user.service';
 import {Location} from './domain/location';
 import {User} from './domain/user';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class LocationService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+                private currentUserService: CurrentUserService) {
     }
 
     getAllLocations(): Observable<Location[]> {
@@ -28,9 +31,22 @@ export class LocationService {
         return this.http.get<Location[]>('api/users/' + userId + '/locations');
     }
 
-    addLocation(name: string): Observable<Location> {
-        const location = new Location(name);
-        return this.http.post<Location>('api/users/1/locations', location);
+    addLocation(location: Location): Observable<Location> {
+        return this.currentUserService.getCurrentUser()
+            .pipe(
+                switchMap((value) => {
+                        if (value !== null) {
+                            return this.addLocationWithUserId(location, value.id);
+                        } else {
+                            return EMPTY;
+                        }
+                    },
+                ),
+            );
+    }
+
+    private addLocationWithUserId(location: Location, userId: number): Observable<Location> {
+        return this.http.post<Location>('api/users/' + userId + '/locations', location);
     }
 
     getPersonalLocationsByUser(user: User): Observable<Location[]> {
