@@ -43,7 +43,7 @@ public class LocationController {
     @PostMapping("/users/{userId}/locations")
     @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.CREATED)
-    public LocationDTO addLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long userId, Principal principal) {
+    public LocationDTO addLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long userId, Principal principal) {
         Location location = convertToEntity(locationDTO);
         User owner = userService.getUserById(userId);
         if (!owner.getEmail().equals(principal.getName())) {
