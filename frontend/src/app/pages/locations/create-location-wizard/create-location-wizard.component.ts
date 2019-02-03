@@ -18,8 +18,16 @@ export class CreateLocationWizardComponent implements OnInit {
     errorFlag = false;
     error: any;
 
-    firstPage = new FormGroup({
+    basicInfoPage = new FormGroup({
         name: new FormControl('', [Validators.required]),
+    });
+
+    locationInfoPage = new FormGroup({
+        street: new FormControl('', [Validators.required]),
+        houseNumber: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [Validators.required]),
+        city: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
     });
 
     constructor(private locationService: LocationService,
@@ -32,9 +40,17 @@ export class CreateLocationWizardComponent implements OnInit {
     createLocation(): void {
         this.errorFlag = false;
         this.loadingFlag = true;
-        if (!this.firstPage.invalid) {
-            this.locationService.addLocation(this.firstPage.value['name'])
+        if (!this.basicInfoPage.invalid && !this.locationInfoPage.invalid) {
+            const loco = new Location();
+            loco.name = this.basicInfoPage.value['name'];
+            loco.street = this.locationInfoPage.value['street'];
+            loco.houseNumber = this.locationInfoPage.value['houseNumber'];
+            loco.zipCode = this.locationInfoPage.value['zipCode'];
+            loco.city = this.locationInfoPage.value['city'];
+            loco.country = this.locationInfoPage.value['country'];
+            this.locationService.addLocation(loco)
                 .subscribe((location) => {
+                        console.log(location);
                         this.doFinish();
                         this.navigate(location);
                     },
@@ -53,7 +69,7 @@ export class CreateLocationWizardComponent implements OnInit {
 
     reset(): void {
         this.wizard.reset();
-        this.firstPage.reset();
+        this.basicInfoPage.reset();
         this.wizard.close();
         this.loadingFlag = false;
         this.errorFlag = false;

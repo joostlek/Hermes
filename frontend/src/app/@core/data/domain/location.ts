@@ -13,8 +13,4 @@ export class Location {
     city: string;
     country: string;
     zipCode: string;
-
-    constructor(name: string) {
-        this.name = name;
-    }
 }

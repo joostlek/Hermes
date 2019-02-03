@@ -6,9 +6,9 @@
     <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
     <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
 
-    <clr-wizard-page [clrWizardPageNextDisabled]="firstPage.invalid">
+    <clr-wizard-page [clrWizardPageNextDisabled]="basicInfoPage.invalid">
         <ng-template clrPageTitle>Basic information</ng-template>
-        <form clrForm [formGroup]="firstPage">
+        <form clrForm [formGroup]="basicInfoPage">
             <clr-input-container>
                 <label>Location name</label>
                 <input placeholder="Location name" clrInput formControlName="name" name="name" type="text"/>
@@ -18,9 +18,40 @@
         </form>
     </clr-wizard-page>
 
-    <clr-wizard-page>
-        <ng-template clrPageTitle>Page 2</ng-template>
-        ...
+    <clr-wizard-page [clrWizardPageNextDisabled]="locationInfoPage.invalid">
+        <ng-template clrPageTitle>Location information</ng-template>
+        <form clrForm [formGroup]="locationInfoPage">
+            <clr-input-container>
+                <label>Street</label>
+                <input placeholder="Street" formControlName="street" name="street" type="text" clrInput>
+                <clr-control-helper>The street of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>House number</label>
+                <input placeholder="House number" formControlName="houseNumber" name="houseNumber" type="text" clrInput>
+                <clr-control-helper>The house number of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Zip code</label>
+                <input placeholder="Zip code" formControlName="zipCode" name="zipCode" type="text" clrInput>
+                <clr-control-helper>The zip code of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>City</label>
+                <input placeholder="City" formControlName="city" name="city" type="text" clrInput>
+                <clr-control-helper>The City of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Country</label>
+                <input placeholder="Country" formControlName="country" name="country" type="text" clrInput>
+                <clr-control-helper>The country of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+        </form>
     </clr-wizard-page>
 
     <clr-wizard-page #finalPage
