@@ -21,7 +21,7 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public List<Company> getAllCompanies() {
-        return companyRepository.getAllCompanies();
+        return companyRepository.findAll();
     }
 
     @Override

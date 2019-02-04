@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface CompanyRepository extends CrudRepository<Company, Long> {
-    List<Company> getAllCompanies();
+    List<Company> findAll();
 }
