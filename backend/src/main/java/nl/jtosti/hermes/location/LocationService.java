@@ -38,6 +38,11 @@ public class LocationService implements LocationServiceInterface {
         return locationRepository.save(location);
     }
 
+    @Override
+    public List<Location> getLocationsByCompanyId(Long companyId) {
+        return locationRepository.findAllByCompanyId(companyId);
+    }
+
 //    @Override
 //    public List<Location> getLocationsByUserId(Long id) {
 //        return locationRepository.findAllByOwnerIdOrderByIdAsc(id);

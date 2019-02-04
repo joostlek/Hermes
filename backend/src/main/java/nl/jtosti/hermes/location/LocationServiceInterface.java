@@ -11,7 +11,7 @@ public interface LocationServiceInterface {
 
     Location save(Location location);
 
-//    public List<Location> getLocationsByUserId(Long id);
+    List<Location> getLocationsByCompanyId(Long companyId);
 
     Location update(Location location);
 

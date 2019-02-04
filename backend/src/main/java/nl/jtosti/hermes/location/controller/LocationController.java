@@ -1,12 +1,12 @@
 package nl.jtosti.hermes.location.controller;
 
+import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.company.CompanyService;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
 import nl.jtosti.hermes.location.dto.LocationDTO;
-import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
-import nl.jtosti.hermes.util.NotIdentifiedAsUserException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,16 +22,17 @@ public class LocationController {
     private final ModelMapper modelMapper;
     private final UserServiceInterface userService;
     private LocationServiceInterface locationService;
+    private final CompanyService companyService;
 
     @Autowired
-    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, UserServiceInterface userService) {
+    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, UserServiceInterface userService, CompanyService companyService) {
         this.locationService = locationService;
         this.modelMapper = modelMapper;
         this.userService = userService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/locations")
-    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public List<LocationDTO> getAllLocations() {
         List<Location> locations = locationService.getAllLocations();
@@ -40,39 +41,24 @@ public class LocationController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/users/{userId}/locations")
-    @Secured({"USER", "ADMIN"})
+    @PostMapping("/companies/{companyId}/locations")
     @ResponseStatus(HttpStatus.CREATED)
-    public LocationDTO addLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long userId, Principal principal) {
+    public LocationDTO addLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long companyId, Principal principal) {
         Location location = convertToEntity(locationDTO);
-        User owner = userService.getUserById(userId);
-        if (!owner.getEmail().equals(principal.getName())) {
-            throw new NotIdentifiedAsUserException(userId);
-        }
-//        location.a(owner);
+        Company company = companyService.getCompanyById(companyId);
+        location.setCompany(company);
         Location newLocation = locationService.save(location);
         return convertToExtendedDTO(newLocation);
     }
 
-//    @GetMapping("/users/{userId}/locations")
-//    @Secured({"USER", "ADMIN"})
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<LocationDTO> getLocationByUserId(@PathVariable Long userId) {
-//        List<Location> locations = locationService.getLocationsByUserId(userId);
-//        return locations.stream()
-//                .map(this::convertToDTO)
-//                .collect(Collectors.toList());
-//    }
-
-//    @GetMapping("/users/{userId}/personal-locations")
-//    @Secured({"USER", "ADMIN"})
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<LocationDTO> getPersonalLocationByUserId(@PathVariable Long userId) {
-//        List<Location> locations = locationService.getPersonalLocationsByUserId(userId);
-//        return locations.stream()
-//                .map(this::convertToDTO)
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping("/companies/{companyId}/locations")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LocationDTO> getLocationByCompanyId(@PathVariable Long companyId) {
+        List<Location> locations = locationService.getLocationsByCompanyId(companyId);
+        return locations.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
     @GetMapping("/locations/{id}")
     @Secured({"USER", "ADMIN"})

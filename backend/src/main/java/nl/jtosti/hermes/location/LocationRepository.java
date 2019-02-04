@@ -9,6 +9,8 @@ import java.util.List;
 public interface LocationRepository extends CrudRepository<Location, Long> {
     List<Location> findAll();
 
+    List<Location> findAllByCompanyId(Long id);
+
 //    List<Location> findAllByOwnerIdOrderByIdAsc(Long id);
 //
 //    @Query("SELECT DISTINCT loc FROM Location loc LEFT JOIN loc.screens scr LEFT JOIN scr.images ima LEFT JOIN ima.owner use WHERE use.id = :id OR loc.owner.id = :id ORDER BY loc.id")
