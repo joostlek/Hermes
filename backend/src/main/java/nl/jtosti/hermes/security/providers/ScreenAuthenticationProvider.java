@@ -1,6 +1,6 @@
 package nl.jtosti.hermes.security.providers;
 
-import nl.jtosti.hermes.exceptions.ScreenPasswordExpiredException;
+import nl.jtosti.hermes.screen.auth.exception.ScreenPasswordExpiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;

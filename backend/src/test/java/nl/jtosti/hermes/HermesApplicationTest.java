@@ -1,6 +1,6 @@
 package nl.jtosti.hermes;
 
-import nl.jtosti.hermes.controllers.UserController;
+import nl.jtosti.hermes.user.controller.UserController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
