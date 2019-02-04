@@ -7,6 +7,7 @@
             <button clrTabLink>Information</button>
             <ng-template [(clrIfActive)]="informationActive">
                 <clr-tab-content>
+                    <h3>Basic information</h3>
                     <table class="table table-vertical">
                         <tbody>
                         <tr>
@@ -17,6 +18,27 @@
                             <th>Owner</th>
                             <td><a routerLink="/users/{{location.owner.id}}">{{location.owner.firstName}}
                                 {{location.owner.lastName}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h3>Location information</h3>
+                    <table class="table table-vertical">
+                        <tbody>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{location.street}} {{location.houseNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>Zip code</th>
+                            <td>{{location.zipCode}}</td>
+                        </tr>
+                        <tr>
+                            <th>City</th>
+                            <td>{{location.city}}</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>{{location.country}}</td>
                         </tr>
                         </tbody>
                     </table>
