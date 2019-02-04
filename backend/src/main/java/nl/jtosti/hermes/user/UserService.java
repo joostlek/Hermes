@@ -62,9 +62,15 @@ public class UserService implements UserServiceInterface {
                 );
     }
 
+
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> getAllUsersByCompanyId(Long companyId) {
+        return userRepository.findUsersByCompanies(companyId);
     }
 
 }

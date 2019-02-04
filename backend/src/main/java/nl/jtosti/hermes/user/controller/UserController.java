@@ -7,8 +7,6 @@ import nl.jtosti.hermes.user.dto.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,10 +55,13 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @GetMapping("/users/me")
+    @GetMapping("/companies/{companyId}/users")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return convertToExtendedDTO(userService.getUserByEmail(userDetails.getUsername()));
+    public List<UserDTO> getUsersByCompanyId(@PathVariable Long companyId) {
+        return userService.getAllUsersByCompanyId(companyId)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     private ExtendedUserDTO convertToExtendedDTO(User user) {

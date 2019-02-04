@@ -16,4 +16,6 @@ public interface UserServiceInterface {
     User updateUser(User newUser);
 
     void deleteUser(Long id);
+
+    List<User> getAllUsersByCompanyId(Long companyId);
 }

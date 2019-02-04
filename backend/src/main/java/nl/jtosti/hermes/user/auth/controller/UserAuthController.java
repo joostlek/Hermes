@@ -2,7 +2,6 @@ package nl.jtosti.hermes.user.auth.controller;
 
 import nl.jtosti.hermes.security.requests.UserAuthenticationRequest;
 import nl.jtosti.hermes.user.User;
-import nl.jtosti.hermes.user.UserServiceInterface;
 import nl.jtosti.hermes.user.auth.UserAuthServiceInterface;
 import nl.jtosti.hermes.user.auth.dto.AuthUserDTO;
 import nl.jtosti.hermes.user.auth.dto.NewUserDTO;
@@ -22,13 +21,10 @@ public class UserAuthController {
 
     private final ModelMapper modelMapper;
 
-    private final UserServiceInterface userService;
-
     @Autowired
-    public UserAuthController(UserAuthServiceInterface userAuthService, ModelMapper modelMapper, UserServiceInterface userService) {
+    public UserAuthController(UserAuthServiceInterface userAuthService, ModelMapper modelMapper) {
         this.userAuthService = userAuthService;
         this.modelMapper = modelMapper;
-        this.userService = userService;
     }
 
     @PostMapping("/auth/user/signin")
@@ -39,6 +35,12 @@ public class UserAuthController {
     @GetMapping("/auth/user/refresh")
     public AuthUserDTO refreshToken(@AuthenticationPrincipal UserDetails userDetails) {
         return convertToDTO(userAuthService.refreshAuthentication(userDetails));
+    }
+
+    @GetMapping("/users/me")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDTO getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return convertToExtendedDTO(userAuthService.getUserByEmail(userDetails.getUsername()));
     }
 
     @PostMapping("/auth/user/register")
@@ -66,6 +68,5 @@ public class UserAuthController {
         }
         return null;
     }
-
 
 }

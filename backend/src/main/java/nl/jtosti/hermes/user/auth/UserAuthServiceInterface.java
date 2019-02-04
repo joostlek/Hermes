@@ -10,4 +10,6 @@ public interface UserAuthServiceInterface {
     String refreshAuthentication(UserDetails userDetails);
 
     User save(User user);
+
+    User getUserByEmail(String email);
 }

@@ -53,6 +53,11 @@ public class UserAuthService implements UserAuthServiceInterface {
         return userService.save(user);
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return userService.getUserByEmail(email);
+    }
+
     private String getToken(User user) {
         return jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
     }
