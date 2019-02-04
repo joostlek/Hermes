@@ -33,6 +33,11 @@ public class ImageService implements ImageServiceInterface {
         return imageRepository.findAllByScreenId(id);
     }
 
+    @Override
+    public List<Image> getImagesByCompanyId(Long companyId) {
+        return imageRepository.findAllByCompanyId(companyId);
+    }
+
 //    @Override
 //    public List<Image> getImagesByUserId(Long id) {
 //        return imageRepository.findAllByOwnerId(id);

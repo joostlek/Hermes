@@ -9,6 +9,8 @@ import java.util.List;
 public interface ImageRepository extends CrudRepository<Image, Long> {
     List<Image> findAll();
 
+    List<Image> findAllByCompanyId(Long companyId);
+
     List<Image> findAllByScreenId(Long id);
 
     List<Image> findAllByScreenLocationId(Long id);

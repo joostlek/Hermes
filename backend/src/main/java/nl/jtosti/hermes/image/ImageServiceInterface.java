@@ -9,6 +9,8 @@ public interface ImageServiceInterface {
 
     List<Image> getImagesByScreenId(Long id);
 
+    List<Image> getImagesByCompanyId(Long companyId);
+
 //    public List<Image> getImagesByUserId(Long id);
 
     List<Image> getImagesByLocationId(Long id);

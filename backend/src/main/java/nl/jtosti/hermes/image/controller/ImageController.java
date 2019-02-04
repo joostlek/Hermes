@@ -1,5 +1,7 @@
 package nl.jtosti.hermes.image.controller;
 
+import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.company.CompanyService;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.image.ImageServiceInterface;
 import nl.jtosti.hermes.image.StorageService;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,14 +38,16 @@ public class ImageController {
 
     private final StorageService storageService;
 
+    private final CompanyService companyService;
 
     @Autowired
-    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService, StorageService storageService) {
+    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService, StorageService storageService, CompanyService companyService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.screenService = screenService;
         this.userService = userService;
         this.storageService = storageService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/images")
@@ -54,14 +59,14 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping("/users/{userId}/images")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ImageDTO> getImagesByUserId(@PathVariable Long userId) {
-//        List<Image> images = imageService.getImagesByUserId(userId);
-//        return images.stream()
-//                .map(this::convertToExtendedDTO)
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping("/companies/{companyId}/images")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ImageDTO> getImagesByCompanyId(@PathVariable Long companyId) {
+        List<Image> images = imageService.getImagesByCompanyId(companyId);
+        return images.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
 
     @GetMapping("/screens/{screenId}/images")
     @ResponseStatus(HttpStatus.OK)
@@ -81,15 +86,6 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping("/users/{userId}/locations/{locationId}/images")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ImageDTO> getImagesByLocationIdByUserId(@PathVariable Long userId, @PathVariable Long locationId) {
-//        List<Image> images = imageService.getImagesByLocationIdByUserId(locationId, userId);
-//        return images.stream()
-//                .map(this::convertToExtendedDTO)
-//                .collect(Collectors.toList());
-//    }
-
     @GetMapping("/images/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ImageDTO getOneImage(@PathVariable Long id) {
@@ -105,14 +101,19 @@ public class ImageController {
         return convertToExtendedDTO(newImage);
     }
 
-    @PostMapping(value = "/users/{userId}/images", params = {"screenId"})
+    @PostMapping(value = "/companies/{companyId}/images", params = {"screenId"})
     @ResponseStatus(HttpStatus.CREATED)
-    public ImageDTO saveImage(@RequestBody ImageDTO imageDTO, @PathVariable Long userId, @RequestParam Long screenId) {
+    public ImageDTO saveImage(@RequestBody ImageDTO imageDTO,
+                              @PathVariable Long companyId,
+                              @RequestParam Long screenId,
+                              Principal principal) {
         Image image = convertToEntity(imageDTO);
-        User owner = userService.getUserById(userId);
-        image.setUploader(owner);
+        User uploader = userService.getUserByEmail(principal.getName());
+        image.setUploader(uploader);
         Screen screen = screenService.getScreenById(screenId);
         image.setScreen(screen);
+        Company company = companyService.getCompanyById(companyId);
+        image.setCompany(company);
         Image newImage = imageService.save(image);
         return convertToExtendedDTO(newImage);
     }
