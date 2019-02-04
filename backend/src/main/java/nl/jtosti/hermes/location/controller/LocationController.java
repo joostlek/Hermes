@@ -1,7 +1,7 @@
 package nl.jtosti.hermes.location.controller;
 
 import nl.jtosti.hermes.company.Company;
-import nl.jtosti.hermes.company.CompanyService;
+import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 public class LocationController {
     private final ModelMapper modelMapper;
     private final UserServiceInterface userService;
-    private LocationServiceInterface locationService;
-    private final CompanyService companyService;
+    private final LocationServiceInterface locationService;
+    private final CompanyServiceInterface companyService;
 
     @Autowired
-    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, UserServiceInterface userService, CompanyService companyService) {
+    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, UserServiceInterface userService, CompanyServiceInterface companyService) {
         this.locationService = locationService;
         this.modelMapper = modelMapper;
         this.userService = userService;
