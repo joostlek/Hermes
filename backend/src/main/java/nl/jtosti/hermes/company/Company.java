@@ -150,6 +150,10 @@ public class Company {
         this.users = users;
     }
 
+    public void addUser(User user) {
+        this.users.add(user);
+    }
+
     public Set<Location> getLocations() {
         return locations;
     }
