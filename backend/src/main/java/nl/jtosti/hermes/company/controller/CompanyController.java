@@ -3,6 +3,7 @@ package nl.jtosti.hermes.company.controller;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.dto.CompanyDTO;
+import nl.jtosti.hermes.company.dto.ExtendedCompanyDTO;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -38,9 +39,9 @@ public class CompanyController {
 
     @GetMapping("/companies/{companyId}")
     @ResponseStatus(HttpStatus.OK)
-    public CompanyDTO getCompanyById(@PathVariable Long companyId) {
+    public ExtendedCompanyDTO getCompanyById(@PathVariable Long companyId) {
         Company company = companyService.getCompanyById(companyId);
-        return convertToDTO(company);
+        return convertToExtendedDTO(company);
     }
 
     @PostMapping("/users/{userId}/companies")
@@ -61,6 +62,10 @@ public class CompanyController {
 
     private CompanyDTO convertToDTO(Company company) {
         return modelMapper.map(company, CompanyDTO.class);
+    }
+
+    private ExtendedCompanyDTO convertToExtendedDTO(Company company) {
+        return modelMapper.map(company, ExtendedCompanyDTO.class);
     }
 
     private Company convertToEntity(CompanyDTO companyDTO) {
