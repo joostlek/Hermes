@@ -2,6 +2,7 @@ package nl.jtosti.hermes.user;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findAllByOrderByIdAsc();
 
-    @Query("select u from User u left join company_users ON company_users.user_id = u.id WHERE company_users.company_id = ?1")
-    List<User> findUsersByCompanies(Long id);
+    @Query("select u from users u left join u.companies cu ON cu.id = :companyId")
+    List<User> findUsersByCompanyId(@Param("companyId") Long id);
 }

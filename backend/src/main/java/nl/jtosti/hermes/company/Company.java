@@ -62,6 +62,19 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private Set<Image> images;
 
+    public Company() {
+    }
+
+    public Company(String phoneNumber, String name, String street, String houseNumber, String zipCode, String city, String country) {
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
+    }
+
     public Long getId() {
         return id;
     }

@@ -70,7 +70,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public List<User> getAllUsersByCompanyId(Long companyId) {
-        return userRepository.findUsersByCompanies(companyId);
+        return userRepository.findUsersByCompanyId(companyId);
     }
 
 }
