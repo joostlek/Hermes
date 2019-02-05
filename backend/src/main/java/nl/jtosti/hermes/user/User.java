@@ -12,10 +12,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * This represents an user of the application
+ */
 @Entity(name = "users")
 public class User {
 
-    public static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
+    private static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
 
     @Id
     @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 1)
@@ -105,6 +108,9 @@ public class User {
         return password;
     }
 
+    /**
+     * @param password hashes the password and saves the hash
+     */
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
     }

@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 
+/**
+ * The start of the application
+ */
 @SpringBootApplication()
 public class HermesApplication implements CommandLineRunner {
 
@@ -31,6 +34,11 @@ public class HermesApplication implements CommandLineRunner {
         return new Argon2PasswordEncoder();
     }
 
+    /**
+     * Initializes the storage for images
+     * @param args arguments
+     * @throws Exception because @{CommandLineRunner}
+     */
     @Override
     public void run(String... args) throws Exception {
         storageService.deleteAll();
