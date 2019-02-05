@@ -64,17 +64,6 @@ public class Location {
         this.company = company;
     }
 
-    public Location(String name, String street, String houseNumber, String zipCode, String city, String country, List<Screen> screens, Company company) {
-        this.name = name;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.zipCode = zipCode;
-        this.city = city;
-        this.country = country;
-        this.company = company;
-        this.screens = screens;
-    }
-
     public Long getId() {
         return id;
     }

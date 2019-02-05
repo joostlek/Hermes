@@ -6,7 +6,6 @@ import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
 import nl.jtosti.hermes.location.dto.LocationDTO;
-import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +19,13 @@ import java.util.stream.Collectors;
 @RestController
 public class LocationController {
     private final ModelMapper modelMapper;
-    private final UserServiceInterface userService;
     private final LocationServiceInterface locationService;
     private final CompanyServiceInterface companyService;
 
     @Autowired
-    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, UserServiceInterface userService, CompanyServiceInterface companyService) {
+    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, CompanyServiceInterface companyService) {
         this.locationService = locationService;
         this.modelMapper = modelMapper;
-        this.userService = userService;
         this.companyService = companyService;
     }
 
