@@ -1,11 +1,9 @@
-package nl.jtosti.hermes.services;
+package nl.jtosti.hermes.screen.auth;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.screen.ScreenServiceInterface;
-import nl.jtosti.hermes.screen.auth.ApplicationScreen;
-import nl.jtosti.hermes.screen.auth.ScreenLoginService;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
 import nl.jtosti.hermes.user.User;
 import org.junit.jupiter.api.DisplayName;

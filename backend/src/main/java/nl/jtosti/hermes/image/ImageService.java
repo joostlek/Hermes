@@ -38,20 +38,10 @@ public class ImageService implements ImageServiceInterface {
         return imageRepository.findAllByCompanyId(companyId);
     }
 
-//    @Override
-//    public List<Image> getImagesByUserId(Long id) {
-//        return imageRepository.findAllByOwnerId(id);
-//    }
-
     @Override
     public List<Image> getImagesByLocationId(Long id) {
         return imageRepository.findAllByScreenLocationId(id);
     }
-
-//    @Override
-//    public List<Image> getImagesByLocationIdByUserId(Long locationId, Long userId) {
-//        return imageRepository.findAllByScreenLocationIdAndOwnerId(locationId, userId);
-//    }
 
     @Override
     public boolean exists(Long id) {

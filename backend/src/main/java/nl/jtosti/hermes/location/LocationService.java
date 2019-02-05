@@ -43,11 +43,6 @@ public class LocationService implements LocationServiceInterface {
         return locationRepository.findAllByCompanyId(companyId);
     }
 
-//    @Override
-//    public List<Location> getLocationsByUserId(Long id) {
-//        return locationRepository.findAllByOwnerIdOrderByIdAsc(id);
-//    }
-
     @Override
     public Location update(Location newLocation) {
         return locationRepository.findById(newLocation.getId())
@@ -64,9 +59,4 @@ public class LocationService implements LocationServiceInterface {
     public void delete(Long id) {
         locationRepository.deleteById(id);
     }
-
-//    @Override
-//    public List<Location> getPersonalLocationsByUserId(Long id) {
-//        return locationRepository.findPersonalLocationsByUserId(id);
-//    }
 }

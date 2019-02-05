@@ -11,11 +11,7 @@ public interface ImageServiceInterface {
 
     List<Image> getImagesByCompanyId(Long companyId);
 
-//    public List<Image> getImagesByUserId(Long id);
-
     List<Image> getImagesByLocationId(Long id);
-
-//    public List<Image> getImagesByLocationIdByUserId(Long locationId, Long userId);
 
     boolean exists(Long id);
 

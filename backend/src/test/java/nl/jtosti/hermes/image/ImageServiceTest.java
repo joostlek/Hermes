@@ -1,10 +1,6 @@
-package nl.jtosti.hermes.services;
+package nl.jtosti.hermes.image;
 
 import nl.jtosti.hermes.company.Company;
-import nl.jtosti.hermes.image.Image;
-import nl.jtosti.hermes.image.ImageRepository;
-import nl.jtosti.hermes.image.ImageService;
-import nl.jtosti.hermes.image.ImageServiceInterface;
 import nl.jtosti.hermes.image.exception.ImageNotFoundException;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.Screen;

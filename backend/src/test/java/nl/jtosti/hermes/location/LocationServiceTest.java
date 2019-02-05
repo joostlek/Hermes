@@ -1,10 +1,6 @@
-package nl.jtosti.hermes.services;
+package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
-import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.location.LocationRepository;
-import nl.jtosti.hermes.location.LocationService;
-import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import nl.jtosti.hermes.user.User;
 import org.junit.jupiter.api.DisplayName;

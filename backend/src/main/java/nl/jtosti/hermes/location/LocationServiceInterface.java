@@ -16,6 +16,4 @@ public interface LocationServiceInterface {
     Location update(Location location);
 
     void delete(Long id);
-
-//    public List<Location> getPersonalLocationsByUserId(Long id);
 }
