@@ -21,7 +21,7 @@ if [ "$TRAVIS_REPO_SLUG" == "joostlek/Hermes" ] && [ "$TRAVIS_PULL_REQUEST" == "
   cp -Rf $HOME/apidocs ./apidocs
   git add -f .
   git commit -m "Latest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-  git push -fq origin gh-pages > /dev/null
+  git push -fq origin master > /dev/null
 
   echo -e "Published Javadoc to gh-pages.\n"
 
