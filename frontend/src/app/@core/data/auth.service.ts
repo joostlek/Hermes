@@ -46,7 +46,7 @@ export class AuthService {
 
     register(registration: Registration, callback, errorCallback): void {
         this.token.removeToken();
-        this.http.post('api/auth/register', registration)
+        this.http.post('api/auth/user/register', registration)
             .subscribe((response) => {
                 if (response.hasOwnProperty('id')) {
                     return callback && callback();
