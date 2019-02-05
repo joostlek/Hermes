@@ -1,12 +1,8 @@
-package nl.jtosti.hermes.services;
+package nl.jtosti.hermes.screen;
 
 import nl.jtosti.hermes.HermesApplication;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.screen.Screen;
-import nl.jtosti.hermes.screen.ScreenRepository;
-import nl.jtosti.hermes.screen.ScreenService;
-import nl.jtosti.hermes.screen.ScreenServiceInterface;
 import nl.jtosti.hermes.screen.auth.exception.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
 import nl.jtosti.hermes.user.User;

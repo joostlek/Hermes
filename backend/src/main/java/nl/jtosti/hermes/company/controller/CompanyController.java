@@ -22,10 +22,10 @@ public class CompanyController {
     private final UserServiceInterface userService;
 
     @Autowired
-    public CompanyController(CompanyServiceInterface companyService, ModelMapper modelMapper, UserServiceInterface userAuthService) {
+    public CompanyController(CompanyServiceInterface companyService, ModelMapper modelMapper, UserServiceInterface userService) {
         this.companyService = companyService;
         this.modelMapper = modelMapper;
-        this.userService = userAuthService;
+        this.userService = userService;
     }
 
 
