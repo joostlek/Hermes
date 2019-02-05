@@ -9,7 +9,7 @@ if [ "$TRAVIS_REPO_SLUG" == "joostlek/Hermes" ] && [ "$TRAVIS_PULL_REQUEST" == "
 
   echo -e "Publishing javadoc...\n"
 
-  cp -R target/site/apidocs $HOME/apidocs
+  cp -R backend/target/site/apidocs $HOME/apidocs
 
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
