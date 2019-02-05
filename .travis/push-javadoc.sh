@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "$TRAVIS_REPO_SLUG" == "joostlek/Hermes" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
-
+if [ "$TRAVIS_REPO_SLUG" == "joostlek/Hermes" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_JDK_VERSION" == "openjdk11" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
+  ./mvnw javadoc:javadoc
   echo -e "Publishing javadoc...\n"
 
   cp -R backend/target/site/apidocs $HOME/apidocs
