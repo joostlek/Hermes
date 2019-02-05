@@ -124,7 +124,7 @@
         <dependency>
             <groupId>org.sonarsource.java</groupId>
             <artifactId>sonar-jacoco-listeners</artifactId>
-            <version>5.10.0.16874</version>
+            <version>5.10.2.17019</version>
             <scope>test</scope>
         </dependency>
         <dependency>
