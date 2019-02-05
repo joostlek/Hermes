@@ -1,11 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-if [    "$TRAVIS_REPO_SLUG" = "joostlek/Hermes" -a \
-        "$TRAVIS_PULL_REQUEST" = "false" -a \
-        "$TRAVIS_BRANCH" = "master" ]
-then
+if [ "$TRAVIS_REPO_SLUG" == "joostlek/Hermes" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 
-  echo "Publishing javadoc..."
+  echo -e "Publishing javadoc...\n"
 
   cp -R target/site/apidocs $HOME/apidocs
 
@@ -15,13 +12,12 @@ then
   git clone --quiet --branch=master https://${GH_TOKEN}@github.com/joostlek/joostlek.github.io gh-pages > /dev/null
 
   cd gh-pages
-  git rm -rf ./travis-javadoc-test/apidocs
-  mkdir -p ./travis-javadoc-test/apidocs
-  cp -Rf $HOME/apidocs ./travis-javadoc-test
+  git rm -rf ./javadoc
+  cp -Rf $HOME/javadoc-latest ./javadoc
   git add -f .
   git commit -m "Latest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-  git push -fq origin master > /dev/null
+  git push -fq origin gh-pages > /dev/null
 
-  echo "Published Javadoc to gh-pages."
+  echo -e "Published Javadoc to gh-pages.\n"
 
 fi
