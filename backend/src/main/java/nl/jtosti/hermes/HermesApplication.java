@@ -1,7 +1,7 @@
 package nl.jtosti.hermes;
 
+import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
-import nl.jtosti.hermes.services.StorageServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
