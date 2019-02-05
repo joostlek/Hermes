@@ -1,11 +1,11 @@
+import {Company} from './company';
 import {Screen} from './screen';
-import {User} from './user';
 
 export class Location {
     id: number;
     name: string;
     screens: Screen[];
-    owner: User;
+    company: Company;
     created: Date;
     updated: Date;
     street: string;
