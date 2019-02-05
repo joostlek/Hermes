@@ -10,11 +10,6 @@
 
     <artifactId>frontend</artifactId>
 
-    <properties>
-        <maven.compiler.source>10</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
-
     <build>
         <resources>
             <resource>
@@ -47,6 +42,15 @@
                             <arguments>install</arguments>
                         </configuration>
                     </execution>
+                    <!--<execution>-->
+                    <!--<id>yarn lint</id>-->
+                    <!--<goals>-->
+                    <!--<goal>yarn</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                    <!--<arguments>lint</arguments>-->
+                    <!--</configuration>-->
+                    <!--</execution>-->
                     <execution>
                         <id>yarn build</id>
                         <goals>
