@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 public class ScreenService implements ScreenServiceInterface {
 
+    private final ScreenRepository screenRepository;
+
     @Autowired
-    private ScreenRepository screenRepository;
+    public ScreenService(ScreenRepository screenRepository) {
+        this.screenRepository = screenRepository;
+    }
 
     @Override
     public Screen getScreenById(Long id) {
