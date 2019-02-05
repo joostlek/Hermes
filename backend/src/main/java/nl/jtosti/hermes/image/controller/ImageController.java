@@ -1,10 +1,10 @@
 package nl.jtosti.hermes.image.controller;
 
 import nl.jtosti.hermes.company.Company;
-import nl.jtosti.hermes.company.CompanyService;
+import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.image.ImageServiceInterface;
-import nl.jtosti.hermes.image.StorageService;
+import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.image.dto.ExtendedImageDTO;
 import nl.jtosti.hermes.image.dto.FileDTO;
 import nl.jtosti.hermes.image.dto.ImageDTO;
@@ -36,12 +36,12 @@ public class ImageController {
 
     private final UserServiceInterface userService;
 
-    private final StorageService storageService;
+    private final StorageServiceInterface storageService;
 
-    private final CompanyService companyService;
+    private final CompanyServiceInterface companyService;
 
     @Autowired
-    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService, StorageService storageService, CompanyService companyService) {
+    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService, StorageServiceInterface storageService, CompanyServiceInterface companyService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.screenService = screenService;
@@ -49,6 +49,7 @@ public class ImageController {
         this.storageService = storageService;
         this.companyService = companyService;
     }
+
 
     @GetMapping("/images")
     @ResponseStatus(HttpStatus.OK)

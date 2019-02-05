@@ -5,7 +5,7 @@ import nl.jtosti.hermes.user.dto.UserDTO;
 
 public class ExtendedImageDTO extends ImageDTO {
     private ScreenDTO screen;
-    private UserDTO owner;
+    private UserDTO uploader;
 
     public ScreenDTO getScreen() {
         return screen;
@@ -15,11 +15,11 @@ public class ExtendedImageDTO extends ImageDTO {
         this.screen = screen;
     }
 
-    public UserDTO getOwner() {
-        return owner;
+    public UserDTO getUploader() {
+        return uploader;
     }
 
-    public void setOwner(UserDTO owner) {
-        this.owner = owner;
+    public void setUploader(UserDTO uploader) {
+        this.uploader = uploader;
     }
 }
