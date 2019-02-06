@@ -38,4 +38,9 @@ public class CompanyService implements CompanyServiceInterface {
     public void deleteCompany(Long id) {
         companyRepository.deleteById(id);
     }
+
+    @Override
+    public List<Company> getAllCompaniesByUserId(Long userId) {
+        return companyRepository.findCompaniesByUserId(userId);
+    }
 }

@@ -33,7 +33,7 @@ const routes: Routes = [
                     },
                     {
                         path: '',
-                        loadChildren: './locations/locations.module#LocationsModule',
+                        loadChildren: './location-overview/location-overview.module#LocationOverviewModule',
                     },
                 ],
             },

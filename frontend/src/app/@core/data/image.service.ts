@@ -42,7 +42,9 @@ export class ImageService {
     }
 
     addImage(name: string, url: string, screenId: number, userId: number): Observable<Image> {
-        const image = new Image(name, url);
+        const image = new Image();
+        image.name = name;
+        image.url = url;
         return this.http.post<Image>('/api/users/' + userId + '/images?screenId=' + screenId, image);
     }
 }

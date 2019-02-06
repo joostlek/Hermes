@@ -1,0 +1,5 @@
+<div *ngFor="let company of companies">
+    <div *ngFor="let location of company.locations">
+        <app-location-list-item [company]="company" [location]="location"></app-location-list-item>
+    </div>
+</div>

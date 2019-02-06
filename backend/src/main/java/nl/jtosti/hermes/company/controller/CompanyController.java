@@ -54,6 +54,15 @@ public class CompanyController {
         return convertToDTO(addedCompany);
     }
 
+    @GetMapping("/users/{userId}/companies")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedCompanyDTO> getAllCompaniesByUserId(@PathVariable Long userId) {
+        return companyService.getAllCompaniesByUserId(userId)
+                .stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
     @DeleteMapping("/companies/{companyId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteCompany(@PathVariable Long companyId) {

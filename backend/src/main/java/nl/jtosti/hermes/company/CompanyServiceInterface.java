@@ -10,4 +10,6 @@ public interface CompanyServiceInterface {
     Company save(Company company);
 
     void deleteCompany(Long id);
+
+    List<Company> getAllCompaniesByUserId(Long userId);
 }
