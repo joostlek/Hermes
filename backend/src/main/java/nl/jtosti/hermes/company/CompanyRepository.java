@@ -11,6 +11,6 @@ import java.util.List;
 public interface CompanyRepository extends CrudRepository<Company, Long> {
     List<Company> findAll();
 
-    @Query("select c from Company c left join c.users user ON user.id = :userId")
+    @Query("select c from Company c inner join c.users user ON user.id = :userId")
     List<Company> findCompaniesByUserId(@Param("userId") Long userId);
 }
