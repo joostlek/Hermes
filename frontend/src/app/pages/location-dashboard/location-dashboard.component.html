@@ -1,0 +1,32 @@
+<div class="content-container">
+    <div class="content-area">
+        <router-outlet></router-outlet>
+    </div>
+    <nav class="sidenav" [clr-nav-level]="2">
+        <section class="sidenav-content">
+            <a routerLink="overview" class="nav-link" routerLinkActive="active">
+                {{location?.name}}
+            </a>
+            <section class="nav-group collapsible">
+                <input id="tab2" type="checkbox">
+                <label for="tab2">Advertise</label>
+                <ul class="nav-list">
+                    <li>
+                        <a class="nav-link" routerLink="advertise/images" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{exact: true}">Images</a>
+                    </li>
+                </ul>
+            </section>
+            <section class="nav-group collapsible" *ngIf="company && isFromCompany()">
+                <input id="tab3" type="checkbox">
+                <label for="tab3">Manage</label>
+                <ul class="nav-list">
+                    <li>
+                        <a class="nav-link" routerLink="manage/images" routerLinkActive="active">Images</a>
+                        <a class="nav-link" routerLink="manage/screens" routerLinkActive="active">Screens</a>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </nav>
+</div>

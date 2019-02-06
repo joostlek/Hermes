@@ -47,4 +47,8 @@ export class ImageService {
         image.url = url;
         return this.http.post<Image>('/api/users/' + userId + '/images?screenId=' + screenId, image);
     }
+
+    getImagesByLocationId(locationId: number): Observable<Image[]> {
+        return this.http.get<Image[]>('api/locations/' + locationId + '/images');
+    }
 }

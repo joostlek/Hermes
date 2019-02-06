@@ -7,7 +7,7 @@
     <clr-dg-placeholder>{{ error ? 'An error occurred, please check your connection' : 'No images for this location found!'}}</clr-dg-placeholder>
 
     <clr-dg-row *ngFor="let image of images">
-        <clr-dg-cell>{{image.id}}</clr-dg-cell>
+        <clr-dg-cell><a routerLink="{{image.id}}">{{image.id}}</a></clr-dg-cell>
         <clr-dg-cell>{{image.name}}</clr-dg-cell>
         <clr-dg-cell>{{image.url}}</clr-dg-cell>
         <clr-dg-cell>{{image.screen.name}}</clr-dg-cell>
