@@ -15,6 +15,10 @@ const routes: Routes = [
                 path: 'manage',
                 loadChildren: './manage/manage.module#ManageModule',
             },
+            {
+                path: 'advertise',
+                loadChildren: './promote/promote.module#PromoteModule',
+            },
         ],
     },
 ];
