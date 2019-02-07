@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {Location} from '../../../../@core/data/domain/location';
 import {Screen} from '../../../../@core/data/domain/screen';
 import {ScreenService} from '../../../../@core/data/screen.service';
 import {ChosenLocationService} from '../../chosen-location.service';
@@ -18,14 +21,22 @@ export class ManageScreensComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getScreens();
+        this.getLocation()
+            .subscribe((location) => {
+                    this.getScreens(location.id);
+                },
+            );
     }
 
-    getScreens(): void {
-        this.screenService.getScreensByLocationId(this.chosenLocationService.location.id)
-            .subscribe((value) => {
-                    this.screens = value;
-                },
+    getScreens(locationId: number): void {
+        this.screenService.getScreensByLocationId(locationId)
+            .subscribe((screens) => this.screens = screens);
+    }
+
+    getLocation(): Observable<Location> {
+        return this.chosenLocationService.getLocation()
+            .pipe(
+                filter((value) => value !== null),
             );
     }
 }

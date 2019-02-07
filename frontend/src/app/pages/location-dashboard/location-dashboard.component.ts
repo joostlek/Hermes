@@ -52,7 +52,7 @@ export class LocationDashboardComponent implements OnInit {
         this.locationService.getLocationById(id)
             .subscribe((location) => {
                     this.location = location;
-                    this.chosenLocation.location = location;
+                this.chosenLocation.pushNewLocation(location);
                     this.getCompany(location.company.id);
                 },
             );
@@ -60,9 +60,9 @@ export class LocationDashboardComponent implements OnInit {
 
     getCompany(id: number): void {
         this.companyService.getCompanyById(id)
-            .subscribe((value) => {
-                    this.company = value;
-                    this.chosenLocation.company = value;
+            .subscribe((company) => {
+                this.company = company;
+                this.chosenLocation.pushNewCompany(company);
                 },
             );
     }
