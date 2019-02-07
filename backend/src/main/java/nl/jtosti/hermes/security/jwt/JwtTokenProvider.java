@@ -5,7 +5,9 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import nl.jtosti.hermes.screen.auth.ScreenLoginService;
 import nl.jtosti.hermes.user.auth.UserLoginService;
+import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +25,9 @@ import java.util.List;
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
+
+    private final ScreenLoginService screenLoginService;
+
     private Key key = MacProvider.generateKey();
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 3600000; // 1h
@@ -30,8 +35,9 @@ public class JwtTokenProvider {
     private long refreshValidityInMilliseconds = 3600000;
 
     @Autowired
-    public JwtTokenProvider(UserLoginService userDetailsService) {
+    public JwtTokenProvider(UserLoginService userDetailsService, ScreenLoginService screenLoginService) {
         this.userDetailsService = userDetailsService;
+        this.screenLoginService = screenLoginService;
     }
 
     public String createToken(String username, List<String> roles) {
@@ -49,7 +55,12 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+        UserDetails userDetails;
+        try {
+            userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+        } catch (UserNotFoundException ex) {
+            userDetails = this.screenLoginService.loadUserByUsername(getUsername(token));
+        }
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
