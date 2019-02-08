@@ -1,8 +1,8 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ClrLoadingState, ClrWizard, ClrWizardPage} from '@clr/angular';
-import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {filter, takeUntil} from 'rxjs/operators';
 import {Company} from '../../../../../@core/data/domain/company';
 import {Image} from '../../../../../@core/data/domain/image';
 import {Location} from '../../../../../@core/data/domain/location';
@@ -18,7 +18,7 @@ import {ChosenLocationService} from '../../../chosen-location.service';
     templateUrl: './image-wizard.component.html',
     styleUrls: ['./image-wizard.component.css'],
 })
-export class ImageWizardComponent implements OnInit {
+export class ImageWizardComponent implements OnInit, OnDestroy {
     @Input('open') open: boolean;
     @ViewChild('wizardlg') wizard: ClrWizard;
     @ViewChild('finalPage') finalPage: ClrWizardPage;
@@ -41,6 +41,11 @@ export class ImageWizardComponent implements OnInit {
     fileUploadButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
+    fileUploadSubscription: Subscription;
+    fileUploadSubject: Subject<boolean> = new Subject();
+
+    subject: Subject<boolean> = new Subject();
+
     fileToUpload: File = null;
 
     firstPage = new FormGroup({
@@ -59,6 +64,9 @@ export class ImageWizardComponent implements OnInit {
 
     getScreens(): void {
         this.getLocation()
+            .pipe(
+                takeUntil(this.subject),
+            )
             .subscribe((location) => {
                     this.getScreensByLocationId(location.id);
                 },
@@ -141,6 +149,10 @@ export class ImageWizardComponent implements OnInit {
     doFinish(): void {
         this.wizard.forceFinish();
         this.reset();
+    }
+
+    ngOnDestroy(): void {
+        this.subject.next(false);
     }
 
 }
