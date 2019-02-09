@@ -38,6 +38,15 @@ const routes: Routes = [
                 ],
             },
             {
+                path: 'companies',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: './company-overview/company-overview.module#CompanyOverviewModule',
+                    },
+                ],
+            },
+            {
                 path: 'screens',
                 loadChildren: './screens/screens.module#ScreensModule',
             },
