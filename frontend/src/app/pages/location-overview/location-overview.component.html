@@ -1,0 +1,31 @@
+<div class="content-container">
+    <div class="content-area">
+        <h1>Location Overview</h1>
+        <clr-tabs>
+            <clr-tab>
+                <button clrTabLink id="link1">All</button>
+                <clr-tab-content id="content1" *clrIfActive>
+                    <div *ngIf="companies">
+                        <app-company-list [companies]="companies"></app-company-list>
+                    </div>
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink id="link2">Personal</button>
+                <clr-tab-content *clrIfActive>
+                    <div *ngIf="companies">
+                        <app-company-list [companies]="companies"></app-company-list>
+                    </div>
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink id="link3">Advertising</button>
+                <clr-tab-content *clrIfActive>
+                    <div *ngIf="companies">
+                        <app-company-list [companies]="companies"></app-company-list>
+                    </div>
+                </clr-tab-content>
+            </clr-tab>
+        </clr-tabs>
+    </div>
+</div>

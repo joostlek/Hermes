@@ -32,23 +32,25 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                 }),
             );
         }
-        return next.handle(req).pipe(
-            catchError((err: any, caught: Observable<HttpEvent<any>>): Observable<any> => {
-                if (err.status === 403) {
-                    return this.refreshToken()
-                        .pipe(
-                            switchMap(() => {
-                                req = this.addAuthHeader(req);
-                                return next.handle(req);
-                            }),
-                            catchError((err1, caught1) => {
-                                this.authService.logout();
-                                return EMPTY;
-                            }),
-                        );
-                }
-            }),
-        );
+        return next.handle(req)
+            .pipe(
+                catchError((err: any, caught: Observable<HttpEvent<any>>): Observable<any> => {
+                    if (err.status === 403) {
+                        return this.refreshToken()
+                            .pipe(
+                                switchMap(() => {
+                                    req = this.addAuthHeader(req);
+                                    return next.handle(req);
+                                }),
+                                catchError((err1, caught1) => {
+                                    this.authService.logout();
+                                    return EMPTY;
+                                }),
+                            );
+                    }
+                    return throwError(err);
+                }),
+            );
     }
 
     refreshToken(): Observable<any> {

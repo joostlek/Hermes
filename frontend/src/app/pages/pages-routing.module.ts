@@ -29,11 +29,11 @@ const routes: Routes = [
                 children: [
                     {
                         path: ':id',
-                        loadChildren: './location/location.module#LocationModule',
+                        loadChildren: './location-dashboard/location-dashboard.module#LocationDashboardModule',
                     },
                     {
                         path: '',
-                        loadChildren: './locations/locations.module#LocationsModule',
+                        loadChildren: './location-overview/location-overview.module#LocationOverviewModule',
                     },
                 ],
             },

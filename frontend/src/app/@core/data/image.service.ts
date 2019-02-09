@@ -6,7 +6,7 @@ import {Screen} from './domain/screen';
 import {User} from './domain/user';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ImageService {
 
@@ -41,8 +41,11 @@ export class ImageService {
         return this.http.get<Image[]>('api/users/' + userId + '/locations/' + locationId + '/images');
     }
 
-    addImage(name: string, url: string, screenId: number, userId: number): Observable<Image> {
-        const image = new Image(name, url);
-        return this.http.post<Image>('/api/users/' + userId + '/images?screenId=' + screenId, image);
+    addImage(image: Image, screenId: number, companyId: number): Observable<Image> {
+        return this.http.post<Image>('/api/companies/' + companyId + '/images?screenId=' + screenId, image);
+    }
+
+    getImagesByLocationId(locationId: number): Observable<Image[]> {
+        return this.http.get<Image[]>('api/locations/' + locationId + '/images');
     }
 }

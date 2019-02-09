@@ -1,6 +1,6 @@
 import {Location as NgLocation} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '../../@core/data/domain/location';
 import {Screen} from '../../@core/data/domain/screen';
 import {LocationService} from '../../@core/data/location.service';
@@ -19,6 +19,7 @@ export class LocationComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private locationService: LocationService,
         private screenService: ScreenService,
         private ngLocation: NgLocation,
@@ -32,9 +33,19 @@ export class LocationComponent implements OnInit {
     getParameter(): void {
         this.route.params.subscribe(
             (params) => {
-                this.getLocation(+params['id']);
+                if (params.hasOwnProperty('id')) {
+                    this.getLocation(+params['id']);
+                } else {
+                    this.getParentParameter();
+                }
             },
         );
+    }
+
+    getParentParameter(): void {
+        this.route.parent.parent.params.subscribe((params) => {
+            this.getLocation(+params['id']);
+        });
     }
 
     getLocation(id: number): void {

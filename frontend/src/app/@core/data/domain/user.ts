@@ -1,5 +1,5 @@
+import {Company} from './company';
 import {Image} from './image';
-import {Location} from './location';
 
 export class User {
     id: number;
@@ -9,7 +9,6 @@ export class User {
     created: Date;
     updated: Date;
     images: Image[];
-    locations: Location[];
-
+    companies: Company[];
 
 }

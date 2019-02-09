@@ -1,21 +1,21 @@
 package nl.jtosti.hermes.location.dto;
 
-import nl.jtosti.hermes.user.dto.UserDTO;
+import nl.jtosti.hermes.company.dto.CompanyDTO;
 
 public class ExtendedLocationDTO extends LocationDTO {
-    private UserDTO owner;
+    private CompanyDTO company;
     private String street;
     private String houseNumber;
     private String zipCode;
     private String city;
     private String country;
 
-    public UserDTO getOwner() {
-        return owner;
+    public CompanyDTO getCompany() {
+        return company;
     }
 
-    public void setOwner(UserDTO owner) {
-        this.owner = owner;
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
     }
 
     public String getStreet() {

@@ -139,12 +139,12 @@ export class ImagesComponent implements OnInit, OnDestroy {
     createImage(): void {
         this.submitButtonState = ClrLoadingState.LOADING;
         if (!this.firstPage.invalid && !this.secondPage.invalid) {
-            this.imageService.addImage(this.firstPage.value['name'], this.secondPage.value['url'], this.firstPage.value['screenId'], 1)
-                .subscribe((image) => {
-                    this.submitButtonState = ClrLoadingState.SUCCESS;
-                    this.reset();
-                    this.getImages(this.location);
-                });
+            // this.imageService.addImage(this.firstPage.value['name'], this.secondPage.value['url'], this.firstPage.value['screenId'], 1)
+            //     .subscribe((image) => {
+            //         this.submitButtonState = ClrLoadingState.SUCCESS;
+            //         this.reset();
+            //         this.getImages(this.location);
+            //     });
         }
     }
 

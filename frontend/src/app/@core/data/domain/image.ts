@@ -1,3 +1,4 @@
+import {Company} from './company';
 import {Screen} from './screen';
 import {User} from './user';
 
@@ -5,12 +6,7 @@ export class Image {
     id: number;
     name: string;
     url: string;
-    owner: User;
+    uploader: User;
+    company: Company;
     screen: Screen;
-
-
-    constructor(name: string, url: string) {
-        this.name = name;
-        this.url = url;
-    }
 }
