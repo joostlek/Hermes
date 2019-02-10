@@ -4,18 +4,19 @@ import {Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {CompanyService} from '../../../../../@core/data/company.service';
 import {Company} from '../../../../../@core/data/domain/company';
+import {Location} from '../../../../../@core/data/domain/location';
 import {ChosenCompanyService} from '../../../chosen-company.service';
-import {User} from '../../../../../@core/data/domain/user';
+import {LocationService} from '../../../../../@core/data/location.service';
 
 @Component({
-    selector: 'app-remove-user-modal',
-    templateUrl: './remove-user-modal.component.html',
-    styleUrls: ['./remove-user-modal.component.css'],
+    selector: 'app-remove-location-modal',
+    templateUrl: './remove-location-modal.component.html',
+    styleUrls: ['./remove-location-modal.component.css'],
 })
-export class RemoveUserModalComponent implements OnInit {
+export class RemoveLocationModalComponent implements OnInit {
     @Input('open') openStream: Subject<boolean>;
-    @Input('refreshUserList') refreshList: Subject<boolean>;
-    @Input('user') user: User;
+    @Input('refreshLocationList') refreshList: Subject<boolean>;
+    @Input('location') location: Location;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
@@ -24,6 +25,7 @@ export class RemoveUserModalComponent implements OnInit {
 
     constructor(
         private companyService: CompanyService,
+        private locationService: LocationService,
         private chosenCompanyService: ChosenCompanyService,
     ) {
     }
@@ -58,9 +60,9 @@ export class RemoveUserModalComponent implements OnInit {
             );
     }
 
-    private removeUser(): void {
+    private removeLocation(): void {
         this.submitButtonState = ClrLoadingState.LOADING;
-        this.companyService.removeUserFromCompany(this.user.id, this.company.id)
+        this.locationService.deleteLocation(this.location.id)
             .subscribe(
                 () => {
                     this.submitButtonState = ClrLoadingState.SUCCESS;
@@ -74,5 +76,4 @@ export class RemoveUserModalComponent implements OnInit {
                 },
             );
     }
-
 }
