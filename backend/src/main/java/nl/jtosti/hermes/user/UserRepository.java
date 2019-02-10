@@ -24,6 +24,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
      */
     List<User> findAllByOrderByIdAsc();
 
-    @Query("select u from users u left join u.companies cu ON cu.id = :companyId")
+    @Query("select u from users u inner join u.companies cu ON cu.id = :companyId")
     List<User> findUsersByCompanyId(@Param("companyId") Long id);
 }
