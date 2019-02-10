@@ -43,7 +43,7 @@ export class RemoveLocationModalComponent implements OnInit {
         );
     }
 
-    private closeModal(): void {
+    public closeModal(): void {
         this.error = undefined;
         this.openStream.next(false);
     }
@@ -60,7 +60,7 @@ export class RemoveLocationModalComponent implements OnInit {
             );
     }
 
-    private removeLocation(): void {
+    public removeLocation(): void {
         this.submitButtonState = ClrLoadingState.LOADING;
         this.locationService.deleteLocation(this.location.id)
             .subscribe(

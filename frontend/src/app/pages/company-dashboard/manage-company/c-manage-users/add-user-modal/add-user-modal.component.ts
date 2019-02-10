@@ -44,7 +44,7 @@ export class AddUserModalComponent implements OnInit {
         );
     }
 
-    private closeModal(): void {
+    public closeModal(): void {
         this.email.reset();
         this.openStream.next(false);
     }
@@ -61,7 +61,7 @@ export class AddUserModalComponent implements OnInit {
             );
     }
 
-    private addUserToCompany(): void {
+    public addUserToCompany(): void {
         if (this.email.valid) {
             this.submitButtonState = ClrLoadingState.LOADING;
             this.companyService.addUserToCompany(this.email.value['email'], this.company.id)
@@ -78,7 +78,7 @@ export class AddUserModalComponent implements OnInit {
         }
     }
 
-    private getErrorMessage(error: ValidationErrors): string {
+    public getErrorMessage(error: ValidationErrors): string {
         if (error === null) {
             return '';
         }

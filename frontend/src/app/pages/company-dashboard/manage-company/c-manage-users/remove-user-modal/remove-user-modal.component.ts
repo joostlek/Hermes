@@ -41,7 +41,7 @@ export class RemoveUserModalComponent implements OnInit {
         );
     }
 
-    private closeModal(): void {
+    public closeModal(): void {
         this.error = undefined;
         this.openStream.next(false);
     }
@@ -58,7 +58,7 @@ export class RemoveUserModalComponent implements OnInit {
             );
     }
 
-    private removeUser(): void {
+    public removeUser(): void {
         this.submitButtonState = ClrLoadingState.LOADING;
         this.companyService.removeUserFromCompany(this.user.id, this.company.id)
             .subscribe(

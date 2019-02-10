@@ -61,28 +61,28 @@ export class CreateLocationWizardComponent implements OnInit {
             );
     }
 
-    private reset(): void {
+    public reset(): void {
         this.wizard.reset();
         this.basicInfoPage.reset();
         this.locationInfoPage.reset();
         this.error = undefined;
     }
 
-    private closeWizard(): void {
+    public closeWizard(): void {
         this.reset();
         this.openStream.next(false);
     }
 
-    private doCancel(): void {
+    public doCancel(): void {
         this.reset();
         this.wizard.close();
     }
 
-    private goBack(): void {
+    public goBack(): void {
         this.wizard.previous();
     }
 
-    private createLocation(): void {
+    public createLocation(): void {
         if (!this.basicInfoPage.invalid && !this.locationInfoPage.invalid) {
             this.submitButtonState = ClrLoadingState.LOADING;
             const loco = new Location();
