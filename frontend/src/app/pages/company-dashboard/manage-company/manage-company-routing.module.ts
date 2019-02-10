@@ -6,6 +6,10 @@ const routes: Routes = [
         path: 'locations',
         loadChildren: './c-manage-locations/c-manage-locations.module#CManageLocationsModule',
     },
+    {
+        path: 'users',
+        loadChildren: './c-manage-users/c-manage-users.module#CManageUsersModule',
+    },
 ];
 
 @NgModule({

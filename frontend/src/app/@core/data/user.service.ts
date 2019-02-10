@@ -18,4 +18,8 @@ export class UserService {
     getUserById(id: number): Observable<User> {
         return this.http.get<User>('api/users/' + id);
     }
+
+    getUsersByCompanyId(companyId: number): Observable<User[]> {
+        return this.http.get<User[]>('api/companies/' + companyId + '/users');
+    }
 }
