@@ -35,22 +35,8 @@ export class LocationService {
         return this.http.get<Location[]>('api/companies/' + companyId + '/locations');
     }
 
-    addLocation(location: Location): Observable<Location> {
-        return this.currentUserService.getCurrentUser()
-            .pipe(
-                switchMap((value) => {
-                        if (value !== null) {
-                            return this.addLocationWithUserId(location, value.id);
-                        } else {
-                            return EMPTY;
-                        }
-                    },
-                ),
-            );
-    }
-
-    private addLocationWithUserId(location: Location, userId: number): Observable<Location> {
-        return this.http.post<Location>('api/users/' + userId + '/locations', location);
+    addLocation(location: Location, companyId: number): Observable<Location> {
+        return this.http.post<Location>('api/companies/' + companyId + '/locations', location);
     }
 
     getPersonalLocationsByUser(user: User): Observable<Location[]> {

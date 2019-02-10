@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {filter} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {filter, takeUntil} from 'rxjs/operators';
 import {Location} from '../../../../@core/data/domain/location';
 import {LocationService} from '../../../../@core/data/location.service';
 import {ChosenCompanyService} from '../../chosen-company.service';
@@ -10,6 +11,12 @@ import {ChosenCompanyService} from '../../chosen-company.service';
     styleUrls: ['./c-manage-locations.component.css'],
 })
 export class CManageLocationsComponent implements OnInit {
+    private locationLoadStream$: Subject<boolean> = new Subject();
+
+    createLocationWizardOpen: Subject<boolean> = new Subject();
+    deleteLocationModalOpen: Subject<boolean> = new Subject();
+    refreshLocationList: Subject<boolean> = new Subject();
+
     locations: Location[];
 
     constructor(
@@ -20,19 +27,43 @@ export class CManageLocationsComponent implements OnInit {
 
     ngOnInit() {
         this.getLocations();
+        this.checkRefresh();
     }
 
-    getLocations(): void {
+    private getLocations(): void {
         this.chosenCompanyService.getCompany()
             .pipe(
                 filter((value) => value !== null),
+                takeUntil(this.locationLoadStream$),
             )
             .subscribe((company) => {
                     this.locationService.getLocationsByCompanyId(company.id)
-                        .subscribe((locations) => this.locations = locations);
+                        .pipe(
+                            takeUntil(this.locationLoadStream$),
+                        )
+                        .subscribe((locations) => {
+                                this.locations = locations;
+                            },
+                        );
                 },
             );
+    }
 
+    private checkRefresh(): void {
+        this.refreshLocationList
+            .pipe(
+                filter((value) => value !== null),
+            )
+            .subscribe(
+                () => {
+                    this.locationLoadStream$.next(true);
+                    this.getLocations();
+                },
+            );
+    }
+
+    private openLocationWizard(): void {
+        this.createLocationWizardOpen.next(true);
     }
 
 }
