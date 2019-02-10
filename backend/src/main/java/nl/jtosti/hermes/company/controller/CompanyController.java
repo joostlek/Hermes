@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,12 +47,12 @@ public class CompanyController {
 
     @PostMapping("/users/{userId}/companies")
     @ResponseStatus(HttpStatus.CREATED)
-    public CompanyDTO createCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Long userId) {
+    public ExtendedCompanyDTO createCompany(@RequestBody ExtendedCompanyDTO companyDTO, @PathVariable Long userId) {
         User user = userService.getUserById(userId);
         Company company = convertToEntity(companyDTO);
         company.addUser(user);
         Company addedCompany = companyService.save(company);
-        return convertToDTO(addedCompany);
+        return convertToExtendedDTO(addedCompany);
     }
 
     @GetMapping("/users/{userId}/companies")
@@ -78,6 +79,16 @@ public class CompanyController {
     }
 
     private Company convertToEntity(CompanyDTO companyDTO) {
-        return modelMapper.map(companyDTO, Company.class);
+        Company company = modelMapper.map(companyDTO, Company.class);
+        if (company.getUsers() == null) {
+            company.setUsers(new HashSet<>());
+        }
+        if (company.getLocations() == null) {
+            company.setLocations(new HashSet<>());
+        }
+        if (company.getImages() == null) {
+            company.setImages(new HashSet<>());
+        }
+        return company;
     }
 }

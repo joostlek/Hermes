@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -63,9 +64,13 @@ public class Company {
     private Set<Image> images;
 
     public Company() {
+        this.users = new HashSet<>();
+        this.locations = new HashSet<>();
+        this.images = new HashSet<>();
     }
 
     public Company(String phoneNumber, String name, String street, String houseNumber, String zipCode, String city, String country) {
+        this();
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.street = street;

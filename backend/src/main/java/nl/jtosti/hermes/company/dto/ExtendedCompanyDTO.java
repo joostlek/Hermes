@@ -7,6 +7,7 @@ import nl.jtosti.hermes.user.dto.UserDTO;
 import java.util.List;
 
 public class ExtendedCompanyDTO extends CompanyDTO {
+    private String phoneNumber;
     private String street;
     private String houseNumber;
     private String zipCode;
@@ -15,6 +16,14 @@ public class ExtendedCompanyDTO extends CompanyDTO {
     private List<UserDTO> users;
     private List<LocationDTO> locations;
     private List<ImageDTO> images;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getStreet() {
         return street;

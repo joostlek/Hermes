@@ -1,0 +1,85 @@
+<clr-wizard #wizardlg [(clrWizardOpen)]="open" clrWizardSize="lg">
+    <clr-wizard-title>Create company</clr-wizard-title>
+
+    <clr-wizard-button [type]="'cancel'" (click)="reset()">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+    <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+
+    <clr-wizard-page [clrWizardPageNextDisabled]="basicInfoPage.invalid">
+        <ng-template clrPageTitle>Basic information</ng-template>
+        <form clrForm [formGroup]="basicInfoPage">
+            <clr-input-container>
+                <label>Company name</label>
+                <input placeholder="Company name" clrInput formControlName="name" name="name" type="text"/>
+                <clr-control-helper>The name of the company</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Phone number</label>
+                <input placeholder="Phone number" formControlName="phoneNumber" name="phoneNumber" type="text" clrInput>
+                <clr-control-helper>The house number of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page [clrWizardPageNextDisabled]="locationInfoPage.invalid">
+        <ng-template clrPageTitle>Location information</ng-template>
+        <form clrForm [formGroup]="locationInfoPage">
+            <clr-input-container>
+                <label>Street</label>
+                <input placeholder="Street" formControlName="street" name="street" type="text" clrInput>
+                <clr-control-helper>The street of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>House number</label>
+                <input placeholder="House number" formControlName="houseNumber" name="houseNumber" type="text" clrInput>
+                <clr-control-helper>The house number of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Zip code</label>
+                <input placeholder="Zip code" formControlName="zipCode" name="zipCode" type="text" clrInput>
+                <clr-control-helper>The zip code of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>City</label>
+                <input placeholder="City" formControlName="city" name="city" type="text" clrInput>
+                <clr-control-helper>The City of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Country</label>
+                <input placeholder="Country" formControlName="country" name="country" type="text" clrInput>
+                <clr-control-helper>The country of the location</clr-control-helper>
+                <clr-control-error>This field is required!</clr-control-error>
+            </clr-input-container>
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page #finalPage
+                     clrWizardPagePreventDefault="true"
+                     (clrWizardPageOnCommit)="createLocation()"
+                     (clrWizardPageOnCancel)="doCancel()"
+                     (clrWizardPagePrevious)="goBack()">
+        <ng-template clrPageTitle>Finalizing</ng-template>
+        <div class="spinner" *ngIf="loadingFlag">
+            Loading...
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorFlag">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">
+                            {{error.status}} - {{error.message}}
+                        </span>
+                </div>
+            </div>
+        </div>
+    </clr-wizard-page>
+</clr-wizard>

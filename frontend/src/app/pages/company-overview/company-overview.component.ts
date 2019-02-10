@@ -12,6 +12,7 @@ import {User} from '../../@core/data/domain/user';
 })
 export class CompanyOverviewComponent implements OnInit {
     companies: Company[];
+    wizardOpen = false;
 
     constructor(
         private currentUserService: CurrentUserService,
