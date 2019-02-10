@@ -63,11 +63,11 @@ export class CManageLocationsComponent implements OnInit {
             );
     }
 
-    private openLocationWizard(): void {
+    public openLocationWizard(): void {
         this.createLocationWizardOpen.next(true);
     }
 
-    private onDelete(location: Location): void {
+    public onDelete(location: Location): void {
         this.locationToBeDeleted = location;
         this.deleteLocationModalOpen.next(true);
     }
