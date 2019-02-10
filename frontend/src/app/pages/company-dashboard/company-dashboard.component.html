@@ -1,0 +1,21 @@
+<div class="content-container">
+    <div class="content-area">
+        <router-outlet></router-outlet>
+    </div>
+    <nav class="sidenav" [clr-nav-level]="2">
+        <section class="sidenav-content">
+            <a routerLink="overview" class="nav-link" routerLinkActive="active">
+                {{company?.name}}
+            </a>
+            <section class="nav-group collapsible">
+                <input id="tab2" type="checkbox">
+                <label for="tab2">Manage</label>
+                <ul class="nav-list">
+                    <li>
+                        <a class="nav-link" routerLink="manage/locations" routerLinkActive="active">Locations</a>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </nav>
+</div>
