@@ -47,4 +47,8 @@ export class CompanyService {
     public addUserToCompany(email: string, companyId: number): Observable<any> {
         return this.http.put('api/companies/' + companyId + '/users', {email});
     }
+
+    public removeUserFromCompany(userId: number, companyId: number): Observable<any> {
+        return this.http.delete('api/companies/' + companyId + '/users/' + userId);
+    }
 }

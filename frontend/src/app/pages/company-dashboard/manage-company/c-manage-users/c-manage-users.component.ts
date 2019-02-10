@@ -15,7 +15,11 @@ export class CManageUsersComponent implements OnInit {
     private userLoadStream$: Subject<boolean> = new Subject();
 
     users: User[];
-    modalOpen: Subject<boolean> = new Subject();
+    addUserModalOpen: Subject<boolean> = new Subject();
+    removeUserModalOpen: Subject<boolean> = new Subject();
+    refreshUserList: Subject<boolean> = new Subject();
+
+    userToBeDeleted: User;
 
     constructor(
         private chosenCompanyService: ChosenCompanyService,
@@ -48,13 +52,13 @@ export class CManageUsersComponent implements OnInit {
     }
 
     openModal(): void {
-        this.modalOpen.next(true);
+        this.addUserModalOpen.next(true);
     }
 
     private checkModalOpen(): void {
-        this.modalOpen
+        this.refreshUserList
             .pipe(
-                filter((value) => value !== true),
+                filter((value) => value !== false),
             )
             .subscribe(
                 () => {
@@ -62,5 +66,10 @@ export class CManageUsersComponent implements OnInit {
                     this.getUsers();
                 },
             );
+    }
+
+    private onDelete(user: User): void {
+        this.userToBeDeleted = user;
+        this.removeUserModalOpen.next(true);
     }
 }

@@ -21,7 +21,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-link" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
         <button [clrLoading]="submitButtonState" type="button" class="btn btn-primary" (click)="addUserToCompany()" [ngClass]="!email.valid ? 'disabled' : null">Ok</button>
     </div>
 </clr-modal>

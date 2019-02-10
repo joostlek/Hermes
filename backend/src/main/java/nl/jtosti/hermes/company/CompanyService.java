@@ -1,7 +1,9 @@
 package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.company.exception.LastUserException;
 import nl.jtosti.hermes.company.exception.UserAlreadyAddedException;
+import nl.jtosti.hermes.company.exception.UserNotInCompanyException;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,20 @@ public class CompanyService implements CompanyServiceInterface {
             throw new UserAlreadyAddedException();
         }
         company.addUser(user);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public void removeUserFromCompany(Long userId, Long companyId) {
+        User user = userService.getUserById(userId);
+        Company company = this.getCompanyById(companyId);
+        if (company.getUsers().size() == 1) {
+            throw new LastUserException();
+        }
+        if (!company.hasUser(user)) {
+            throw new UserNotInCompanyException();
+        }
+        company.getUsers().remove(user);
         companyRepository.save(company);
     }
 }

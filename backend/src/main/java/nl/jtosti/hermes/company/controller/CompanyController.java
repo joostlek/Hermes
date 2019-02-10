@@ -78,6 +78,12 @@ public class CompanyController {
         companyService.addUserToCompany(companyId, userDTO.getEmail());
     }
 
+    @DeleteMapping("/companies/{companyId}/users/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void addUserToCompany(@PathVariable Long companyId, @PathVariable Long userId) {
+        companyService.removeUserFromCompany(userId, companyId);
+    }
+
     private CompanyDTO convertToDTO(Company company) {
         return modelMapper.map(company, CompanyDTO.class);
     }

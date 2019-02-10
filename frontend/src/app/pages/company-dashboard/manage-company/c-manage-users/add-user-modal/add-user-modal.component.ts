@@ -14,6 +14,7 @@ import {ChosenCompanyService} from '../../../chosen-company.service';
 })
 export class AddUserModalComponent implements OnInit {
     @Input('open') openStream: Subject<boolean>;
+    @Input('refreshUserList') refreshList: Subject<boolean>;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
@@ -66,6 +67,7 @@ export class AddUserModalComponent implements OnInit {
             this.companyService.addUserToCompany(this.email.value['email'], this.company.id)
                 .subscribe(() => {
                         this.submitButtonState = ClrLoadingState.SUCCESS;
+                        this.refreshList.next(true);
                         this.closeModal();
                     }, (error) => {
                         this.submitButtonState = ClrLoadingState.ERROR;
