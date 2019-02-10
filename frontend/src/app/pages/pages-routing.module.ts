@@ -41,6 +41,10 @@ const routes: Routes = [
                 path: 'companies',
                 children: [
                     {
+                        path: ':id',
+                        loadChildren: './company-dashboard/company-dashboard.module#CompanyDashboardModule',
+                    },
+                    {
                         path: '',
                         loadChildren: './company-overview/company-overview.module#CompanyOverviewModule',
                     },

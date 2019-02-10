@@ -31,6 +31,10 @@ export class LocationService {
         return this.http.get<Location[]>('api/users/' + userId + '/locations');
     }
 
+    getLocationsByCompanyId(companyId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/companies/' + companyId + '/locations');
+    }
+
     addLocation(location: Location): Observable<Location> {
         return this.currentUserService.getCurrentUser()
             .pipe(
