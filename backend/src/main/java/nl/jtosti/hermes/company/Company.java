@@ -172,6 +172,18 @@ public class Company {
         this.users.add(user);
     }
 
+    public boolean hasUser(User user) {
+        if (this.users == null || this.users.isEmpty()) {
+            return false;
+        }
+        for (User user1 : this.users) {
+            if (user.equals(user1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Set<Location> getLocations() {
         return locations;
     }

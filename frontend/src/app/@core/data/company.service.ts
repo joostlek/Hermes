@@ -43,4 +43,8 @@ export class CompanyService {
     private addCompanyWithUserId(company: Company, userId: number): Observable<Company> {
         return this.http.post<Company>('api/users/' + userId + '/companies', company);
     }
+
+    public addUserToCompany(email: string, companyId: number): Observable<any> {
+        return this.http.put('api/companies/' + companyId + '/users', {email});
+    }
 }

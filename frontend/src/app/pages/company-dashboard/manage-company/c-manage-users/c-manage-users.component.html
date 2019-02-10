@@ -1,2 +1,7 @@
 <h1>Users</h1>
+<button type="button" class="btn btn-icon btn-primary" title="Add user" (click)="openModal()">
+    <clr-icon shape="plus"></clr-icon>
+    add user
+</button>
 <app-user-table [users]="users"></app-user-table>
+<app-add-user-modal [open]="modalOpen"></app-add-user-modal>

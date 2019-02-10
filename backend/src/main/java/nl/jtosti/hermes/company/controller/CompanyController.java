@@ -2,6 +2,7 @@ package nl.jtosti.hermes.company.controller;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
+import nl.jtosti.hermes.company.dto.AddUserDTO;
 import nl.jtosti.hermes.company.dto.CompanyDTO;
 import nl.jtosti.hermes.company.dto.ExtendedCompanyDTO;
 import nl.jtosti.hermes.user.User;
@@ -68,6 +69,13 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteCompany(@PathVariable Long companyId) {
         companyService.deleteCompany(companyId);
+    }
+
+
+    @PutMapping("/companies/{companyId}/users")
+    @ResponseStatus(HttpStatus.OK)
+    public void addUserToCompany(@RequestBody AddUserDTO userDTO, @PathVariable Long companyId) {
+        companyService.addUserToCompany(companyId, userDTO.getEmail());
     }
 
     private CompanyDTO convertToDTO(Company company) {

@@ -12,4 +12,6 @@ public interface CompanyServiceInterface {
     void deleteCompany(Long id);
 
     List<Company> getAllCompaniesByUserId(Long userId);
+
+    void addUserToCompany(Long companyId, String email);
 }

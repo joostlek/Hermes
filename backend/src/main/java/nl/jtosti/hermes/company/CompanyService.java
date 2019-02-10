@@ -1,6 +1,9 @@
 package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.company.exception.UserAlreadyAddedException;
+import nl.jtosti.hermes.user.User;
+import nl.jtosti.hermes.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +15,12 @@ import java.util.List;
 public class CompanyService implements CompanyServiceInterface {
 
     private final CompanyRepository companyRepository;
+    private final UserService userService;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, UserService userService) {
         this.companyRepository = companyRepository;
+        this.userService = userService;
     }
 
 
@@ -42,5 +47,16 @@ public class CompanyService implements CompanyServiceInterface {
     @Override
     public List<Company> getAllCompaniesByUserId(Long userId) {
         return companyRepository.findCompaniesByUserId(userId);
+    }
+
+    @Override
+    public void addUserToCompany(Long companyId, String email) {
+        User user = userService.getUserByEmail(email);
+        Company company = this.getCompanyById(companyId);
+        if (company.hasUser(user)) {
+            throw new UserAlreadyAddedException();
+        }
+        company.addUser(user);
+        companyRepository.save(company);
     }
 }
