@@ -7,6 +7,7 @@ export class Company {
     name: string;
     street: string;
     houseNumber: string;
+    phoneNumber: string;
     city: string;
     country: string;
     zipCode: string;

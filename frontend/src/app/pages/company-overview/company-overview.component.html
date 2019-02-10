@@ -1,6 +1,10 @@
 <div class="content-container">
     <div class="content-area">
         <h1>Companies</h1>
+        <button type="button" class="btn btn-icon btn-primary" title="Add new image" (click)="wizardOpen = !wizardOpen">
+            <clr-icon shape="plus"></clr-icon>
+        </button>
         <app-company-list [companies]="companies"></app-company-list>
     </div>
 </div>
+<app-company-wizard [open]="wizardOpen"></app-company-wizard>
