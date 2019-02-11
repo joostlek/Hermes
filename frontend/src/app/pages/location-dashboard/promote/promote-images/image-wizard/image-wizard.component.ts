@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ClrLoadingState, ClrWizard, ClrWizardPage} from '@clr/angular';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {filter, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {Company} from '../../../../../@core/data/domain/company';
 import {Image} from '../../../../../@core/data/domain/image';
 import {Location} from '../../../../../@core/data/domain/location';
@@ -74,19 +74,14 @@ export class ImageWizardComponent implements OnInit, OnDestroy {
     }
 
     getLocation(): Observable<Location> {
-        return this.chosenLocationService.getLocation()
-            .pipe(
-                filter((value) => value !== null),
-            );
+        return this.chosenLocationService.getLocation();
     }
 
     getCompany(): void {
         this.chosenLocationService.getCompany()
-            .pipe(
-                filter((value) => value !== null),
-            ).subscribe(
-            (company) => this.company = company,
-        );
+            .subscribe(
+                (company) => this.company = company,
+            );
     }
 
     getScreensByLocationId(locationId: number): void {

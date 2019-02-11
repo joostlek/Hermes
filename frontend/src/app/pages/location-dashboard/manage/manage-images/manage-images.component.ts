@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {filter} from 'rxjs/operators';
 import {Image} from '../../../../@core/data/domain/image';
 import {ImageService} from '../../../../@core/data/image.service';
 import {ChosenLocationService} from '../../chosen-location.service';
@@ -27,10 +26,7 @@ export class ManageImagesComponent implements OnInit {
     }
 
     getCurrentLocation() {
-        return this.chosenLocationService.getLocation()
-            .pipe(
-                filter((value) => value !== null),
-            );
+        return this.chosenLocationService.getLocation();
     }
 
     getImages(locationId: number): void {

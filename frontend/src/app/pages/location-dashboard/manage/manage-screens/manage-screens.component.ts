@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
 import {Location} from '../../../../@core/data/domain/location';
 import {Screen} from '../../../../@core/data/domain/screen';
 import {ScreenService} from '../../../../@core/data/screen.service';
@@ -34,9 +33,6 @@ export class ManageScreensComponent implements OnInit {
     }
 
     getLocation(): Observable<Location> {
-        return this.chosenLocationService.getLocation()
-            .pipe(
-                filter((value) => value !== null),
-            );
+        return this.chosenLocationService.getLocation();
     }
 }

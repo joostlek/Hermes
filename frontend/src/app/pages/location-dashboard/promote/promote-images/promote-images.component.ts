@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {filter} from 'rxjs/operators';
 import {Image} from '../../../../@core/data/domain/image';
 import {Location} from '../../../../@core/data/domain/location';
 import {ImageService} from '../../../../@core/data/image.service';
@@ -31,10 +30,7 @@ export class PromoteImagesComponent implements OnInit {
     }
 
     getCurrentLocation() {
-        return this.chosenLocationService.getLocation()
-            .pipe(
-                filter((value) => value !== null),
-            );
+        return this.chosenLocationService.getLocation();
     }
 
     getImages(locationId: number): void {
