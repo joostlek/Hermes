@@ -5,11 +5,15 @@ import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.dto.AddUserDTO;
 import nl.jtosti.hermes.company.dto.CompanyDTO;
 import nl.jtosti.hermes.company.dto.ExtendedCompanyDTO;
+import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
+import nl.jtosti.hermes.location.dto.LocationDTO;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -44,6 +48,16 @@ public class CompanyController {
     public ExtendedCompanyDTO getCompanyById(@PathVariable Long companyId) {
         Company company = companyService.getCompanyById(companyId);
         return convertToExtendedDTO(company);
+    }
+
+    @PutMapping("/companies/{companyId}")
+    @Secured({"USER", "ADMIN"})
+    @ResponseStatus(HttpStatus.OK)
+    public CompanyDTO updateCompany(@RequestBody ExtendedCompanyDTO companyDTO, @PathVariable Long companyId) {
+        Company company = convertToEntity(companyDTO);
+        company.setId(companyId);
+        Company updatedCompany = companyService.updateCompany(company);
+        return convertToExtendedDTO(updatedCompany);
     }
 
     @PostMapping("/users/{userId}/companies")

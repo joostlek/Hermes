@@ -13,6 +13,8 @@ public interface CompanyServiceInterface {
 
     List<Company> getAllCompaniesByUserId(Long userId);
 
+    Company updateCompany(Company company);
+
     void addUserToCompany(Long companyId, String email);
 
     void removeUserFromCompany(Long userId, Long companyId);

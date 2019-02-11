@@ -52,6 +52,18 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
+    public Company updateCompany(Company newCompany) {
+        Company company = companyRepository.findById(newCompany.getId()).orElseThrow(() -> new CompanyNotFoundException(newCompany.getId()));
+        company.setName(newCompany.getName());
+        company.setStreet(newCompany.getStreet());
+        company.setHouseNumber(newCompany.getHouseNumber());
+        company.setZipCode(newCompany.getZipCode());
+        company.setCountry(newCompany.getCountry());
+        company.setCity(newCompany.getCity());
+        return save(company);
+    }
+
+    @Override
     public void addUserToCompany(Long companyId, String email) {
         User user = userService.getUserByEmail(email);
         Company company = this.getCompanyById(companyId);
