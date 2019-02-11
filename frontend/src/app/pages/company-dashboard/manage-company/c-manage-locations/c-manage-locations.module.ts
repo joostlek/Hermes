@@ -6,14 +6,15 @@ import {CManageLocationsRoutingModule} from './c-manage-locations-routing.module
 import {CManageLocationsComponent} from './c-manage-locations.component';
 import {CreateLocationWizardComponent} from './create-location-wizard/create-location-wizard.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { RemoveLocationModalComponent } from './remove-location-modal/remove-location-modal.component';
+import {UiModule} from '../../../../@ui/ui.module';
 
 @NgModule({
-    declarations: [CManageLocationsComponent, CreateLocationWizardComponent, RemoveLocationModalComponent],
+    declarations: [CManageLocationsComponent, CreateLocationWizardComponent],
     imports: [
         CommonModule,
         ClarityModule,
         ClrFormsModule,
+        UiModule,
         ReactiveFormsModule,
         CManageLocationsRoutingModule,
     ],

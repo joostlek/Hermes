@@ -7,6 +7,7 @@ import {ImageTableComponent} from './tables/image-table/image-table.component';
 import {LocationTableComponent} from './tables/location-table/location-table.component';
 import {UserTableComponent} from './tables/user-table/user-table.component';
 import {RouterModule} from '@angular/router';
+import {RemoveLocationModalComponent} from './modals/remove-location-modal/remove-location-modal.component';
 
 const COMPONENTS = [
     Sidebar,
@@ -14,6 +15,7 @@ const COMPONENTS = [
     ScreenTableComponent,
     ImageTableComponent,
     LocationTableComponent,
+    RemoveLocationModalComponent,
     UserTableComponent,
 ];
 

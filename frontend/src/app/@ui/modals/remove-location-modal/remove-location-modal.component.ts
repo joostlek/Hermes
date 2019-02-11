@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ClrLoadingState} from '@clr/angular';
 import {Subject} from 'rxjs';
-import {CompanyService} from '../../../../../@core/data/company.service';
-import {Company} from '../../../../../@core/data/domain/company';
-import {Location} from '../../../../../@core/data/domain/location';
-import {ChosenCompanyService} from '../../../chosen-company.service';
-import {LocationService} from '../../../../../@core/data/location.service';
+import {CompanyService} from '../../../@core/data/company.service';
+import {Company} from '../../../@core/data/domain/company';
+import {Location} from '../../../@core/data/domain/location';
+import {LocationService} from '../../../@core/data/location.service';
+import {ChosenCompanyService} from '../../../pages/company-dashboard/chosen-company.service';
 
 @Component({
     selector: 'app-remove-location-modal',
@@ -14,7 +14,7 @@ import {LocationService} from '../../../../../@core/data/location.service';
 })
 export class RemoveLocationModalComponent implements OnInit {
     @Input('open') openStream: Subject<boolean>;
-    @Input('refreshLocationList') refreshList: Subject<boolean>;
+    @Input('refreshLocation') refreshList: Subject<boolean>;
     @Input('location') location: Location;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 

@@ -4,6 +4,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Company} from '../../../@core/data/domain/company';
 import {Location} from '../../../@core/data/domain/location';
 import {ChosenLocationService} from '../chosen-location.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-location-detail',
@@ -15,11 +16,14 @@ export class LocationDetailComponent implements OnInit {
     location: Location;
     company: Company;
 
-    openEditModal: Subject<boolean> = new Subject();
+    editModal: Subject<boolean> = new Subject();
+    deleteModal: Subject<boolean> = new Subject();
     refreshLocation: Subject<boolean> = new Subject();
+    forwardToList: Subject<boolean> = new Subject();
 
     constructor(
         private chosenLocationService: ChosenLocationService,
+        private router: Router,
     ) {
     }
 
@@ -27,6 +31,7 @@ export class LocationDetailComponent implements OnInit {
         this.getLocation();
         this.getCompany();
         this.checkRefresh();
+        this.checkForward();
     }
 
     private checkRefresh(): void {
@@ -35,6 +40,14 @@ export class LocationDetailComponent implements OnInit {
                 this.refreshLocationStream$.next(true);
                 this.getLocation();
                 this.getCompany();
+            },
+        );
+    }
+
+    private checkForward(): void {
+        this.forwardToList.subscribe(
+            () => {
+                this.router.navigateByUrl('/locations');
             },
         );
     }
@@ -61,7 +74,11 @@ export class LocationDetailComponent implements OnInit {
             );
     }
 
-    public openModal(): void {
-        this.openEditModal.next(true);
+    public openEditModal(): void {
+        this.editModal.next(true);
+    }
+
+    public openDeleteModal(): void {
+        this.deleteModal.next(true);
     }
 }

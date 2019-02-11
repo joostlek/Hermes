@@ -8,6 +8,7 @@ import { EditLocationModalComponent } from './edit-location-modal/edit-location-
 import {LocationDashboardRoutingModule} from './location-dashboard-routing.module';
 import {LocationDashboardComponent} from './location-dashboard.component';
 import {LocationDetailComponent} from './location-detail/location-detail.component';
+import {UiModule} from '../../@ui/ui.module';
 
 @NgModule({
     declarations: [LocationDashboardComponent, LocationDetailComponent, EditLocationModalComponent],
@@ -16,6 +17,7 @@ import {LocationDetailComponent} from './location-detail/location-detail.compone
         ClarityModule,
         ClrFormsModule,
         ReactiveFormsModule,
+        UiModule,
         LocationDashboardRoutingModule,
     ],
     providers: [
