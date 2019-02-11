@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import {Company} from '../../@core/data/domain/company';
 
 @Injectable({
@@ -11,8 +12,11 @@ export class ChosenCompanyService {
     constructor() {
     }
 
-    getCompany(): BehaviorSubject<Company> {
-        return this.company$;
+    getCompany(): Observable<Company> {
+        return this.company$
+            .pipe(
+                filter((value) => value !== null),
+            );
     }
 
     pushNewCompany(company: Company): void {

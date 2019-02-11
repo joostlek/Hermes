@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ClrLoadingState} from '@clr/angular';
 import {Subject} from 'rxjs';
-import {filter} from 'rxjs/operators';
 import {CompanyService} from '../../../../../@core/data/company.service';
 import {Company} from '../../../../../@core/data/domain/company';
 import {ChosenCompanyService} from '../../../chosen-company.service';
@@ -48,9 +47,6 @@ export class RemoveUserModalComponent implements OnInit {
 
     private getCompany(): void {
         this.chosenCompanyService.getCompany()
-            .pipe(
-                filter((value) => value !== null),
-            )
             .subscribe(
                 (company) => {
                     this.company = company;

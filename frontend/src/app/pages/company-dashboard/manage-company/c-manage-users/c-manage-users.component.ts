@@ -35,7 +35,6 @@ export class CManageUsersComponent implements OnInit {
     getUsers(): void {
         this.chosenCompanyService.getCompany()
             .pipe(
-                filter((value) => value !== null),
                 takeUntil(this.userLoadStream$),
             )
             .subscribe((company: Company) => {

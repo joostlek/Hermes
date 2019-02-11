@@ -34,7 +34,6 @@ export class CManageLocationsComponent implements OnInit {
     private getLocations(): void {
         this.chosenCompanyService.getCompany()
             .pipe(
-                filter((value) => value !== null),
                 takeUntil(this.locationLoadStream$),
             )
             .subscribe((company) => {
