@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LocationDashboardComponent} from './location-dashboard.component';
+import {LocationDetailComponent} from './location-detail/location-detail.component';
 
 const routes: Routes = [
     {
@@ -9,7 +10,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'overview',
-                loadChildren: './../location/location.module#LocationModule',
+                component: LocationDetailComponent,
             },
             {
                 path: 'manage',
