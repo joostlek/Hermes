@@ -9,7 +9,7 @@
 
     <clr-dg-row *clrDgItems="let location of locations" [clrDgItem]="location">
         <clr-dg-cell>{{location.id}}</clr-dg-cell>
-        <clr-dg-cell><a routerLink="/locations/{{location.id}}">{{location.name}}</a></clr-dg-cell>
+        <clr-dg-cell><a routerLink="/locations/{{location.id}}/overview">{{location.name}}</a></clr-dg-cell>
         <clr-dg-action-overflow>
             <button class="action-item" (click)="onDelete(location)">Delete</button>
         </clr-dg-action-overflow>
