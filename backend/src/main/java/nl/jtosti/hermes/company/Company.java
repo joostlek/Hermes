@@ -45,7 +45,7 @@ public class Company {
     @UpdateTimestamp
     private Date updated;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinTable(
             name = "company_users",
             joinColumns = {

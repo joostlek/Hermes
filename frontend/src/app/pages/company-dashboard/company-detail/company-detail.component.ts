@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Company} from '../../../@core/data/domain/company';
 import {ChosenCompanyService} from '../chosen-company.service';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-company-detail',
@@ -19,12 +19,22 @@ export class CompanyDetailComponent implements OnInit {
 
     constructor(
         private chosenCompanyService: ChosenCompanyService,
+        private router: Router,
     ) {
     }
 
     ngOnInit() {
         this.watchRefresh();
         this.getCompany();
+        this.watchList();
+    }
+
+    private watchList(): void {
+        this.forwardToList.subscribe(
+            () => {
+                this.router.navigateByUrl('/companies');
+            },
+        );
     }
 
     private watchRefresh(): void {
@@ -45,5 +55,9 @@ export class CompanyDetailComponent implements OnInit {
 
     public openEditModal(): void {
         this.editModal.next(true);
+    }
+
+    public openDeleteModal(): void {
+        this.deleteModal.next(true);
     }
 }

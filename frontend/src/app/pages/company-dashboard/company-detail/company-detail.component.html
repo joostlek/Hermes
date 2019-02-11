@@ -3,7 +3,7 @@
     <button class="btn btn-primary" (click)="openEditModal()">
         <clr-icon shape="pencil"></clr-icon>
     </button>
-    <button class="btn btn-warning">
+    <button class="btn btn-warning" (click)="openDeleteModal()">
         <clr-icon shape="trash"></clr-icon>
     </button>
 </div>
@@ -12,3 +12,4 @@
 {{company?.zipCode}} {{company?.city}}<br>
 {{company?.country}}
 <app-edit-company-modal [open]="editModal" [refreshLocation]="refreshCompany"></app-edit-company-modal>
+<app-remove-company-modal [open]="deleteModal" [refreshLocation]="forwardToList"></app-remove-company-modal>

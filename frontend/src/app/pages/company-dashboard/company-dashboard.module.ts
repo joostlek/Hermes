@@ -7,9 +7,10 @@ import {CompanyDashboardComponent} from './company-dashboard.component';
 import {CompanyDetailComponent} from './company-detail/company-detail.component';
 import {EditCompanyModalComponent} from './edit-company-modal/edit-company-modal.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { RemoveCompanyModalComponent } from './remove-company-modal/remove-company-modal.component';
 
 @NgModule({
-    declarations: [CompanyDashboardComponent, CompanyDetailComponent, EditCompanyModalComponent],
+    declarations: [CompanyDashboardComponent, CompanyDetailComponent, EditCompanyModalComponent, RemoveCompanyModalComponent],
     imports: [
         CommonModule,
         ClarityModule,

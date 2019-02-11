@@ -1,0 +1,20 @@
+<clr-modal [(clrModalOpen)]="open">
+    <h3 class="modal-title">Remove user</h3>
+    <div class="modal-body">
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">{{error}}</span>
+                </div>
+            </div>
+        </div>
+        <p>Are you sure you want to delete {{company?.name}}?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button [clrLoading]="submitButtonState" type="button" class="btn btn-danger" (click)="removeCompany()" [disabled]="error">Delete</button>
+    </div>
+</clr-modal>
