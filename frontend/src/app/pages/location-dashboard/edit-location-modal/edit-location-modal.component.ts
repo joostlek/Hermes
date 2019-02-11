@@ -4,6 +4,7 @@ import {Subject} from 'rxjs';
 import {Location} from '../../../@core/data/domain/location';
 import {ChosenLocationService} from '../chosen-location.service';
 import {LocationService} from '../../../@core/data/location.service';
+import {ClrLoadingState} from '@clr/angular';
 
 @Component({
     selector: 'app-edit-location-modal',
@@ -13,6 +14,7 @@ import {LocationService} from '../../../@core/data/location.service';
 export class EditLocationModalComponent implements OnInit {
     @Input('open') openStream: Subject<boolean>;
     @Input('refreshLocation') refreshStream: Subject<boolean>;
+    submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     location: Location;
     open = false;
@@ -91,6 +93,7 @@ export class EditLocationModalComponent implements OnInit {
     }
 
     public updateLocation(): void {
+        this.submitButtonState = ClrLoadingState.LOADING;
         if (!this.locationInfoPage.invalid && !this.basicInfoPage.invalid) {
             this.location.name = this.basicInfoPage.value['name'];
             this.location.street = this.locationInfoPage.value['street'];
@@ -101,12 +104,15 @@ export class EditLocationModalComponent implements OnInit {
             this.locationService.updateLocation(this.location)
                 .subscribe(
                     (location: Location) => {
+                        this.submitButtonState = ClrLoadingState.SUCCESS;
                         this.chosenLocationService.pushNewLocation(location);
                         this.refreshStream.next(true);
-                        this.location = location;
+                        this.closeModal();
                     },
                     (error) => {
-                        this.error = error.toString();
+                        this.error = JSON.parse(error.error)['message'];
+                        this.submitButtonState = ClrLoadingState.ERROR;
+                        console.error(this.error);
                     },
                 );
         }
