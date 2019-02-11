@@ -1,32 +1,13 @@
-<div *ngIf="company"><h1>{{company.name}}</h1>
-    <h3>Basic information</h3>
-    <table class="table table-vertical">
-        <tbody>
-        <tr>
-            <th>Name</th>
-            <td>{{company.name}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <h3>Location information</h3>
-    <table class="table table-vertical">
-        <tbody>
-        <tr>
-            <th>Address</th>
-            <td>{{company.street}} {{company.houseNumber}}</td>
-        </tr>
-        <tr>
-            <th>Zip code</th>
-            <td>{{company.zipCode}}</td>
-        </tr>
-        <tr>
-            <th>City</th>
-            <td>{{company.city}}</td>
-        </tr>
-        <tr>
-            <th>Country</th>
-            <td>{{company.country}}</td>
-        </tr>
-        </tbody>
-    </table>
+<h2>{{company?.name}}</h2>
+<div class="btn-group btn-icon">
+    <button class="btn btn-primary">
+        <clr-icon shape="pencil"></clr-icon>
+    </button>
+    <button class="btn btn-warning">
+        <clr-icon shape="trash"></clr-icon>
+    </button>
 </div>
+<h3>Address</h3>
+{{company?.street}} {{company?.houseNumber}}<br>
+{{company?.zipCode}} {{company?.city}}<br>
+{{company?.country}}
