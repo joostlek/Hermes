@@ -50,4 +50,8 @@ export class LocationService {
         return this.http.delete('api/locations/' + locationId);
     }
 
+    updateLocation(location: Location): Observable<Location> {
+        return this.http.put<Location>('api/locations/' + location.id, location);
+    }
+
 }

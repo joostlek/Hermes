@@ -48,6 +48,11 @@ public class LocationService implements LocationServiceInterface {
         return locationRepository.findById(newLocation.getId())
                 .map(location -> {
                     location.setName(newLocation.getName());
+                    location.setStreet(newLocation.getStreet());
+                    location.setHouseNumber(newLocation.getHouseNumber());
+                    location.setZipCode(newLocation.getZipCode());
+                    location.setCountry(newLocation.getCountry());
+                    location.setCity(newLocation.getCity());
                     return save(location);
                 })
                 .orElseThrow(

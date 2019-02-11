@@ -67,7 +67,7 @@ public class LocationController {
     @PutMapping("/locations/{id}")
     @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
-    public LocationDTO updateLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long id) {
+    public LocationDTO updateLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long id) {
         Location location = convertToEntity(locationDTO);
         location.setId(id);
         Location updatedLocation = locationService.update(location);
