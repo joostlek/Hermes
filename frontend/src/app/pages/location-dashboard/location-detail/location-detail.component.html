@@ -1,33 +1,15 @@
 <section class="dox-content" *ngIf="location != null">
-    <h2>{{location.name}}</h2>
-    <h3>Basic information</h3>
-    <table class="table table-vertical">
-        <tbody>
-        <tr>
-            <th>Name</th>
-            <td>{{location.name}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <h3>Address information</h3>
-    <table class="table table-vertical">
-        <tbody>
-        <tr>
-            <th>Address</th>
-            <td>{{location.street}} {{location.houseNumber}}</td>
-        </tr>
-        <tr>
-            <th>Zip code</th>
-            <td>{{location.zipCode}}</td>
-        </tr>
-        <tr>
-            <th>City</th>
-            <td>{{location.city}}</td>
-        </tr>
-        <tr>
-            <th>Country</th>
-            <td>{{location.country}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <h2>{{company?.name}} - {{location.name}}</h2>
+    <div class="btn-group btn-icon">
+        <button class="btn btn-primary">
+            <clr-icon shape="pencil"></clr-icon>
+        </button>
+        <button class="btn btn-warning">
+            <clr-icon shape="trash"></clr-icon>
+        </button>
+    </div>
+    <h3>Address</h3>
+    {{location.street}} {{location.houseNumber}}<br>
+    {{location.zipCode}} {{location.city}}<br>
+    {{location.country}}
 </section>
