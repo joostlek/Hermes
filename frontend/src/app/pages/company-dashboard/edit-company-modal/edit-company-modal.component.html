@@ -1,0 +1,78 @@
+<clr-modal [(clrModalOpen)]="open">
+    <h3 class="modal-title">Edit {{location?.name}}</h3>
+    <div class="modal-body">
+        <clr-tabs>
+            <clr-tab>
+                <button clrTabLink id="link1">Basic <span class="badge badge-danger"
+                                                          *ngIf="basicInfoPage.invalid">{{getErrorCount(basicInfoPage)}}</span>
+                </button>
+                <clr-tab-content id="content1" *clrIfActive>
+                    <form clrForm [formGroup]="basicInfoPage">
+                        <clr-input-container>
+                            <label>Location name</label>
+                            <input placeholder="Location name" clrInput formControlName="name" name="name" type="text"/>
+                            <clr-control-helper>The name of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                    </form>
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink id="link2">Address <span class="badge badge-danger"
+                                                            *ngIf="locationInfoPage.invalid">{{getErrorCount(locationInfoPage)}}</span>
+                </button>
+                <clr-tab-content id="content2" *clrIfActive>
+                    <form clrForm [formGroup]="locationInfoPage">
+                        <clr-input-container>
+                            <label>Street</label>
+                            <input placeholder="Street" formControlName="street" name="street" type="text" clrInput>
+                            <clr-control-helper>The street of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                        <clr-input-container>
+                            <label>House number</label>
+                            <input placeholder="House number" formControlName="houseNumber" name="houseNumber"
+                                   type="text" clrInput>
+                            <clr-control-helper>The house number of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                        <clr-input-container>
+                            <label>Zip code</label>
+                            <input placeholder="Zip code" formControlName="zipCode" name="zipCode" type="text" clrInput>
+                            <clr-control-helper>The zip code of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                        <clr-input-container>
+                            <label>City</label>
+                            <input placeholder="City" formControlName="city" name="city" type="text" clrInput>
+                            <clr-control-helper>The City of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                        <clr-input-container>
+                            <label>Country</label>
+                            <input placeholder="Country" formControlName="country" name="country" type="text" clrInput>
+                            <clr-control-helper>The country of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                    </form>
+                </clr-tab-content>
+            </clr-tab>
+        </clr-tabs>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">{{error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button [clrLoading]="submitButtonState" type="button" class="btn btn-success" (click)="updateCompany()"
+                [disabled]="isDisabled()">Update
+        </button>
+    </div>
+</clr-modal>

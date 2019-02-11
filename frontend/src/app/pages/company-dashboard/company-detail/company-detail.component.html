@@ -1,6 +1,6 @@
 <h2>{{company?.name}}</h2>
 <div class="btn-group btn-icon">
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="openEditModal()">
         <clr-icon shape="pencil"></clr-icon>
     </button>
     <button class="btn btn-warning">
@@ -11,3 +11,4 @@
 {{company?.street}} {{company?.houseNumber}}<br>
 {{company?.zipCode}} {{company?.city}}<br>
 {{company?.country}}
+<app-edit-company-modal [open]="editModal"></app-edit-company-modal>
