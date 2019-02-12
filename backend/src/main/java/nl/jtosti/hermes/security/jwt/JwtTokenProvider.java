@@ -31,8 +31,8 @@ public class JwtTokenProvider {
     private Key key = MacProvider.generateKey();
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 3600000; // 1h
-    @Value("${security.jwt.token.refresh-expire-length:3600000}")
-    private long refreshValidityInMilliseconds = 3600000;
+    @Value("${security.jwt.token.refresh-expire-length:604800000}")
+    private long refreshValidityInMilliseconds = 604800000; // 1w
 
     @Autowired
     public JwtTokenProvider(UserLoginService userDetailsService, ScreenLoginService screenLoginService) {
