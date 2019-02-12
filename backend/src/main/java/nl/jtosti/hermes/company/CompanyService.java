@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -48,7 +51,19 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public List<Company> getAllCompaniesByUserId(Long userId) {
+        return Stream.concat(this.getAdvertisingCompaniesByUserId(userId).stream(),
+                this.getPersonalCompaniesByUserID(userId).stream())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Company> getPersonalCompaniesByUserID(Long userId) {
         return companyRepository.findCompaniesByUserId(userId);
+    }
+
+    @Override
+    public List<Company> getAdvertisingCompaniesByUserId(Long userId) {
+        return new ArrayList<>();
     }
 
     @Override

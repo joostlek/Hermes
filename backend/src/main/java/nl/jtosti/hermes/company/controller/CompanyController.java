@@ -5,9 +5,6 @@ import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.dto.AddUserDTO;
 import nl.jtosti.hermes.company.dto.CompanyDTO;
 import nl.jtosti.hermes.company.dto.ExtendedCompanyDTO;
-import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
-import nl.jtosti.hermes.location.dto.LocationDTO;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -74,6 +71,24 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedCompanyDTO> getAllCompaniesByUserId(@PathVariable Long userId) {
         return companyService.getAllCompaniesByUserId(userId)
+                .stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/users/{userId}/companies/personal")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedCompanyDTO> getPersonalCompaniesByUserId(@PathVariable Long userId) {
+        return companyService.getPersonalCompaniesByUserID(userId)
+                .stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/users/{userId}/companies/advertising")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedCompanyDTO> getAdvertisingCompaniesByUserId(@PathVariable Long userId) {
+        return companyService.getAdvertisingCompaniesByUserId(userId)
                 .stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());

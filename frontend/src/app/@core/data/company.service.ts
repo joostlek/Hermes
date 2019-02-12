@@ -44,6 +44,14 @@ export class CompanyService {
         return this.http.post<Company>('api/users/' + userId + '/companies', company);
     }
 
+    public getPersonalCompanies(userId: number): Observable<Company[]> {
+        return this.http.get<Company[]>('api/users/' + userId + '/companies/personal');
+    }
+
+    public getAdvertisingCompanies(userId: number): Observable<Company[]> {
+        return this.http.get<Company[]>('api/users/' + userId + '/companies/advertising');
+    }
+
     public addUserToCompany(email: string, companyId: number): Observable<any> {
         return this.http.put('api/companies/' + companyId + '/users', {email});
     }

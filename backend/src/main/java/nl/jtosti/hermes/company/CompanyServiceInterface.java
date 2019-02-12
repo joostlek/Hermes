@@ -13,6 +13,10 @@ public interface CompanyServiceInterface {
 
     List<Company> getAllCompaniesByUserId(Long userId);
 
+    List<Company> getPersonalCompaniesByUserID(Long userId);
+
+    List<Company> getAdvertisingCompaniesByUserId(Long userId);
+
     Company updateCompany(Company company);
 
     void addUserToCompany(Long companyId, String email);

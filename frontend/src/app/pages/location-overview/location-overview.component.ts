@@ -46,13 +46,13 @@ export class LocationOverviewComponent implements OnInit {
                                 this.allCompanyStream.next(companies);
                             },
                         );
-                    this.companyService.getCompaniesByUserId(user.id)
+                    this.companyService.getPersonalCompanies(user.id)
                         .subscribe(
                             (companies) => {
                                 this.personalCompanyStream.next(companies);
                             },
                         );
-                    this.companyService.getCompaniesByUserId(user.id)
+                    this.companyService.getAdvertisingCompanies(user.id)
                         .subscribe(
                             (companies) => {
                                 this.advertisingCompanyStream.next(companies);
