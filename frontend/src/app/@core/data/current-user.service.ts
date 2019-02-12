@@ -13,7 +13,6 @@ export class CurrentUserService {
     }
 
     getCurrentUser() {
-        console.log(this.user$.getValue() === null);
         if (this.user$.getValue() === null) {
             this.updateCurrentUser();
         }

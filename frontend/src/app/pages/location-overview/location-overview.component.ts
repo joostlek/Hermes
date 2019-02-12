@@ -4,6 +4,7 @@ import {CompanyService} from '../../@core/data/company.service';
 import {CurrentUserService} from '../../@core/data/current-user.service';
 import {Company} from '../../@core/data/domain/company';
 import {User} from '../../@core/data/domain/user';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-location-overview',
@@ -14,6 +15,10 @@ export class LocationOverviewComponent implements OnInit {
     user: User = null;
     companies: Company[];
 
+    allCompanyStream: BehaviorSubject<Company[]> = new BehaviorSubject(null);
+    personalCompanyStream: BehaviorSubject<Company[]> = new BehaviorSubject(null);
+    advertisingCompanyStream: BehaviorSubject<Company[]> = new BehaviorSubject(null);
+
     constructor(
         private companyService: CompanyService,
         private currentUserService: CurrentUserService,
@@ -21,27 +26,40 @@ export class LocationOverviewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCurrentUser()
+        this.initializeStreams();
+    }
+
+    private getCurrentUser(): Observable<User> {
+        return this.currentUserService.getCurrentUser()
             .pipe(
                 filter((value) => value !== null),
-            )
-            .subscribe(
-                (value) => {
-                    this.user = value;
-                    this.getCompanies();
-                },
             );
     }
 
-    getCurrentUser() {
-        return this.currentUserService.getCurrentUser();
-    }
-
-    getCompanies(): void {
-        this.companyService.getCompaniesByUserId(this.user.id)
-            .subscribe((value) => {
-                this.companies = value;
-            });
+    private initializeStreams(): void {
+        this.getCurrentUser()
+            .subscribe(
+                (user) => {
+                    this.companyService.getCompaniesByUserId(user.id)
+                        .subscribe(
+                            (companies) => {
+                                this.allCompanyStream.next(companies);
+                            },
+                        );
+                    this.companyService.getCompaniesByUserId(user.id)
+                        .subscribe(
+                            (companies) => {
+                                this.personalCompanyStream.next(companies);
+                            },
+                        );
+                    this.companyService.getCompaniesByUserId(user.id)
+                        .subscribe(
+                            (companies) => {
+                                this.advertisingCompanyStream.next(companies);
+                            },
+                        );
+                },
+            );
     }
 
 }
