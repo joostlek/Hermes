@@ -5,7 +5,7 @@ chardet==3.0.4
 colorama==0.4.1
 configparser==3.7.1
 idna==2.8
-more-itertools==5.0.0
+more-itertools==6.0.0
 Pillow==5.4.1
 pluggy==0.8.1
 py==1.7.0
