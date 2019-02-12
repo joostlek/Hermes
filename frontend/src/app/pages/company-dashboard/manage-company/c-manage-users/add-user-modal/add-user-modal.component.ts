@@ -45,6 +45,7 @@ export class AddUserModalComponent implements OnInit {
 
     public closeModal(): void {
         this.email.reset();
+        this.error = undefined;
         this.openStream.next(false);
     }
 
