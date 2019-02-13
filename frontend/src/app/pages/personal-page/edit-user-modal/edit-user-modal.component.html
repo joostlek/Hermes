@@ -1,0 +1,58 @@
+<clr-modal [(clrModalOpen)]="modalOpen">
+    <h3 class="modal-title">Edit {{user?.firstName}} {{user?.lastName}}</h3>
+    <div class="modal-body">
+        <clr-tabs>
+            <clr-tab>
+                <button clrTabLink id="link1">Basic <span class="badge badge-danger"
+                                                          *ngIf="registerForm.invalid">{{getErrorCount(registerForm)}}</span>
+                </button>
+                <clr-tab-content id="content1" *clrIfActive>
+                    <form class="login" clrForm [formGroup]="registerForm" clrLayout="vertical">
+                        <clr-input-container>
+                            <label>First name</label>
+                            <input clrInput type="text" placeholder="First name" formControlName="firstName">
+                            <clr-control-error>This is incorrect</clr-control-error>
+                        </clr-input-container>
+                        <clr-input-container>
+                            <label>Last name</label>
+                            <input clrInput type="text" placeholder="Last name" formControlName="lastName">
+                            <clr-control-error>This is incorrect</clr-control-error>
+                        </clr-input-container>
+                        <clr-input-container>
+                            <label>Email</label>
+                            <input clrInput type="text" placeholder="Email" formControlName="email">
+                            <clr-control-error>This is incorrect</clr-control-error>
+                        </clr-input-container>
+                        <!--<clr-input-container>-->
+                            <!--<label>Password</label>-->
+                            <!--<input clrInput type="password" placeholder="Password" formControlName="password">-->
+                            <!--<clr-control-error>This is incorrect</clr-control-error>-->
+                        <!--</clr-input-container>-->
+                        <!--<clr-input-container>-->
+                            <!--<label>Repeat password</label>-->
+                            <!--<input clrInput type="password" placeholder="Repeat password"-->
+                                   <!--formControlName="repeatPassword">-->
+                            <!--<clr-control-error>This is incorrect</clr-control-error>-->
+                        <!--</clr-input-container>-->
+                    </form>
+                </clr-tab-content>
+            </clr-tab>
+        </clr-tabs>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">{{error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button [clrLoading]="submitButtonState" type="button" class="btn btn-success" (click)="updateUser()"
+                [disabled]="isDisabled()">Update
+        </button>
+    </div>
+</clr-modal>

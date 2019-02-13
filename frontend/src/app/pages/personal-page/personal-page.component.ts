@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../@core/data/domain/user';
+import {Subject} from 'rxjs';
 import {CurrentUserService} from '../../@core/data/current-user.service';
+import {User} from '../../@core/data/domain/user';
 import {calculateDifference, Interval} from '../../@core/util/interval';
 
 @Component({
@@ -14,6 +15,8 @@ export class PersonalPageComponent implements OnInit {
     intervalUpdated: Interval;
     showUpdated = false;
 
+    editUser: Subject<boolean> = new Subject<boolean>();
+
     constructor(
         private currentUserService: CurrentUserService,
     ) {
@@ -21,6 +24,10 @@ export class PersonalPageComponent implements OnInit {
 
     ngOnInit() {
         this.getCurrentUser();
+    }
+
+    public openEditModal(): void {
+        this.editUser.next(true);
     }
 
     getCurrentUser(): void {

@@ -38,7 +38,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User save(User user) {
-        user.setRoles(Collections.singletonList("USER"));
+//        user.setRoles(Collections.singletonList("USER"));
         return userRepository.save(user);
     }
 

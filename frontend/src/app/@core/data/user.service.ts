@@ -22,4 +22,8 @@ export class UserService {
     getUsersByCompanyId(companyId: number): Observable<User[]> {
         return this.http.get<User[]>('api/companies/' + companyId + '/users');
     }
+
+    public updateUser(user: User): Observable<User> {
+        return this.http.put<User>('api/users/' + user.id, user);
+    }
 }
