@@ -1,15 +1,17 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ClarityModule} from '@clr/angular';
+import {ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {ClarityModule, ClrFormsModule} from '@clr/angular';
+import {ExampleScreenComponent} from './components/example-screen/example-screen.component';
+import {SecuredImageComponent} from './components/secured-image/secured-image.component';
 import {Sidebar, StandardLayout} from './layout';
-import {ScreenTableComponent} from './tables/screen-table/screen-table.component';
+import {EditImageModalComponent} from './modals/edit-image-modal/edit-image-modal.component';
+import {RemoveLocationModalComponent} from './modals/remove-location-modal/remove-location-modal.component';
 import {ImageTableComponent} from './tables/image-table/image-table.component';
 import {LocationTableComponent} from './tables/location-table/location-table.component';
+import {ScreenTableComponent} from './tables/screen-table/screen-table.component';
 import {UserTableComponent} from './tables/user-table/user-table.component';
-import {RouterModule} from '@angular/router';
-import {RemoveLocationModalComponent} from './modals/remove-location-modal/remove-location-modal.component';
-import {SecuredImageComponent} from './components/secured-image/secured-image.component';
-import {ExampleScreenComponent} from './components/example-screen/example-screen.component';
 
 const COMPONENTS = [
     Sidebar,
@@ -21,6 +23,7 @@ const COMPONENTS = [
     UserTableComponent,
     SecuredImageComponent,
     ExampleScreenComponent,
+    EditImageModalComponent,
 ];
 
 @NgModule({
@@ -28,6 +31,8 @@ const COMPONENTS = [
     imports: [
         CommonModule,
         ClarityModule,
+        ReactiveFormsModule,
+        ClrFormsModule,
         RouterModule,
     ],
     exports: [...COMPONENTS],

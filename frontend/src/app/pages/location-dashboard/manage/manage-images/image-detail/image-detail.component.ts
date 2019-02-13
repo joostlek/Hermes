@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ImageService} from '../../../../../@core/data/image.service';
 import {Image} from '../../../../../@core/data/domain/image';
-import {DomSanitizer} from '@angular/platform-browser';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-image-detail',
@@ -13,10 +13,12 @@ export class ImageDetailComponent implements OnInit {
     image: Image;
     style: any;
 
+    editModal: Subject<boolean> = new Subject<boolean>();
+    deleteModal: Subject<boolean> = new Subject<boolean>();
+
     constructor(
         private route: ActivatedRoute,
         private imageService: ImageService,
-        private dom: DomSanitizer,
     ) {
     }
 
@@ -37,12 +39,16 @@ export class ImageDetailComponent implements OnInit {
         this.imageService.getImage(id)
             .subscribe((image) => {
                     this.image = image;
-                this.style = {};
-                this.style['width'] = image.screen.width + 'px';
-                this.style['height'] = image.screen.height + 'px';
-                this.style = this.dom.bypassSecurityTrustStyle(this.style);
                 },
             );
+    }
+
+    public openEditModal(): void {
+        this.editModal.next(true);
+    }
+
+    public openDeleteModal(): void {
+        this.deleteModal.next(true);
     }
 
 }

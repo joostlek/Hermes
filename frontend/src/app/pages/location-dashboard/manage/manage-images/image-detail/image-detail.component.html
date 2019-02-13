@@ -1,7 +1,17 @@
 <h2>{{image?.name}}</h2>
 <h5>Uploaded by {{image?.uploader.firstName}} {{image?.uploader.lastName}}</h5>
 
+<div class="btn-group btn-icon">
+    <button class="btn btn-primary" (click)="openEditModal()">
+        <clr-icon shape="pencil"></clr-icon>
+    </button>
+    <button class="btn btn-warning" (click)="openDeleteModal()">
+        <clr-icon shape="trash"></clr-icon>
+    </button>
+</div>
+
 <div *ngIf="image">
     <h4>Preview</h4>
     <app-example-screen [image]="image" [screen]="image?.screen" [scale]="5"></app-example-screen>
 </div>
+<app-edit-image-modal *ngIf="image" [image]="image" [openStream]="editModal"></app-edit-image-modal>

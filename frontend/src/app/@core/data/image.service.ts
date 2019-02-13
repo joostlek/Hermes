@@ -48,4 +48,8 @@ export class ImageService {
     getImagesByLocationId(locationId: number): Observable<Image[]> {
         return this.http.get<Image[]>('api/locations/' + locationId + '/images');
     }
+
+    public updateImage(image: Image): Observable<Image> {
+        return this.http.put<Image>('api/images/' + image.id, image);
+    }
 }

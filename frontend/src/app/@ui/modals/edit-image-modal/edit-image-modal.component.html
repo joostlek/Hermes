@@ -1,0 +1,38 @@
+<clr-modal [(clrModalOpen)]="open">
+    <h3 class="modal-title">Edit {{image?.name}}</h3>
+    <div class="modal-body">
+        <clr-tabs>
+            <clr-tab>
+                <button clrTabLink id="link1">Basic <span class="badge badge-danger"
+                                                          *ngIf="basicInfoPage.invalid">{{getErrorCount(basicInfoPage)}}</span>
+                </button>
+                <clr-tab-content id="content1" *clrIfActive>
+                    <form clrForm [formGroup]="basicInfoPage">
+                        <clr-input-container>
+                            <label>Location name</label>
+                            <input placeholder="Location name" clrInput formControlName="name" name="name" type="text"/>
+                            <clr-control-helper>The name of the location</clr-control-helper>
+                            <clr-control-error>This field is required!</clr-control-error>
+                        </clr-input-container>
+                    </form>
+                </clr-tab-content>
+            </clr-tab>
+        </clr-tabs>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">{{error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button [clrLoading]="submitButtonState" type="button" class="btn btn-success" (click)="updateImage()"
+                [disabled]="isDisabled()">Update
+        </button>
+    </div>
+</clr-modal>
