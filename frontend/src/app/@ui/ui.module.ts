@@ -7,6 +7,7 @@ import {ExampleScreenComponent} from './components/example-screen/example-screen
 import {SecuredImageComponent} from './components/secured-image/secured-image.component';
 import {Sidebar, StandardLayout} from './layout';
 import {EditImageModalComponent} from './modals/edit-image-modal/edit-image-modal.component';
+import {RemoveImageModalComponent} from './modals/remove-image-modal/remove-image-modal.component';
 import {RemoveLocationModalComponent} from './modals/remove-location-modal/remove-location-modal.component';
 import {ImageTableComponent} from './tables/image-table/image-table.component';
 import {LocationTableComponent} from './tables/location-table/location-table.component';
@@ -24,6 +25,7 @@ const COMPONENTS = [
     SecuredImageComponent,
     ExampleScreenComponent,
     EditImageModalComponent,
+    RemoveImageModalComponent,
 ];
 
 @NgModule({

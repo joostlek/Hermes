@@ -52,4 +52,8 @@ export class ImageService {
     public updateImage(image: Image): Observable<Image> {
         return this.http.put<Image>('api/images/' + image.id, image);
     }
+
+    public deleteImage(imageId: number): Observable<any> {
+        return this.http.delete('api/images/' + imageId);
+    }
 }

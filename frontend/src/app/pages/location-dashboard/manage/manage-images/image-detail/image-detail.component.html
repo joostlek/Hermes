@@ -15,3 +15,5 @@
     <app-example-screen [image]="image" [screen]="image?.screen" [scale]="5"></app-example-screen>
 </div>
 <app-edit-image-modal *ngIf="image" [image]="image" [openStream]="editModal"></app-edit-image-modal>
+<app-remove-image-modal *ngIf="image" [image]="image" [openStream]="deleteModal"
+                        [refreshList]="toListStream"></app-remove-image-modal>

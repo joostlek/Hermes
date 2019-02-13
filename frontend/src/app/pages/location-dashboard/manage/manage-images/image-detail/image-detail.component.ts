@@ -1,13 +1,14 @@
+import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ImageService} from '../../../../../@core/data/image.service';
-import {Image} from '../../../../../@core/data/domain/image';
 import {Subject} from 'rxjs';
+import {Image} from '../../../../../@core/data/domain/image';
+import {ImageService} from '../../../../../@core/data/image.service';
 
 @Component({
     selector: 'app-image-detail',
     templateUrl: './image-detail.component.html',
-    styleUrls: ['./image-detail.component.css']
+    styleUrls: ['./image-detail.component.css'],
 })
 export class ImageDetailComponent implements OnInit {
     image: Image;
@@ -15,15 +16,18 @@ export class ImageDetailComponent implements OnInit {
 
     editModal: Subject<boolean> = new Subject<boolean>();
     deleteModal: Subject<boolean> = new Subject<boolean>();
+    toListStream: Subject<boolean> = new Subject<boolean>();
 
     constructor(
         private route: ActivatedRoute,
         private imageService: ImageService,
+        private location: Location,
     ) {
     }
 
     ngOnInit() {
         this.getParameter();
+        this.watchForward();
     }
 
     getParameter(): void {
@@ -41,6 +45,14 @@ export class ImageDetailComponent implements OnInit {
                     this.image = image;
                 },
             );
+    }
+
+    private watchForward(): void {
+        this.toListStream.subscribe(
+            () => {
+                this.location.back();
+            },
+        );
     }
 
     public openEditModal(): void {
