@@ -1,6 +1,7 @@
 <div class="list-item">
     <a routerLink="{{company.id}}">
         {{company.name}}
-
-    </a>
+    </a><span> - {{company.street}} {{company.houseNumber}}, {{company.city}}</span><br>
+    <div class="count-label"><clr-icon shape="map-marker"></clr-icon> {{company.locations.length}}</div>
+    <div class="count-label"><clr-icon shape="users"></clr-icon> {{company.users.length}}</div>
 </div>

@@ -4,3 +4,8 @@
     padding-left: 50px;
     padding-top: 10px;
 }
+
+.count-label {
+    display: inline-block;
+    width: 40px;
+}
