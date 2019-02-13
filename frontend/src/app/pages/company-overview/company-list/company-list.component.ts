@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 import {Company} from '../../../@core/data/domain/company';
 
 @Component({
@@ -7,12 +8,22 @@ import {Company} from '../../../@core/data/domain/company';
     styleUrls: ['./company-list.component.css'],
 })
 export class CompanyListComponent implements OnInit {
-    @Input('companies') companies: Company[];
+    @Input() companyStream: Observable<Company[]>;
+    companies: Company[];
 
     constructor() {
     }
 
     ngOnInit() {
+        this.getCompanies();
+    }
+
+    private getCompanies(): void {
+        this.companyStream.subscribe(
+            (companies: Company[]) => {
+                this.companies = companies;
+            },
+        );
     }
 
 }

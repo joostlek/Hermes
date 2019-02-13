@@ -1,11 +1,19 @@
 <div class="content-container">
     <div class="content-area">
         <h1>Companies</h1>
-        <button type="button" class="btn btn-icon btn-primary" title="Add new image" (click)="wizardOpen = !wizardOpen">
+        <button type="button" class="btn btn-icon btn-primary" title="Create new company"
+                (click)="wizardOpen = !wizardOpen">
             <clr-icon shape="plus"></clr-icon>
             create
         </button>
-        <app-company-list [companies]="companies"></app-company-list>
+        <clr-tabs>
+            <clr-tab>
+                <button clrTabLink id="link1">All</button>
+                <clr-tab-content id="content1" *clrIfActive>
+                    <app-company-list [companyStream]="getAllCompanyStream()"></app-company-list>
+                </clr-tab-content>
+            </clr-tab>
+        </clr-tabs>
     </div>
 </div>
 <app-company-wizard [open]="wizardOpen"></app-company-wizard>

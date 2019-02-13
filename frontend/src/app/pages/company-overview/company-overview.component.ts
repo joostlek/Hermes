@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {CompanyService} from '../../@core/data/company.service';
 import {CurrentUserService} from '../../@core/data/current-user.service';
@@ -11,8 +12,9 @@ import {User} from '../../@core/data/domain/user';
     styleUrls: ['./company-overview.component.css'],
 })
 export class CompanyOverviewComponent implements OnInit {
-    companies: Company[];
     wizardOpen = false;
+
+    allCompanies: BehaviorSubject<Company[]> = new BehaviorSubject(null);
 
     constructor(
         private currentUserService: CurrentUserService,
@@ -24,6 +26,12 @@ export class CompanyOverviewComponent implements OnInit {
         this.getCompanies();
     }
 
+    public getAllCompanyStream(): Observable<Company[]> {
+        return this.allCompanies.pipe(
+            filter((value) => value !== null),
+        );
+    }
+
     getCompanies(): void {
         this.currentUserService.getCurrentUser()
             .pipe(
@@ -31,7 +39,7 @@ export class CompanyOverviewComponent implements OnInit {
             )
             .subscribe((value: User) => {
                 this.companyService.getCompaniesByUserId(value.id)
-                    .subscribe((value1) => this.companies = value1);
+                    .subscribe((value1) => this.allCompanies.next(value1));
             });
 
     }
