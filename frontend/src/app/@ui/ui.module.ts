@@ -8,6 +8,7 @@ import {LocationTableComponent} from './tables/location-table/location-table.com
 import {UserTableComponent} from './tables/user-table/user-table.component';
 import {RouterModule} from '@angular/router';
 import {RemoveLocationModalComponent} from './modals/remove-location-modal/remove-location-modal.component';
+import { SecuredImageComponent } from './components/secured-image/secured-image.component';
 
 const COMPONENTS = [
     Sidebar,
@@ -17,6 +18,7 @@ const COMPONENTS = [
     LocationTableComponent,
     RemoveLocationModalComponent,
     UserTableComponent,
+    SecuredImageComponent,
 ];
 
 @NgModule({
