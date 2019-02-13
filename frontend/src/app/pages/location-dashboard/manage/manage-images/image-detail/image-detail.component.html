@@ -1,2 +1,7 @@
-<h1>{{image?.name}}</h1>
-<app-secured-image [src]="image?.url" [style]="{'width': '100px'}"></app-secured-image>
+<h2>{{image?.name}}</h2>
+<h5>Uploaded by {{image?.uploader.firstName}} {{image?.uploader.lastName}}</h5>
+
+<div *ngIf="image">
+    <h4>Preview</h4>
+    <app-example-screen [image]="image" [screen]="image?.screen" [scale]="5"></app-example-screen>
+</div>

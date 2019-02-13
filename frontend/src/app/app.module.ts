@@ -11,11 +11,13 @@ import {DataModule} from './@core/data/data.module';
 import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-password.directive';
 import {RefreshTokenInterceptor} from './@core/interceptor/refresh-token-interceptor';
 import {JsonInterceptor} from './@core/interceptor/json-interceptor';
+import {SafePipe} from './@core/pipes/safe.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         RepeatPasswordValidatorDirective,
+        SafePipe,
     ],
     imports: [
         HttpClientModule,
