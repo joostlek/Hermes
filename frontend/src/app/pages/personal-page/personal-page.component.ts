@@ -37,7 +37,7 @@ export class PersonalPageComponent implements OnInit {
                 if (user !== null) {
                     this.intervalCreated = calculateDifference(new Date(), user.created);
                     this.intervalUpdated = calculateDifference(new Date(), user.updated);
-                    if (this.user.created === this.user.updated) {
+                    if (this.user.created !== this.user.updated) {
                         this.showUpdated = true;
                     }
                 }

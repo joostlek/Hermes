@@ -1,12 +1,12 @@
 <section class="dox-content">
     <h2>{{user?.firstName}} {{user?.lastName}}</h2>
     <h4 class="email">{{user?.email}}</h4>
-    <h6>Created {{intervalCreated?.toString()}} ago</h6>
-    <h6 *ngIf="showUpdated">Updated {{intervalUpdated?.toString()}} ago</h6>
     <div class="btn-group btn-icon">
         <button class="btn btn-primary" (click)="openEditModal()">
             <clr-icon shape="pencil"></clr-icon>
         </button>
     </div>
+    <h6>Created {{intervalCreated?.toString()}} ago</h6>
+    <h6 *ngIf="showUpdated" class="updated">Updated {{intervalUpdated?.toString()}} ago</h6>
 </section>
 <app-edit-user-modal *ngIf="user" [user]="user" [openStream]="editUser"></app-edit-user-modal>

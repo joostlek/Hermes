@@ -20,7 +20,6 @@ export class Interval {
     private _minutes: number;
     private _seconds: number;
 
-
     get years(): number {
         return this._years;
     }
@@ -84,7 +83,11 @@ export class Interval {
             if (res.length !== 0) {
                 res += ',';
             }
-            res += this.days + ' days';
+            if (this.days === 0) {
+                res += this.minutes + ' minutes';
+            } else {
+                res += this.days + ' days';
+            }
         }
         return res;
     }
