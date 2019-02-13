@@ -16,7 +16,7 @@ export class SecuredImageComponent implements OnChanges {
     }
 
     @Input() private src: string;
-    @Input() private style: any;
+    @Input() style: any;
     private src$ = new BehaviorSubject(this.src);
 
     dataUrl$ = this.src$
