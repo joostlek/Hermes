@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~7.0.3",
     "@angular/platform-browser-dynamic": "~7.0.3",
     "@angular/router": "~7.0.3",
-    "@clr/angular": "~1.0.4",
+    "@clr/angular": "~1.0.5",
     "@clr/icons": "~1.0.5",
     "@clr/ui": "~1.0.5",
     "@webcomponents/custom-elements": "^1.0.0",
