@@ -16,4 +16,8 @@ public interface LocationServiceInterface {
     Location update(Location location);
 
     void delete(Long id);
+
+    void addAdvertisingLocationToCompany(Long companyId, Long locationId);
+
+    List<Location> getAdvertisingLocationsByCompanyId(Long companyId);
 }

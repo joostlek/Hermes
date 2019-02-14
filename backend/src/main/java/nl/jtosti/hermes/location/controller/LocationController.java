@@ -2,6 +2,7 @@ package nl.jtosti.hermes.location.controller;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
+import nl.jtosti.hermes.company.dto.AddAdvertisingLocationDTO;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
@@ -79,6 +80,21 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteLocation(@PathVariable Long id) {
         locationService.delete(id);
+    }
+
+    @PostMapping("/companies/{companyId}/advertising")
+    @ResponseStatus(HttpStatus.OK)
+    public void addAdvertisingLocationToCompany(@RequestBody AddAdvertisingLocationDTO locationDTO, @PathVariable Long companyId) {
+        locationService.addAdvertisingLocationToCompany(companyId, locationDTO.getLocationId());
+    }
+
+    @GetMapping("/companies/{companyId}/advertising")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedLocationDTO> getAdvertisingLocations(@PathVariable Long companyId) {
+        List<Location> locations = locationService.getAdvertisingLocationsByCompanyId(companyId);
+        return locations.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
     }
 
     private ExtendedLocationDTO convertToExtendedDTO(Location location) {

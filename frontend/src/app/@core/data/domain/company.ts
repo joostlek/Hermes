@@ -11,6 +11,7 @@ export class Company {
     city: string;
     country: string;
     zipCode: string;
+    advertisingLocations: Location[];
     locations: Location[];
     users: User[];
     images: Image[];

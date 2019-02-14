@@ -7,10 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Location {
@@ -51,10 +48,16 @@ public class Location {
     @JsonIgnoreProperties({"locations", "images"})
     private Company company;
 
+    @ManyToMany(mappedBy = "advertisingLocations")
+    private Set<Company> advertisingCompanies;
+
     protected Location() {
+        this.screens = new ArrayList<>();
+        this.advertisingCompanies = new HashSet<>();
     }
 
     public Location(String name, String street, String houseNumber, String zipCode, String city, String country, Company company) {
+        this();
         this.name = name;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -146,6 +149,18 @@ public class Location {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Set<Company> getAdvertisingCompanies() {
+        return advertisingCompanies;
+    }
+
+    public void setAdvertisingCompanies(Set<Company> advertisingCompanies) {
+        this.advertisingCompanies = advertisingCompanies;
+    }
+
+    public void addAdvertisingCompanies(Company company) {
+        this.advertisingCompanies.add(company);
     }
 
     @Override

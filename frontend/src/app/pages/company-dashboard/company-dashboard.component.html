@@ -1,5 +1,6 @@
 <div class="content-container">
     <div class="content-area">
+        {{company | json}}
         <router-outlet></router-outlet>
     </div>
     <nav class="sidenav" [clr-nav-level]="2">
@@ -16,6 +17,10 @@
                     </li>
                     <li>
                         <a class="nav-link" routerLink="manage/users" routerLinkActive="active">Users</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" routerLink="manage/advertising-locations" routerLinkActive="active">Advertising
+                            Locations</a>
                     </li>
                 </ul>
             </section>

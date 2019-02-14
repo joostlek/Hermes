@@ -54,4 +54,8 @@ export class LocationService {
         return this.http.put<Location>('api/locations/' + location.id, location);
     }
 
+    public getAdvertisingLocationsByCompanyId(companyId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/companies/' + companyId + '/advertising');
+    }
+
 }

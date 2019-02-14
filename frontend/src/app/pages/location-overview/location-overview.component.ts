@@ -5,6 +5,7 @@ import {CurrentUserService} from '../../@core/data/current-user.service';
 import {Company} from '../../@core/data/domain/company';
 import {User} from '../../@core/data/domain/user';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {LocationService} from '../../@core/data/location.service';
 
 @Component({
     selector: 'app-location-overview',
@@ -22,6 +23,7 @@ export class LocationOverviewComponent implements OnInit {
     constructor(
         private companyService: CompanyService,
         private currentUserService: CurrentUserService,
+        private locationService: LocationService,
     ) {
     }
 

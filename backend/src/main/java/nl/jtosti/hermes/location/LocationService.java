@@ -1,5 +1,7 @@
 package nl.jtosti.hermes.location;
 
+import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.company.CompanyService;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,13 @@ import java.util.List;
 public class LocationService implements LocationServiceInterface {
 
     private final LocationRepository locationRepository;
+    private final CompanyService companyService;
+
 
     @Autowired
-    public LocationService(LocationRepository locationRepository) {
+    public LocationService(LocationRepository locationRepository, CompanyService companyService) {
         this.locationRepository = locationRepository;
+        this.companyService = companyService;
     }
 
     @Override
@@ -63,5 +68,18 @@ public class LocationService implements LocationServiceInterface {
     @Override
     public void delete(Long id) {
         locationRepository.deleteById(id);
+    }
+
+    @Override
+    public void addAdvertisingLocationToCompany(Long companyId, Long locationId) {
+        Company company = companyService.getCompanyById(companyId);
+        Location location = this.getLocationById(locationId);
+        location.addAdvertisingCompanies(company);
+        this.save(location);
+    }
+
+    @Override
+    public List<Location> getAdvertisingLocationsByCompanyId(Long companyId) {
+        return locationRepository.findAllByAdvertisingCompanyId(companyId);
     }
 }
