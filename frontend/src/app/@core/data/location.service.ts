@@ -42,10 +42,6 @@ export class LocationService {
         return this.getPersonalLocationsByUserId(user.id);
     }
 
-    getPersonalLocationsByUserId(userId: number): Observable<Location[]> {
-        return this.http.get<Location[]>('api/users/' + userId + '/personal-locations');
-    }
-
     deleteLocation(locationId: number): Observable<any> {
         return this.http.delete('api/locations/' + locationId);
     }
@@ -56,6 +52,18 @@ export class LocationService {
 
     public getAdvertisingLocationsByCompanyId(companyId: number): Observable<Location[]> {
         return this.http.get<Location[]>('api/companies/' + companyId + '/advertising');
+    }
+
+    public getAllLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/locations');
+    }
+
+    public getAdvertisingLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/locations/advertising');
+    }
+
+    public getPersonalLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/locations/personal');
     }
 
 }

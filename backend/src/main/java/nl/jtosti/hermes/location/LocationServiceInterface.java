@@ -20,4 +20,10 @@ public interface LocationServiceInterface {
     void addAdvertisingLocationToCompany(Long companyId, Long locationId);
 
     List<Location> getAdvertisingLocationsByCompanyId(Long companyId);
+
+    List<Location> getAdvertisingLocationsByUserId(Long userId);
+
+    List<Location> getPersonalLocationsByUserId(Long userId);
+
+    List<Location> getAllLocationsByUserId(Long userId);
 }

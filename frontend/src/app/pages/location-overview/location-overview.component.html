@@ -5,19 +5,19 @@
             <clr-tab>
                 <button clrTabLink id="link1">All</button>
                 <clr-tab-content id="content1" *clrIfActive>
-                    <app-company-list [companyStream]="allCompanyStream"></app-company-list>
+                    <app-location-list [locationStream]="getAllLocationsStream()"></app-location-list>
                 </clr-tab-content>
             </clr-tab>
             <clr-tab>
                 <button clrTabLink id="link2">Personal</button>
                 <clr-tab-content *clrIfActive>
-                    <app-company-list [companyStream]="personalCompanyStream"></app-company-list>
+                    <app-location-list [locationStream]="getPersonalLocationsStream()"></app-location-list>
                 </clr-tab-content>
             </clr-tab>
             <clr-tab>
                 <button clrTabLink id="link3">Advertising</button>
                 <clr-tab-content *clrIfActive>
-                    <app-company-list [companyStream]="advertisingCompanyStream"></app-company-list>
+                    <app-location-list [locationStream]="getAdvertisingLocationsStream()"></app-location-list>
                 </clr-tab-content>
             </clr-tab>
         </clr-tabs>

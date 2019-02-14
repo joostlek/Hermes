@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -81,5 +83,20 @@ public class LocationService implements LocationServiceInterface {
     @Override
     public List<Location> getAdvertisingLocationsByCompanyId(Long companyId) {
         return locationRepository.findAllByAdvertisingCompanyId(companyId);
+    }
+
+    @Override
+    public List<Location> getAdvertisingLocationsByUserId(Long userId) {
+        return locationRepository.findAllAdvertisingCompaniesByUserId(userId);
+    }
+
+    @Override
+    public List<Location> getPersonalLocationsByUserId(Long userId) {
+        return locationRepository.findAllPersonalCompaniesByUserId(userId);
+    }
+
+    @Override
+    public List<Location> getAllLocationsByUserId(Long userId) {
+        return Stream.concat(this.getPersonalLocationsByUserId(userId).stream(), this.getAdvertisingLocationsByUserId(userId).stream()).collect(Collectors.toList());
     }
 }

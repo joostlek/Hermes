@@ -97,6 +97,33 @@ public class LocationController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/users/{userId}/locations")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedLocationDTO> getAllLocationsByUserId(@PathVariable Long userId) {
+        List<Location> locations = locationService.getAllLocationsByUserId(userId);
+        return locations.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/users/{userId}/locations/advertising")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedLocationDTO> getAdvertisingLocationsByUserId(@PathVariable Long userId) {
+        List<Location> locations = locationService.getAdvertisingLocationsByUserId(userId);
+        return locations.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/users/{userId}/locations/personal")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ExtendedLocationDTO> getPersonalLocationsByUserId(@PathVariable Long userId) {
+        List<Location> locations = locationService.getPersonalLocationsByUserId(userId);
+        return locations.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
     private ExtendedLocationDTO convertToExtendedDTO(Location location) {
         return modelMapper.map(location, ExtendedLocationDTO.class);
     }
