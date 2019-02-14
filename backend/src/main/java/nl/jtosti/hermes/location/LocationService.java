@@ -74,10 +74,11 @@ public class LocationService implements LocationServiceInterface {
 
     @Override
     public void addAdvertisingLocationToCompany(Long companyId, Long locationId) {
+        System.out.println(companyId);
         Company company = companyService.getCompanyById(companyId);
         Location location = this.getLocationById(locationId);
         location.addAdvertisingCompanies(company);
-        this.save(location);
+        location = locationRepository.save(location);
     }
 
     @Override

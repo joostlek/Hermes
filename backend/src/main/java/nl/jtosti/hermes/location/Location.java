@@ -42,13 +42,22 @@ public class Location {
 
     @OneToMany(mappedBy = "location")
     @JsonIgnoreProperties({"location", "images"})
-    private List<Screen> screens = new ArrayList<>();
+    private List<Screen> screens;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonIgnoreProperties({"locations", "images"})
     private Company company;
 
-    @ManyToMany(mappedBy = "advertisingLocations")
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinTable(
+            name = "company_locations",
+            joinColumns = {
+                    @JoinColumn(name = "location_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "company_id")
+            }
+    )
     private Set<Company> advertisingCompanies;
 
     protected Location() {

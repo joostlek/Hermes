@@ -60,16 +60,7 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private Set<Location> locations;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinTable(
-            name = "company_locations",
-            joinColumns = {
-                    @JoinColumn(name = "company_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "location_id")
-            }
-    )
+    @ManyToMany(mappedBy = "advertisingCompanies")
     private Set<Location> advertisingLocations;
 
     @OneToMany(mappedBy = "company")

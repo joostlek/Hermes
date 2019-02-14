@@ -3,6 +3,7 @@ import {ChosenCompanyService} from '../../chosen-company.service';
 import {LocationService} from '../../../../@core/data/location.service';
 import {Company} from '../../../../@core/data/domain/company';
 import {Location} from '../../../../@core/data/domain/location';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-c-manage-advertising-locations',
@@ -10,6 +11,8 @@ import {Location} from '../../../../@core/data/domain/location';
     styleUrls: ['./c-manage-advertising-locations.component.css'],
 })
 export class CManageAdvertisingLocationsComponent implements OnInit {
+    addLocationModal: Subject<boolean> = new Subject<boolean>();
+
     locations: Location[];
 
     constructor(
@@ -34,5 +37,9 @@ export class CManageAdvertisingLocationsComponent implements OnInit {
                         );
                 },
             );
+    }
+
+    public openAddLocationModal(): void {
+        this.addLocationModal.next(true);
     }
 }

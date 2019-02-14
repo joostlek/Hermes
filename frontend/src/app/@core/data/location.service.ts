@@ -66,4 +66,8 @@ export class LocationService {
         return this.http.get<Location[]>('api/users/' + userId + '/locations/personal');
     }
 
+    public addAdvertisingLocationToCompany(locationId: number, companyId: number): Observable<any> {
+        return this.http.post('api/companies/' + companyId + '/advertising', {locationId});
+    }
+
 }
