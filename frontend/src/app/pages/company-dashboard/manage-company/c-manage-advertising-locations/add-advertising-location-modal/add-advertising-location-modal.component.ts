@@ -6,6 +6,7 @@ import {Company} from '../../../../../@core/data/domain/company';
 import {Location} from '../../../../../@core/data/domain/location';
 import {LocationService} from '../../../../../@core/data/location.service';
 import {ChosenCompanyService} from '../../../chosen-company.service';
+import {ClrLoadingState} from '@clr/angular';
 
 @Component({
     selector: 'app-add-advertising-location-modal',
@@ -13,6 +14,7 @@ import {ChosenCompanyService} from '../../../chosen-company.service';
     styleUrls: ['./add-advertising-location-modal.component.css'],
 })
 export class AddAdvertisingLocationModalComponent implements OnInit {
+    @Input() refreshStream: Subject<boolean>;
     @Input() openStream: Subject<boolean>;
 
     open = false;
@@ -20,6 +22,8 @@ export class AddAdvertisingLocationModalComponent implements OnInit {
 
     companies: Company[];
     locations: Location[];
+
+    submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     constructor(
         private companyService: CompanyService,
@@ -71,13 +75,21 @@ export class AddAdvertisingLocationModalComponent implements OnInit {
     }
 
     public addLocation(): void {
+        this.submitButtonState = ClrLoadingState.LOADING;
         this.chosenCompanyService.getCompany()
             .subscribe(
                 (company: Company) => {
                     this.locationService.addAdvertisingLocationToCompany(+this.locationForm.controls['locationId'].value, company.id)
                         .subscribe(
                             () => {
-                                console.log('kek');
+                                this.submitButtonState = ClrLoadingState.SUCCESS;
+                                this.refreshStream.next(true);
+                                this.closeModal();
+                            },
+                            (error) => {
+                                this.error = JSON.parse(error.error)['message'];
+                                this.submitButtonState = ClrLoadingState.ERROR;
+                                console.error(this.error);
                             },
                         );
                 },

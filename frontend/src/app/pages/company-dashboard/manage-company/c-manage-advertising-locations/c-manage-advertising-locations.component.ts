@@ -13,6 +13,8 @@ import {Subject} from 'rxjs';
 export class CManageAdvertisingLocationsComponent implements OnInit {
     addLocationModal: Subject<boolean> = new Subject<boolean>();
 
+    refreshList: Subject<boolean> = new Subject<boolean>();
+
     locations: Location[];
 
     constructor(
@@ -22,7 +24,16 @@ export class CManageAdvertisingLocationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getAdvertisingLocations();
+        this.watchRefresh();
+        this.refreshList.next(true);
+    }
+
+    private watchRefresh(): void {
+        this.refreshList.subscribe(
+            () => {
+                this.getAdvertisingLocations();
+            },
+        );
     }
 
     private getAdvertisingLocations(): void {
