@@ -2,8 +2,10 @@ package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyService;
+import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
 import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
+import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,9 +78,15 @@ public class LocationService implements LocationServiceInterface {
     @Override
     public void addAdvertisingLocationToCompany(Long companyId, Long locationId) {
         Company company = companyService.getCompanyById(companyId);
+        if (locationId == 0) {
+            throw new LocationNotSelectedException();
+        }
         Location location = this.getLocationById(locationId);
         if (location.getCompany().equals(company)) {
             throw new LocationIsFromCompanyException();
+        }
+        if (location.hasAdvertisingCompany(company)) {
+            throw new LocationAlreadyAddedException();
         }
         location.addAdvertisingCompanies(company);
         locationRepository.save(location);
