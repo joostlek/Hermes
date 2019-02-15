@@ -172,6 +172,15 @@ public class Location {
         this.advertisingCompanies.add(company);
     }
 
+    public boolean hasAdvertisingCompany(Company company) {
+        for (Company comp : this.advertisingCompanies) {
+            if (comp.equals(company)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         if (this.id == null) {
