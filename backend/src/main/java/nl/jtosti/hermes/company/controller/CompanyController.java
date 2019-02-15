@@ -132,6 +132,9 @@ public class CompanyController {
         if (company.getImages() == null) {
             company.setImages(new HashSet<>());
         }
+        if (company.getAdvertisingLocations() == null) {
+            company.setAdvertisingLocations(new HashSet<>());
+        }
         return company;
     }
 }

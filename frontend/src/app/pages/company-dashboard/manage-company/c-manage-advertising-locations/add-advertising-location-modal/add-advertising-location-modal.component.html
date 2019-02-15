@@ -1,0 +1,36 @@
+<clr-modal [(clrModalOpen)]="open">
+    <h3 class="modal-title">Add user</h3>
+    <div class="modal-body">
+        <p>Please enter the email address of the user you want to add to this company.</p>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">{{error}}</span>
+                </div>
+            </div>
+        </div>
+        <form clrForm [formGroup]="locationForm">
+            <clr-select-container>
+                <label for="company">Company</label>
+                <select clrSelect name="company" formControlName="companyId" id="company"
+                        (change)="updateLocations($event.target.value)">
+                    <option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</option>
+                </select>
+            </clr-select-container>
+            <clr-select-container>
+                <label for="location">Location</label>
+                <select clrSelect name="location" formControlName="locationId" id="location">
+                    <option *ngFor="let location of locations" value="{{location.id}}">{{location.name}}</option>
+                </select>
+            </clr-select-container>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button [clrLoading]="submitButtonState" type="button" class="btn btn-primary" (click)="addLocation()">Ok
+        </button>
+    </div>
+</clr-modal>

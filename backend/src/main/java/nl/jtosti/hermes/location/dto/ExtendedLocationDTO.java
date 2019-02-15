@@ -2,8 +2,11 @@ package nl.jtosti.hermes.location.dto;
 
 import nl.jtosti.hermes.company.dto.CompanyDTO;
 
+import java.util.Set;
+
 public class ExtendedLocationDTO extends LocationDTO {
     private CompanyDTO company;
+    private Set<CompanyDTO> advertisingCompanies;
     private String street;
     private String houseNumber;
     private String zipCode;
@@ -16,6 +19,14 @@ public class ExtendedLocationDTO extends LocationDTO {
 
     public void setCompany(CompanyDTO company) {
         this.company = company;
+    }
+
+    public Set<CompanyDTO> getAdvertisingCompanies() {
+        return advertisingCompanies;
+    }
+
+    public void setAdvertisingCompanies(Set<CompanyDTO> advertisingCompanies) {
+        this.advertisingCompanies = advertisingCompanies;
     }
 
     public String getStreet() {

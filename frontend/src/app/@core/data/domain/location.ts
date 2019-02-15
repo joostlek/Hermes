@@ -13,4 +13,5 @@ export class Location {
     city: string;
     country: string;
     zipCode: string;
+    advertisingCompanies: Company[];
 }

@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.company.CompanyService;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import nl.jtosti.hermes.user.User;
 import org.junit.jupiter.api.DisplayName;
@@ -154,10 +155,13 @@ class LocationServiceTest {
     static class LocationServiceTestContextConfiguration {
         @Autowired
         private LocationRepository locationRepository;
+        @Autowired
+        private CompanyService companyService;
+
 
         @Bean
         public LocationServiceInterface locationServiceInterface() {
-            return new LocationService(locationRepository);
+            return new LocationService(locationRepository, companyService);
         }
     }
 }

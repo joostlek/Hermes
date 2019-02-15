@@ -42,16 +42,32 @@ export class LocationService {
         return this.getPersonalLocationsByUserId(user.id);
     }
 
-    getPersonalLocationsByUserId(userId: number): Observable<Location[]> {
-        return this.http.get<Location[]>('api/users/' + userId + '/personal-locations');
-    }
-
     deleteLocation(locationId: number): Observable<any> {
         return this.http.delete('api/locations/' + locationId);
     }
 
     updateLocation(location: Location): Observable<Location> {
         return this.http.put<Location>('api/locations/' + location.id, location);
+    }
+
+    public getAdvertisingLocationsByCompanyId(companyId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/companies/' + companyId + '/advertising');
+    }
+
+    public getAllLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/locations');
+    }
+
+    public getAdvertisingLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/locations/advertising');
+    }
+
+    public getPersonalLocationsByUserId(userId: number): Observable<Location[]> {
+        return this.http.get<Location[]>('api/users/' + userId + '/locations/personal');
+    }
+
+    public addAdvertisingLocationToCompany(locationId: number, companyId: number): Observable<any> {
+        return this.http.post('api/companies/' + companyId + '/advertising', {locationId});
     }
 
 }

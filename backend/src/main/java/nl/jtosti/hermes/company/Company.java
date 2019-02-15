@@ -60,6 +60,9 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private Set<Location> locations;
 
+    @ManyToMany(mappedBy = "advertisingCompanies")
+    private Set<Location> advertisingLocations;
+
     @OneToMany(mappedBy = "company")
     private Set<Image> images;
 
@@ -67,6 +70,7 @@ public class Company {
         this.users = new HashSet<>();
         this.locations = new HashSet<>();
         this.images = new HashSet<>();
+        this.advertisingLocations = new HashSet<>();
     }
 
     public Company(String phoneNumber, String name, String street, String houseNumber, String zipCode, String city, String country) {
@@ -198,5 +202,17 @@ public class Company {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public Set<Location> getAdvertisingLocations() {
+        return advertisingLocations;
+    }
+
+    public void setAdvertisingLocations(Set<Location> advertisingLocations) {
+        this.advertisingLocations = advertisingLocations;
+    }
+
+    public void addAdvertisingLocation(Location location) {
+        this.advertisingLocations.add(location);
     }
 }
