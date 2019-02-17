@@ -10,6 +10,10 @@ const routes: Routes = [
         path: 'screens',
         loadChildren: './manage-screens/manage-screens.module#ManageScreensModule',
     },
+    {
+        path: 'advertising-companies',
+        loadChildren: './l-manage-advertising-companies/l-manage-advertising-companies.module#LManageAdvertisingCompaniesModule',
+    },
 ];
 
 @NgModule({
