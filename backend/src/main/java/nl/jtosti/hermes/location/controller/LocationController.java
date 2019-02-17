@@ -88,6 +88,12 @@ public class LocationController {
         locationService.addAdvertisingLocationToCompany(companyId, locationDTO.getLocationId());
     }
 
+    @DeleteMapping("/locations/{locationId}/advertising/{companyId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExtendedLocationDTO removeAdvertisingCompanyFromLocation(@PathVariable Long locationId, @PathVariable Long companyId) {
+        return convertToExtendedDTO(locationService.removeAdvertisingCompanyFromLocation(locationId, companyId));
+    }
+
     @GetMapping("/companies/{companyId}/advertising")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedLocationDTO> getAdvertisingLocations(@PathVariable Long companyId) {

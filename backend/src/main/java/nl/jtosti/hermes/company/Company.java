@@ -2,6 +2,7 @@ package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.user.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -202,6 +203,16 @@ public class Company {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public Set<Image> getImagesByLocation(Location location) {
+        Set<Image> images = new HashSet<>();
+        for (Image image : this.images) {
+            if (location.getScreens().contains(image.getScreen())) {
+                images.add(image);
+            }
+        }
+        return images;
     }
 
     public Set<Location> getAdvertisingLocations() {

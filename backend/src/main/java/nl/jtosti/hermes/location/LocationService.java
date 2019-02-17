@@ -2,10 +2,9 @@ package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyService;
-import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
-import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
-import nl.jtosti.hermes.location.exception.LocationNotFoundException;
-import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
+import nl.jtosti.hermes.company.exception.CompanyHasImagesException;
+import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.location.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +89,26 @@ public class LocationService implements LocationServiceInterface {
         }
         location.addAdvertisingCompanies(company);
         locationRepository.save(location);
+    }
+
+    @Override
+    public Location removeAdvertisingCompanyFromLocation(Long locationId, Long companyId) {
+        if (locationId == 0) {
+            throw new LocationNotFoundException(locationId);
+        }
+        if (companyId == 0) {
+            throw new CompanyNotFoundException(companyId);
+        }
+        Location location = this.getLocationById(locationId);
+        Company company = companyService.getCompanyById(companyId);
+        if (!location.hasAdvertisingCompany(company)) {
+            throw new CompanyNotAdvertisingException(company.getName(), location.getName());
+        }
+        if (company.getImagesByLocation(location).size() > 0) {
+            throw new CompanyHasImagesException(company.getName());
+        }
+        location.getAdvertisingCompanies().remove(company);
+        return locationRepository.save(location);
     }
 
     @Override

@@ -4,9 +4,10 @@ import {NgModule} from '@angular/core';
 import {LManageAdvertisingCompaniesRoutingModule} from './l-manage-advertising-companies-routing.module';
 import {LManageAdvertisingCompaniesComponent} from './l-manage-advertising-companies.component';
 import {ClarityModule} from '@clr/angular';
+import { RemoveAdvertisingCompanyModalComponent } from './remove-advertising-company-modal/remove-advertising-company-modal.component';
 
 @NgModule({
-    declarations: [LManageAdvertisingCompaniesComponent],
+    declarations: [LManageAdvertisingCompaniesComponent, RemoveAdvertisingCompanyModalComponent],
     imports: [
         CommonModule,
         ClarityModule,

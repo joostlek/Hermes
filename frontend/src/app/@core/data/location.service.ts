@@ -70,4 +70,8 @@ export class LocationService {
         return this.http.post('api/companies/' + companyId + '/advertising', {locationId});
     }
 
+    public removeAdvertisingCompanyFromLocation(locationId: number, companyId: number): Observable<Location> {
+        return this.http.delete<Location>('api/locations/' + locationId + '/advertising/' + companyId);
+    }
+
 }
