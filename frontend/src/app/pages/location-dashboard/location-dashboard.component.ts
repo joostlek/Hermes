@@ -7,6 +7,7 @@ import {Location} from '../../@core/data/domain/location';
 import {User} from '../../@core/data/domain/user';
 import {LocationService} from '../../@core/data/location.service';
 import {ChosenLocationService} from './chosen-location.service';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Component({
     selector: 'app-location-dashboard',
@@ -18,6 +19,11 @@ export class LocationDashboardComponent implements OnInit {
     company: Company;
     user: User;
 
+    chooseCompanyModal: Subject<boolean> = new Subject<boolean>();
+    companyChoices: Subject<Company[]> = new Subject<Company[]>();
+
+    admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
     constructor(
         private route: ActivatedRoute,
         private locationService: LocationService,
@@ -28,18 +34,19 @@ export class LocationDashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getParameter();
         this.getCurrentUser();
     }
 
-    getCurrentUser(): void {
+    private getCurrentUser(): void {
         this.currentUserService.getCurrentUser()
             .subscribe((value) => {
-                this.user = value;
-            });
+                    this.user = value;
+                    this.getParameter();
+                },
+            );
     }
 
-    getParameter(): void {
+    private getParameter(): void {
         this.route.params
             .subscribe(
                 (params) => {
@@ -48,36 +55,75 @@ export class LocationDashboardComponent implements OnInit {
             );
     }
 
-    getLocation(id: number): void {
+    private getLocation(id: number): void {
         this.locationService.getLocationById(id)
             .subscribe((location) => {
                     this.location = location;
+                this.watchCompany();
                 this.chosenLocation.pushNewLocation(location);
-                    this.getCompany(location.company.id);
+                this.getActingCompany();
                 },
             );
     }
 
-    getCompany(id: number): void {
+    private getActingCompany(): void {
+        const companies = [];
+        for (const key in this.user.companies) {
+            if (this.user.companies.hasOwnProperty(key)) {
+                const company = this.user.companies[key];
+                for (const adKey in this.location.advertisingCompanies) {
+                    if (this.location.advertisingCompanies.hasOwnProperty(adKey)) {
+                        const adCompany = this.location.advertisingCompanies[adKey];
+                        if (adCompany['id'] === company['id']) {
+                            companies.push(company);
+                        }
+                    }
+                }
+                if (company['id'] === this.location.company.id) {
+                    companies.push(company);
+                }
+            }
+        }
+        if (companies.length === 1) {
+            this.getCompany(companies[0]['id']);
+        } else if (companies.length > 1) {
+            this.openCompanyChooser();
+            this.companyChoices.next(companies);
+        }
+    }
+
+    private openCompanyChooser(): void {
+        this.chooseCompanyModal.next(true);
+    }
+
+    private getCompany(id: number): void {
         this.companyService.getCompanyById(id)
             .subscribe((company) => {
-                this.company = company;
                 this.chosenLocation.pushNewCompany(company);
                 },
             );
     }
 
-    isFromCompany(): boolean {
-        if (this.user === null || this.user === undefined || this.company === null || this.company === undefined) {
-            return false;
-        }
+    private watchCompany(): void {
+        this.chosenLocation.getCompany()
+            .subscribe(
+                (company: Company) => {
+                    this.company = company;
+                    this.checkRights();
+                },
+            );
+    }
+
+    private checkRights(): void {
         let res = false;
-        this.user.companies.forEach((value) => {
-            if (value.id === this.company.id) {
-                res = true;
-            }
-        });
-        return res;
+        this.company.locations.forEach(
+            (location: Location) => {
+                if (location.id === this.location.id) {
+                    res = true;
+                }
+            },
+        );
+        this.admin.next(res);
     }
 
 }
