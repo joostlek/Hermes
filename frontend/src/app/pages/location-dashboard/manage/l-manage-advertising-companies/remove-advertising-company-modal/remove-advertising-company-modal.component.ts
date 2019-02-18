@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
-import {Company} from '../../../@core/data/domain/company';
-import {Location} from '../../../@core/data/domain/location';
-import {ChosenLocationService} from '../../../pages/location-dashboard/chosen-location.service';
-import {LocationService} from '../../../@core/data/location.service';
+import {Company} from '../../../../../@core/data/domain/company';
+import {Location} from '../../../../../@core/data/domain/location';
+import {ChosenLocationService} from '../../../chosen-location.service';
+import {LocationService} from '../../../../../@core/data/location.service';
 import {ClrLoadingState} from '@clr/angular';
 
 @Component({

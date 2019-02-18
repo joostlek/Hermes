@@ -13,7 +13,6 @@ import {ImageTableComponent} from './tables/image-table/image-table.component';
 import {LocationTableComponent} from './tables/location-table/location-table.component';
 import {ScreenTableComponent} from './tables/screen-table/screen-table.component';
 import {UserTableComponent} from './tables/user-table/user-table.component';
-import {RemoveAdvertisingCompanyModalComponent} from './modals/remove-advertising-company-modal/remove-advertising-company-modal.component';
 
 const COMPONENTS = [
     Sidebar,
@@ -27,7 +26,6 @@ const COMPONENTS = [
     ExampleScreenComponent,
     EditImageModalComponent,
     RemoveImageModalComponent,
-    RemoveAdvertisingCompanyModalComponent,
 ];
 
 @NgModule({
