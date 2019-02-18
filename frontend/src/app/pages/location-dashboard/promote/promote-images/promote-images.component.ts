@@ -3,6 +3,7 @@ import {Image} from '../../../../@core/data/domain/image';
 import {Location} from '../../../../@core/data/domain/location';
 import {ImageService} from '../../../../@core/data/image.service';
 import {ChosenLocationService} from '../../chosen-location.service';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-promote-images',
@@ -10,8 +11,9 @@ import {ChosenLocationService} from '../../chosen-location.service';
     styleUrls: ['./promote-images.component.css'],
 })
 export class PromoteImagesComponent implements OnInit {
+    imageWizard: Subject<boolean> = new Subject<boolean>();
+
     images: Image[];
-    wizardOpen = false;
     location: Location;
 
     constructor(
@@ -27,6 +29,10 @@ export class PromoteImagesComponent implements OnInit {
                 this.location = location;
                 },
             );
+    }
+
+    private openImageWizard(): void {
+        this.imageWizard.next(true);
     }
 
     getCurrentLocation() {
