@@ -13,6 +13,8 @@ public interface ImageServiceInterface {
 
     List<Image> getImagesByLocationId(Long id);
 
+    List<Image> getImagesByLocationIdAndCompanyId(Long locationId, Long companyId);
+
     boolean exists(Long id);
 
     Image save(Image image);

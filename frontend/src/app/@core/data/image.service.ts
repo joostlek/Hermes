@@ -56,4 +56,8 @@ export class ImageService {
     public deleteImage(imageId: number): Observable<any> {
         return this.http.delete('api/images/' + imageId);
     }
+
+    public getImagesByLocationIdByCompanyId(locationId: number, companyId: number): Observable<Image[]> {
+        return this.http.get<Image[]>('api/locations/' + locationId + '/images?companyId=' + companyId);
+    }
 }

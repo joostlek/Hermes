@@ -87,6 +87,16 @@ public class ImageController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping(value = "/locations/{locationId}/images", params = {"companyId"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<ImageDTO> getImagesByLocationIdByCompanyId(@PathVariable Long locationId,
+                                                           @RequestParam Long companyId) {
+        List<Image> images = imageService.getImagesByLocationIdAndCompanyId(locationId, companyId);
+        return images.stream()
+                .map(this::convertToExtendedDTO)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/images/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ImageDTO getOneImage(@PathVariable Long id) {
