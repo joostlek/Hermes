@@ -27,6 +27,8 @@ import static org.mockito.Mockito.when;
 @DisplayName("Location Service")
 @Tag("services")
 class LocationServiceTest {
+    @MockBean
+    private CompanyService companyService;
 
     @Autowired
     private LocationServiceInterface locationService;
