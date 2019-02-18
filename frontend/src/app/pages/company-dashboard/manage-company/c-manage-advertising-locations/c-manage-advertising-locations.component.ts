@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ChosenCompanyService} from '../../chosen-company.service';
-import {LocationService} from '../../../../@core/data/location.service';
+import {Subject} from 'rxjs';
 import {Company} from '../../../../@core/data/domain/company';
 import {Location} from '../../../../@core/data/domain/location';
-import {Subject} from 'rxjs';
+import {LocationService} from '../../../../@core/data/location.service';
+import {ChosenCompanyService} from '../../chosen-company.service';
 
 @Component({
     selector: 'app-c-manage-advertising-locations',
@@ -12,10 +12,12 @@ import {Subject} from 'rxjs';
 })
 export class CManageAdvertisingLocationsComponent implements OnInit {
     addLocationModal: Subject<boolean> = new Subject<boolean>();
-
+    removeLocationModal: Subject<boolean> = new Subject<boolean>();
     refreshList: Subject<boolean> = new Subject<boolean>();
 
     locations: Location[];
+
+    locationToBeDeleted: Location;
 
     constructor(
         private chosenCompanyService: ChosenCompanyService,
@@ -52,5 +54,10 @@ export class CManageAdvertisingLocationsComponent implements OnInit {
 
     public openAddLocationModal(): void {
         this.addLocationModal.next(true);
+    }
+
+    public openRemoveLocationModal(location: Location): void {
+        this.locationToBeDeleted = location;
+        this.removeLocationModal.next(true);
     }
 }

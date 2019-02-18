@@ -6,9 +6,10 @@ import {CManageAdvertisingLocationsComponent} from './c-manage-advertising-locat
 import {ClarityModule, ClrFormsModule} from '@clr/angular';
 import {AddAdvertisingLocationModalComponent} from './add-advertising-location-modal/add-advertising-location-modal.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {RemoveAdvertisingLocationModalComponent} from './remove-advertising-location-modal/remove-advertising-location-modal.component';
 
 @NgModule({
-    declarations: [CManageAdvertisingLocationsComponent, AddAdvertisingLocationModalComponent],
+    declarations: [CManageAdvertisingLocationsComponent, AddAdvertisingLocationModalComponent, RemoveAdvertisingLocationModalComponent],
     imports: [
         CommonModule,
         ClarityModule,
