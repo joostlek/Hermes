@@ -1,0 +1,29 @@
+<clr-modal [(clrModalOpen)]="open">
+    <h3 class="modal-title">Choose company</h3>
+    <div class="modal-body">
+        <form clrForm [formGroup]="companyForm">
+            <div class="alert alert-danger" role="alert" *ngIf="error">
+                <div class="alert-items">
+                    <div class="alert-item static">
+                        <div class="alert-icon-wrapper">
+                            <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                        </div>
+                        <span class="alert-text">{{error}}</span>
+                    </div>
+                </div>
+            </div>
+            <clr-select-container>
+                <label for="companyId">Company</label>
+                <select clrSelect name="companyId" formControlName="companyId" id="companyId">
+                    <option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</option>
+                </select>
+            </clr-select-container>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="goBack()">back</button>
+        <button [clrLoading]="submitButtonState" type="button" class="btn btn-success" (click)="chooseCompany()"
+                [disabled]="error">Choose
+        </button>
+    </div>
+</clr-modal>

@@ -1,5 +1,5 @@
 <section *ngIf="location != null">
-    <h2>{{company?.name}} - {{location.name}}</h2>
+    <h2>{{location.company.name}} - {{location.name}}</h2>
     <div class="btn-group btn-icon">
         <button class="btn btn-primary" (click)="openEditModal()">
             <clr-icon shape="pencil"></clr-icon>

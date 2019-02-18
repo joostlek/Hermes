@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {Company} from '../../../@core/data/domain/company';
 import {Location} from '../../../@core/data/domain/location';
 import {ChosenLocationService} from '../chosen-location.service';
 import {Router} from '@angular/router';
@@ -14,7 +13,6 @@ import {Router} from '@angular/router';
 export class LocationDetailComponent implements OnInit {
     private refreshLocationStream$: Subject<boolean> = new Subject();
     location: Location;
-    company: Company;
 
     editModal: Subject<boolean> = new Subject();
     deleteModal: Subject<boolean> = new Subject();
@@ -29,7 +27,6 @@ export class LocationDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getLocation();
-        this.getCompany();
         this.checkRefresh();
         this.checkForward();
     }
@@ -39,7 +36,6 @@ export class LocationDetailComponent implements OnInit {
             () => {
                 this.refreshLocationStream$.next(true);
                 this.getLocation();
-                this.getCompany();
             },
         );
     }
@@ -59,17 +55,6 @@ export class LocationDetailComponent implements OnInit {
             )
             .subscribe((location) => {
                     this.location = location;
-                },
-            );
-    }
-
-    private getCompany(): void {
-        this.chosenLocationService.getCompany()
-            .pipe(
-                takeUntil(this.refreshLocationStream$),
-            )
-            .subscribe((company) => {
-                    this.company = company;
                 },
             );
     }
