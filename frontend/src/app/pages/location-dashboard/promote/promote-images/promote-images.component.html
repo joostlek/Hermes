@@ -1,7 +1,7 @@
 <h1>Manage images</h1>
-<button type="button" class="btn btn-icon btn-primary" title="Add new image" (click)="wizardOpen = !wizardOpen">
+<button type="button" class="btn btn-icon btn-primary" title="Add new image" (click)="openImageWizard()">
     <clr-icon shape="plus"></clr-icon>
     create
 </button>
 <app-image-table [images]="images"></app-image-table>
-<app-image-wizard [open]="wizardOpen"></app-image-wizard>
+<app-image-wizard [openStream]="imageWizard"></app-image-wizard>

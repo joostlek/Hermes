@@ -13,6 +13,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
     selector: 'app-location-dashboard',
     templateUrl: './location-dashboard.component.html',
     styleUrls: ['./location-dashboard.component.css'],
+    providers: [ChosenLocationService],
 })
 export class LocationDashboardComponent implements OnInit {
     location: Location;
@@ -35,6 +36,7 @@ export class LocationDashboardComponent implements OnInit {
 
     ngOnInit() {
         this.getCurrentUser();
+        console.log(this.chosenLocation);
     }
 
     private getCurrentUser(): void {
@@ -56,6 +58,7 @@ export class LocationDashboardComponent implements OnInit {
     }
 
     private getLocation(id: number): void {
+        console.log('kek');
         this.locationService.getLocationById(id)
             .subscribe((location) => {
                     this.location = location;
@@ -67,33 +70,50 @@ export class LocationDashboardComponent implements OnInit {
     }
 
     private getActingCompany(): void {
-        const companies = [];
-        for (const key in this.user.companies) {
-            if (this.user.companies.hasOwnProperty(key)) {
-                const company = this.user.companies[key];
-                for (const adKey in this.location.advertisingCompanies) {
-                    if (this.location.advertisingCompanies.hasOwnProperty(adKey)) {
-                        const adCompany = this.location.advertisingCompanies[adKey];
-                        if (adCompany['id'] === company['id']) {
-                            companies.push(company);
+        const tempCompany = sessionStorage.getItem('selectedCompany');
+        console.log(tempCompany);
+        if (tempCompany !== null) {
+            this.getCompany(JSON.parse(tempCompany)[this.location.id]['id']);
+        } else {
+            const companies = [];
+            for (const key in this.user.companies) {
+                if (this.user.companies.hasOwnProperty(key)) {
+                    const company = this.user.companies[key];
+                    for (const adKey in this.location.advertisingCompanies) {
+                        if (this.location.advertisingCompanies.hasOwnProperty(adKey)) {
+                            const adCompany = this.location.advertisingCompanies[adKey];
+                            if (adCompany['id'] === company['id']) {
+                                companies.push(company);
+                            }
                         }
                     }
-                }
-                if (company['id'] === this.location.company.id) {
-                    companies.push(company);
+                    if (company['id'] === this.location.company.id) {
+                        companies.push(company);
+                    }
                 }
             }
-        }
-        if (companies.length === 1) {
-            this.getCompany(companies[0]['id']);
-        } else if (companies.length > 1) {
-            this.openCompanyChooser();
-            this.companyChoices.next(companies);
+            if (companies.length === 1) {
+                this.getCompany(companies[0]['id']);
+            } else if (companies.length > 1) {
+                this.openCompanyChooser();
+                this.companyChoices.next(companies);
+            }
         }
     }
 
     private openCompanyChooser(): void {
         this.chooseCompanyModal.next(true);
+    }
+
+    private putSessionStorage(companyId: number): void {
+        const tempCompany = sessionStorage.getItem('selectedCompany');
+        let res = {};
+        if (tempCompany !== null) {
+            res = JSON.parse(tempCompany);
+        }
+        res[this.location.id] = {};
+        res[this.location.id]['id'] = companyId;
+        sessionStorage.setItem('selectedCompany', JSON.stringify(res));
     }
 
     private getCompany(id: number): void {
@@ -108,6 +128,8 @@ export class LocationDashboardComponent implements OnInit {
         this.chosenLocation.getCompany()
             .subscribe(
                 (company: Company) => {
+                    console.log(company.id);
+                    this.putSessionStorage(company.id);
                     this.company = company;
                     this.checkRights();
                 },

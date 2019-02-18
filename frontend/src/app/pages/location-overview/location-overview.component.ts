@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {CompanyService} from '../../@core/data/company.service';
 import {CurrentUserService} from '../../@core/data/current-user.service';
 import {Location} from '../../@core/data/domain/location';
 import {User} from '../../@core/data/domain/user';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {LocationService} from '../../@core/data/location.service';
 
 @Component({
@@ -28,6 +28,11 @@ export class LocationOverviewComponent implements OnInit {
 
     ngOnInit() {
         this.initializeStreams();
+        this.removeSelectedCompany();
+    }
+
+    private removeSelectedCompany(): void {
+        sessionStorage.removeItem('selectedCompany');
     }
 
     private getCurrentUser(): Observable<User> {

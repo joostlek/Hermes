@@ -19,7 +19,7 @@ import {ChosenLocationService} from '../../../chosen-location.service';
     styleUrls: ['./image-wizard.component.css'],
 })
 export class ImageWizardComponent implements OnInit, OnDestroy {
-    @Input('open') open: boolean;
+    @Input() openStream: Subject<boolean>;
     @ViewChild('wizardlg') wizard: ClrWizard;
     @ViewChild('finalPage') finalPage: ClrWizardPage;
 
@@ -32,7 +32,8 @@ export class ImageWizardComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    wizardOpen = false;
+    open = false;
+
     loadingFlag = false;
     errorFlag = false;
     error: any;
@@ -60,6 +61,15 @@ export class ImageWizardComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getScreens();
         this.getCompany();
+        this.watchOpen();
+    }
+
+    private watchOpen(): void {
+        this.openStream.subscribe(
+            (value: boolean) => {
+                this.open = value;
+            },
+        );
     }
 
     getScreens(): void {
@@ -131,6 +141,7 @@ export class ImageWizardComponent implements OnInit, OnDestroy {
         this.firstPage.reset();
         this.wizard.close();
         this.submitButtonState = ClrLoadingState.DEFAULT;
+        this.openStream.next(false);
     }
 
     doCancel(): void {

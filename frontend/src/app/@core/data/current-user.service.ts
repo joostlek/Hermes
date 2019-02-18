@@ -1,7 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from './domain/user';
+import {filter} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -12,11 +13,13 @@ export class CurrentUserService {
     constructor(private http: HttpClient) {
     }
 
-    getCurrentUser() {
+    public getCurrentUser(): Observable<User> {
         if (this.user$.getValue() === null) {
             this.updateCurrentUser();
         }
-        return this.user$;
+        return this.user$.pipe(
+            filter((value) => value !== null),
+        );
     }
 
     updateCurrentUser(): void {

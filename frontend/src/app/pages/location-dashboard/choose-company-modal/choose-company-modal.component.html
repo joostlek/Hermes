@@ -1,0 +1,17 @@
+<clr-modal [(clrModalOpen)]="open">
+    <h3 class="modal-title">Choose company</h3>
+    <div class="modal-body">
+        <form clrForm [formGroup]="companyForm">
+            <clr-select-container>
+                <label for="companyId">Company</label>
+                <select clrSelect name="companyId" formControlName="companyId" id="companyId">
+                    <option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</option>
+                </select>
+            </clr-select-container>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="goBack()">back</button>
+        <button type="button" class="btn btn-success" (click)="chooseCompany()">Choose</button>
+    </div>
+</clr-modal>

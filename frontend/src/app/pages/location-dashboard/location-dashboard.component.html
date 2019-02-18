@@ -1,6 +1,7 @@
 <div class="content-container">
     <div class="content-area">
-        {{location | json}}
+        <app-choose-company-modal [openStream]="chooseCompanyModal"
+                                  [companyStream]="companyChoices"></app-choose-company-modal>
         <router-outlet></router-outlet>
     </div>
     <nav class="sidenav" [clr-nav-level]="2">
