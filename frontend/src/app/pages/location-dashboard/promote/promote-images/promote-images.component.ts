@@ -28,7 +28,7 @@ export class PromoteImagesComponent implements OnInit {
         this.getLocation();
     }
 
-    private openImageWizard(): void {
+    public openImageWizard(): void {
         this.imageWizard.next(true);
     }
 
