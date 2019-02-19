@@ -146,6 +146,20 @@ class UserServiceTest {
         userService.deleteUser(1L);
     }
 
+    @Test
+    @DisplayName("Get list of users by company")
+    void shouldReturnListOfUsers_whenGetListOfCompanyUsers() {
+        User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
+        User user1 = new User("Jay", "Jones", "jay.jones@jay.com", "");
+        given(userRepository.findUsersByCompanyId(1L)).willReturn(Arrays.asList(user, user1));
+
+        List<User> found = userService.getAllUsersByCompanyId(1L);
+        assertThat(found).hasSize(2);
+        assertThat(found.get(0)).isEqualTo(user);
+        assertThat(found.get(1)).isEqualTo(user1);
+
+    }
+
 
     @TestConfiguration
     static class UserServiceTestContextConfiguration {
