@@ -213,6 +213,10 @@ public class Company {
         this.images = images;
     }
 
+    public void addImage(Image image) {
+        this.images.add(image);
+    }
+
     public Set<Image> getImagesByLocation(Location location) {
         Set<Image> locationImages = new HashSet<>();
         for (Image image : this.images) {
