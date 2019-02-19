@@ -128,6 +128,6 @@ public class LocationService implements LocationServiceInterface {
 
     @Override
     public List<Location> getAllLocationsByUserId(Long userId) {
-        return Stream.concat(this.getPersonalLocationsByUserId(userId).stream(), this.getAdvertisingLocationsByUserId(userId).stream()).collect(Collectors.toList());
+        return locationRepository.findAllCompaniesByUserId(userId);
     }
 }

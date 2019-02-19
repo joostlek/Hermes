@@ -20,4 +20,8 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
 
     @Query("select l from Location l inner join l.company company inner join company.users user on user.id = :userId")
     List<Location> findAllPersonalCompaniesByUserId(Long userId);
+
+    @Query("SELECT l from Location l where l.id IN (SELECT loc.id from Location loc inner join l.company company inner join company.users user on user.id = :userId) " +
+            "or l.id IN (select l from Location l inner join l.advertisingCompanies company inner join company.users user on user.id = :userId)")
+    List<Location> findAllCompaniesByUserId(Long userId);
 }
