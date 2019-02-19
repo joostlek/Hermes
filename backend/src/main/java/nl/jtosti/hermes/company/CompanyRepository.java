@@ -14,6 +14,6 @@ public interface CompanyRepository extends CrudRepository<Company, Long> {
     @Query("select c from Company c inner join c.users user ON user.id = :userId")
     List<Company> findCompaniesByUserId(@Param("userId") Long userId);
 
-    @Query("select c from Company c inner join c.users user ON user.id = :userId inner join Location location ON location.company.id = c.id ")
-    List<Company> findAdvertisingCompaniesByUserId(@Param("userId") Long userId);
+//    @Query("select c from Company c where c IN (SELECT location.company from Location location where location.company IN (select com from Company com inner join com.users user ON user.id = :userId))")
+//    List<Company> findAdvertisingCompaniesByUserId(@Param("userId") Long userId);
 }

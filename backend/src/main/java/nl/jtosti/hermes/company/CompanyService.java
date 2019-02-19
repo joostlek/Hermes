@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,7 +68,16 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public List<Company> getAdvertisingCompaniesByUserId(Long userId) {
-        return companyRepository.findAdvertisingCompaniesByUserId(userId);
+        List<Company> companies = new ArrayList<>();
+        User user = userService.getUserById(userId);
+        for (Company company : user.getCompanies()) {
+            for (Location location : company.getAdvertisingLocations()) {
+                if (!companies.contains(location.getCompany())) {
+                    companies.add(location.getCompany());
+                }
+            }
+        }
+        return companies;
     }
 
     @Override
