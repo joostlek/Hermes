@@ -2,18 +2,17 @@ package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.company.exception.*;
 import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.location.LocationService;
+import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
 import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
 import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
 import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.user.User;
-import nl.jtosti.hermes.user.UserService;
+import nl.jtosti.hermes.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,11 +22,11 @@ import java.util.stream.Stream;
 public class CompanyService implements CompanyServiceInterface {
 
     private final CompanyRepository companyRepository;
-    private final UserService userService;
-    private final LocationService locationService;
+    private final UserServiceInterface userService;
+    private final LocationServiceInterface locationService;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, UserService userService, LocationService locationService) {
+    public CompanyService(CompanyRepository companyRepository, UserServiceInterface userService, LocationServiceInterface locationService) {
         this.companyRepository = companyRepository;
         this.userService = userService;
         this.locationService = locationService;
@@ -68,12 +67,12 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public List<Company> getAdvertisingCompaniesByUserId(Long userId) {
-        return new ArrayList<>();
+        return companyRepository.findAdvertisingCompaniesByUserId(userId);
     }
 
     @Override
     public Company updateCompany(Company newCompany) {
-        Company company = companyRepository.findById(newCompany.getId()).orElseThrow(() -> new CompanyNotFoundException(newCompany.getId()));
+        Company company = this.getCompanyById(newCompany.getId());
         company.setName(newCompany.getName());
         company.setStreet(newCompany.getStreet());
         company.setHouseNumber(newCompany.getHouseNumber());
