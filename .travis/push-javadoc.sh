@@ -13,7 +13,7 @@ if [ "$TRAVIS_REPO_SLUG" == "joostlek/Hermes" ] && [ "$TRAVIS_PULL_REQUEST" == "
 
   cd gh-pages
   git rm -rf hermes/apidocs
-  mkdir hermes/apidocs
+  mkdir -p hermes/apidocs
   cp -Rf $HOME/apidocs hermes/apidocs
   git add -f .
   git commit -m "Latest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
