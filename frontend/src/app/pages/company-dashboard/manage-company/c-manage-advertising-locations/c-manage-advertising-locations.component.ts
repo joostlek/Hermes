@@ -42,12 +42,7 @@ export class CManageAdvertisingLocationsComponent implements OnInit {
         this.chosenCompanyService.getCompany()
             .subscribe(
                 (company: Company) => {
-                    this.locationService.getAdvertisingLocationsByCompanyId(company.id)
-                        .subscribe(
-                            (locations: Location[]) => {
-                                this.locations = locations;
-                            },
-                        );
+                    this.locations = company.advertisingLocations;
                 },
             );
     }

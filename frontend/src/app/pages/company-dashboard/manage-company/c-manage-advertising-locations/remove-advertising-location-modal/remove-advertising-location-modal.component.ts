@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ClrLoadingState} from '@clr/angular';
 import {Subject} from 'rxjs';
+import {CompanyService} from '../../../../../@core/data/company.service';
 import {Company} from '../../../../../@core/data/domain/company';
 import {Location} from '../../../../../@core/data/domain/location';
 import {ChosenCompanyService} from '../../../chosen-company.service';
-import {LocationService} from '../../../../../@core/data/location.service';
-import {ClrLoadingState} from '@clr/angular';
 
 @Component({
     selector: 'app-remove-advertising-location-modal',
@@ -23,7 +23,7 @@ export class RemoveAdvertisingLocationModalComponent implements OnInit {
 
     constructor(
         private chosenCompanyService: ChosenCompanyService,
-        private locationService: LocationService,
+        private companyService: CompanyService,
     ) {
     }
 
@@ -57,14 +57,16 @@ export class RemoveAdvertisingLocationModalComponent implements OnInit {
 
     public removeLocation(): void {
         this.submitButtonState = ClrLoadingState.LOADING;
-        this.locationService.removeAdvertisingCompanyFromLocation(this.location.id, this.company.id)
+        this.companyService.removeAdvertisingLocationFromCompany(this.location.id, this.company.id)
             .subscribe(
-                (location: Location) => {
+                (company: Company) => {
+                    this.chosenCompanyService.pushNewCompany(company);
+                    this.refreshList.next(true);
                     this.submitButtonState = ClrLoadingState.SUCCESS;
                     this.closeModal();
                 },
                 (error) => {
-                    this.error = JSON.parse(error)['message'];
+                    this.error = JSON.parse(error.error)['message'];
                     this.submitButtonState = ClrLoadingState.ERROR;
                     console.error(error);
                 },

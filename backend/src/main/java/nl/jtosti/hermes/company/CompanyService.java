@@ -1,9 +1,12 @@
 package nl.jtosti.hermes.company;
 
-import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
-import nl.jtosti.hermes.company.exception.LastUserException;
-import nl.jtosti.hermes.company.exception.UserAlreadyAddedException;
-import nl.jtosti.hermes.company.exception.UserNotInCompanyException;
+import nl.jtosti.hermes.company.exception.*;
+import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.location.LocationService;
+import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
+import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
+import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
+import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +24,13 @@ public class CompanyService implements CompanyServiceInterface {
 
     private final CompanyRepository companyRepository;
     private final UserService userService;
+    private final LocationService locationService;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, UserService userService) {
+    public CompanyService(CompanyRepository companyRepository, UserService userService, LocationService locationService) {
         this.companyRepository = companyRepository;
         this.userService = userService;
+        this.locationService = locationService;
     }
 
 
@@ -101,5 +106,33 @@ public class CompanyService implements CompanyServiceInterface {
         }
         company.getUsers().remove(user);
         companyRepository.save(company);
+    }
+
+    @Override
+    public Company removeAdvertisingLocationFromCompany(Company company, Location location) {
+        if (!location.hasAdvertisingCompany(company)) {
+            throw new CompanyNotAdvertisingException(company.getName(), location.getName());
+        }
+        if (company.getImagesByLocation(location).size() > 0) {
+            throw new LocationHasImagesException(location.getName());
+        }
+        company.getAdvertisingLocations().remove(location);
+        return this.save(company);
+    }
+
+    @Override
+    public Company addAdvertisingLocationToCompany(Company company, Long locationId) {
+        if (locationId == 0) {
+            throw new LocationNotSelectedException();
+        }
+        Location location = locationService.getLocationById(locationId);
+        if (location.getCompany().equals(company)) {
+            throw new LocationIsFromCompanyException();
+        }
+        if (location.hasAdvertisingCompany(company)) {
+            throw new LocationAlreadyAddedException();
+        }
+        company.addAdvertisingLocation(location);
+        return this.save(company);
     }
 }

@@ -2,7 +2,6 @@ package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.user.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -61,7 +60,16 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private Set<Location> locations;
 
-    @ManyToMany(mappedBy = "advertisingCompanies")
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinTable(
+            name = "company_locations",
+            joinColumns = {
+                    @JoinColumn(name = "company_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "location_id")
+            }
+    )
     private Set<Location> advertisingLocations;
 
     @OneToMany(mappedBy = "company")

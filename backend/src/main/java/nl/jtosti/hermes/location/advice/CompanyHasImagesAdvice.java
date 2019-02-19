@@ -1,7 +1,6 @@
-package nl.jtosti.hermes.company.advice;
+package nl.jtosti.hermes.location.advice;
 
-import nl.jtosti.hermes.company.exception.CompanyHasImagesException;
-import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.location.exception.CompanyHasImagesException;
 import nl.jtosti.hermes.util.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

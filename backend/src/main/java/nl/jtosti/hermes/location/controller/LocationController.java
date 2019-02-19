@@ -2,7 +2,6 @@ package nl.jtosti.hermes.location.controller;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
-import nl.jtosti.hermes.company.dto.AddAdvertisingLocationDTO;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
@@ -10,10 +9,8 @@ import nl.jtosti.hermes.location.dto.LocationDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +27,9 @@ public class LocationController {
         this.companyService = companyService;
     }
 
+    /**
+     * @return DTO List of all locations
+     */
     @GetMapping("/locations")
     @ResponseStatus(HttpStatus.OK)
     public List<LocationDTO> getAllLocations() {
@@ -39,9 +39,14 @@ public class LocationController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param locationDTO Location data
+     * @param companyId   Id of the to be parent company
+     * @return Created location
+     */
     @PostMapping("/companies/{companyId}/locations")
     @ResponseStatus(HttpStatus.CREATED)
-    public LocationDTO addLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long companyId, Principal principal) {
+    public LocationDTO addLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long companyId) {
         Location location = convertToEntity(locationDTO);
         Company company = companyService.getCompanyById(companyId);
         location.setCompany(company);
@@ -51,7 +56,7 @@ public class LocationController {
 
     @GetMapping("/companies/{companyId}/locations")
     @ResponseStatus(HttpStatus.OK)
-    public List<LocationDTO> getLocationByCompanyId(@PathVariable Long companyId) {
+    public List<LocationDTO> getLocationsByCompanyId(@PathVariable Long companyId) {
         List<Location> locations = locationService.getLocationsByCompanyId(companyId);
         return locations.stream()
                 .map(this::convertToDTO)
@@ -59,14 +64,12 @@ public class LocationController {
     }
 
     @GetMapping("/locations/{id}")
-    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public LocationDTO getSingleLocation(@PathVariable Long id) {
         return convertToExtendedDTO(locationService.getLocationById(id));
     }
 
     @PutMapping("/locations/{id}")
-    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public LocationDTO updateLocation(@RequestBody ExtendedLocationDTO locationDTO, @PathVariable Long id) {
         Location location = convertToEntity(locationDTO);
@@ -76,22 +79,17 @@ public class LocationController {
     }
 
     @DeleteMapping("/locations/{id}")
-    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public void deleteLocation(@PathVariable Long id) {
         locationService.delete(id);
     }
 
-    @PostMapping("/companies/{companyId}/advertising")
-    @ResponseStatus(HttpStatus.OK)
-    public void addAdvertisingLocationToCompany(@RequestBody AddAdvertisingLocationDTO locationDTO, @PathVariable Long companyId) {
-        locationService.addAdvertisingLocationToCompany(companyId, locationDTO.getLocationId());
-    }
-
     @DeleteMapping("/locations/{locationId}/advertising/{companyId}")
     @ResponseStatus(HttpStatus.OK)
     public ExtendedLocationDTO removeAdvertisingCompanyFromLocation(@PathVariable Long locationId, @PathVariable Long companyId) {
-        return convertToExtendedDTO(locationService.removeAdvertisingCompanyFromLocation(locationId, companyId));
+        Location location = locationService.getLocationById(locationId);
+        Company company = companyService.getCompanyById(companyId);
+        return convertToExtendedDTO(locationService.removeAdvertisingCompanyFromLocation(location, company));
     }
 
     @GetMapping("/companies/{companyId}/advertising")

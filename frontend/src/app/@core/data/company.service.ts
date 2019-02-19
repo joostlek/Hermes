@@ -67,4 +67,12 @@ export class CompanyService {
     public deleteCompany(companyId: number): Observable<any> {
         return this.http.delete('api/companies/' + companyId);
     }
+
+    public removeAdvertisingLocationFromCompany(locationId: number, companyId: number): Observable<Company> {
+        return this.http.delete<Company>('api/companies/' + companyId + '/advertising/' + locationId);
+    }
+
+    public addAdvertisingLocationToCompany(locationId: number, companyId: number): Observable<Company> {
+        return this.http.post<Company>('api/companies/' + companyId + '/advertising', {locationId});
+    }
 }

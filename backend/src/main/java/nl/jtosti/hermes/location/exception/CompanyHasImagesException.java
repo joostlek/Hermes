@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.company.exception;
+package nl.jtosti.hermes.location.exception;
 
 public class CompanyHasImagesException extends RuntimeException {
     public CompanyHasImagesException(String companyName) {

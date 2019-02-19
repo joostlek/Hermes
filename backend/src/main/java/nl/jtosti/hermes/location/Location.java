@@ -48,7 +48,7 @@ public class Location {
     @JsonIgnoreProperties({"locations", "images"})
     private Company company;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinTable(
             name = "company_locations",
             joinColumns = {

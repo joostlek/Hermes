@@ -1,30 +1,25 @@
 package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
-import nl.jtosti.hermes.company.CompanyService;
-import nl.jtosti.hermes.company.exception.CompanyHasImagesException;
-import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
-import nl.jtosti.hermes.location.exception.*;
+import nl.jtosti.hermes.location.exception.CompanyHasImagesException;
+import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
+import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Transactional
 public class LocationService implements LocationServiceInterface {
 
     private final LocationRepository locationRepository;
-    private final CompanyService companyService;
 
 
     @Autowired
-    public LocationService(LocationRepository locationRepository, CompanyService companyService) {
+    public LocationService(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
-        this.companyService = companyService;
     }
 
     @Override
@@ -75,32 +70,7 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
-    public void addAdvertisingLocationToCompany(Long companyId, Long locationId) {
-        Company company = companyService.getCompanyById(companyId);
-        if (locationId == 0) {
-            throw new LocationNotSelectedException();
-        }
-        Location location = this.getLocationById(locationId);
-        if (location.getCompany().equals(company)) {
-            throw new LocationIsFromCompanyException();
-        }
-        if (location.hasAdvertisingCompany(company)) {
-            throw new LocationAlreadyAddedException();
-        }
-        location.addAdvertisingCompanies(company);
-        locationRepository.save(location);
-    }
-
-    @Override
-    public Location removeAdvertisingCompanyFromLocation(Long locationId, Long companyId) {
-        if (locationId == 0) {
-            throw new LocationNotFoundException(locationId);
-        }
-        if (companyId == 0) {
-            throw new CompanyNotFoundException(companyId);
-        }
-        Location location = this.getLocationById(locationId);
-        Company company = companyService.getCompanyById(companyId);
+    public Location removeAdvertisingCompanyFromLocation(Location location, Company company) {
         if (!location.hasAdvertisingCompany(company)) {
             throw new CompanyNotAdvertisingException(company.getName(), location.getName());
         }

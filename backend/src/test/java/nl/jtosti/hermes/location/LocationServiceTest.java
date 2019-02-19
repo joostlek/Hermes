@@ -157,13 +157,10 @@ class LocationServiceTest {
     static class LocationServiceTestContextConfiguration {
         @Autowired
         private LocationRepository locationRepository;
-        @Autowired
-        private CompanyService companyService;
-
 
         @Bean
         public LocationServiceInterface locationServiceInterface() {
-            return new LocationService(locationRepository, companyService);
+            return new LocationService(locationRepository);
         }
     }
 }

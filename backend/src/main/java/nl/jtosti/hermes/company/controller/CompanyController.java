@@ -5,6 +5,9 @@ import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.dto.AddUserDTO;
 import nl.jtosti.hermes.company.dto.CompanyDTO;
 import nl.jtosti.hermes.company.dto.ExtendedCompanyDTO;
+import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.location.LocationService;
+import nl.jtosti.hermes.location.dto.AddAdvertisingLocationDTO;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
@@ -23,12 +26,15 @@ public class CompanyController {
     private final CompanyServiceInterface companyService;
     private final ModelMapper modelMapper;
     private final UserServiceInterface userService;
+    private final LocationService locationService;
+
 
     @Autowired
-    public CompanyController(CompanyServiceInterface companyService, ModelMapper modelMapper, UserServiceInterface userService) {
+    public CompanyController(CompanyServiceInterface companyService, ModelMapper modelMapper, UserServiceInterface userService, LocationService locationService) {
         this.companyService = companyService;
         this.modelMapper = modelMapper;
         this.userService = userService;
+        this.locationService = locationService;
     }
 
 
@@ -100,6 +106,20 @@ public class CompanyController {
         companyService.deleteCompany(companyId);
     }
 
+    @DeleteMapping("/companies/{companyId}/advertising/{locationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExtendedCompanyDTO removeAdvertisingCompanyFromLocation(@PathVariable Long locationId, @PathVariable Long companyId) {
+        Company company = companyService.getCompanyById(companyId);
+        Location location = locationService.getLocationById(locationId);
+        return convertToExtendedDTO(companyService.removeAdvertisingLocationFromCompany(company, location));
+    }
+
+    @PostMapping("/companies/{companyId}/advertising")
+    @ResponseStatus(HttpStatus.OK)
+    public ExtendedCompanyDTO addAdvertisingLocationToCompany(@RequestBody AddAdvertisingLocationDTO locationDTO, @PathVariable Long companyId) {
+        Company company = companyService.getCompanyById(companyId);
+        return convertToExtendedDTO(companyService.addAdvertisingLocationToCompany(company, locationDTO.getLocationId()));
+    }
 
     @PutMapping("/companies/{companyId}/users")
     @ResponseStatus(HttpStatus.OK)

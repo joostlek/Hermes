@@ -23,6 +23,8 @@ export class AddAdvertisingLocationModalComponent implements OnInit {
     companies: Company[];
     locations: Location[];
 
+    company: Company;
+
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     constructor(
@@ -39,6 +41,16 @@ export class AddAdvertisingLocationModalComponent implements OnInit {
 
     ngOnInit() {
         this.watchOpen();
+        this.getCompany();
+    }
+
+    private getCompany(): void {
+        this.chosenCompanyService.getCompany()
+            .subscribe(
+                (company: Company) => {
+                    this.company = company;
+                },
+            );
     }
 
     private watchOpen(): void {
@@ -76,24 +88,22 @@ export class AddAdvertisingLocationModalComponent implements OnInit {
 
     public addLocation(): void {
         this.submitButtonState = ClrLoadingState.LOADING;
-        this.chosenCompanyService.getCompany()
-            .subscribe(
-                (company: Company) => {
-                    this.locationService.addAdvertisingLocationToCompany(+this.locationForm.controls['locationId'].value, company.id)
-                        .subscribe(
-                            () => {
-                                this.submitButtonState = ClrLoadingState.SUCCESS;
-                                this.refreshStream.next(true);
-                                this.closeModal();
-                            },
-                            (error) => {
-                                this.error = JSON.parse(error.error)['message'];
-                                this.submitButtonState = ClrLoadingState.ERROR;
-                                console.error(this.error);
-                            },
-                        );
-                },
-            );
+        if (!this.locationForm.invalid) {
+            this.companyService.addAdvertisingLocationToCompany(+this.locationForm.controls['locationId'].value, this.company.id)
+                .subscribe(
+                    (newCompany: Company) => {
+                        this.submitButtonState = ClrLoadingState.SUCCESS;
+                        this.chosenCompanyService.pushNewCompany(newCompany);
+                        this.refreshStream.next(true);
+                        this.closeModal();
+                    },
+                    (error) => {
+                        this.error = JSON.parse(error.error)['message'];
+                        this.submitButtonState = ClrLoadingState.ERROR;
+                        console.error(this.error);
+                    },
+                );
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package nl.jtosti.hermes.location;
 
+import nl.jtosti.hermes.company.Company;
+
 import java.util.List;
 
 public interface LocationServiceInterface {
@@ -17,9 +19,7 @@ public interface LocationServiceInterface {
 
     void delete(Long id);
 
-    void addAdvertisingLocationToCompany(Long companyId, Long locationId);
-
-    Location removeAdvertisingCompanyFromLocation(Long locationId, Long companyId);
+    Location removeAdvertisingCompanyFromLocation(Location location, Company company);
 
     List<Location> getAdvertisingLocationsByCompanyId(Long companyId);
 

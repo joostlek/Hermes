@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.company.dto;
+package nl.jtosti.hermes.location.dto;
 
 public class AddAdvertisingLocationDTO {
     private Long locationId;
