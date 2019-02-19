@@ -74,7 +74,7 @@ public class LocationService implements LocationServiceInterface {
         if (!location.hasAdvertisingCompany(company)) {
             throw new CompanyNotAdvertisingException(company.getName(), location.getName());
         }
-        if (company.getImagesByLocation(location).size() > 0) {
+        if (!company.getImagesByLocation(location).isEmpty()) {
             throw new CompanyHasImagesException(company.getName());
         }
         location.getAdvertisingCompanies().remove(company);

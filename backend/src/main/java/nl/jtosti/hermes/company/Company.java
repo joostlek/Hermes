@@ -214,13 +214,13 @@ public class Company {
     }
 
     public Set<Image> getImagesByLocation(Location location) {
-        Set<Image> images = new HashSet<>();
+        Set<Image> locationImages = new HashSet<>();
         for (Image image : this.images) {
             if (location.getScreens().contains(image.getScreen())) {
-                images.add(image);
+                locationImages.add(image);
             }
         }
-        return images;
+        return locationImages;
     }
 
     public Set<Location> getAdvertisingLocations() {

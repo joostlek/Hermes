@@ -1,7 +1,6 @@
 package nl.jtosti.hermes.location.advice;
 
 import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
-import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import nl.jtosti.hermes.util.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

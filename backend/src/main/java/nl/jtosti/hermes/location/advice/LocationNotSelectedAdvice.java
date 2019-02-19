@@ -1,6 +1,5 @@
 package nl.jtosti.hermes.location.advice;
 
-import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
 import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.util.ErrorDTO;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,6 @@
 package nl.jtosti.hermes.company.advice;
 
 import nl.jtosti.hermes.company.exception.LastUserException;
-import nl.jtosti.hermes.company.exception.UserAlreadyAddedException;
 import nl.jtosti.hermes.util.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
