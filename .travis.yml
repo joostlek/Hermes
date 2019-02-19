@@ -15,7 +15,6 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 
 before_install:
-  - chmod +x mvnw
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker login -u _ -p $HEROKU_API_KEY registry.heroku.com
