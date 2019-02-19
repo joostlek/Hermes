@@ -1,12 +1,14 @@
 package nl.jtosti.hermes.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
 import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
 import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import nl.jtosti.hermes.user.dto.ExtendedUserDTO;
+import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -123,5 +125,48 @@ class UserControllerTest {
                 .with(user("user"))
                 .with(csrf()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Get all users by company id")
+    void shouldReturnJsonArray_whenGetAllUsersByCompanyId() throws Exception {
+        User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
+        User user1 = new User("Jane", "Jones", "jane.jones@jones.com", "");
+        List<User> allUsers = Arrays.asList(user, user1);
+        given(service.getAllUsersByCompanyId(1L)).willReturn(allUsers);
+
+        mvc.perform(get("/companies/1/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$[1].firstName", is(user1.getFirstName())));
+    }
+
+    @Test
+    @DisplayName("Get all users by invalid company id throws exception")
+    void shouldThrowCompanyNotFoundException() throws Exception {
+
+        when(service.getAllUsersByCompanyId(4L)).thenThrow(new CompanyNotFoundException(4L));
+
+        mvc.perform(get("/companies/4/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", is("Could not find company 4")));
+    }
+
+    @Test
+    @DisplayName("Get user by unknown user id")
+    void shouldThrowUserNotFoundException_whenGetInvalidUserId() throws Exception {
+
+        when(service.getUserById(4L)).thenThrow(new UserNotFoundException(4L));
+
+        mvc.perform(get("/users/4")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", is("Could not find user 4")));
     }
 }

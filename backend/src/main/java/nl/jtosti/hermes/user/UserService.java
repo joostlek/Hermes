@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.user;
 
+import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,11 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public List<User> getAllUsersByCompanyId(Long companyId) {
-        return userRepository.findUsersByCompanyId(companyId);
+        List<User> users = userRepository.findUsersByCompanyId(companyId);
+        if (users.isEmpty()) {
+            throw new CompanyNotFoundException(companyId);
+        }
+        return users;
     }
 
 }

@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.user;
 
 
+import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -157,7 +159,18 @@ class UserServiceTest {
         assertThat(found).hasSize(2);
         assertThat(found.get(0)).isEqualTo(user);
         assertThat(found.get(1)).isEqualTo(user1);
+    }
 
+    @Test
+    @DisplayName("Get list of users by unknown company ID")
+    void shouldThrowCompanyNotFoundException_whenGetListOfCompanyUsersFromUnknownId() {
+        given(userRepository.findUsersByCompanyId(1L)).willReturn(new ArrayList<>());
+
+        try {
+            userService.getAllUsersByCompanyId(1L);
+        } catch (CompanyNotFoundException e) {
+            assertThat(e.getMessage()).isEqualTo("Could not find company 1");
+        }
     }
 
 
