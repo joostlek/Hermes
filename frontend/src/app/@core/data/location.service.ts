@@ -22,14 +22,6 @@ export class LocationService {
         return this.http.get<Location>('api/locations/' + id);
     }
 
-    getLocationsByUser(user: User): Observable<Location[]> {
-        return this.getLocationsByUserId(user.id);
-    }
-
-    getLocationsByUserId(userId: number): Observable<Location[]> {
-        return this.http.get<Location[]>('api/users/' + userId + '/locations');
-    }
-
     getLocationsByCompanyId(companyId: number): Observable<Location[]> {
         return this.http.get<Location[]>('api/companies/' + companyId + '/locations');
     }
