@@ -8,23 +8,6 @@ const routes: Routes = [
         component: PagesComponent,
         children: [
             {
-                path: 'users',
-                children: [
-                    {
-                        path: ':id',
-                        loadChildren: './user/user.module#UserModule',
-                    },
-                    {
-                        path: '',
-                        loadChildren: './users/users.module#UsersModule',
-                    },
-                ],
-            },
-            {
-                path: 'images',
-                loadChildren: './images/images.module#ImagesModule',
-            },
-            {
                 path: 'locations',
                 children: [
                     {
@@ -49,10 +32,6 @@ const routes: Routes = [
                         loadChildren: './company-overview/company-overview.module#CompanyOverviewModule',
                     },
                 ],
-            },
-            {
-                path: 'screens',
-                loadChildren: './screens/screens.module#ScreensModule',
             },
             {
                 path: 'profile',
