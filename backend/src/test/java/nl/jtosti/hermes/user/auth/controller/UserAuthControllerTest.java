@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.user.controller;
+package nl.jtosti.hermes.user.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.image.StorageServiceInterface;
@@ -6,7 +6,6 @@ import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
 import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.auth.UserAuthServiceInterface;
-import nl.jtosti.hermes.user.auth.controller.UserAuthController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserAuthController.class)
-@DisplayName("User Controller")
+@DisplayName("User auth controller")
 @Tag("Controller")
 class UserAuthControllerTest {
     @Autowired
@@ -39,6 +38,7 @@ class UserAuthControllerTest {
 
     @Autowired
     ModelMapper modelMapper;
+
     @Autowired
     private MockMvc mvc;
 
@@ -55,7 +55,7 @@ class UserAuthControllerTest {
     private UserAuthenticationProvider authenticationProvider;
 
     @MockBean
-    private UserAuthServiceInterface service;
+    private UserAuthServiceInterface userAuthService;
 
     @Test
     @DisplayName("Add user")
@@ -64,7 +64,7 @@ class UserAuthControllerTest {
         user.setId(1L);
         User user1 = new User("Alex", "Jones", "alex.jones@alex.com", "");
 
-        when(service.save(any(User.class))).thenReturn(user);
+        when(userAuthService.save(any(User.class))).thenReturn(user);
 
         mvc.perform(post("/auth/user/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
