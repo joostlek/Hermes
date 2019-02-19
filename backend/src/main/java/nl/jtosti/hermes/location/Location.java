@@ -7,7 +7,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Location {
@@ -42,7 +45,7 @@ public class Location {
 
     @OneToMany(mappedBy = "location")
     @JsonIgnoreProperties({"location", "images"})
-    private List<Screen> screens;
+    private Set<Screen> screens;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonIgnoreProperties({"locations", "images"})
@@ -61,7 +64,7 @@ public class Location {
     private Set<Company> advertisingCompanies;
 
     protected Location() {
-        this.screens = new ArrayList<>();
+        this.screens = new HashSet<>();
         this.advertisingCompanies = new HashSet<>();
     }
 
@@ -140,11 +143,11 @@ public class Location {
         this.country = country;
     }
 
-    public List<Screen> getScreens() {
+    public Set<Screen> getScreens() {
         return screens;
     }
 
-    public void setScreens(List<Screen> screens) {
+    public void setScreens(Set<Screen> screens) {
         this.screens = screens;
     }
 

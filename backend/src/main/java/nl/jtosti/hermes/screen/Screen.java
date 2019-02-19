@@ -11,10 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Screen {
@@ -53,7 +53,7 @@ public class Screen {
 
     @OneToMany(mappedBy = "screen")
     @JsonIgnoreProperties({"screen", "owner"})
-    private List<Image> images = new ArrayList<>();
+    private Set<Image> images = new HashSet<>();
 
     protected Screen() {
     }
@@ -66,7 +66,7 @@ public class Screen {
         this.toReceivePassword = true;
     }
 
-    public Screen(String name, int width, int height, Location location, List<Image> images) {
+    public Screen(String name, int width, int height, Location location, Set<Image> images) {
         this.name = name;
         this.width = width;
         this.height = height;
@@ -123,11 +123,11 @@ public class Screen {
         this.location = location;
     }
 
-    public List<Image> getImages() {
+    public Set<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(Set<Image> images) {
         this.images = images;
     }
 
