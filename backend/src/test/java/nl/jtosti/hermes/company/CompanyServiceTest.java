@@ -310,7 +310,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    @DisplayName("Remove advertising location from company")
+    @DisplayName("Remove advertising location with images from company")
     void shouldThrowLocationHasImagesException_whenRemoveLocationWithImages() {
         Company company1 = new Company("", "", "", "", "", "", "");
         Location location = new Location("", "", "", "", "", "", company);
