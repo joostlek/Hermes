@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.dto.AddUserDTO;
+import nl.jtosti.hermes.company.exception.*;
 import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationService;
@@ -28,10 +29,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -103,6 +106,18 @@ class CompanyControllerTest {
                 .with(user("user")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(company.getName())));
+    }
+
+    @Test
+    @DisplayName("Get single non-existent companies")
+    void shouldReturnError_whenGetNonExistentCompany() throws Exception {
+        when(companyService.getCompanyById(1L)).thenThrow(new CompanyNotFoundException(1L));
+
+        mvc.perform(get("/companies/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", notNullValue()));
     }
 
     @Test
@@ -267,6 +282,19 @@ class CompanyControllerTest {
     }
 
     @Test
+    @DisplayName("Remove advertising location from company")
+    void shouldReturnError_whenDeleteAdvertisingLocationWithImages() throws Exception {
+        when(companyService.removeAdvertisingLocationFromCompany(any(Company.class), any(Location.class))).thenThrow(new LocationHasImagesException("henk"));
+
+        mvc.perform(delete("/companies/1/advertising/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("user")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", notNullValue()));
+
+    }
+
+    @Test
     @DisplayName("Add user to company")
     void shouldDoNothing_whenAddUserToCompany() throws Exception {
         AddUserDTO userDTO = new AddUserDTO();
@@ -280,6 +308,20 @@ class CompanyControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("Add user to company")
+    void shouldReturnError_whenAddAlreadyAddedUser() throws Exception {
+        doThrow(new UserAlreadyAddedException()).when(companyService).addUserToCompany(eq(1L), any(String.class));
+        AddUserDTO userDTO = new AddUserDTO();
+        userDTO.setEmail("alex.jones@alex.com");
+
+        mvc.perform(put("/companies/1/users")
+                .with(user("user"))
+                .with(csrf())
+                .content(objectMapper.writer().writeValueAsString(userDTO))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isConflict());
+    }
 
     @Test
     @DisplayName("Remove user from company")
@@ -292,6 +334,31 @@ class CompanyControllerTest {
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Remove last user from company")
+    void shouldReturnError_whenDeleteLastUser() throws Exception {
+        doThrow(new LastUserException()).when(companyService).removeUserFromCompany(1L, 1L);
+
+        mvc.perform(delete("/companies/1/users/1")
+                .with(user("user"))
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isConflict());
+    }
+
+
+    @Test
+    @DisplayName("Remove not-added user from company")
+    void shouldReturnError_whenRemoveNotAddedUser() throws Exception {
+        doThrow(new UserNotInCompanyException()).when(companyService).removeUserFromCompany(1L, 1L);
+
+        mvc.perform(delete("/companies/1/users/1")
+                .with(user("user"))
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isConflict());
     }
 
 }
