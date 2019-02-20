@@ -284,12 +284,17 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Remove advertising location from company")
     void shouldReturnError_whenDeleteAdvertisingLocationWithImages() throws Exception {
+        Company company = new Company("", "asd", "", "", "", "", "");
+        Location location = new Location("", "", "", "", "", "", company);
+
+        when(locationService.getLocationById(1L)).thenReturn(location);
+        when(companyService.getCompanyById(1L)).thenReturn(company);
         when(companyService.removeAdvertisingLocationFromCompany(any(Company.class), any(Location.class))).thenThrow(new LocationHasImagesException("henk"));
 
         mvc.perform(delete("/companies/1/advertising/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
-                .andExpect(status().isOk())
+                .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message", notNullValue()));
 
     }
