@@ -30,6 +30,7 @@ class HermesApplicationTest {
     @DisplayName("Test startup")
     void main() {
         HermesApplication.main(new String[]{});
+        assertThat(true).isTrue();
     }
 
 }

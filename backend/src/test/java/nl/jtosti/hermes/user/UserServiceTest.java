@@ -146,6 +146,7 @@ class UserServiceTest {
     @DisplayName("Delete user")
     void shouldDoNothing_whenDeleteUser() {
         userService.deleteUser(1L);
+        assertThat(true).isTrue();
     }
 
     @Test

@@ -10,7 +10,6 @@ import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
 import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
-import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -157,21 +156,6 @@ class LocationControllerTest {
                 .with(user("user")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(location.getName())));
-    }
-
-    @Test
-    @DisplayName("Add location to non-existant user")
-    void shouldReturnNotFound_whenSaveLocationWithInvalidOwner() throws Exception {
-        Location location = new Location("Alex coffee", "Alexstreet", "1", "1234AB", "Coffee", "land", company);
-
-        when(userService.getUserById(333L)).thenThrow(UserNotFoundException.class);
-
-//        mvc.perform(post("/users/333/locations")
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .with(user("user"))
-//                .with(csrf())
-//                .content(objectMapper.writer().writeValueAsString(location)))
-//                .andExpect(status().isNotFound());
     }
 
     @Test

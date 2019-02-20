@@ -184,6 +184,7 @@ class ScreenServiceTest {
     @DisplayName("Delete screen")
     void shouldDoNothing_whenDeleteScreen() {
         screenService.deleteScreen(1L);
+        assertThat(true).isTrue();
     }
 
     @TestConfiguration

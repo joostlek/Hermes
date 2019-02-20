@@ -151,6 +151,7 @@ class LocationServiceTest {
     @DisplayName("Delete location")
     void shouldDoNothing_whenDeleteLocation() {
         locationService.delete(1L);
+        assertThat(true).isTrue();
     }
 
     @TestConfiguration

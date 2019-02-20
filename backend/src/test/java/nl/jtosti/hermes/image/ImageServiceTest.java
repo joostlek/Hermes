@@ -181,6 +181,7 @@ class ImageServiceTest {
     @DisplayName("Delete image")
     void shouldDoNothing_whenDeleteImage() {
         imageService.delete(1L);
+        assertThat(true).isTrue();
     }
 
     @TestConfiguration
