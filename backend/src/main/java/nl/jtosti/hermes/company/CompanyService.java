@@ -107,11 +107,11 @@ public class CompanyService implements CompanyServiceInterface {
     public void removeUserFromCompany(Long userId, Long companyId) {
         User user = userService.getUserById(userId);
         Company company = this.getCompanyById(companyId);
-        if (company.getUsers().size() == 1) {
-            throw new LastUserException();
-        }
         if (!company.hasUser(user)) {
             throw new UserNotInCompanyException();
+        }
+        if (company.getUsers().size() == 1) {
+            throw new LastUserException();
         }
         company.getUsers().remove(user);
         companyRepository.save(company);

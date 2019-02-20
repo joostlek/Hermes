@@ -161,16 +161,8 @@ public class Company {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Set<User> getUsers() {
@@ -186,7 +178,7 @@ public class Company {
     }
 
     public boolean hasUser(User user) {
-        if (this.users == null || this.users.isEmpty()) {
+        if (this.users.isEmpty()) {
             return false;
         }
         for (User user1 : this.users) {

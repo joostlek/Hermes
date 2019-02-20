@@ -81,7 +81,7 @@ class CompanyServiceTest {
     @Test
     @DisplayName("Get company by unknown id")
     void shouldThrowCompanyNotFoundException_whenGetCompanyByUnknownId() {
-        when(companyRepository.findById(2L)).thenThrow(new CompanyNotFoundException(2L));
+        when(companyRepository.findById(2L)).thenReturn(Optional.empty());
 
         try {
             companyService.getCompanyById(2L);
@@ -106,9 +106,9 @@ class CompanyServiceTest {
     @Test
     @DisplayName("Delete company")
     void shouldDoNothing_whenDeleteCompany() {
-        doNothing().when(locationService).delete(1L);
+        doNothing().when(companyRepository).deleteById(1L);
 
-        locationService.delete(1L);
+        companyService.deleteCompany(1L);
     }
 
     @Test
@@ -228,12 +228,14 @@ class CompanyServiceTest {
     @Test
     @DisplayName("Remove user not added to company")
     void shouldThrowUserNotInCompanyException_whenRemoveUserNotInCompany() {
+        User user1 = new User("Jane", "Jones", "jane.jones@jones@.com", "jjcom");
+        company.addUser(user1);
         when(userService.getUserById(1L)).thenReturn(user);
         when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
         try {
             companyService.removeUserFromCompany(1L, 1L);
-            fail("User was added, even though it was already added!");
+            fail("Not added user could be removed from company without exception!");
         } catch (RuntimeException e) {
             assertThat(e)
                     .isInstanceOf(UserNotInCompanyException.class);
