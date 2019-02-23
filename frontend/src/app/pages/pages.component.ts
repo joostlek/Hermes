@@ -13,18 +13,21 @@ import {User} from '../@core/data/domain/user';
 export class PagesComponent implements OnInit {
     user: User;
 
-    constructor(private currentUserService: CurrentUserService) {
+    constructor(
+        private currentUserService: CurrentUserService,
+    ) {
     }
 
     ngOnInit() {
         this.getCurrentUser();
     }
 
-    getCurrentUser() {
+    private getCurrentUser(): void {
         this.currentUserService.getCurrentUser()
             .subscribe((user: User) => {
-                this.user = user;
-            });
+                    this.user = user;
+                },
+            );
     }
 
 }
