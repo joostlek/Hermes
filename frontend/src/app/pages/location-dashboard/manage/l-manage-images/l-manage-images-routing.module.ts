@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ImageDetailComponent} from '../manage-images/image-detail/image-detail.component';
-import {ManageImagesComponent} from '../manage-images/manage-images.component';
+import {ImageDetailComponent} from './image-detail/image-detail.component';
+import {LManageImagesComponent} from './l-manage-images.component';
 
 const routes: Routes = [
     {
@@ -10,7 +10,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        component: ManageImagesComponent,
+        component: LManageImagesComponent,
     },
 ];
 

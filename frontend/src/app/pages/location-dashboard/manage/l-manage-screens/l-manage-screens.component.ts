@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
+import {Screen} from '../../../../@core/data/domain/screen';
+import {ChosenLocationService} from '../../chosen-location.service';
+import {ScreenService} from '../../../../@core/data/screen.service';
 import {Observable} from 'rxjs';
 import {Location} from '../../../../@core/data/domain/location';
-import {Screen} from '../../../../@core/data/domain/screen';
-import {ScreenService} from '../../../../@core/data/screen.service';
-import {ChosenLocationService} from '../../chosen-location.service';
 
 @Component({
-    selector: 'app-manage-screens',
-    templateUrl: './manage-screens.component.html',
-    styleUrls: ['./manage-screens.component.css'],
+    selector: 'app-l-manage-screens',
+    templateUrl: './l-manage-screens.component.html',
+    styleUrls: ['./l-manage-screens.component.css']
 })
-export class ManageScreensComponent implements OnInit {
+export class LManageScreensComponent implements OnInit {
     screens: Screen[];
 
     constructor(

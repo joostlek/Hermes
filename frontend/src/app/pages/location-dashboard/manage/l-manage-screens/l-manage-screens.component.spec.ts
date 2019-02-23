@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ManageScreensComponent} from './manage-screens.component';
+import {LManageScreensComponent} from './l-manage-screens.component';
 
-describe('ManageScreensComponent', () => {
-    let component: ManageScreensComponent;
-    let fixture: ComponentFixture<ManageScreensComponent>;
+describe('LManageScreensComponent', () => {
+    let component: LManageScreensComponent;
+    let fixture: ComponentFixture<LManageScreensComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ManageScreensComponent]
+            declarations: [LManageScreensComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ManageScreensComponent);
+        fixture = TestBed.createComponent(LManageScreensComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

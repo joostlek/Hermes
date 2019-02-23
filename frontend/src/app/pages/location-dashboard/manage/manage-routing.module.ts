@@ -8,7 +8,7 @@ const routes: Routes = [
     },
     {
         path: 'screens',
-        loadChildren: './manage-screens/manage-screens.module#ManageScreensModule',
+        loadChildren: './l-manage-screens/l-manage-screens.module#LManageScreensModule',
     },
     {
         path: 'advertising-companies',

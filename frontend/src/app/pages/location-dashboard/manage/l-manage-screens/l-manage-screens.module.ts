@@ -2,17 +2,17 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 
 import {UiModule} from '../../../../@ui/ui.module';
-import {ManageScreensRoutingModule} from './manage-screens-routing.module';
-import {ManageScreensComponent} from './manage-screens.component';
+import {LManageScreensRoutingModule} from './l-manage-screens-routing.module';
+import {LManageScreensComponent} from './l-manage-screens.component';
 import {ScreenDetailComponent} from './screen-detail/screen-detail.component';
 
 @NgModule({
-    declarations: [ManageScreensComponent, ScreenDetailComponent],
+    declarations: [LManageScreensComponent, ScreenDetailComponent],
     imports: [
         CommonModule,
         UiModule,
-        ManageScreensRoutingModule,
+        LManageScreensRoutingModule,
     ],
 })
-export class ManageScreensModule {
+export class LManageScreensModule {
 }

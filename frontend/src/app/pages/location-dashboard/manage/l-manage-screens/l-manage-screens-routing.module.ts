@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ManageScreensComponent} from './manage-screens.component';
+import {LManageScreensComponent} from './l-manage-screens.component';
 import {ScreenDetailComponent} from './screen-detail/screen-detail.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        component: ManageScreensComponent,
+        component: LManageScreensComponent,
     },
 ];
 
@@ -18,5 +18,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class ManageScreensRoutingModule {
+export class LManageScreensRoutingModule {
 }
