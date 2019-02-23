@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.user.auth;
+package nl.jtosti.hermes.security.user;
 
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

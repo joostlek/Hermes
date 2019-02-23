@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.user.auth.dto;
+package nl.jtosti.hermes.user.dto;
 
 public class NewUserDTO {
     private String firstName;

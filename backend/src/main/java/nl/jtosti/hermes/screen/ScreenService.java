@@ -1,6 +1,6 @@
 package nl.jtosti.hermes.screen;
 
-import nl.jtosti.hermes.screen.auth.exception.ScreenIsNotToReceivePasswordException;
+import nl.jtosti.hermes.screen.exception.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
 import nl.jtosti.hermes.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;

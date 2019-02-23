@@ -3,8 +3,8 @@ package nl.jtosti.hermes.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
 import nl.jtosti.hermes.image.StorageServiceInterface;
-import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
-import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
+import nl.jtosti.hermes.security.screen.ScreenAuthenticationProvider;
+import nl.jtosti.hermes.security.user.UserAuthenticationProvider;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import nl.jtosti.hermes.user.dto.ExtendedUserDTO;
@@ -56,13 +56,13 @@ class UserControllerTest {
     private StorageServiceInterface storageService;
 
     @MockBean
-    private JwtTokenProvider jwtTokenProvider;
-
-    @MockBean
     private UserDetailsService userDetailsService;
 
     @MockBean
     private UserAuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private ScreenAuthenticationProvider screenAuthenticationProvider;
 
     @Test
     @DisplayName("Get all users")

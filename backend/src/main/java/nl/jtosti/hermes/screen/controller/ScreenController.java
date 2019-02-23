@@ -5,7 +5,9 @@ import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.screen.ScreenServiceInterface;
 import nl.jtosti.hermes.screen.dto.ExtendedScreenDTO;
+import nl.jtosti.hermes.screen.dto.PasswordDTO;
 import nl.jtosti.hermes.screen.dto.ScreenDTO;
+import nl.jtosti.hermes.screen.dto.ScreenRegisterRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,6 +75,11 @@ public class ScreenController {
         return convertToExtendedDTO(updatedScreen);
     }
 
+    @PostMapping("/screen/register")
+    public PasswordDTO register(@RequestBody ScreenRegisterRequest request) {
+        return convertToPasswordDTO(screenService.registerScreen(request.getScreenId()));
+    }
+
     @DeleteMapping("/screens/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteScreen(@PathVariable("id") Long id) {
@@ -89,5 +96,9 @@ public class ScreenController {
 
     private Screen convertToEntity(ScreenDTO screenDTO) {
         return modelMapper.map(screenDTO, Screen.class);
+    }
+
+    private PasswordDTO convertToPasswordDTO(String password) {
+        return new PasswordDTO(password);
     }
 }

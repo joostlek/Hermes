@@ -1,27 +1,28 @@
-package nl.jtosti.hermes.user.auth;
+package nl.jtosti.hermes.security.screen;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ApplicationUser implements UserDetails {
-    private String email;
+public class ApplicationScreen implements UserDetails {
+
+    private Long screenId;
     private String password;
-    private List<String> roles;
+    private boolean passwordExpired;
 
-    public ApplicationUser(String email, String password, List<String> roles) {
-        this.email = email;
+    public ApplicationScreen(Long screenId, String password, boolean passwordExpired) {
+        this.screenId = screenId;
         this.password = password;
-        this.roles = roles;
+        this.passwordExpired = passwordExpired;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
+        return Stream.of("SCREEN")
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
@@ -33,7 +34,7 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return Long.toString(screenId);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !passwordExpired;
     }
 
     @Override

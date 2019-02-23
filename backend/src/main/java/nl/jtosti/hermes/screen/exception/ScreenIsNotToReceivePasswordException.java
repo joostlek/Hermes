@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.screen.auth.exception;
+package nl.jtosti.hermes.screen.exception;
 
 public class ScreenIsNotToReceivePasswordException extends RuntimeException {
     public ScreenIsNotToReceivePasswordException(Long screenId) {

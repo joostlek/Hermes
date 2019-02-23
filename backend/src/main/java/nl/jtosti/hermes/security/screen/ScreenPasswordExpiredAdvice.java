@@ -1,6 +1,5 @@
-package nl.jtosti.hermes.screen.auth.advice;
+package nl.jtosti.hermes.security.screen;
 
-import nl.jtosti.hermes.screen.auth.exception.ScreenPasswordExpiredException;
 import nl.jtosti.hermes.util.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

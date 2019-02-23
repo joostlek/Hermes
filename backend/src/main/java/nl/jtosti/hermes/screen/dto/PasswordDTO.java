@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.screen.auth.dto;
+package nl.jtosti.hermes.screen.dto;
 
 public class PasswordDTO {
     private String password;

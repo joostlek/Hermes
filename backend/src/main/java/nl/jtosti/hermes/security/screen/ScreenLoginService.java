@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.screen.auth;
+package nl.jtosti.hermes.security.screen;
 
 import nl.jtosti.hermes.screen.ScreenServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

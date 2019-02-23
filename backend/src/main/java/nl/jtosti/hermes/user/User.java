@@ -3,7 +3,7 @@ package nl.jtosti.hermes.user;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
-import nl.jtosti.hermes.user.auth.ApplicationUser;
+import nl.jtosti.hermes.security.user.ApplicationUser;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.userdetails.UserDetails;

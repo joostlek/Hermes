@@ -9,8 +9,8 @@ import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationService;
 import nl.jtosti.hermes.location.dto.AddAdvertisingLocationDTO;
-import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
-import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
+import nl.jtosti.hermes.security.screen.ScreenAuthenticationProvider;
+import nl.jtosti.hermes.security.user.UserAuthenticationProvider;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -60,9 +60,6 @@ class CompanyControllerTest {
     private UserServiceInterface userService;
 
     @MockBean
-    private JwtTokenProvider jwtTokenProvider;
-
-    @MockBean
     private UserDetailsService userDetailsService;
 
     @MockBean
@@ -70,6 +67,9 @@ class CompanyControllerTest {
 
     @MockBean
     private UserAuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private ScreenAuthenticationProvider screenAuthenticationProvider;
 
     @MockBean
     private CompanyServiceInterface companyService;

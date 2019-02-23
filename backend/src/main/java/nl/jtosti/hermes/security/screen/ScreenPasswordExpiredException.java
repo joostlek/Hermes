@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.screen.auth.exception;
+package nl.jtosti.hermes.security.screen;
 
 public class ScreenPasswordExpiredException extends RuntimeException {
     public ScreenPasswordExpiredException() {

@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.user.auth;
+package nl.jtosti.hermes.security.user;
 
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;

@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.security.providers;
+package nl.jtosti.hermes.security.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,13 +26,17 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) {
-        String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        if (passwordEncoder.matches(password, userDetails.getPassword())) {
-            return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), userDetails.getAuthorities());
-        } else {
-            throw new BadCredentialsException("");
+        try {
+            String username = authentication.getName();
+            String password = authentication.getCredentials().toString();
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (passwordEncoder.matches(password, userDetails.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), userDetails.getAuthorities());
+            } else {
+                throw new BadCredentialsException("kek");
+            }
+        } catch (RuntimeException e) {
+            return null;
         }
 
     }

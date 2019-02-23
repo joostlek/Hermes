@@ -1,4 +1,4 @@
-package nl.jtosti.hermes.security.requests;
+package nl.jtosti.hermes.screen.dto;
 
 import java.io.Serializable;
 

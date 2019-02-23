@@ -9,8 +9,8 @@ import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.screen.ScreenServiceInterface;
-import nl.jtosti.hermes.security.jwt.JwtTokenProvider;
-import nl.jtosti.hermes.security.providers.UserAuthenticationProvider;
+import nl.jtosti.hermes.security.screen.ScreenAuthenticationProvider;
+import nl.jtosti.hermes.security.user.UserAuthenticationProvider;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.junit.jupiter.api.DisplayName;
@@ -56,9 +56,6 @@ class ImageControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private JwtTokenProvider jwtTokenProvider;
-
-    @MockBean
     private ImageServiceInterface imageService;
 
     @MockBean
@@ -69,6 +66,9 @@ class ImageControllerTest {
 
     @MockBean
     private UserAuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private ScreenAuthenticationProvider screenAuthenticationProvider;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
 

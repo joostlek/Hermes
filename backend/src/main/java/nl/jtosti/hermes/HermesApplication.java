@@ -36,6 +36,7 @@ public class HermesApplication implements CommandLineRunner {
 
     /**
      * Initializes the storage for images
+     *
      * @param args arguments
      * @throws Exception because @{CommandLineRunner}
      */

@@ -3,7 +3,7 @@ package nl.jtosti.hermes.screen;
 import nl.jtosti.hermes.HermesApplication;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.screen.auth.exception.ScreenIsNotToReceivePasswordException;
+import nl.jtosti.hermes.screen.exception.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
 import nl.jtosti.hermes.user.User;
 import org.junit.jupiter.api.DisplayName;
