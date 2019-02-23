@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 import {ClrForm, ClrLoadingState} from '@clr/angular';
 import {AuthService} from '../../@core/data/auth.service';
 import {Registration} from '../../@core/data/domain/registration';
-import {Router} from '@angular/router';
 import {repeatPasswordValidator} from '../../@core/directives/repeat-password.directive';
 
 @Component({
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
         {validators: repeatPasswordValidator});
 
     constructor(
-        private auth: AuthService,
+        private authService: AuthService,
         private router: Router,
     ) {
     }
@@ -34,36 +34,24 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
     }
 
-    get firstName() {
-        return this.registerForm.get('firstName');
-    }
-
-    get lastName() {
-        return this.registerForm.get('lastName');
-    }
-
-    get email() {
-        return this.registerForm.get('email');
-    }
-
-    get password() {
-        return this.registerForm.get('password');
-    }
-
-    get repeatPassword() {
-        return this.registerForm.get('repeatPassword');
-    }
-
-    register() {
+    public register(): void {
         this.registerButtonState = ClrLoadingState.LOADING;
         if (this.registerForm.valid) {
-            const registration = new Registration(this.firstName.value, this.lastName.value, this.email.value, this.password.value);
-            this.auth.register(registration, () => {
-                this.registerButtonState = ClrLoadingState.SUCCESS;
-                this.router.navigateByUrl('/auth/login');
-            }, () => {
-                this.registerButtonState = ClrLoadingState.ERROR;
-            });
+            const registration = new Registration(
+                this.registerForm.get('firstName').value,
+                this.registerForm.get('lastName').value,
+                this.registerForm.get('email').value,
+                this.registerForm.get('password').value);
+            this.authService.register(registration)
+                .subscribe(
+                    () => {
+                        this.registerButtonState = ClrLoadingState.SUCCESS;
+                        this.router.navigateByUrl('/auth/login');
+                    },
+                    () => {
+                        this.registerButtonState = ClrLoadingState.ERROR;
+                    },
+                );
         } else {
             setTimeout(() => {
                 this.clrForm.markAsDirty();

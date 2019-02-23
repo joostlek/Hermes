@@ -1,35 +1,38 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from './domain/user';
 import {filter} from 'rxjs/operators';
+import {User} from './domain/user';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CurrentUserService {
-    private user$ = new BehaviorSubject(null);
+    private user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
     constructor(private http: HttpClient) {
     }
 
     public getCurrentUser(): Observable<User> {
-        if (this.user$.getValue() === null) {
-            this.updateCurrentUser();
-        }
         return this.user$.pipe(
             filter((value) => value !== null),
         );
     }
 
-    updateCurrentUser(): void {
-        this.http.get<User>('api/users/me')
-            .subscribe((user) => {
-                this.user$.next(user);
-            });
+    public updateCurrentUser(user: User): void {
+        this.user$.next(user);
     }
 
-    removeCurrentUser() {
+    public refreshCurrentUser(): void {
+        this.http.get('api/users/me')
+            .subscribe(
+                (user: User) => {
+                    this.updateCurrentUser(user);
+                },
+            );
+    }
+
+    public removeCurrentUser(): void {
         this.user$.next(null);
     }
 }

@@ -85,7 +85,7 @@ export class EditUserModalComponent implements OnInit {
                 .subscribe(
                     () => {
                         this.submitButtonState = ClrLoadingState.SUCCESS;
-                        this.currentUserService.updateCurrentUser();
+                        this.currentUserService.refreshCurrentUser();
                         this.closeModal();
                     },
                     (error) => {

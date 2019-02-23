@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../@core/data/auth.service';
 import {Router} from '@angular/router';
-import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../../@core/data/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -14,10 +13,11 @@ export class LoginComponent implements OnInit {
         username: '',
         password: '',
     };
-    errorMessage: string;
+
+    error: string;
 
     constructor(
-        private auth: AuthService,
+        private authService: AuthService,
         private router: Router,
     ) {
     }
@@ -25,12 +25,15 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
-    authenticate() {
-        this.auth.authenticate(this.credentials, () => {
-            this.router.navigateByUrl('/');
-        }, (error: HttpErrorResponse) => {
-            this.errorMessage = error.error['message'];
-        });
-
+    public authenticate(): void {
+        this.authService.authenticate(this.credentials)
+            .subscribe(
+                () => {
+                    this.router.navigateByUrl('/');
+                },
+                () => {
+                    this.error = 'Credentials incorrect';
+                },
+            );
     }
 }

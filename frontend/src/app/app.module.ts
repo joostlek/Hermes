@@ -34,11 +34,11 @@ import {SafePipe} from './@core/pipes/safe.pipe';
         //     provide: ErrorHandler,
         //     useClass: ErrorsHandler,
         // },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: RefreshTokenInterceptor,
-            multi: true,
-        },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: RefreshTokenInterceptor,
+        //     multi: true,
+        // },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JsonInterceptor,

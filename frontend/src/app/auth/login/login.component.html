@@ -9,8 +9,8 @@
                [(ngModel)]="credentials.username">
         <input class="password" type="password" id="login_password" placeholder="Password" name="password"
                [(ngModel)]="credentials.password">
-        <div class="error active" *ngIf="errorMessage">
-            {{errorMessage}}
+        <div class="error active" *ngIf="error">
+            {{error}}
         </div>
         <button type="submit" class="btn btn-primary">NEXT</button>
         <a routerLink="../register" class="signup">Sign up for an account</a>
