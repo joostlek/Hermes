@@ -9,4 +9,4 @@
     <h6>Created {{intervalCreated?.toString()}} ago</h6>
     <h6 *ngIf="showUpdated" class="updated">Updated {{intervalUpdated?.toString()}} ago</h6>
 </section>
-<app-edit-user-modal *ngIf="user" [user]="user" [openStream]="editUser"></app-edit-user-modal>
+<app-edit-user-modal *ngIf="user" [user]="user" [openStream]=editUserModal></app-edit-user-modal>

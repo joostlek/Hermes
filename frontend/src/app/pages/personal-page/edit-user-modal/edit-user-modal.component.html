@@ -1,4 +1,4 @@
-<clr-modal [(clrModalOpen)]="modalOpen">
+<clr-modal [(clrModalOpen)]="open">
     <h3 class="modal-title">Edit {{user?.firstName}} {{user?.lastName}}</h3>
     <div class="modal-body">
         <clr-tabs>
@@ -23,17 +23,6 @@
                             <input clrInput type="text" placeholder="Email" formControlName="email">
                             <clr-control-error>This is incorrect</clr-control-error>
                         </clr-input-container>
-                        <!--<clr-input-container>-->
-                            <!--<label>Password</label>-->
-                            <!--<input clrInput type="password" placeholder="Password" formControlName="password">-->
-                            <!--<clr-control-error>This is incorrect</clr-control-error>-->
-                        <!--</clr-input-container>-->
-                        <!--<clr-input-container>-->
-                            <!--<label>Repeat password</label>-->
-                            <!--<input clrInput type="password" placeholder="Repeat password"-->
-                                   <!--formControlName="repeatPassword">-->
-                            <!--<clr-control-error>This is incorrect</clr-control-error>-->
-                        <!--</clr-input-container>-->
                     </form>
                 </clr-tab-content>
             </clr-tab>

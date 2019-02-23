@@ -15,7 +15,7 @@ export class PersonalPageComponent implements OnInit {
     intervalUpdated: Interval;
     showUpdated = false;
 
-    editUser: Subject<boolean> = new Subject<boolean>();
+    editUserModal: Subject<boolean> = new Subject<boolean>();
 
     constructor(
         private currentUserService: CurrentUserService,
@@ -27,21 +27,20 @@ export class PersonalPageComponent implements OnInit {
     }
 
     public openEditModal(): void {
-        this.editUser.next(true);
+        this.editUserModal.next(true);
     }
 
     getCurrentUser(): void {
         this.currentUserService.getCurrentUser()
             .subscribe((user: User) => {
-                this.user = user;
-                if (user !== null) {
+                    this.user = user;
                     this.intervalCreated = calculateDifference(new Date(), user.created);
                     this.intervalUpdated = calculateDifference(new Date(), user.updated);
                     if (this.user.created !== this.user.updated) {
                         this.showUpdated = true;
                     }
-                }
-            });
+                },
+            );
     }
 
 }

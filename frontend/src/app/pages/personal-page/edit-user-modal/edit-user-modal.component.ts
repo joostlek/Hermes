@@ -14,9 +14,10 @@ import {UserService} from '../../../@core/data/user.service';
 export class EditUserModalComponent implements OnInit {
     @Input() openStream: Subject<boolean>;
     @Input() user: User;
+
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
-    modalOpen = false;
+    open = false;
 
     error: string;
 
@@ -24,10 +25,7 @@ export class EditUserModalComponent implements OnInit {
             firstName: new FormControl('', [Validators.required]),
             lastName: new FormControl('', [Validators.required]),
             email: new FormControl('', {validators: [Validators.required, Validators.email], updateOn: 'blur'}),
-            // password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-            // repeatPassword: new FormControl('', [Validators.required]),
         },
-        // {validators: repeatPasswordValidator}
     );
 
     constructor(
@@ -43,15 +41,15 @@ export class EditUserModalComponent implements OnInit {
     private watchOpen(): void {
         this.openStream.subscribe(
             (value: boolean) => {
-                this.modalOpen = value;
+                this.open = value;
                 if (value === true) {
-                    this.fillForms();
+                    this.lazyLoadModal();
                 }
             },
         );
     }
 
-    private fillForms(): void {
+    private lazyLoadModal(): void {
         this.registerForm.controls['firstName'].setValue(this.user.firstName);
         this.registerForm.controls['lastName'].setValue(this.user.lastName);
         this.registerForm.controls['email'].setValue(this.user.email);
