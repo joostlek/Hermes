@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ClrLoadingState} from '@clr/angular';
 import {Subject} from 'rxjs';
 import {Location} from '../../../@core/data/domain/location';
-import {ChosenLocationService} from '../chosen-location.service';
 import {LocationService} from '../../../@core/data/location.service';
-import {ClrLoadingState} from '@clr/angular';
+import {ChosenLocationService} from '../chosen-location.service';
 
 @Component({
     selector: 'app-edit-location-modal',
@@ -12,8 +12,8 @@ import {ClrLoadingState} from '@clr/angular';
     styleUrls: ['./edit-location-modal.component.css'],
 })
 export class EditLocationModalComponent implements OnInit {
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshLocation') refreshStream: Subject<boolean>;
+    @Input() openStream: Subject<boolean>;
+    @Input() refreshStream: Subject<boolean>;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     location: Location;
@@ -40,21 +40,21 @@ export class EditLocationModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.checkOpenStream();
+        this.watchOpen();
     }
 
-    private checkOpenStream(): void {
+    private watchOpen(): void {
         this.openStream.subscribe(
             (value) => {
                 this.open = value;
                 if (value === true) {
-                    this.getLocation();
+                    this.lazyLoadModal();
                 }
             },
         );
     }
 
-    private getLocation(): void {
+    private lazyLoadModal(): void {
         this.chosenLocationService.getLocation()
             .subscribe(
                 (location: Location) => {

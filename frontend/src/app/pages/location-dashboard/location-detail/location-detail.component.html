@@ -13,5 +13,7 @@
     {{location.zipCode}} {{location.city}}<br>
     {{location.country}}
 </section>
-<app-edit-location-modal [open]="editModal" [refreshLocation]="refreshLocation"></app-edit-location-modal>
-<app-remove-location-modal [open]="deleteModal" [refreshLocation]="forwardToList" [location]="location"></app-remove-location-modal>
+<app-edit-location-modal [openStream]="editLocationModal"
+                         [refreshStream]="refreshLocationStream"></app-edit-location-modal>
+<app-remove-location-modal [open]="deleteLocationModal" [refreshLocation]="forwardToList"
+                           [location]="location"></app-remove-location-modal>

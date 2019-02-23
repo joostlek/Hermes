@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ManageImagesComponent} from './manage-images.component';
+import {LManageImagesComponent} from './l-manage-images.component';
 
-describe('ManageImagesComponent', () => {
-    let component: ManageImagesComponent;
-    let fixture: ComponentFixture<ManageImagesComponent>;
+describe('LManageImagesComponent', () => {
+    let component: LManageImagesComponent;
+    let fixture: ComponentFixture<LManageImagesComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ManageImagesComponent]
+            declarations: [LManageImagesComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ManageImagesComponent);
+        fixture = TestBed.createComponent(LManageImagesComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

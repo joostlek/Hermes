@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {Location} from '../../../@core/data/domain/location';
 import {ChosenLocationService} from '../chosen-location.service';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-location-detail',
@@ -14,9 +14,9 @@ export class LocationDetailComponent implements OnInit {
     private refreshLocationStream$: Subject<boolean> = new Subject();
     location: Location;
 
-    editModal: Subject<boolean> = new Subject();
-    deleteModal: Subject<boolean> = new Subject();
-    refreshLocation: Subject<boolean> = new Subject();
+    editLocationModal: Subject<boolean> = new Subject();
+    deleteLocationModal: Subject<boolean> = new Subject();
+    refreshLocationStream: Subject<boolean> = new Subject();
     forwardToList: Subject<boolean> = new Subject();
 
     constructor(
@@ -27,12 +27,12 @@ export class LocationDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getLocation();
-        this.checkRefresh();
+        this.watchRefresh();
         this.checkForward();
     }
 
-    private checkRefresh(): void {
-        this.refreshLocation.subscribe(
+    private watchRefresh(): void {
+        this.refreshLocationStream.subscribe(
             () => {
                 this.refreshLocationStream$.next(true);
                 this.getLocation();
@@ -60,10 +60,10 @@ export class LocationDetailComponent implements OnInit {
     }
 
     public openEditModal(): void {
-        this.editModal.next(true);
+        this.editLocationModal.next(true);
     }
 
     public openDeleteModal(): void {
-        this.deleteModal.next(true);
+        this.deleteLocationModal.next(true);
     }
 }

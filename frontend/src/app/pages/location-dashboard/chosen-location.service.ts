@@ -14,25 +14,25 @@ export class ChosenLocationService {
     constructor() {
     }
 
-    getLocation(): Observable<Location> {
+    public getLocation(): Observable<Location> {
         return this.location$
             .pipe(
                 filter((value) => value !== null),
             );
     }
 
-    pushNewLocation(location: Location): void {
+    public pushNewLocation(location: Location): void {
         this.location$.next(location);
     }
 
-    getCompany(): Observable<Company> {
+    public getCompany(): Observable<Company> {
         return this.company$
             .pipe(
                 filter((value) => value !== null),
             );
     }
 
-    pushNewCompany(company: Company): void {
+    public pushNewCompany(company: Company): void {
         this.company$.next(company);
     }
 }

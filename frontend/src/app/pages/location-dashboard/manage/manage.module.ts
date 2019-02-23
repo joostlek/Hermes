@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 
 import {ManageRoutingModule} from './manage-routing.module';
 
@@ -7,8 +7,8 @@ import {ManageRoutingModule} from './manage-routing.module';
     declarations: [],
     imports: [
         CommonModule,
-        ManageRoutingModule
-    ]
+        ManageRoutingModule,
+    ],
 })
 export class ManageModule {
 }

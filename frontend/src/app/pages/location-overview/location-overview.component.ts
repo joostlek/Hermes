@@ -4,7 +4,6 @@ import {filter} from 'rxjs/operators';
 import {CompanyService} from '../../@core/data/company.service';
 import {CurrentUserService} from '../../@core/data/current-user.service';
 import {Location} from '../../@core/data/domain/location';
-import {User} from '../../@core/data/domain/user';
 import {LocationService} from '../../@core/data/location.service';
 
 @Component({
@@ -13,8 +12,6 @@ import {LocationService} from '../../@core/data/location.service';
     styleUrls: ['./location-overview.component.css'],
 })
 export class LocationOverviewComponent implements OnInit {
-    user: User = null;
-
     allLocationStream: BehaviorSubject<Location[]> = new BehaviorSubject(null);
     personalLocationStream: BehaviorSubject<Location[]> = new BehaviorSubject(null);
     advertisingLocationStream: BehaviorSubject<Location[]> = new BehaviorSubject(null);
@@ -35,15 +32,8 @@ export class LocationOverviewComponent implements OnInit {
         sessionStorage.removeItem('selectedCompany');
     }
 
-    private getCurrentUser(): Observable<User> {
-        return this.currentUserService.getCurrentUser()
-            .pipe(
-                filter((value) => value !== null),
-            );
-    }
-
     private initializeStreams(): void {
-        this.getCurrentUser()
+        this.currentUserService.getCurrentUser()
             .subscribe(
                 (user) => {
                     this.locationService.getAllLocationsByUserId(user.id)

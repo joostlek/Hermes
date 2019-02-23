@@ -30,7 +30,7 @@ export class ImageDetailComponent implements OnInit {
         this.watchForward();
     }
 
-    getParameter(): void {
+    private getParameter(): void {
         this.route.params
             .subscribe(
                 (params) => {
@@ -39,7 +39,7 @@ export class ImageDetailComponent implements OnInit {
             );
     }
 
-    getImage(id: number): void {
+    private getImage(id: number): void {
         this.imageService.getImage(id)
             .subscribe((image) => {
                     this.image = image;

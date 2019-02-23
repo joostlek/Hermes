@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
     {
         path: 'images',
-        loadChildren: './manage-images/manage-images.module#ManageImagesModule',
+        loadChildren: './l-manage-images/l-manage-images.module#LManageImagesModule',
     },
     {
         path: 'screens',

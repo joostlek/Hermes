@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ImageDetailComponent} from './image-detail/image-detail.component';
-import {ManageImagesComponent} from './manage-images.component';
+import {ImageDetailComponent} from '../manage-images/image-detail/image-detail.component';
+import {ManageImagesComponent} from '../manage-images/manage-images.component';
 
 const routes: Routes = [
     {
@@ -18,5 +18,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class ManageImagesRoutingModule {
+export class LManageImagesRoutingModule {
 }

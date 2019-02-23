@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Image} from '../../../../@core/data/domain/image';
+import {Location} from '../../../../@core/data/domain/location';
 import {ImageService} from '../../../../@core/data/image.service';
 import {ChosenLocationService} from '../../chosen-location.service';
 
 @Component({
-    selector: 'app-manage-images',
-    templateUrl: './manage-images.component.html',
-    styleUrls: ['./manage-images.component.css'],
+    selector: 'app-l-manage-images',
+    templateUrl: './l-manage-images.component.html',
+    styleUrls: ['./l-manage-images.component.css'],
 })
-export class ManageImagesComponent implements OnInit {
+export class LManageImagesComponent implements OnInit {
     images: Image[];
 
     constructor(
@@ -18,20 +19,22 @@ export class ManageImagesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCurrentLocation()
-            .subscribe((location) => {
+        this.getLocation();
+    }
+
+    private getLocation(): void {
+        this.chosenLocationService.getLocation()
+            .subscribe(
+                (location: Location) => {
                     this.getImages(location.id);
                 },
             );
     }
 
-    getCurrentLocation() {
-        return this.chosenLocationService.getLocation();
-    }
-
-    getImages(locationId: number): void {
+    private getImages(locationId: number): void {
         this.imageService.getImagesByLocationId(locationId)
-            .subscribe((images) => {
+            .subscribe(
+                (images) => {
                     this.images = images;
                 },
             );

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {CompanyService} from '../../@core/data/company.service';
 import {CurrentUserService} from '../../@core/data/current-user.service';
 import {Company} from '../../@core/data/domain/company';
@@ -7,7 +8,6 @@ import {Location} from '../../@core/data/domain/location';
 import {User} from '../../@core/data/domain/user';
 import {LocationService} from '../../@core/data/location.service';
 import {ChosenLocationService} from './chosen-location.service';
-import {BehaviorSubject, Subject} from 'rxjs';
 
 @Component({
     selector: 'app-location-dashboard',
@@ -36,7 +36,6 @@ export class LocationDashboardComponent implements OnInit {
 
     ngOnInit() {
         this.getCurrentUser();
-        console.log(this.chosenLocation);
     }
 
     private getCurrentUser(): void {
@@ -58,7 +57,6 @@ export class LocationDashboardComponent implements OnInit {
     }
 
     private getLocation(id: number): void {
-        console.log('kek');
         this.locationService.getLocationById(id)
             .subscribe((location) => {
                     this.location = location;
@@ -71,33 +69,41 @@ export class LocationDashboardComponent implements OnInit {
 
     private getActingCompany(): void {
         const tempCompany = sessionStorage.getItem('selectedCompany');
-        console.log(tempCompany);
         if (tempCompany !== null) {
             this.getCompany(JSON.parse(tempCompany)[this.location.id]['id']);
         } else {
-            const companies = [];
-            for (const key in this.user.companies) {
-                if (this.user.companies.hasOwnProperty(key)) {
-                    const company = this.user.companies[key];
-                    for (const adKey in this.location.advertisingCompanies) {
-                        if (this.location.advertisingCompanies.hasOwnProperty(adKey)) {
-                            const adCompany = this.location.advertisingCompanies[adKey];
-                            if (adCompany['id'] === company['id']) {
-                                companies.push(company);
-                            }
-                        }
-                    }
-                    if (company['id'] === this.location.company.id) {
-                        companies.push(company);
-                    }
-                }
-            }
+            const companies = this.getMatchingCompanies();
             if (companies.length === 1) {
                 this.getCompany(companies[0]['id']);
             } else if (companies.length > 1) {
                 this.openCompanyChooser();
                 this.companyChoices.next(companies);
             }
+        }
+    }
+
+    private getMatchingCompanies(): Company[] {
+        const companies = [];
+        for (const key in this.user.companies) {
+            if (this.user.companies.hasOwnProperty(key)) {
+                const company = this.user.companies[key];
+                this.getAdvertisingCompanies(company, companies);
+            }
+        }
+        return companies;
+    }
+
+    private getAdvertisingCompanies(company: Company, companies: Company[]): void {
+        for (const adKey in this.location.advertisingCompanies) {
+            if (this.location.advertisingCompanies.hasOwnProperty(adKey)) {
+                const adCompany = this.location.advertisingCompanies[adKey];
+                if (adCompany['id'] === company['id']) {
+                    companies.push(company);
+                }
+            }
+        }
+        if (company['id'] === this.location.company.id) {
+            companies.push(company);
         }
     }
 

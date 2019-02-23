@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ChosenLocationService} from '../../chosen-location.service';
+import {Subject} from 'rxjs';
 import {Company} from '../../../../@core/data/domain/company';
 import {Location} from '../../../../@core/data/domain/location';
-import {Subject} from 'rxjs';
+import {ChosenLocationService} from '../../chosen-location.service';
 
 @Component({
     selector: 'app-l-manage-advertising-companies',
@@ -13,7 +13,7 @@ export class LManageAdvertisingCompaniesComponent implements OnInit {
     companies: Company[];
 
     removeCompanyModal: Subject<boolean> = new Subject<boolean>();
-    refreshList: Subject<boolean> = new Subject<boolean>();
+    refreshCompanyStream: Subject<boolean> = new Subject<boolean>();
 
     companyToBeDeleted: Company;
 
@@ -24,11 +24,11 @@ export class LManageAdvertisingCompaniesComponent implements OnInit {
 
     ngOnInit() {
         this.watchRefresh();
-        this.refreshList.next(true);
+        this.refreshCompanyStream.next(true);
     }
 
     private watchRefresh(): void {
-        this.refreshList.subscribe(
+        this.refreshCompanyStream.subscribe(
             () => {
                 this.companyToBeDeleted = undefined;
                 this.getCompanies();
