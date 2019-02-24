@@ -7,7 +7,7 @@
             <a routerLink="overview" class="nav-link" routerLinkActive="active">
                 {{company?.name}}
             </a>
-            <section class="nav-group collapsible">
+            <section class="nav-group collapsible" *ngIf="admin | async">
                 <input id="tab2" type="checkbox">
                 <label for="tab2">Manage</label>
                 <ul class="nav-list">
