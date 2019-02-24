@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.user;
 
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.user.exception.EmailAlreadyUsedException;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,11 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User save(User user) {
+        if (user.getId() == null) {
+            if (this.exists(user.getEmail())) {
+                throw new EmailAlreadyUsedException(user.getEmail());
+            }
+        }
         return userRepository.save(user);
     }
 
