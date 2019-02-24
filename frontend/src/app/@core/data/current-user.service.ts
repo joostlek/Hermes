@@ -10,10 +10,16 @@ import {User} from './domain/user';
 export class CurrentUserService {
     private user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
+    private refreshInProgress = false;
+
     constructor(private http: HttpClient) {
     }
 
     public getCurrentUser(): Observable<User> {
+        if (this.user$.getValue() === null && this.refreshInProgress === false) {
+            this.refreshInProgress = true;
+            this.refreshCurrentUser();
+        }
         return this.user$.pipe(
             filter((value) => value !== null),
         );
@@ -28,6 +34,7 @@ export class CurrentUserService {
             .subscribe(
                 (user: User) => {
                     this.updateCurrentUser(user);
+                    this.refreshInProgress = true;
                 },
             );
     }
