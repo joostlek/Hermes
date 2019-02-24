@@ -12,8 +12,8 @@ import {ChosenCompanyService} from '../chosen-company.service';
     styleUrls: ['./edit-company-modal.component.css'],
 })
 export class EditCompanyModalComponent implements OnInit {
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshLocation') refreshStream: Subject<boolean>;
+    @Input() openStream: Subject<boolean>;
+    @Input() refreshStream: Subject<boolean>;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     company: Company;
@@ -40,10 +40,10 @@ export class EditCompanyModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.checkOpenStream();
+        this.watchOpen();
     }
 
-    private checkOpenStream(): void {
+    private watchOpen(): void {
         this.openStream.subscribe(
             (value) => {
                 this.open = value;

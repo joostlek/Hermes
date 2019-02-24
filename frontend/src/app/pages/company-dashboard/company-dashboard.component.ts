@@ -23,7 +23,7 @@ export class CompanyDashboardComponent implements OnInit {
         this.getParameter();
     }
 
-    getParameter(): void {
+    private getParameter(): void {
         this.route.params
             .subscribe(
                 (params) => {
@@ -32,7 +32,7 @@ export class CompanyDashboardComponent implements OnInit {
             );
     }
 
-    getCompany(companyId: number): void {
+    private getCompany(companyId: number): void {
         this.companyService.getCompanyById(companyId)
             .subscribe((company) => {
                     this.company = company;

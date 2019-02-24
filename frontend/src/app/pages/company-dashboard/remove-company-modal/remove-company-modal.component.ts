@@ -11,8 +11,8 @@ import {ChosenCompanyService} from '../chosen-company.service';
     styleUrls: ['./remove-company-modal.component.css'],
 })
 export class RemoveCompanyModalComponent implements OnInit {
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshLocation') refreshList: Subject<boolean>;
+    @Input() openStream: Subject<boolean>;
+    @Input() toListStream: Subject<boolean>;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
@@ -58,7 +58,7 @@ export class RemoveCompanyModalComponent implements OnInit {
             .subscribe(
                 () => {
                     this.submitButtonState = ClrLoadingState.SUCCESS;
-                    this.refreshList.next(true);
+                    this.toListStream.next(true);
                     this.closeModal();
                 },
                 (error) => {

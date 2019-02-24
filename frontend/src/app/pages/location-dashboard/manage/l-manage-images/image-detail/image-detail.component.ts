@@ -12,10 +12,9 @@ import {ImageService} from '../../../../../@core/data/image.service';
 })
 export class ImageDetailComponent implements OnInit {
     image: Image;
-    style: any;
 
-    editModal: Subject<boolean> = new Subject<boolean>();
-    deleteModal: Subject<boolean> = new Subject<boolean>();
+    editImageModal: Subject<boolean> = new Subject<boolean>();
+    deleteImageModal: Subject<boolean> = new Subject<boolean>();
     toListStream: Subject<boolean> = new Subject<boolean>();
 
     constructor(
@@ -27,7 +26,7 @@ export class ImageDetailComponent implements OnInit {
 
     ngOnInit() {
         this.getParameter();
-        this.watchForward();
+        this.watchList();
     }
 
     private getParameter(): void {
@@ -47,7 +46,7 @@ export class ImageDetailComponent implements OnInit {
             );
     }
 
-    private watchForward(): void {
+    private watchList(): void {
         this.toListStream.subscribe(
             () => {
                 this.location.back();
@@ -56,11 +55,11 @@ export class ImageDetailComponent implements OnInit {
     }
 
     public openEditModal(): void {
-        this.editModal.next(true);
+        this.editImageModal.next(true);
     }
 
     public openDeleteModal(): void {
-        this.deleteModal.next(true);
+        this.deleteImageModal.next(true);
     }
 
 }

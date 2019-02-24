@@ -13,9 +13,9 @@ import {ChosenCompanyService} from '../../../pages/company-dashboard/chosen-comp
     styleUrls: ['./remove-location-modal.component.css'],
 })
 export class RemoveLocationModalComponent implements OnInit {
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshLocation') refreshList: Subject<boolean>;
-    @Input('location') location: Location;
+    @Input() openStream: Subject<boolean>;
+    @Input() refreshList: Subject<boolean>;
+    @Input() location: Location;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
@@ -30,14 +30,14 @@ export class RemoveLocationModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.checkOpenStream();
-        this.getCompany();
+        this.watchOpen();
     }
 
-    private checkOpenStream(): void {
+    private watchOpen(): void {
         this.openStream.subscribe(
             (value) => {
                 this.open = value;
+                this.getCompany();
             },
         );
     }

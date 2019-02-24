@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ClrWizard, ClrWizardPage} from '@clr/angular';
 import {CompanyService} from '../../../@core/data/company.service';
 import {Company} from '../../../@core/data/domain/company';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-company-wizard',
@@ -11,12 +12,14 @@ import {Company} from '../../../@core/data/domain/company';
     styleUrls: ['./company-wizard.component.css'],
 })
 export class CompanyWizardComponent implements OnInit {
-    @Input('open') open: boolean;
     @ViewChild('wizardlg') wizard: ClrWizard;
     @ViewChild('finalPage') finalPage: ClrWizardPage;
+    @Input() openStream: Subject<boolean>;
+
     loadingFlag = false;
     errorFlag = false;
     error: any;
+    open = false;
 
     basicInfoPage = new FormGroup({
         name: new FormControl('', [Validators.required]),
@@ -38,9 +41,18 @@ export class CompanyWizardComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.watchOpen();
     }
 
-    createLocation(): void {
+    private watchOpen(): void {
+        this.openStream.subscribe(
+            (value: boolean) => {
+                this.open = value;
+            },
+        );
+    }
+
+    private createLocation(): void {
         this.errorFlag = false;
         this.loadingFlag = true;
         if (!this.basicInfoPage.invalid && !this.locationInfoPage.invalid) {
@@ -67,11 +79,11 @@ export class CompanyWizardComponent implements OnInit {
         }
     }
 
-    navigate(company: Company): void {
+    private navigate(company: Company): void {
         this.router.navigate([company.id]);
     }
 
-    reset(): void {
+    public reset(): void {
         this.wizard.reset();
         this.basicInfoPage.reset();
         this.wizard.close();
@@ -79,15 +91,15 @@ export class CompanyWizardComponent implements OnInit {
         this.errorFlag = false;
     }
 
-    doCancel(): void {
+    public doCancel(): void {
         this.reset();
     }
 
-    goBack(): void {
+    public goBack(): void {
         this.wizard.previous();
     }
 
-    doFinish(): void {
+    public doFinish(): void {
         this.wizard.forceFinish();
         this.reset();
     }

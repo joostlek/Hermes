@@ -1,5 +1,5 @@
 <h1>Users</h1>
-<button type="button" class="btn btn-icon btn-primary" title="Add user" (click)="openModal()">
+<button type="button" class="btn btn-icon btn-primary" title="Add user" (click)="openAddUserModal()">
     <clr-icon shape="plus"></clr-icon>
     add
 </button>
@@ -11,7 +11,7 @@
         <clr-dg-cell>{{user.firstName}} {{user.lastName}}</clr-dg-cell>
         <clr-dg-cell>{{user.email}}</clr-dg-cell>
         <clr-dg-action-overflow>
-            <button class="action-item" (click)="onDelete(user)">Delete</button>
+            <button class="action-item" (click)="openRemoveUserModal(user)">Delete</button>
         </clr-dg-action-overflow>
     </clr-dg-row>
 
@@ -22,5 +22,6 @@
         </clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
-<app-add-user-modal [open]="addUserModalOpen" [refreshUserList]="refreshUserList"></app-add-user-modal>
-<app-remove-user-modal [open]="removeUserModalOpen" [user]="userToBeDeleted" [refreshUserList]="refreshUserList"></app-remove-user-modal>
+<app-add-user-modal [openStream]="addUserModal" [refreshStream]="refreshUserList"></app-add-user-modal>
+<app-remove-user-modal [openStream]="removeUserModal" [user]="userToBeDeleted"
+                       [refreshStream]="refreshUserList"></app-remove-user-modal>

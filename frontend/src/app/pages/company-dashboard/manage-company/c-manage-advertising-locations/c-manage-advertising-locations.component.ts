@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Company} from '../../../../@core/data/domain/company';
 import {Location} from '../../../../@core/data/domain/location';
-import {LocationService} from '../../../../@core/data/location.service';
 import {ChosenCompanyService} from '../../chosen-company.service';
 
 @Component({
@@ -21,7 +20,6 @@ export class CManageAdvertisingLocationsComponent implements OnInit {
 
     constructor(
         private chosenCompanyService: ChosenCompanyService,
-        private locationService: LocationService,
     ) {
     }
 

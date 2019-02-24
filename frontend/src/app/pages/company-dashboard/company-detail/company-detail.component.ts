@@ -12,8 +12,8 @@ import {Router} from '@angular/router';
 export class CompanyDetailComponent implements OnInit {
     company: Company;
 
-    editModal: Subject<boolean> = new Subject();
-    deleteModal: Subject<boolean> = new Subject();
+    editCompanyModal: Subject<boolean> = new Subject();
+    deleteCompanyModal: Subject<boolean> = new Subject();
     refreshCompany: Subject<boolean> = new Subject();
     forwardToList: Subject<boolean> = new Subject();
 
@@ -25,8 +25,8 @@ export class CompanyDetailComponent implements OnInit {
 
     ngOnInit() {
         this.watchRefresh();
-        this.getCompany();
         this.watchList();
+        this.getCompany();
     }
 
     private watchList(): void {
@@ -47,17 +47,18 @@ export class CompanyDetailComponent implements OnInit {
 
     private getCompany(): void {
         this.chosenCompanyService.getCompany()
-            .subscribe((company) => {
+            .subscribe(
+                (company: Company) => {
                     this.company = company;
                 },
             );
     }
 
     public openEditModal(): void {
-        this.editModal.next(true);
+        this.editCompanyModal.next(true);
     }
 
     public openDeleteModal(): void {
-        this.deleteModal.next(true);
+        this.deleteCompanyModal.next(true);
     }
 }

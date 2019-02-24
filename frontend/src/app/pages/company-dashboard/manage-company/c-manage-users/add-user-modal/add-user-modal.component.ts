@@ -12,8 +12,8 @@ import {ChosenCompanyService} from '../../../chosen-company.service';
     styleUrls: ['./add-user-modal.component.css'],
 })
 export class AddUserModalComponent implements OnInit {
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshUserList') refreshList: Subject<boolean>;
+    @Input() openStream: Subject<boolean>;
+    @Input() refreshStream: Subject<boolean>;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
@@ -31,13 +31,13 @@ export class AddUserModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.checkOpenStream();
+        this.watchOpen();
         this.getCompany();
     }
 
-    private checkOpenStream(): void {
+    private watchOpen(): void {
         this.openStream.subscribe(
-            (value) => {
+            (value: boolean) => {
                 this.open = value;
             },
         );
@@ -64,7 +64,7 @@ export class AddUserModalComponent implements OnInit {
             this.companyService.addUserToCompany(this.email.value['email'], this.company.id)
                 .subscribe(() => {
                         this.submitButtonState = ClrLoadingState.SUCCESS;
-                        this.refreshList.next(true);
+                    this.refreshStream.next(true);
                         this.closeModal();
                     }, (error) => {
                         this.submitButtonState = ClrLoadingState.ERROR;

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
-import {filter, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {Location} from '../../../../@core/data/domain/location';
 import {LocationService} from '../../../../@core/data/location.service';
 import {ChosenCompanyService} from '../../chosen-company.service';
@@ -13,8 +13,8 @@ import {ChosenCompanyService} from '../../chosen-company.service';
 export class CManageLocationsComponent implements OnInit {
     private locationLoadStream$: Subject<boolean> = new Subject();
 
-    createLocationWizardOpen: Subject<boolean> = new Subject();
-    deleteLocationModalOpen: Subject<boolean> = new Subject();
+    createLocationWizard: Subject<boolean> = new Subject();
+    deleteLocationModal: Subject<boolean> = new Subject();
     refreshLocationList: Subject<boolean> = new Subject();
 
     locations: Location[];
@@ -27,8 +27,8 @@ export class CManageLocationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getLocations();
         this.checkRefresh();
+        this.refreshLocationList.next(true);
     }
 
     private getLocations(): void {
@@ -50,10 +50,8 @@ export class CManageLocationsComponent implements OnInit {
     }
 
     private checkRefresh(): void {
+        this.locationToBeDeleted = undefined;
         this.refreshLocationList
-            .pipe(
-                filter((value) => value !== null),
-            )
             .subscribe(
                 () => {
                     this.locationLoadStream$.next(true);
@@ -63,12 +61,12 @@ export class CManageLocationsComponent implements OnInit {
     }
 
     public openLocationWizard(): void {
-        this.createLocationWizardOpen.next(true);
+        this.createLocationWizard.next(true);
     }
 
-    public onDelete(location: Location): void {
+    public openDeleteLocationModal(location: Location): void {
         this.locationToBeDeleted = location;
-        this.deleteLocationModalOpen.next(true);
+        this.deleteLocationModal.next(true);
     }
 
 }

@@ -11,5 +11,5 @@
 {{company?.street}} {{company?.houseNumber}}<br>
 {{company?.zipCode}} {{company?.city}}<br>
 {{company?.country}}
-<app-edit-company-modal [open]="editModal" [refreshLocation]="refreshCompany"></app-edit-company-modal>
-<app-remove-company-modal [open]="deleteModal" [refreshLocation]="forwardToList"></app-remove-company-modal>
+<app-edit-company-modal [openStream]="editCompanyModal" [refreshStream]="refreshCompany"></app-edit-company-modal>
+<app-remove-company-modal [openStream]="deleteCompanyModal" [toListStream]="forwardToList"></app-remove-company-modal>

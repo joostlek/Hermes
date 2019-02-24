@@ -12,14 +12,14 @@ export class ChosenCompanyService {
     constructor() {
     }
 
-    getCompany(): Observable<Company> {
+    public getCompany(): Observable<Company> {
         return this.company$
             .pipe(
                 filter((value) => value !== null),
             );
     }
 
-    pushNewCompany(company: Company): void {
+    public pushNewCompany(company: Company): void {
         this.company$.next(company);
     }
 }

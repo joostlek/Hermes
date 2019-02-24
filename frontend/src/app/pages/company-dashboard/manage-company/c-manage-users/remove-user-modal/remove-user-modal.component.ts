@@ -12,9 +12,9 @@ import {User} from '../../../../../@core/data/domain/user';
     styleUrls: ['./remove-user-modal.component.css'],
 })
 export class RemoveUserModalComponent implements OnInit {
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshUserList') refreshList: Subject<boolean>;
-    @Input('user') user: User;
+    @Input() openStream: Subject<boolean>;
+    @Input() refreshStream: Subject<boolean>;
+    @Input() user: User;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
@@ -28,14 +28,14 @@ export class RemoveUserModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.checkOpenStream();
-        this.getCompany();
+        this.watchOpen();
     }
 
-    private checkOpenStream(): void {
+    private watchOpen(): void {
         this.openStream.subscribe(
-            (value) => {
+            (value: boolean) => {
                 this.open = value;
+                this.getCompany();
             },
         );
     }
@@ -60,7 +60,7 @@ export class RemoveUserModalComponent implements OnInit {
             .subscribe(
                 () => {
                     this.submitButtonState = ClrLoadingState.SUCCESS;
-                    this.refreshList.next(true);
+                    this.refreshStream.next(true);
                     this.closeModal();
                 },
                 (error) => {

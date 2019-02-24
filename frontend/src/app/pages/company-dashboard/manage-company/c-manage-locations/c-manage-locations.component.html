@@ -11,7 +11,7 @@
         <clr-dg-cell>{{location.id}}</clr-dg-cell>
         <clr-dg-cell><a routerLink="/locations/{{location.id}}/overview">{{location.name}}</a></clr-dg-cell>
         <clr-dg-action-overflow>
-            <button class="action-item" (click)="onDelete(location)">Delete</button>
+            <button class="action-item" (click)="openDeleteLocationModal(location)">Delete</button>
         </clr-dg-action-overflow>
     </clr-dg-row>
 
@@ -22,5 +22,7 @@
         </clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
-<app-create-location-wizard [open]="createLocationWizardOpen" [refreshLocationList]="refreshLocationList"></app-create-location-wizard>
-<app-remove-location-modal [open]="deleteLocationModalOpen" [refreshLocation]="refreshLocationList" [location]="locationToBeDeleted"></app-remove-location-modal>
+<app-create-location-wizard [openStream]="createLocationWizard"
+                            [refreshList]="refreshLocationList"></app-create-location-wizard>
+<app-remove-location-modal [openStream]="deleteLocationModal" [refreshList]="refreshLocationList"
+                           [location]="locationToBeDeleted"></app-remove-location-modal>

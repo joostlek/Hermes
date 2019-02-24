@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ClrLoadingState} from '@clr/angular';
 import {Subject} from 'rxjs';
 import {CompanyService} from '../../../../../@core/data/company.service';
 import {Company} from '../../../../../@core/data/domain/company';
 import {Location} from '../../../../../@core/data/domain/location';
 import {LocationService} from '../../../../../@core/data/location.service';
 import {ChosenCompanyService} from '../../../chosen-company.service';
-import {ClrLoadingState} from '@clr/angular';
 
 @Component({
     selector: 'app-add-advertising-location-modal',

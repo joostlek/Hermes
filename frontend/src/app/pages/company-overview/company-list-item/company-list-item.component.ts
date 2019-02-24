@@ -7,7 +7,7 @@ import {Company} from '../../../@core/data/domain/company';
     styleUrls: ['./company-list-item.component.css']
 })
 export class CompanyListItemComponent implements OnInit {
-    @Input('company') company: Company;
+    @Input() company: Company;
 
     constructor() {
     }

@@ -2,7 +2,7 @@
     <div class="content-area">
         <h1>Companies</h1>
         <button type="button" class="btn btn-icon btn-primary" title="Create new company"
-                (click)="wizardOpen = !wizardOpen">
+                (click)="openCompanyWizard()">
             <clr-icon shape="plus"></clr-icon>
             create
         </button>
@@ -16,4 +16,4 @@
         </clr-tabs>
     </div>
 </div>
-<app-company-wizard [open]="wizardOpen"></app-company-wizard>
+<app-company-wizard [openStream]="companyWizard"></app-company-wizard>

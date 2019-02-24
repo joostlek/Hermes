@@ -16,8 +16,8 @@ export class CreateLocationWizardComponent implements OnInit {
     @ViewChild('wizardlg') wizard: ClrWizard;
     @ViewChild('finalPage') finalPage: ClrWizardPage;
 
-    @Input('open') openStream: Subject<boolean>;
-    @Input('refreshLocationList') refreshList: Subject<boolean>;
+    @Input() openStream: Subject<boolean>;
+    @Input() refreshList: Subject<boolean>;
     submitButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     open = false;
