@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
 
     registerButtonState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
+    error: string;
+
     registerForm = new FormGroup({
             firstName: new FormControl('', [Validators.required]),
             lastName: new FormControl('', [Validators.required]),
@@ -48,8 +50,10 @@ export class RegisterComponent implements OnInit {
                         this.registerButtonState = ClrLoadingState.SUCCESS;
                         this.router.navigateByUrl('/auth/login');
                     },
-                    () => {
+                    (error) => {
+                        this.error = JSON.parse(error.error)['message'];
                         this.registerButtonState = ClrLoadingState.ERROR;
+                        console.error(this.error);
                     },
                 );
         } else {

@@ -5,6 +5,9 @@
         <h5 class="hint">Please fill out the following information</h5>
     </section>
     <div class="login-group">
+        <div class="error active" *ngIf="error">
+            {{error}}
+        </div>
         <clr-input-container>
             <label>First name</label>
             <input clrInput type="text" placeholder="First name" formControlName="firstName">
