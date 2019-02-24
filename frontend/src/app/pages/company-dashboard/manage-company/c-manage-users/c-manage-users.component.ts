@@ -66,11 +66,11 @@ export class CManageUsersComponent implements OnInit {
             );
     }
 
-    private openAddUserModal(): void {
+    public openAddUserModal(): void {
         this.addUserModal.next(true);
     }
 
-    private openRemoveUserModal(user: User): void {
+    public openRemoveUserModal(user: User): void {
         this.userToBeDeleted = user;
         this.removeUserModal.next(true);
     }
