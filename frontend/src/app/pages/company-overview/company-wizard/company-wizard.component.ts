@@ -52,7 +52,7 @@ export class CompanyWizardComponent implements OnInit {
         );
     }
 
-    private createLocation(): void {
+    public createCompany(): void {
         this.errorFlag = false;
         this.loadingFlag = true;
         if (!this.basicInfoPage.invalid && !this.locationInfoPage.invalid) {
