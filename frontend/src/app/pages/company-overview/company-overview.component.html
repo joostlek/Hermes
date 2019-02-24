@@ -13,6 +13,18 @@
                     <app-company-list [companyStream]="getAllCompanyStream()"></app-company-list>
                 </clr-tab-content>
             </clr-tab>
+            <clr-tab>
+                <button clrTabLink id="link2">Personal</button>
+                <clr-tab-content id="content2" *clrIfActive>
+                    <app-company-list [companyStream]="getPersonalCompanyStream()"></app-company-list>
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink id="link3">Advertising</button>
+                <clr-tab-content id="content3" *clrIfActive>
+                    <app-company-list [companyStream]="getAdvertisingCompanyStream()"></app-company-list>
+                </clr-tab-content>
+            </clr-tab>
         </clr-tabs>
     </div>
 </div>
