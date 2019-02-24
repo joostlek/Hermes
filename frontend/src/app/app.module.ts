@@ -6,6 +6,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ClarityModule} from '@clr/angular';
 import {DataModule} from './@core/data/data.module';
 import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-password.directive';
+import {ErrorInterceptor} from './@core/interceptor/error-interceptor';
 import {JsonInterceptor} from './@core/interceptor/json-interceptor';
 import {SafePipe} from './@core/pipes/safe.pipe';
 import {UiModule} from './@ui/ui.module';
@@ -28,6 +29,11 @@ import {AppComponent} from './app.component';
         AppRoutingModule,
     ],
     providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true,
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JsonInterceptor,
