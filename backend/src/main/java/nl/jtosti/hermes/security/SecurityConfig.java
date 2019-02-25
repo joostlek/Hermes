@@ -3,8 +3,11 @@ package nl.jtosti.hermes.security;
 import nl.jtosti.hermes.security.screen.ScreenAuthenticationProvider;
 import nl.jtosti.hermes.security.user.UserAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,34 +17,23 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-
-import java.lang.Integer;
-
 
 import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 @EnableRedisHttpSession
-@PropertySource("classpath:application.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserAuthenticationProvider userAuthenticationProvider;
     private final ScreenAuthenticationProvider screenAuthenticationProvider;
-    
+
     @Value("${spring.redis.host}")
     private String hostName;
-    
+
     @Value("${spring.redis.password}")
     private String password;
-    
+
     @Value("${spring.redis.port}")
-    private String port;
-      
-
-
+    private int port;
 
     @Autowired
     public SecurityConfig(UserAuthenticationProvider userAuthenticationProvider, ScreenAuthenticationProvider screenAuthenticationProvider) {
@@ -51,11 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public RedisConnectionFactory connectionFactory() {
-        RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration(hostName, Integer.parseInt(port));
+        RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration(hostName, port);
         rsc.setPassword(RedisPassword.of(password));
-        LettuceConnectionFactory rcf = new
-LettuceConnectionFactory(rsc);
-        return rcf;
+        return new LettuceConnectionFactory(rsc);
     }
 
     @Override
