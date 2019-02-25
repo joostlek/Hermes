@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 @EnableRedisHttpSession
-@PropertySource("application.properties")
+@PropertySource("classpath:application.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserAuthenticationProvider userAuthenticationProvider;
     private final ScreenAuthenticationProvider screenAuthenticationProvider;
