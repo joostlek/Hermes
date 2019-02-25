@@ -17,6 +17,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import java.lang.Integer;
 
