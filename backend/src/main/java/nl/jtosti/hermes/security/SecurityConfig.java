@@ -30,10 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.redis.host}")
     private String hostName;
     
-    @Value("${spring.redis.password")
+    @Value("${spring.redis.password}")
     private String password;
     
-    @Value("${spring.redis.port}"})
+    @Value("${spring.redis.port}")
     private int port;
       
 
