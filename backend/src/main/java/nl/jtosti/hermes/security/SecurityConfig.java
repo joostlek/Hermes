@@ -14,6 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.beans.factory.annotation.Value;
+
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +26,17 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserAuthenticationProvider userAuthenticationProvider;
     private final ScreenAuthenticationProvider screenAuthenticationProvider;
+    
+    @Value("${spring.redis.host}")
+    private String hostName;
+    
+    @Value("${spring.redis.password")
+    private String password;
+    
+    @Value("${spring.redis.port}"})
+    private int port;
+      
+
 
 
     @Autowired
@@ -32,7 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public RedisConnectionFactory connectionFactory() {
-        return new LettuceConnectionFactory();
+        RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration(hostName, port);
+        rsc.setPassword(RedisPassword.of(password));
+        LettuceConnectionFactory rcf = new
+LettuceConnectionFactory(rsc);
+        return rcf;
     }
 
     @Override
