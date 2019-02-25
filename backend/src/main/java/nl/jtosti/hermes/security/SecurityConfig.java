@@ -18,6 +18,8 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.lang.Integer;
+
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String password;
     
     @Value("${spring.redis.port}")
-    private int port;
+    private String port;
       
 
 
@@ -47,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public RedisConnectionFactory connectionFactory() {
-        RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration(hostName, port);
+        RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration(hostName, Integer.parseInt(port));
         rsc.setPassword(RedisPassword.of(password));
         LettuceConnectionFactory rcf = new
 LettuceConnectionFactory(rsc);
