@@ -1,7 +1,7 @@
 FROM openjdk:10
 VOLUME /tmp
 ADD backend/target/backend-0.0.1-SNAPSHOT-exec.jar app.jar
-ADD /ur/local/location/application.properties /app/application.properties
+ADD backend/target/classes/application.properties /app/application.properties
 RUN sh -c 'touch /app.jar'
 ENV JAVA_OPTS="-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=,suspend=n"
 EXPOSE 8080 8787
