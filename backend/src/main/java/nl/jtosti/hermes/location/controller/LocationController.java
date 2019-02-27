@@ -2,6 +2,7 @@ package nl.jtosti.hermes.location.controller;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
+import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@V1ApiController
 public class LocationController {
     private final ModelMapper modelMapper;
     private final LocationServiceInterface locationService;

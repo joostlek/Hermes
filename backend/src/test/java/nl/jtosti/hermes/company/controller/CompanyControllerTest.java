@@ -85,7 +85,7 @@ class CompanyControllerTest {
 
         given(companyService.getAllCompanies()).willReturn(companies);
 
-        mvc.perform(get("/companies")
+        mvc.perform(get("/api/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -101,7 +101,7 @@ class CompanyControllerTest {
 
         given(companyService.getCompanyById(1L)).willReturn(company);
 
-        mvc.perform(get("/companies/1")
+        mvc.perform(get("/api/companies/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -113,7 +113,7 @@ class CompanyControllerTest {
     void shouldReturnError_whenGetNonExistentCompany() throws Exception {
         when(companyService.getCompanyById(1L)).thenThrow(new CompanyNotFoundException(1L));
 
-        mvc.perform(get("/companies/1")
+        mvc.perform(get("/api/companies/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isNotFound())
@@ -127,7 +127,7 @@ class CompanyControllerTest {
 
         given(companyService.updateCompany(any(Company.class))).willReturn(company);
 
-        mvc.perform(put("/companies/1")
+        mvc.perform(put("/api/companies/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user"))
                 .content(objectMapper.writer().writeValueAsString(company)))
@@ -144,7 +144,7 @@ class CompanyControllerTest {
         when(userService.getUserById(1L)).thenReturn(user);
         given(companyService.save(any(Company.class))).willReturn(company1);
 
-        mvc.perform(post("/users/1/companies")
+        mvc.perform(post("/api/users/1/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user"))
                 .content(objectMapper.writer().writeValueAsString(company)))
@@ -165,7 +165,7 @@ class CompanyControllerTest {
         when(userService.getUserById(1L)).thenReturn(user);
         given(companyService.save(any(Company.class))).willReturn(company1);
 
-        mvc.perform(post("/users/1/companies")
+        mvc.perform(post("/api/users/1/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user"))
                 .content(objectMapper.writer().writeValueAsString(company)))
@@ -182,7 +182,7 @@ class CompanyControllerTest {
 
         given(companyService.getAllCompaniesByUserId(1L)).willReturn(companies);
 
-        mvc.perform(get("/users/1/companies")
+        mvc.perform(get("/api/users/1/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -200,7 +200,7 @@ class CompanyControllerTest {
 
         given(companyService.getPersonalCompaniesByUserID(1L)).willReturn(companies);
 
-        mvc.perform(get("/users/1/companies/personal")
+        mvc.perform(get("/api/users/1/companies/personal")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -218,7 +218,7 @@ class CompanyControllerTest {
 
         given(companyService.getAdvertisingCompaniesByUserId(1L)).willReturn(companies);
 
-        mvc.perform(get("/users/1/companies/advertising")
+        mvc.perform(get("/api/users/1/companies/advertising")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -230,7 +230,7 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Delete company")
     void shouldDoNothing_whenDeleteCompany() throws Exception {
-        mvc.perform(delete("/companies/1")
+        mvc.perform(delete("/api/companies/1")
                 .with(user("user"))
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -250,7 +250,7 @@ class CompanyControllerTest {
         when(companyService.getCompanyById(1L)).thenReturn(company);
         when(companyService.addAdvertisingLocationToCompany(any(Company.class), eq(1L))).thenReturn(company);
 
-        mvc.perform(post("/companies/1/advertising")
+        mvc.perform(post("/api/companies/1/advertising")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user"))
                 .content(objectMapper.writer().writeValueAsString(advertisingDTO)))
@@ -272,7 +272,7 @@ class CompanyControllerTest {
         when(companyService.getCompanyById(1L)).thenReturn(company);
         when(companyService.removeAdvertisingLocationFromCompany(any(Company.class), any(Location.class))).thenReturn(company);
 
-        mvc.perform(delete("/companies/1/advertising/1")
+        mvc.perform(delete("/api/companies/1/advertising/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -291,7 +291,7 @@ class CompanyControllerTest {
         when(companyService.getCompanyById(1L)).thenReturn(company);
         when(companyService.removeAdvertisingLocationFromCompany(any(Company.class), any(Location.class))).thenThrow(new LocationHasImagesException("henk"));
 
-        mvc.perform(delete("/companies/1/advertising/1")
+        mvc.perform(delete("/api/companies/1/advertising/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isConflict())
@@ -305,7 +305,7 @@ class CompanyControllerTest {
         AddUserDTO userDTO = new AddUserDTO();
         userDTO.setEmail("alex.jones@alex.com");
 
-        mvc.perform(put("/companies/1/users")
+        mvc.perform(put("/api/companies/1/users")
                 .with(user("user"))
                 .with(csrf())
                 .content(objectMapper.writer().writeValueAsString(userDTO))
@@ -320,7 +320,7 @@ class CompanyControllerTest {
         AddUserDTO userDTO = new AddUserDTO();
         userDTO.setEmail("alex.jones@alex.com");
 
-        mvc.perform(put("/companies/1/users")
+        mvc.perform(put("/api/companies/1/users")
                 .with(user("user"))
                 .with(csrf())
                 .content(objectMapper.writer().writeValueAsString(userDTO))
@@ -334,7 +334,7 @@ class CompanyControllerTest {
         AddUserDTO userDTO = new AddUserDTO();
         userDTO.setEmail("alex.jones@alex.com");
 
-        mvc.perform(delete("/companies/1/users/1")
+        mvc.perform(delete("/api/companies/1/users/1")
                 .with(user("user"))
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -346,7 +346,7 @@ class CompanyControllerTest {
     void shouldReturnError_whenDeleteLastUser() throws Exception {
         doThrow(new LastUserException()).when(companyService).removeUserFromCompany(1L, 1L);
 
-        mvc.perform(delete("/companies/1/users/1")
+        mvc.perform(delete("/api/companies/1/users/1")
                 .with(user("user"))
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -359,7 +359,7 @@ class CompanyControllerTest {
     void shouldReturnError_whenRemoveNotAddedUser() throws Exception {
         doThrow(new UserNotInCompanyException()).when(companyService).removeUserFromCompany(1L, 1L);
 
-        mvc.perform(delete("/companies/1/users/1")
+        mvc.perform(delete("/api/companies/1/users/1")
                 .with(user("user"))
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))

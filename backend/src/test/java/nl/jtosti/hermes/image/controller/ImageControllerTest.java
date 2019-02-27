@@ -89,7 +89,7 @@ class ImageControllerTest {
 
         given(imageService.getAllImages()).willReturn(images);
 
-        mvc.perform(get("/images")
+        mvc.perform(get("/api/images")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -149,7 +149,7 @@ class ImageControllerTest {
 
         given(imageService.getImagesByScreenId(1L)).willReturn(images);
 
-        mvc.perform(get("/screens/1/images")
+        mvc.perform(get("/api/screens/1/images")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -214,7 +214,7 @@ class ImageControllerTest {
 
         given(imageService.getImagesByLocationId(1L)).willReturn(images);
 
-        mvc.perform(get("/locations/1/images")
+        mvc.perform(get("/api/locations/1/images")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -244,7 +244,7 @@ class ImageControllerTest {
 
         when(imageService.getImageById(1L)).thenReturn(image);
 
-        mvc.perform(get("/images/1")
+        mvc.perform(get("/api/images/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -268,7 +268,7 @@ class ImageControllerTest {
         when(screenService.getScreenById(1L)).thenReturn(screen);
         when(imageService.save(any(Image.class))).thenReturn(image);
 
-        mvc.perform(post("/companies/1/images")
+        mvc.perform(post("/api/companies/1/images")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .with(csrf())
                 .with(user("user"))
@@ -296,7 +296,7 @@ class ImageControllerTest {
         when(imageService.getImageById(1L)).thenReturn(image);
         when(imageService.update(any(Image.class))).thenReturn(image1);
 
-        mvc.perform(put("/images/1")
+        mvc.perform(put("/api/images/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .with(csrf())
                 .with(user("1"))
@@ -314,7 +314,7 @@ class ImageControllerTest {
     @Test
     @DisplayName("Delete image")
     void shouldDoNothing_whenDeleteImage() throws Exception {
-        mvc.perform(delete("/images/1")
+        mvc.perform(delete("/api/images/1")
                 .with(csrf())
                 .with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON))

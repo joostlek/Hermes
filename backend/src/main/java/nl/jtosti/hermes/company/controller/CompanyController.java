@@ -5,6 +5,7 @@ import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.dto.AddUserDTO;
 import nl.jtosti.hermes.company.dto.CompanyDTO;
 import nl.jtosti.hermes.company.dto.ExtendedCompanyDTO;
+import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationService;
 import nl.jtosti.hermes.location.dto.AddAdvertisingLocationDTO;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@V1ApiController
 public class CompanyController {
 
     private final CompanyServiceInterface companyService;

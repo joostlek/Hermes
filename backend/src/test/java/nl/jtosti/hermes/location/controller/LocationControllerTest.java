@@ -81,7 +81,7 @@ class LocationControllerTest {
 
         given(locationService.getAllLocations()).willReturn(locations);
 
-        mvc.perform(get("/locations")
+        mvc.perform(get("/api/locations")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -151,7 +151,7 @@ class LocationControllerTest {
 
         given(locationService.getLocationById(1L)).willReturn(location);
 
-        mvc.perform(get("/locations/1")
+        mvc.perform(get("/api/locations/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -167,7 +167,7 @@ class LocationControllerTest {
         when(companyService.getCompanyById(1L)).thenReturn(company);
         when(locationService.save(any(Location.class))).thenReturn(location);
 
-        mvc.perform(post("/companies/1/locations")
+        mvc.perform(post("/api/companies/1/locations")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .with(user("alex.jones@alex.com"))
                 .with(csrf())
@@ -200,7 +200,7 @@ class LocationControllerTest {
 
         when(locationService.update(any(Location.class))).thenReturn(location);
 
-        mvc.perform(put("/locations/1")
+        mvc.perform(put("/api/locations/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .with(user("user"))
                 .with(csrf())
@@ -212,7 +212,7 @@ class LocationControllerTest {
     @Test
     @DisplayName("Delete location")
     void shouldDoNothing_whenDeleteLocation() throws Exception {
-        mvc.perform(delete("/locations/1")
+        mvc.perform(delete("/api/locations/1")
                 .with(user("user"))
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))

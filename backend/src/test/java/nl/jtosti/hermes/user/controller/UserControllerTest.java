@@ -72,7 +72,7 @@ class UserControllerTest {
         List<User> allUsers = Arrays.asList(user, user1);
         given(service.getAllUsers()).willReturn(allUsers);
 
-        mvc.perform(get("/users")
+        mvc.perform(get("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -90,7 +90,7 @@ class UserControllerTest {
 
         when(service.updateUser(any(User.class))).thenReturn(user1);
 
-        mvc.perform(put("/users/1")
+        mvc.perform(put("/api/users/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writer().writeValueAsString(user1))
                 .with(user("user"))
@@ -107,7 +107,7 @@ class UserControllerTest {
 
         when(service.getUserById(1L)).thenReturn(user);
 
-        mvc.perform(get("/users/1")
+        mvc.perform(get("/api/users/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -120,7 +120,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Delete user")
     void shouldDoNothing_whenDeleteUser() throws Exception {
-        mvc.perform(delete("/users/1")
+        mvc.perform(delete("/api/users/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user"))
                 .with(csrf()))
@@ -135,7 +135,7 @@ class UserControllerTest {
         List<User> allUsers = Arrays.asList(user, user1);
         given(service.getAllUsersByCompanyId(1L)).willReturn(allUsers);
 
-        mvc.perform(get("/companies/1/users")
+        mvc.perform(get("/api/companies/1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -150,7 +150,7 @@ class UserControllerTest {
 
         when(service.getAllUsersByCompanyId(4L)).thenThrow(new CompanyNotFoundException(4L));
 
-        mvc.perform(get("/companies/4/users")
+        mvc.perform(get("/api/companies/4/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isNotFound())
@@ -163,7 +163,7 @@ class UserControllerTest {
 
         when(service.getUserById(4L)).thenThrow(new UserNotFoundException(4L));
 
-        mvc.perform(get("/users/4")
+        mvc.perform(get("/api/users/4")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isNotFound())

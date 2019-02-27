@@ -2,6 +2,7 @@ package nl.jtosti.hermes.image.controller;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
+import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.image.ImageServiceInterface;
 import nl.jtosti.hermes.image.StorageServiceInterface;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@V1ApiController
 public class ImageController {
     private final ImageServiceInterface imageService;
 

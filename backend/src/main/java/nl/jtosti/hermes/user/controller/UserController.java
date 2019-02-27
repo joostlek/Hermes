@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.user.controller;
 
+import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import nl.jtosti.hermes.user.dto.ExtendedUserDTO;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@V1ApiController
 public class UserController {
 
     private final ModelMapper modelMapper;

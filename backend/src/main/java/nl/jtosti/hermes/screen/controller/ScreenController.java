@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.screen.controller;
 
+import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.screen.Screen;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@V1ApiController
 public class ScreenController {
 
     private final ModelMapper modelMapper;

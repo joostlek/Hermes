@@ -57,13 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and()
-                .logout()
-                .defaultLogoutSuccessHandlerFor(new HttpStatusReturningLogoutSuccessHandler(), new AntPathRequestMatcher("/logout"))
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
+                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+                .permitAll(true)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.POST, "/screen/register").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/", "/*.js", "/favicon.ico", "/*.css").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/screen/register").permitAll()
+                .antMatchers("/api/**").authenticated();
     }
 
     @Override

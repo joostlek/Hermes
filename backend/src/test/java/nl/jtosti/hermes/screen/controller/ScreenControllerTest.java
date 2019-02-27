@@ -81,7 +81,7 @@ class ScreenControllerTest {
 
         given(screenService.getAllScreens()).willReturn(screens);
 
-        mvc.perform(get("/screens")
+        mvc.perform(get("/api/screens")
                 .with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -106,7 +106,7 @@ class ScreenControllerTest {
 
         given(screenService.getScreensByLocationId(1L)).willReturn(screens);
 
-        mvc.perform(get("/locations/1/screens")
+        mvc.perform(get("/api/locations/1/screens")
                 .with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -129,7 +129,7 @@ class ScreenControllerTest {
 
         when(screenService.getScreenById(1L)).thenReturn(screen);
 
-        mvc.perform(get("/screens/1")
+        mvc.perform(get("/api/screens/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user("user")))
                 .andExpect(status().isOk())
@@ -153,7 +153,7 @@ class ScreenControllerTest {
         when(locationService.getLocationById(1L)).thenReturn(location);
         when(screenService.save(any(Screen.class))).thenReturn(screen);
 
-        mvc.perform(post("/locations/1/screens")
+        mvc.perform(post("/api/locations/1/screens")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writer().writeValueAsString(screen))
                 .with(csrf())
@@ -173,7 +173,7 @@ class ScreenControllerTest {
 
         when(screenService.updateScreen(any(Screen.class))).thenReturn(screen);
 
-        mvc.perform(put("/screens/1")
+        mvc.perform(put("/api/screens/1")
                 .with(csrf())
                 .with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -188,7 +188,7 @@ class ScreenControllerTest {
     @Test
     @DisplayName("Delete screen")
     void shouldDoNothing_whenDeleteScreen() throws Exception {
-        mvc.perform(delete("/screens/1")
+        mvc.perform(delete("/api/screens/1")
                 .with(user("user"))
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
