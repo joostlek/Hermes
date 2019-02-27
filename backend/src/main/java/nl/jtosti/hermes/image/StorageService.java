@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.image;
 
+import nl.jtosti.hermes.config.ImagePathConfiguration;
 import nl.jtosti.hermes.image.exception.FileStoreException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,7 +21,12 @@ import java.util.Date;
 
 @Service
 public class StorageService implements StorageServiceInterface {
-    private final Path rootLocation = Paths.get("upload-dir");
+
+    private Path rootLocation;
+
+    public StorageService(ImagePathConfiguration imagePathConfiguration) {
+        this.rootLocation = Paths.get(imagePathConfiguration.getPath());
+    }
 
     @Override
     public String store(MultipartFile file) {
@@ -59,10 +65,12 @@ public class StorageService implements StorageServiceInterface {
 
     @Override
     public void init() {
-        try {
-            Files.createDirectory(rootLocation);
-        } catch (IOException e) {
-            throw new FileStoreException("init");
+        if (Files.notExists(rootLocation)) {
+            try {
+                Files.createDirectory(rootLocation);
+            } catch (IOException e) {
+                throw new FileStoreException("init");
+            }
         }
     }
 }

@@ -42,7 +42,6 @@ public class HermesApplication implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        storageService.deleteAll();
         storageService.init();
     }
 }
