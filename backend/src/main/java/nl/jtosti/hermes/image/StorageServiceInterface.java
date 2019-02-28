@@ -11,4 +11,10 @@ public interface StorageServiceInterface {
     void deleteAll();
 
     void init();
+
+    String moveToPersistentLocation(String fileName, Long imageId);
+
+    boolean cacheFileExist(String fileName);
+
+    void deleteCache();
 }

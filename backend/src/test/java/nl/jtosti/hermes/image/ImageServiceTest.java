@@ -34,6 +34,9 @@ class ImageServiceTest {
     @MockBean
     private ImageRepository imageRepository;
 
+    @MockBean
+    private StorageServiceInterface storageService;
+
     private User user = new User("Alex", "jones", "alex.jones@alex.com", "");
 
     private Company company = new Company("", "", "", "", "", "", "");
@@ -145,9 +148,14 @@ class ImageServiceTest {
         image.setId(1L);
 
         when(imageRepository.save(any(Image.class))).thenReturn(image);
+        when(storageService.cacheFileExist(any(String.class))).thenReturn(true);
+        when(storageService.moveToPersistentLocation(any(String.class), any(Long.class))).thenReturn("1.png");
 
         Image newImage = imageService.save(image);
-        assertThat(newImage).isEqualTo(image);
+        assertThat(newImage.getName()).isEqualTo(image.getName());
+        assertThat(newImage.getScreen()).isEqualTo(image.getScreen());
+        assertThat(newImage.getUploader()).isEqualTo(image.getUploader());
+        assertThat(newImage.getUrl()).isEqualTo("1.png");
     }
 
     @Test
@@ -190,9 +198,12 @@ class ImageServiceTest {
         @Autowired
         private ImageRepository imageRepository;
 
+        @Autowired
+        private StorageServiceInterface storageService;
+
         @Bean
         public ImageServiceInterface imageServiceInterface() {
-            return new ImageService(imageRepository);
+            return new ImageService(imageRepository, storageService);
         }
     }
 }

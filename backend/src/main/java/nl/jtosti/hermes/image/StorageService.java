@@ -24,8 +24,11 @@ public class StorageService implements StorageServiceInterface {
 
     private Path rootLocation;
 
+    private Path cacheLocation;
+
     public StorageService(ImagePathConfiguration imagePathConfiguration) {
         this.rootLocation = Paths.get(imagePathConfiguration.getPath());
+        this.cacheLocation = Paths.get(imagePathConfiguration.getCachePath());
     }
 
     @Override
@@ -33,7 +36,7 @@ public class StorageService implements StorageServiceInterface {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             String fileName = Long.toString(new Date().getTime());
-            Path path = this.rootLocation.resolve(fileName + ".png");
+            Path path = this.cacheLocation.resolve(fileName + ".png");
             BufferedImage image = ImageIO.read(file.getInputStream());
             ImageIO.write(image, "png", stream);
             Files.copy(new ByteArrayInputStream(stream.toByteArray()), path);
@@ -72,5 +75,41 @@ public class StorageService implements StorageServiceInterface {
                 throw new FileStoreException("init");
             }
         }
+        if (Files.notExists(cacheLocation)) {
+            try {
+                Files.createDirectory(cacheLocation);
+            } catch (IOException e) {
+                throw new FileStoreException("Could not initialize cache directory!");
+            }
+        }
+    }
+
+    @Override
+    public String moveToPersistentLocation(String fileName, Long imageId) {
+        try {
+            Path cacheImage = this.cacheLocation.resolve(fileName);
+            if (Files.exists(cacheImage)) {
+                Path targetImage = this.rootLocation.resolve(imageId + ".png");
+                if (Files.exists(targetImage)) {
+                    throw new FileStoreException("Target image already exists");
+                }
+                Files.move(cacheImage, targetImage);
+                return targetImage.getFileName().toString();
+            } else {
+                throw new FileStoreException("Chosen image does not exist");
+            }
+        } catch (IOException e) {
+            throw new FileStoreException("Could not move image to persistent location");
+        }
+    }
+
+    @Override
+    public boolean cacheFileExist(String fileName) {
+        return Files.exists(this.cacheLocation.resolve(fileName));
+    }
+
+    @Override
+    public void deleteCache() {
+        FileSystemUtils.deleteRecursively(cacheLocation.toFile());
     }
 }

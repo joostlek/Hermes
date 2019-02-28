@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("hermes.images")
 public class ImagePathConfiguration {
     private String path = "upload-dir";
+    private String cachePath = "cache";
 
     public String getPath() {
         return path;
@@ -14,5 +15,13 @@ public class ImagePathConfiguration {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getCachePath() {
+        return cachePath;
+    }
+
+    public void setCachePath(String cachePath) {
+        this.cachePath = cachePath;
     }
 }
