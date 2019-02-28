@@ -1,11 +1,12 @@
 import requests
 from PIL import Image
+from requests.auth import HTTPBasicAuth
 
 from hermes import config
-from hermes.error import ConfigFileNotPresent, PasswordNotAvailable, AuthenticationError
+from hermes.error import ConfigFileNotPresent, PasswordNotAvailable, AuthenticationError, MethodError
 
 conf = config.load_config()
-token = ''
+jar = None
 
 
 def initialize():
@@ -18,10 +19,11 @@ def initialize():
 
 def get_password():
     global conf
-    res = requests.request('POST', conf.get('GENERAL', 'url') + '/auth/screen/register',
+    res = requests.request('POST', conf.get('GENERAL', 'url') + '/api/screen/register',
                            json={'screenId': conf.get('GENERAL', 'screenid')})
     data = res.json()
     try:
+        print(data)
         conf.set('GENERAL', 'password', data['password'])
         conf = config.write_config(conf)
     except KeyError:
@@ -30,35 +32,41 @@ def get_password():
 
 
 def authenticate():
-    global token
-    res = requests.post(conf.get('GENERAL', 'url') + '/auth/screen/signin',
-                        json={'screenId': conf.get('GENERAL', 'screenid'), 'password': conf.get('GENERAL', 'password')})
+    global jar
+    res = requests.get(conf.get('GENERAL', 'url') + '/me',
+                       auth=HTTPBasicAuth(str(conf.get('GENERAL', 'screenid')), conf.get('GENERAL', 'password')))
     if res.status_code == 200:
-        data = res.json()
-        token = data['token']
+        jar = res.cookies
     else:
         raise AuthenticationError(str(res.status_code))
 
 
+def do_authenticated_request(method, endpoint, json=None, stream=False):
+    global jar
+    if method not in ['POST', 'GET', 'PUT', 'DELETE']:
+        raise MethodError(method)
+    res = requests.request(method, conf.get('GENERAL', 'url') + endpoint, json=json, stream=stream, cookies=jar)
+    if res.status_code == 401:
+        authenticate()
+        return do_authenticated_request(method, endpoint, json=json, stream=stream)
+    return res
+
+
 def get_images():
-    global token
-    res = requests.get(conf.get('GENERAL', 'url') + '/screens/' + conf.get('GENERAL', 'screenid') + '/images',
-                       headers={'Authorization': 'Bearer ' + token})
+    res = do_authenticated_request('GET', '/screens/' + conf.get('GENERAL', 'screenid') + '/images')
     data = res.json()
     return data
 
 
 def get_raw_image(image_url):
-    global token
-    res = requests.get(conf.get('GENERAL', 'url') + '/files/' + image_url, headers={'Authorization': 'Bearer ' + token},
-                       stream=True)
+    res = do_authenticated_request('GET', '/files/' + image_url, stream=True)
     return res.raw
 
 
 def save_images():
     for image in get_images():
         img = Image.open(get_raw_image(image['url']))
-        img.save('./' + str(image['id']) + '.png')
+        img.save('./../images/' + str(image['id']) + '.png')
         img.close()
 
 

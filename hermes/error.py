@@ -14,3 +14,9 @@ class AuthenticationError(Exception):
 
     def __init__(self, error):
         super().__init__("Authentication error: " + error)
+
+
+class MethodError(Exception):
+
+    def __init__(self, error):
+        super().__init__("Method unknown " + error)
