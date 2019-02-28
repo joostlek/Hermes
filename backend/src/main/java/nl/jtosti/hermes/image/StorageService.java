@@ -24,8 +24,11 @@ public class StorageService implements StorageServiceInterface {
 
     private Path rootLocation;
 
+    private Path cacheLocation;
+
     public StorageService(ImagePathConfiguration imagePathConfiguration) {
         this.rootLocation = Paths.get(imagePathConfiguration.getPath());
+        this.cacheLocation = Paths.get(imagePathConfiguration.getCachePath());
     }
 
     @Override
