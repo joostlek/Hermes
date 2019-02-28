@@ -36,7 +36,7 @@ public class StorageService implements StorageServiceInterface {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             String fileName = Long.toString(new Date().getTime());
-            Path path = this.rootLocation.resolve(fileName + ".png");
+            Path path = this.cacheLocation.resolve(fileName + ".png");
             BufferedImage image = ImageIO.read(file.getInputStream());
             ImageIO.write(image, "png", stream);
             Files.copy(new ByteArrayInputStream(stream.toByteArray()), path);
@@ -74,6 +74,32 @@ public class StorageService implements StorageServiceInterface {
             } catch (IOException e) {
                 throw new FileStoreException("init");
             }
+        }
+        if (Files.notExists(cacheLocation)) {
+            try {
+                Files.createDirectory(cacheLocation);
+            } catch (IOException e) {
+                throw new FileStoreException("Could not initialize cache directory!");
+            }
+        }
+    }
+
+    @Override
+    public String moveToPersistentLocation(String fileName, Long imageId) {
+        try {
+            Path cacheImage = this.cacheLocation.resolve(fileName);
+            if (Files.exists(cacheImage)) {
+                Path targetImage = this.rootLocation.resolve(imageId + ".png");
+                if (Files.exists(targetImage)) {
+                    throw new FileStoreException("Target image already exists");
+                }
+                Files.move(cacheImage, targetImage);
+                return targetImage.getFileName().toString();
+            } else {
+                throw new FileStoreException("Chosen image does not exist");
+            }
+        } catch (IOException e) {
+            throw new FileStoreException("Could not move image to persistent location");
         }
     }
 }
