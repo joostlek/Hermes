@@ -102,4 +102,14 @@ public class StorageService implements StorageServiceInterface {
             throw new FileStoreException("Could not move image to persistent location");
         }
     }
+
+    @Override
+    public boolean cacheFileExist(String fileName) {
+        return Files.exists(this.cacheLocation.resolve(fileName));
+    }
+
+    @Override
+    public void deleteCache() {
+        FileSystemUtils.deleteRecursively(cacheLocation.toFile());
+    }
 }

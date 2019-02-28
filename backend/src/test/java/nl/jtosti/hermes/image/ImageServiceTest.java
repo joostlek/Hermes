@@ -190,9 +190,12 @@ class ImageServiceTest {
         @Autowired
         private ImageRepository imageRepository;
 
+        @Autowired
+        private StorageServiceInterface storageService;
+
         @Bean
         public ImageServiceInterface imageServiceInterface() {
-            return new ImageService(imageRepository);
+            return new ImageService(imageRepository, storageService);
         }
     }
 }
