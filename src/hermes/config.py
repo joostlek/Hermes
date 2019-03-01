@@ -3,10 +3,10 @@ import configparser
 
 def load_config():
     conf = configparser.ConfigParser()
-    conf.read('../config.ini')
+    conf.read('/hermes/config.ini')
     return conf
 
 
 def write_config(config):
-    config.write(open('../config.ini', 'w'))
+    config.write(open('/hermes/config.ini', 'w'))
     return config

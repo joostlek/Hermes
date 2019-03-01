@@ -2,10 +2,9 @@ import os
 
 import requests
 from PIL import Image
-from requests.auth import HTTPBasicAuth
-
 from hermes import config
 from hermes.error import ConfigFileNotPresent, PasswordNotAvailable, AuthenticationError, MethodError
+from requests.auth import HTTPBasicAuth
 
 conf = config.load_config()
 jar = None
@@ -74,8 +73,8 @@ def get_raw_image(image_url):
 
 
 def check_folder():
-    if not os.path.exists('../app/static/images'):
-        os.makedirs('../app/static/images')
+    if not os.path.exists('../static/images'):
+        os.makedirs('../static/images')
 
 
 def save_images():
@@ -83,7 +82,7 @@ def save_images():
     images = get_images()
     for image in images:
         img = Image.open(get_raw_image(image['url']))
-        img.save('./../app/static/images/' + str(image['id']) + '.png')
+        img.save('./../static/images/' + str(image['id']) + '.png')
         img.close()
     return images
 
