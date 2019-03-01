@@ -51,7 +51,7 @@ export class ImageWizardComponent implements OnInit, OnDestroy {
 
     firstPage = new FormGroup({
         name: new FormControl('', [Validators.required]),
-        screenId: new FormControl(''),
+        screenId: new FormControl('', [Validators.required]),
     });
 
     secondPage = new FormGroup({

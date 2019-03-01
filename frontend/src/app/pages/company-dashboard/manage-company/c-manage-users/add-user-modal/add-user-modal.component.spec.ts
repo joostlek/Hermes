@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddUserModalComponent } from './add-user-modal.component';
+import {AddUserModalComponent} from './add-user-modal.component';
 
 describe('AddUserModalComponent', () => {
   let component: AddUserModalComponent;

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreateLocationWizardComponent } from './create-location-wizard.component';
+import {CreateLocationWizardComponent} from './create-location-wizard.component';
 
 describe('CreateLocationWizardComponent', () => {
   let component: CreateLocationWizardComponent;
