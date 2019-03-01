@@ -64,10 +64,17 @@ def get_raw_image(image_url):
 
 
 def save_images():
-    for image in get_images():
+    images = get_images()
+    for image in images:
         img = Image.open(get_raw_image(image['url']))
-        img.save('./../images/' + str(image['id']) + '.png')
+        img.save('./../app/images/' + str(image['id']) + '.png')
         img.close()
+    return images
+
+
+def get_token():
+    global jar
+    return jar['SESSION']
 
 
 if __name__ == "__main__":

@@ -1,18 +1,20 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from hermes.api import initialize, save_images
 
 app = Flask(__name__)
+images = []
 
 
 def run():
+    global images
     initialize()
-    save_images()
+    images = save_images()
 
 
 @app.route("/")
 def images():
-    return "kek"
+    return render_template('slideshow.html', images=images)
 
 
 if __name__ == "__main__":
