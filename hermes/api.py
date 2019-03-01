@@ -1,3 +1,5 @@
+import os
+
 import requests
 from PIL import Image
 from requests.auth import HTTPBasicAuth
@@ -7,6 +9,7 @@ from hermes.error import ConfigFileNotPresent, PasswordNotAvailable, Authenticat
 
 conf = config.load_config()
 jar = None
+screen = None
 
 
 def initialize():
@@ -15,6 +18,7 @@ def initialize():
     if not conf.has_option('GENERAL', 'password'):
         get_password()
     authenticate()
+    get_screen_information()
 
 
 def get_password():
@@ -52,6 +56,12 @@ def do_authenticated_request(method, endpoint, json=None, stream=False):
     return res
 
 
+def get_screen_information():
+    global screen
+    response = do_authenticated_request('GET', '/screens/' + conf.get('GENERAL', 'screenid'))
+    screen = response.json()
+
+
 def get_images():
     res = do_authenticated_request('GET', '/screens/' + conf.get('GENERAL', 'screenid') + '/images')
     data = res.json()
@@ -63,11 +73,17 @@ def get_raw_image(image_url):
     return res.raw
 
 
+def check_folder():
+    if not os.path.exists('../app/static/images'):
+        os.makedirs('../app/static/images')
+
+
 def save_images():
+    check_folder()
     images = get_images()
     for image in images:
         img = Image.open(get_raw_image(image['url']))
-        img.save('./../app/images/' + str(image['id']) + '.png')
+        img.save('./../app/static/images/' + str(image['id']) + '.png')
         img.close()
     return images
 
@@ -75,6 +91,11 @@ def save_images():
 def get_token():
     global jar
     return jar['SESSION']
+
+
+def get_screen():
+    global screen
+    return screen
 
 
 if __name__ == "__main__":

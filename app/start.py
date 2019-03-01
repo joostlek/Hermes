@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 
-from hermes.api import initialize, save_images
+from hermes.api import initialize, save_images, get_screen
 
 app = Flask(__name__)
 images = []
@@ -14,7 +14,7 @@ def run():
 
 @app.route("/")
 def images():
-    return render_template('slideshow.html', images=images)
+    return render_template('slideshow.html', images=images, screen=get_screen())
 
 
 if __name__ == "__main__":
