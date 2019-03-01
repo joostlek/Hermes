@@ -10,5 +10,5 @@ export class User {
     updated: Date;
     images: Image[];
     companies: Company[];
-
+    roles: string[];
 }
