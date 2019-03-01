@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {tap} from 'rxjs/operators';
-import {Registration} from './domain/registration';
-import {TokenService} from './token.service';
-import {CurrentUserService} from './current-user.service';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {CurrentUserService} from './current-user.service';
+import {Registration} from './domain/registration';
 import {User} from './domain/user';
 import {MessageService} from './message.service';
+import {TokenService} from './token.service';
 
 @Injectable({
     providedIn: 'root',
