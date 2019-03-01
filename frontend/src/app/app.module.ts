@@ -6,6 +6,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ClarityModule} from '@clr/angular';
 import {DataModule} from './@core/data/data.module';
 import {RepeatPasswordValidatorDirective} from './@core/directives/repeat-password.directive';
+import {AuthGuard} from './@core/guards/auth-guard.service';
 import {ErrorInterceptor} from './@core/interceptor/error-interceptor';
 import {JsonInterceptor} from './@core/interceptor/json-interceptor';
 import {SafePipe} from './@core/pipes/safe.pipe';
@@ -39,6 +40,7 @@ import {AppComponent} from './app.component';
             useClass: JsonInterceptor,
             multi: true,
         },
+        AuthGuard,
     ],
     bootstrap: [AppComponent],
 })
