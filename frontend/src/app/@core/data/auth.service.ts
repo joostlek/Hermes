@@ -33,7 +33,11 @@ export class AuthService {
             },
         )
             .pipe(
-                tap((user: User) => this.currentUserService.updateCurrentUser(user)),
+                tap((user: User) => {
+                        this.currentUserService.updateCurrentUser(user);
+                        this.authenticated = true;
+                    },
+                ),
             );
     }
 
@@ -41,7 +45,11 @@ export class AuthService {
         this.messageService.log('User logged out');
         return this.http.get('api/logout')
             .pipe(
-                tap(() => console.log('')),
+                tap(() => {
+                        console.log('log out');
+                        this.authenticated = false;
+                    },
+                ),
             );
     }
 
