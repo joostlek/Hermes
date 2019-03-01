@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {tap} from 'rxjs/operators';
-import {Registration} from './domain/registration';
-import {TokenService} from './token.service';
-import {CurrentUserService} from './current-user.service';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {CurrentUserService} from './current-user.service';
+import {Registration} from './domain/registration';
 import {User} from './domain/user';
 import {MessageService} from './message.service';
+import {TokenService} from './token.service';
 
 @Injectable({
     providedIn: 'root',
@@ -33,7 +33,11 @@ export class AuthService {
             },
         )
             .pipe(
-                tap((user: User) => this.currentUserService.updateCurrentUser(user)),
+                tap((user: User) => {
+                        this.currentUserService.updateCurrentUser(user);
+                        this.authenticated = true;
+                    },
+                ),
             );
     }
 
@@ -41,7 +45,11 @@ export class AuthService {
         this.messageService.log('User logged out');
         return this.http.get('api/logout')
             .pipe(
-                tap(() => console.log('')),
+                tap(() => {
+                        console.log('log out');
+                        this.authenticated = false;
+                    },
+                ),
             );
     }
 

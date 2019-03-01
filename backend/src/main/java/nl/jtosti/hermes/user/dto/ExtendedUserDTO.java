@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ExtendedUserDTO extends UserDTO {
     private List<CompanyDTO> companies;
+    private List<String> roles;
 
     public List<CompanyDTO> getCompanies() {
         return companies;
@@ -13,5 +14,13 @@ public class ExtendedUserDTO extends UserDTO {
 
     public void setCompanies(List<CompanyDTO> companies) {
         this.companies = companies;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }
