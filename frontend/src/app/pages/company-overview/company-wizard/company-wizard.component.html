@@ -24,8 +24,24 @@
         </form>
     </clr-wizard-page>
 
-    <clr-wizard-page [clrWizardPageNextDisabled]="locationInfoPage.invalid">
+    <clr-wizard-page #finalPage
+                     clrWizardPagePreventDefault="true"
+                     (clrWizardPageOnCommit)="createCompany()"
+                     (clrWizardPageOnCancel)="doCancel()"
+                     (clrWizardPagePrevious)="goBack()">
         <ng-template clrPageTitle>Location information</ng-template>
+        <div class="alert alert-danger" role="alert" *ngIf="errorFlag">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">
+                            {{error.status}} - {{error.message}}
+                        </span>
+                </div>
+            </div>
+        </div>
         <form clrForm [formGroup]="locationInfoPage">
             <clr-input-container>
                 <label>Street</label>
@@ -58,28 +74,8 @@
                 <clr-control-error>This field is required!</clr-control-error>
             </clr-input-container>
         </form>
-    </clr-wizard-page>
-
-    <clr-wizard-page #finalPage
-                     clrWizardPagePreventDefault="true"
-                     (clrWizardPageOnCommit)="createCompany()"
-                     (clrWizardPageOnCancel)="doCancel()"
-                     (clrWizardPagePrevious)="goBack()">
-        <ng-template clrPageTitle>Finalizing</ng-template>
         <div class="spinner" *ngIf="loadingFlag">
             Loading...
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="errorFlag">
-            <div class="alert-items">
-                <div class="alert-item static">
-                    <div class="alert-icon-wrapper">
-                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-                    </div>
-                    <span class="alert-text">
-                            {{error.status}} - {{error.message}}
-                        </span>
-                </div>
-            </div>
         </div>
     </clr-wizard-page>
 </clr-wizard>
