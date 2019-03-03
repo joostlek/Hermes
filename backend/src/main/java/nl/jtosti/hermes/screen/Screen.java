@@ -4,17 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
-import nl.jtosti.hermes.security.screen.ApplicationScreen;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Screen {
@@ -177,8 +176,9 @@ public class Screen {
         return super.hashCode();
     }
 
-    public UserDetails toUserDetails() {
-        return new ApplicationScreen(this.id, this.password, this.toReceivePassword);
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Stream.of("SCREEN")
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
-
 }
