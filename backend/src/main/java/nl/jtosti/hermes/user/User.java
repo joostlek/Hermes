@@ -3,14 +3,15 @@ package nl.jtosti.hermes.user;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.security.Argon2PasswordEncoder;
-import nl.jtosti.hermes.security.user.ApplicationUser;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This represents an user of the application
@@ -172,7 +173,9 @@ public class User {
         return super.hashCode();
     }
 
-    public UserDetails toUserDetails() {
-        return new ApplicationUser(this.email, this.getPassword(), this.roles);
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }

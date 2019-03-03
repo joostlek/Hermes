@@ -1,27 +1,26 @@
 package nl.jtosti.hermes.security.user;
 
+import nl.jtosti.hermes.user.User;
+import nl.jtosti.hermes.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserDetailsService userDetailsService;
+    private final UserServiceInterface userService;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserAuthenticationProvider(@Qualifier("userLoginService") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
+    public UserAuthenticationProvider(PasswordEncoder passwordEncoder, UserServiceInterface userService) {
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
@@ -29,9 +28,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         try {
             String username = authentication.getName();
             String password = authentication.getCredentials().toString();
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if (passwordEncoder.matches(password, userDetails.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), userDetails.getAuthorities());
+            User user = userService.getUserByEmail(username);
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), user.getAuthorities());
             } else {
                 throw new BadCredentialsException("kek");
             }
