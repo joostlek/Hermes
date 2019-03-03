@@ -74,7 +74,7 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
                 <configuration>
-                    <jacocoReports>${sonar.jacoco.reportPath}</jacocoReports>
+                    <jacocoReports>target/jacoco.exec</jacocoReports>
                 </configuration>
             </plugin>
         </plugins>
