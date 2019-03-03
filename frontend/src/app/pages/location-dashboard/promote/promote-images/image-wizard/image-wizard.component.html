@@ -24,8 +24,12 @@
         </form>
     </clr-wizard-page>
 
-    <clr-wizard-page>
-        <ng-template clrPageTitle>Page 2</ng-template>
+    <clr-wizard-page #finalPage
+                     clrWizardPagePreventDefault="true"
+                     (clrWizardPageOnCommit)="createImage()"
+                     (clrWizardPageOnCancel)="doCancel()"
+                     (clrWizardPagePrevious)="goBack()">
+        <ng-template clrPageTitle>Image</ng-template>
         <form clrform [formGroup]="secondPage">
             <clr-input-container>
                 <input placeholder="url" type="text" name="url" clrInput formControlName="url"/>
@@ -35,17 +39,6 @@
             </button>
             <input type="file" name="file" (change)="fileUpload($event.target.files)" style="display: none" #fileInput>
         </form>
-    </clr-wizard-page>
-
-    <clr-wizard-page #finalPage
-                     clrWizardPagePreventDefault="true"
-                     (clrWizardPageOnCommit)="createImage()"
-                     (clrWizardPageOnCancel)="doCancel()"
-                     (clrWizardPagePrevious)="goBack()">
-        <ng-template clrPageTitle>Finalizing</ng-template>
-        <div class="spinner" *ngIf="loadingFlag">
-            Loading...
-        </div>
         <div class="alert alert-danger" role="alert" *ngIf="errorFlag">
             <div class="alert-items">
                 <div class="alert-item static">
@@ -57,6 +50,9 @@
                         </span>
                 </div>
             </div>
+        </div>
+        <div class="spinner" *ngIf="loadingFlag">
+            Loading...
         </div>
     </clr-wizard-page>
 </clr-wizard>
