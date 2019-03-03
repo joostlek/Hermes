@@ -2,14 +2,11 @@ import os
 
 import requests
 from PIL import Image
-from requests import Response
-from requests.auth import HTTPBasicAuth
-
 from hermes import config
 from hermes.error import ConfigFileNotPresent, PasswordNotAvailable, AuthenticationError, MethodError
+from requests.auth import HTTPBasicAuth
 
-path = '/hermes/config.ini'
-conf = config.load_config(path)
+conf = config.load_config()
 jar = None
 screen = None
 
@@ -23,7 +20,7 @@ def initialize():
     get_screen_information()
 
 
-def get_password() -> None:
+def get_password():
     global conf
     res = requests.request('POST', conf.get('GENERAL', 'url') + '/api/screen/register',
                            json={'screenId': conf.get('GENERAL', 'screenid')})
@@ -31,13 +28,13 @@ def get_password() -> None:
     try:
         print(data)
         conf.set('GENERAL', 'password', data['password'])
-        conf = config.write_config(path, conf)
+        conf = config.write_config(conf)
     except KeyError:
         print('Please make the screen reauthenticate')
         raise PasswordNotAvailable
 
 
-def authenticate() -> None:
+def authenticate():
     global jar
     res = requests.get(conf.get('GENERAL', 'url') + '/me',
                        auth=HTTPBasicAuth(str(conf.get('GENERAL', 'screenid')), conf.get('GENERAL', 'password')))
@@ -47,7 +44,7 @@ def authenticate() -> None:
         raise AuthenticationError(str(res.status_code))
 
 
-def do_authenticated_request(method: str, endpoint: str, json: str = None, stream: bool = False) -> Response:
+def do_authenticated_request(method, endpoint, json=None, stream=False):
     global jar
     if method not in ['POST', 'GET', 'PUT', 'DELETE']:
         raise MethodError(method)
@@ -58,7 +55,7 @@ def do_authenticated_request(method: str, endpoint: str, json: str = None, strea
     return res
 
 
-def get_screen_information() -> None:
+def get_screen_information():
     global screen
     response = do_authenticated_request('GET', '/screens/' + conf.get('GENERAL', 'screenid'))
     screen = response.json()
@@ -70,7 +67,7 @@ def get_images():
     return data
 
 
-def get_raw_image(image_url: str):
+def get_raw_image(image_url):
     res = do_authenticated_request('GET', '/files/' + image_url, stream=True)
     return res.raw
 

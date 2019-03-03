@@ -1,12 +1,12 @@
-from configparser import ConfigParser
+import configparser
 
 
-def load_config(path: str) -> ConfigParser:
-    conf = ConfigParser()
-    conf.read(path)
+def load_config():
+    conf = configparser.ConfigParser()
+    conf.read('/hermes/config.ini')
     return conf
 
 
-def write_config(path: str, config: ConfigParser) -> ConfigParser:
-    config.write(open(path, 'w'))
+def write_config(config):
+    config.write(open('/hermes/config.ini', 'w'))
     return config
