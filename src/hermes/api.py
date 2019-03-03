@@ -80,6 +80,8 @@ def check_folder():
 def save_images():
     check_folder()
     images = get_images()
+    print(os.listdir())
+    print(os.listdir('./../static/images/'))
     for image in images:
         img = Image.open(get_raw_image(image['url']))
         img.save('./../static/images/' + str(image['id']) + '.png')
