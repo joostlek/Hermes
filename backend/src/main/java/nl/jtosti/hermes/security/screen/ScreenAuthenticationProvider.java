@@ -1,25 +1,24 @@
 package nl.jtosti.hermes.security.screen;
 
+import nl.jtosti.hermes.screen.Screen;
+import nl.jtosti.hermes.screen.ScreenServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ScreenAuthenticationProvider implements AuthenticationProvider {
-    private final UserDetailsService screenLoginService;
+    private final ScreenServiceInterface screenService;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ScreenAuthenticationProvider(@Qualifier("screenLoginService") UserDetailsService screenLoginService, PasswordEncoder passwordEncoder) {
-        this.screenLoginService = screenLoginService;
+    public ScreenAuthenticationProvider(ScreenServiceInterface screenService, PasswordEncoder passwordEncoder) {
+        this.screenService = screenService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -28,12 +27,12 @@ public class ScreenAuthenticationProvider implements AuthenticationProvider {
         try {
             String screenId = authentication.getName();
             String password = authentication.getCredentials().toString();
-            UserDetails userDetails = screenLoginService.loadUserByUsername(screenId);
-            if (!userDetails.isCredentialsNonExpired()) {
+            Screen screen = screenService.getScreenById(Long.parseLong(screenId));
+            if (screen.isToReceivePassword()) {
                 throw new ScreenPasswordExpiredException();
             }
-            if (passwordEncoder.matches(password, userDetails.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), userDetails.getAuthorities());
+            if (passwordEncoder.matches(password, screen.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString(), screen.getAuthorities());
             } else {
                 throw new BadCredentialsException("");
             }
