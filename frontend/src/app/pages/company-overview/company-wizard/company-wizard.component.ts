@@ -86,6 +86,7 @@ export class CompanyWizardComponent implements OnInit {
     public reset(): void {
         this.wizard.reset();
         this.basicInfoPage.reset();
+        this.locationInfoPage.reset();
         this.wizard.close();
         this.loadingFlag = false;
         this.errorFlag = false;
