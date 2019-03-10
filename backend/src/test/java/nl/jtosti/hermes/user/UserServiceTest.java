@@ -2,6 +2,7 @@ package nl.jtosti.hermes.user;
 
 
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,7 +22,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @DisplayName("User Service")
@@ -33,6 +34,9 @@ class UserServiceTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private AclServiceInterface aclService;
 
     @Test
     @DisplayName("Get user with valid email")
@@ -61,9 +65,12 @@ class UserServiceTest {
     @DisplayName("Add user")
     void shouldReturnNewUser_whenAddingUser() {
         User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
+        user.setId(1L);
         when(userRepository.save(any(User.class))).thenReturn(user);
+
         User newUser = userService.save(user);
         assertThat(newUser.getEmail()).isEqualTo(user.getEmail());
+        verify(aclService, atMost(1)).addUser(any(User.class));
     }
 
     @Test
@@ -181,9 +188,12 @@ class UserServiceTest {
         @Autowired
         private UserRepository userRepository;
 
+        @Autowired
+        private AclServiceInterface aclService;
+
         @Bean
         public UserServiceInterface userServiceInterface() {
-            return new UserService(userRepository);
+            return new UserService(userRepository, aclService);
         }
     }
 }

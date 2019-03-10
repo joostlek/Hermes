@@ -1,9 +1,11 @@
 package nl.jtosti.hermes.user;
 
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.user.exception.EmailAlreadyUsedException;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +18,12 @@ public class UserService implements UserServiceInterface {
 
     private final UserRepository userRepository;
 
+    private final AclServiceInterface aclService;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AclServiceInterface aclService) {
         this.userRepository = userRepository;
+        this.aclService = aclService;
     }
 
     @Override
@@ -29,6 +34,7 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    @PostFilter("hasPermission(filterObject, 'ADMINISTRATION')")
     public List<User> getAllUsers() {
         return userRepository.findAllByOrderByIdAsc();
     }
@@ -40,13 +46,13 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User save(User user) {
-        if (user.getId() == null) {
-            if (this.exists(user.getEmail())) {
-                throw new EmailAlreadyUsedException(user.getEmail());
-            }
-            user.setRoles(Collections.singletonList("USER"));
+        if (this.exists(user.getEmail())) {
+            throw new EmailAlreadyUsedException(user.getEmail());
         }
-        return userRepository.save(user);
+        user.setRoles(Collections.singletonList("USER"));
+        User newUser = this.saveUser(user);
+        aclService.addUser(user);
+        return newUser;
     }
 
     @Override
@@ -62,7 +68,7 @@ public class UserService implements UserServiceInterface {
                     user.setFirstName(newUser.getFirstName());
                     user.setLastName(newUser.getLastName());
                     user.setEmail(newUser.getEmail());
-                    return save(user);
+                    return saveUser(user);
                 })
                 .orElseThrow(
                         () -> new UserNotFoundException(newUser.getId())
@@ -82,6 +88,10 @@ public class UserService implements UserServiceInterface {
             throw new CompanyNotFoundException(companyId);
         }
         return users;
+    }
+
+    private User saveUser(User user) {
+        return this.userRepository.save(user);
     }
 
 }

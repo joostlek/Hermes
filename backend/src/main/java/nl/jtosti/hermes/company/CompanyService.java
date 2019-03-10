@@ -1,6 +1,8 @@
 package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.company.exception.*;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
+import nl.jtosti.hermes.config.acl.MyPermission;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
@@ -10,6 +12,10 @@ import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.acls.domain.GrantedAuthoritySid;
+import org.springframework.security.acls.domain.PrincipalSid;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,11 +32,14 @@ public class CompanyService implements CompanyServiceInterface {
     private final UserServiceInterface userService;
     private final LocationServiceInterface locationService;
 
+    private final AclServiceInterface aclService;
+
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, UserServiceInterface userService, LocationServiceInterface locationService) {
+    public CompanyService(CompanyRepository companyRepository, UserServiceInterface userService, LocationServiceInterface locationService, AclServiceInterface aclService) {
         this.companyRepository = companyRepository;
         this.userService = userService;
         this.locationService = locationService;
+        this.aclService = aclService;
     }
 
 
@@ -46,7 +55,10 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public Company save(Company company) {
-        return companyRepository.save(company);
+        Company newCompany = this.saveCompany(company);
+        aclService.addPermissionsToObject(newCompany, new GrantedAuthoritySid("USER"), MyPermission.READ);
+        aclService.addPermissionsToObject(newCompany, new PrincipalSid(SecurityContextHolder.getContext().getAuthentication().getName()), MyPermission.EMPLOYEE);
+        return newCompany;
     }
 
     @Override
@@ -89,7 +101,7 @@ public class CompanyService implements CompanyServiceInterface {
         company.setZipCode(newCompany.getZipCode());
         company.setCountry(newCompany.getCountry());
         company.setCity(newCompany.getCity());
-        return save(company);
+        return saveCompany(company);
     }
 
     @Override
@@ -100,7 +112,8 @@ public class CompanyService implements CompanyServiceInterface {
             throw new UserAlreadyAddedException();
         }
         company.addUser(user);
-        companyRepository.save(company);
+        aclService.addPermissionsToObject(company, new PrincipalSid(email), MyPermission.EMPLOYEE);
+        this.saveCompany(company);
     }
 
     @Override
@@ -114,10 +127,12 @@ public class CompanyService implements CompanyServiceInterface {
             throw new LastUserException();
         }
         company.getUsers().remove(user);
-        companyRepository.save(company);
+        aclService.removePermissionFromObject(company, new PrincipalSid(user.getEmail()), MyPermission.EMPLOYEE);
+        this.saveCompany(company);
     }
 
     @Override
+    @PreAuthorize("hasPermission(#company, 'EMPLOYEE')")
     public Company removeAdvertisingLocationFromCompany(Company company, Location location) {
         if (!location.hasAdvertisingCompany(company)) {
             throw new CompanyNotAdvertisingException(company.getName(), location.getName());
@@ -126,10 +141,11 @@ public class CompanyService implements CompanyServiceInterface {
             throw new LocationHasImagesException(location.getName());
         }
         company.getAdvertisingLocations().remove(location);
-        return this.save(company);
+        return this.saveCompany(company);
     }
 
     @Override
+    @PreAuthorize("hasPermission(#company, 'EMPLOYEE')")
     public Company addAdvertisingLocationToCompany(Company company, Long locationId) {
         if (locationId == 0) {
             throw new LocationNotSelectedException();
@@ -142,6 +158,10 @@ public class CompanyService implements CompanyServiceInterface {
             throw new LocationAlreadyAddedException();
         }
         company.addAdvertisingLocation(location);
-        return this.save(company);
+        return this.saveCompany(company);
+    }
+
+    private Company saveCompany(Company company) {
+        return this.companyRepository.save(company);
     }
 }

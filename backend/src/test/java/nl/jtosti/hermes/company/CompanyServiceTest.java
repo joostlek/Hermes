@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.company.exception.*;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
@@ -48,6 +50,9 @@ class CompanyServiceTest {
 
     @MockBean
     private LocationServiceInterface locationService;
+
+    @MockBean
+    private AclServiceInterface aclService;
 
     private User user = new User("Alex", "Jones", "Alex.jones@alex.com", "pass");
 
@@ -94,6 +99,7 @@ class CompanyServiceTest {
 
     @Test
     @DisplayName("Save company")
+    @WithMockUser("alex.jones@alex.com")
     void shouldReturnSavedCompany_whenSaveCompany() {
         when(companyRepository.save(any(Company.class))).thenReturn(company);
 
@@ -162,6 +168,7 @@ class CompanyServiceTest {
 
     @Test
     @DisplayName("Update company")
+    @WithMockUser("kek@kek.com")
     void shouldUpdateCompany_whenUpdateCompany() {
         Company company = new Company("", "", "", "", "", "", "");
 
@@ -247,6 +254,7 @@ class CompanyServiceTest {
 
     @Test
     @DisplayName("Add advertising location to company")
+    @WithMockUser("alex.jones@alex.com")
     void shouldAddAdvertisingLocationToCompany() {
         Company company1 = new Company("", "", "", "", "", "", "");
         Location location = new Location("", "", "", "", "", "", company);

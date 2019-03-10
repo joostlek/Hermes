@@ -2,6 +2,7 @@ package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyService;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import nl.jtosti.hermes.user.User;
 import org.junit.jupiter.api.DisplayName;
@@ -35,6 +36,9 @@ class LocationServiceTest {
 
     @MockBean
     private LocationRepository locationRepository;
+
+    @MockBean
+    private AclServiceInterface aclService;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
 
@@ -159,9 +163,12 @@ class LocationServiceTest {
         @Autowired
         private LocationRepository locationRepository;
 
+        @Autowired
+        private AclServiceInterface aclService;
+
         @Bean
         public LocationServiceInterface locationServiceInterface() {
-            return new LocationService(locationRepository);
+            return new LocationService(locationRepository, aclService);
         }
     }
 }

@@ -1,10 +1,12 @@
 package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.location.exception.CompanyHasImagesException;
 import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,10 +18,12 @@ public class LocationService implements LocationServiceInterface {
 
     private final LocationRepository locationRepository;
 
+    private final AclServiceInterface aclService;
 
     @Autowired
-    public LocationService(LocationRepository locationRepository) {
+    public LocationService(LocationRepository locationRepository, AclServiceInterface aclService) {
         this.locationRepository = locationRepository;
+        this.aclService = aclService;
     }
 
     @Override
@@ -28,6 +32,7 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
+    @PostFilter("hasPermission(filterObject.company, 'EMPLOYEE')")
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
     }
@@ -39,10 +44,13 @@ public class LocationService implements LocationServiceInterface {
 
     @Override
     public Location save(Location location) {
-        return locationRepository.save(location);
+        Location newLocation = locationRepository.save(location);
+        aclService.addChildObjectWithParent(newLocation, newLocation.getCompany());
+        return newLocation;
     }
 
     @Override
+    @PostFilter("hasPermission(filterObject.company, 'EMPLOYEE')")
     public List<Location> getLocationsByCompanyId(Long companyId) {
         return locationRepository.findAllByCompanyId(companyId);
     }
