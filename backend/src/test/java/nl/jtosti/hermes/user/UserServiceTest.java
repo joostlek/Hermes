@@ -76,7 +76,7 @@ class UserServiceTest {
     @DisplayName("User exists")
     void shouldReturnTrue_whenEmailExists() {
         User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.existsByEmail(any(String.class))).thenReturn(true);
 
         assertThat(userService.exists(user.getEmail())).isTrue();
     }
@@ -84,6 +84,7 @@ class UserServiceTest {
     @Test
     @DisplayName("User doesn't exist")
     void shouldReturnFalse_whenEmailDoesNotExist() {
+        when(userRepository.existsByEmail(any(String.class))).thenReturn(false);
         assertThat(userService.exists("alex.jones@alex.com")).isFalse();
     }
 

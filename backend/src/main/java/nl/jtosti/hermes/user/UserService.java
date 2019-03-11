@@ -44,7 +44,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public boolean exists(String email) {
-        return userRepository.findByEmail(email).orElse(null) != null;
+        return userRepository.existsByEmail(email);
     }
 
     @Override
