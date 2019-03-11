@@ -11,6 +11,7 @@ import nl.jtosti.hermes.user.dto.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,7 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PostAuthorize("hasRole('ADMIN') or returnObject.email == authentication.name")
     public UserDTO getOneUser(@PathVariable Long id) {
         return convertToExtendedDTO(userService.getUserById(id));
     }

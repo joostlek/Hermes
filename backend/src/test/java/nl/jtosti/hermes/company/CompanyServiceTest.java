@@ -8,7 +8,6 @@ import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
 import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
 import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
-import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
@@ -114,13 +113,14 @@ class CompanyServiceTest {
     void shouldDoNothing_whenDeleteCompany() {
         doNothing().when(companyRepository).deleteById(1L);
 
-        companyService.deleteCompany(1L);
+        companyService.deleteCompany(any(Company.class));
         assertThat(true).isTrue();
     }
 
     @Test
     @DisplayName("Get all companies by user id")
     void shouldReturnCombinedStream_whenGetAllCompaniesByUserId() {
+        user.setId(1L);
         Company anotherCompany = new Company("", "", "", "", "", "", "");
         Location location = new Location("", "", "", "", "", "", anotherCompany);
         Location location1 = new Location("", "", "", "", "", "", anotherCompany);
@@ -129,10 +129,7 @@ class CompanyServiceTest {
         user.addCompany(company);
         when(companyRepository.findCompaniesByUserId(1L)).thenReturn(Collections.singletonList(company));
 
-
-        when(userService.getUserById(1L)).thenReturn(user);
-
-        assertThat(companyService.getAllCompaniesByUserId(1L))
+        assertThat(companyService.getAllCompaniesByUser(user))
                 .hasSize(2)
                 .contains(anotherCompany)
                 .contains(company);
@@ -142,9 +139,10 @@ class CompanyServiceTest {
     @Test
     @DisplayName("Get all personal companies by user id")
     void shouldReturnAllPersonalCompanies_whenGetAllPersonalCompaniesByUserId() {
+        user.setId(1L);
         when(companyRepository.findCompaniesByUserId(1L)).thenReturn(Collections.singletonList(company));
 
-        assertThat(companyService.getPersonalCompaniesByUserID(1L))
+        assertThat(companyService.getPersonalCompaniesByUser(user))
                 .hasSize(1)
                 .contains(company);
     }
@@ -152,6 +150,7 @@ class CompanyServiceTest {
     @Test
     @DisplayName("Get all advertising companies by user id")
     void shouldReturnAllAdvertisingCompanies_whenGetAllAdvertisingCompaniesByUserId() {
+        user.setId(1L);
         Company anotherCompany = new Company("", "", "", "", "", "", "");
         Location location = new Location("", "", "", "", "", "", anotherCompany);
         Location location1 = new Location("", "", "", "", "", "", anotherCompany);
@@ -159,9 +158,7 @@ class CompanyServiceTest {
         company.addAdvertisingLocation(location1);
         user.addCompany(company);
 
-        when(userService.getUserById(1L)).thenReturn(user);
-
-        assertThat(companyService.getAdvertisingCompaniesByUserId(1L))
+        assertThat(companyService.getAdvertisingCompaniesByUser(user))
                 .hasSize(1)
                 .contains(anotherCompany);
     }
@@ -187,7 +184,7 @@ class CompanyServiceTest {
         when(userService.getUserByEmail("alex.jones@alex.com")).thenReturn(user);
         when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
-        companyService.addUserToCompany(1L, "alex.jones@alex.com");
+        companyService.addUserToCompany(company, user);
         assertThat(true).isTrue();
     }
 
@@ -195,11 +192,9 @@ class CompanyServiceTest {
     @DisplayName("Add already added user to company")
     void shouldThrowUserAlreadyAddedException_whenAddAlreadyAddedUserToCompany() {
         company.addUser(user);
-        when(userService.getUserByEmail("alex.jones@alex.com")).thenReturn(user);
-        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
         try {
-            companyService.addUserToCompany(1L, "alex.jones@alex.com");
+            companyService.addUserToCompany(company, user);
             fail("User was added, even though it was already added!");
         } catch (RuntimeException e) {
             assertThat(e)
@@ -212,10 +207,8 @@ class CompanyServiceTest {
     void shouldRemoveUserFromCompany_whenRemoveUser() {
         company.addUser(user);
         company.addUser(new User("", "", "", ""));
-        when(userService.getUserById(1L)).thenReturn(user);
-        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
-        companyService.removeUserFromCompany(1L, 1L);
+        companyService.removeUserFromCompany(company, user);
         assertThat(true).isTrue();
     }
 
@@ -227,7 +220,7 @@ class CompanyServiceTest {
         when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
         try {
-            companyService.removeUserFromCompany(1L, 1L);
+            companyService.removeUserFromCompany(company, user);
             fail("User was added, even though it was already added!");
         } catch (RuntimeException e) {
             assertThat(e)
@@ -240,11 +233,9 @@ class CompanyServiceTest {
     void shouldThrowUserNotInCompanyException_whenRemoveUserNotInCompany() {
         User user1 = new User("Jane", "Jones", "jane.jones@jones@.com", "jjcom");
         company.addUser(user1);
-        when(userService.getUserById(1L)).thenReturn(user);
-        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
         try {
-            companyService.removeUserFromCompany(1L, 1L);
+            companyService.removeUserFromCompany(company, user);
             fail("Not added user could be removed from company without exception!");
         } catch (RuntimeException e) {
             assertThat(e)
@@ -258,10 +249,9 @@ class CompanyServiceTest {
     void shouldAddAdvertisingLocationToCompany() {
         Company company1 = new Company("", "", "", "", "", "", "");
         Location location = new Location("", "", "", "", "", "", company);
-        when(locationService.getLocationById(1L)).thenReturn(location);
         when(companyRepository.save(any(Company.class))).thenReturn(company1);
 
-        assertThat(companyService.addAdvertisingLocationToCompany(company1, 1L))
+        assertThat(companyService.addAdvertisingLocationToCompany(company1, location))
                 .isEqualTo(company1);
     }
 
@@ -269,10 +259,9 @@ class CompanyServiceTest {
     @DisplayName("Add advertising location to same company")
     void shouldThrowLocationIsFromCompanyException_whenAddLocationToSameCompany() {
         Location location = new Location("", "", "", "", "", "", company);
-        when(locationService.getLocationById(1L)).thenReturn(location);
 
         try {
-            companyService.addAdvertisingLocationToCompany(company, 1L);
+            companyService.addAdvertisingLocationToCompany(company, location);
             fail("Can add location to the same location");
         } catch (RuntimeException ex) {
             assertThat(ex)
@@ -285,27 +274,14 @@ class CompanyServiceTest {
     void shouldThrowLocationAlreadyAddedException_whenAddLocationTwice() {
         Company company1 = new Company("", "", "", "", "", "", "");
         Location location = new Location("", "", "", "", "", "", company);
-        when(locationService.getLocationById(1L)).thenReturn(location);
 
-        location.addAdvertisingCompanies(company1);
+        company1.addAdvertisingLocation(location);
         try {
-            companyService.addAdvertisingLocationToCompany(company1, 1L);
+            companyService.addAdvertisingLocationToCompany(company1, location);
             fail("Can add location to the same location");
         } catch (RuntimeException ex) {
             assertThat(ex)
                     .isInstanceOf(LocationAlreadyAddedException.class);
-        }
-    }
-
-    @Test
-    @DisplayName("Add advertising location to company with id 0")
-    void shouldThrowLocationNotSelectedException_whenAddLocationZeroToCompany() {
-        try {
-            companyService.addAdvertisingLocationToCompany(company, 0L);
-            fail("Can add location with id 0");
-        } catch (RuntimeException ex) {
-            assertThat(ex)
-                    .isInstanceOf(LocationNotSelectedException.class);
         }
     }
 

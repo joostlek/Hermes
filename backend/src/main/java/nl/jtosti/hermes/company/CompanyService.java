@@ -8,7 +8,6 @@ import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
 import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
 import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
-import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +43,19 @@ public class CompanyService implements CompanyServiceInterface {
 
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public Company getCompanyById(Long id) {
         return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public Company save(Company company) {
         Company newCompany = this.saveCompany(company);
         aclService.addPermissionsToObject(newCompany, new GrantedAuthoritySid("USER"), MyPermission.READ);
@@ -62,26 +64,29 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
-    public void deleteCompany(Long id) {
-        companyRepository.deleteById(id);
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#company, 'EMPLOYEE')")
+    public void deleteCompany(Company company) {
+        companyRepository.delete(company);
     }
 
     @Override
-    public List<Company> getAllCompaniesByUserId(Long userId) {
-        return Stream.concat(this.getAdvertisingCompaniesByUserId(userId).stream(),
-                this.getPersonalCompaniesByUserID(userId).stream())
+    @PreAuthorize("hasPermission(#user, 'ADMINISTRATION')")
+    public List<Company> getAllCompaniesByUser(User user) {
+        return Stream.concat(this.getAdvertisingCompaniesByUser(user).stream(),
+                this.getPersonalCompaniesByUser(user).stream())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Company> getPersonalCompaniesByUserID(Long userId) {
-        return companyRepository.findCompaniesByUserId(userId);
+    @PreAuthorize("hasPermission(#user, 'ADMINISTRATION')")
+    public List<Company> getPersonalCompaniesByUser(User user) {
+        return companyRepository.findCompaniesByUserId(user.getId());
     }
 
     @Override
-    public List<Company> getAdvertisingCompaniesByUserId(Long userId) {
+    @PreAuthorize("hasPermission(#user, 'ADMINISTRATION')")
+    public List<Company> getAdvertisingCompaniesByUser(User user) {
         List<Company> companies = new ArrayList<>();
-        User user = userService.getUserById(userId);
         for (Company company : user.getCompanies()) {
             for (Location location : company.getAdvertisingLocations()) {
                 if (!companies.contains(location.getCompany())) {
@@ -93,6 +98,7 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasPermission(#newCompany, 'EMPLOYEE')")
     public Company updateCompany(Company newCompany) {
         Company company = this.getCompanyById(newCompany.getId());
         company.setName(newCompany.getName());
@@ -105,25 +111,23 @@ public class CompanyService implements CompanyServiceInterface {
     }
 
     @Override
-    public void addUserToCompany(Long companyId, String email) {
-        User user = userService.getUserByEmail(email);
-        Company company = this.getCompanyById(companyId);
+    @PreAuthorize("hasPermission(#company, 'EMPLOYEE')")
+    public void addUserToCompany(Company company, User user) {
         if (company.hasUser(user)) {
             throw new UserAlreadyAddedException();
         }
         company.addUser(user);
-        aclService.addPermissionsToObject(company, new PrincipalSid(email), MyPermission.EMPLOYEE);
+        aclService.addPermissionsToObject(company, new PrincipalSid(user.getEmail()), MyPermission.EMPLOYEE);
         this.saveCompany(company);
     }
 
     @Override
-    public void removeUserFromCompany(Long userId, Long companyId) {
-        User user = userService.getUserById(userId);
-        Company company = this.getCompanyById(companyId);
+    @PreAuthorize("hasPermission(#company, 'EMPLOYEE')")
+    public void removeUserFromCompany(Company company, User user) {
         if (!company.hasUser(user)) {
             throw new UserNotInCompanyException();
         }
-        if (company.getUsers().size() == 1) {
+        if (company.getUsers().size() <= 1) {
             throw new LastUserException();
         }
         company.getUsers().remove(user);
@@ -146,15 +150,11 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     @PreAuthorize("hasPermission(#company, 'EMPLOYEE')")
-    public Company addAdvertisingLocationToCompany(Company company, Long locationId) {
-        if (locationId == 0) {
-            throw new LocationNotSelectedException();
-        }
-        Location location = locationService.getLocationById(locationId);
+    public Company addAdvertisingLocationToCompany(Company company, Location location) {
         if (location.getCompany().equals(company)) {
             throw new LocationIsFromCompanyException();
         }
-        if (location.hasAdvertisingCompany(company)) {
+        if (company.hasAdvertisingLocation(location)) {
             throw new LocationAlreadyAddedException();
         }
         company.addAdvertisingLocation(location);

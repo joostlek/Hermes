@@ -230,4 +230,13 @@ public class Company {
     public void addAdvertisingLocation(Location location) {
         this.advertisingLocations.add(location);
     }
+
+    public boolean hasAdvertisingLocation(Location location) {
+        for (Location advertisingLocation : this.advertisingLocations) {
+            if (advertisingLocation.equals(location)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

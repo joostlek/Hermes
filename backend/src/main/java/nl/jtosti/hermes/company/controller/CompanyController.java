@@ -9,12 +9,12 @@ import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationService;
 import nl.jtosti.hermes.location.dto.AddAdvertisingLocationDTO;
+import nl.jtosti.hermes.location.exception.LocationNotSelectedException;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -56,7 +56,6 @@ public class CompanyController {
     }
 
     @PutMapping("/companies/{companyId}")
-    @Secured({"USER", "ADMIN"})
     @ResponseStatus(HttpStatus.OK)
     public CompanyDTO updateCompany(@RequestBody ExtendedCompanyDTO companyDTO, @PathVariable Long companyId) {
         Company company = convertToEntity(companyDTO);
@@ -78,7 +77,8 @@ public class CompanyController {
     @GetMapping("/users/{userId}/companies")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedCompanyDTO> getAllCompaniesByUserId(@PathVariable Long userId) {
-        return companyService.getAllCompaniesByUserId(userId)
+        User user = userService.getUserById(userId);
+        return companyService.getAllCompaniesByUser(user)
                 .stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -87,7 +87,8 @@ public class CompanyController {
     @GetMapping("/users/{userId}/companies/personal")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedCompanyDTO> getPersonalCompaniesByUserId(@PathVariable Long userId) {
-        return companyService.getPersonalCompaniesByUserID(userId)
+        User user = userService.getUserById(userId);
+        return companyService.getPersonalCompaniesByUser(user)
                 .stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -96,7 +97,8 @@ public class CompanyController {
     @GetMapping("/users/{userId}/companies/advertising")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedCompanyDTO> getAdvertisingCompaniesByUserId(@PathVariable Long userId) {
-        return companyService.getAdvertisingCompaniesByUserId(userId)
+        User user = userService.getUserById(userId);
+        return companyService.getAdvertisingCompaniesByUser(user)
                 .stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -105,7 +107,8 @@ public class CompanyController {
     @DeleteMapping("/companies/{companyId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteCompany(@PathVariable Long companyId) {
-        companyService.deleteCompany(companyId);
+        Company company = companyService.getCompanyById(companyId);
+        companyService.deleteCompany(company);
     }
 
     @DeleteMapping("/companies/{companyId}/advertising/{locationId}")
@@ -119,20 +122,29 @@ public class CompanyController {
     @PostMapping("/companies/{companyId}/advertising")
     @ResponseStatus(HttpStatus.OK)
     public ExtendedCompanyDTO addAdvertisingLocationToCompany(@RequestBody AddAdvertisingLocationDTO locationDTO, @PathVariable Long companyId) {
+        Long locationId = locationDTO.getLocationId();
+        if (locationId == 0) {
+            throw new LocationNotSelectedException();
+        }
+        Location location = locationService.getLocationById(locationId);
         Company company = companyService.getCompanyById(companyId);
-        return convertToExtendedDTO(companyService.addAdvertisingLocationToCompany(company, locationDTO.getLocationId()));
+        return convertToExtendedDTO(companyService.addAdvertisingLocationToCompany(company, location));
     }
 
     @PutMapping("/companies/{companyId}/users")
     @ResponseStatus(HttpStatus.OK)
     public void addUserToCompany(@RequestBody AddUserDTO userDTO, @PathVariable Long companyId) {
-        companyService.addUserToCompany(companyId, userDTO.getEmail());
+        User user = userService.getUserByEmail(userDTO.getEmail());
+        Company company = companyService.getCompanyById(companyId);
+        companyService.addUserToCompany(company, user);
     }
 
     @DeleteMapping("/companies/{companyId}/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public void addUserToCompany(@PathVariable Long companyId, @PathVariable Long userId) {
-        companyService.removeUserFromCompany(userId, companyId);
+    public void removeUserFromCompany(@PathVariable Long companyId, @PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        Company company = companyService.getCompanyById(companyId);
+        companyService.removeUserFromCompany(company, user);
     }
 
     private CompanyDTO convertToDTO(Company company) {

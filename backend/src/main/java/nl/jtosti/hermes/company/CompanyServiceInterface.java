@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.company;
 
 import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.user.User;
 
 import java.util.List;
 
@@ -11,21 +12,21 @@ public interface CompanyServiceInterface {
 
     Company save(Company company);
 
-    void deleteCompany(Long id);
+    void deleteCompany(Company company);
 
-    List<Company> getAllCompaniesByUserId(Long userId);
+    List<Company> getAllCompaniesByUser(User user);
 
-    List<Company> getPersonalCompaniesByUserID(Long userId);
+    List<Company> getPersonalCompaniesByUser(User user);
 
-    List<Company> getAdvertisingCompaniesByUserId(Long userId);
+    List<Company> getAdvertisingCompaniesByUser(User user);
 
     Company updateCompany(Company company);
 
-    void addUserToCompany(Long companyId, String email);
+    void addUserToCompany(Company company, User user);
 
-    void removeUserFromCompany(Long userId, Long companyId);
+    void removeUserFromCompany(Company company, User user);
 
     Company removeAdvertisingLocationFromCompany(Company company, Location location);
 
-    Company addAdvertisingLocationToCompany(Company company, Long locationId);
+    Company addAdvertisingLocationToCompany(Company company, Location location);
 }

@@ -32,7 +32,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -176,11 +175,13 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Get all companies by user id")
     void shouldReturnArrayOfCompanies_whenGetListOfCompaniesByUserId() throws Exception {
+        user.setId(1L);
         Company company = new Company("", "", "", "", "", "", "");
         Company company1 = new Company("", "", "", "", "", "", "");
         List<Company> companies = Arrays.asList(company, company1);
 
-        given(companyService.getAllCompaniesByUserId(1L)).willReturn(companies);
+        when(userService.getUserById(1L)).thenReturn(user);
+        given(companyService.getAllCompaniesByUser(user)).willReturn(companies);
 
         mvc.perform(get("/api/users/1/companies")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -194,11 +195,13 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Get all personal companies")
     void shouldReturnArrayOfCompanies_whenGetListOfPersonalCompanies() throws Exception {
+        user.setId(1L);
         Company company = new Company("", "", "", "", "", "", "");
         Company company1 = new Company("", "", "", "", "", "", "");
         List<Company> companies = Arrays.asList(company, company1);
 
-        given(companyService.getPersonalCompaniesByUserID(1L)).willReturn(companies);
+        when(userService.getUserById(1L)).thenReturn(user);
+        given(companyService.getPersonalCompaniesByUser(user)).willReturn(companies);
 
         mvc.perform(get("/api/users/1/companies/personal")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -212,11 +215,13 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Get all advertising companies")
     void shouldReturnArrayOfCompanies_whenGetListOfAdvertisingCompanies() throws Exception {
+        user.setId(1L);
         Company company = new Company("", "", "", "", "", "", "");
         Company company1 = new Company("", "", "", "", "", "", "");
         List<Company> companies = Arrays.asList(company, company1);
 
-        given(companyService.getAdvertisingCompaniesByUserId(1L)).willReturn(companies);
+        when(userService.getUserById(1L)).thenReturn(user);
+        given(companyService.getAdvertisingCompaniesByUser(user)).willReturn(companies);
 
         mvc.perform(get("/api/users/1/companies/advertising")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -247,8 +252,9 @@ class CompanyControllerTest {
         AddAdvertisingLocationDTO advertisingDTO = new AddAdvertisingLocationDTO();
         advertisingDTO.setLocationId(1L);
 
+        when(locationService.getLocationById(1L)).thenReturn(location);
         when(companyService.getCompanyById(1L)).thenReturn(company);
-        when(companyService.addAdvertisingLocationToCompany(any(Company.class), eq(1L))).thenReturn(company);
+        when(companyService.addAdvertisingLocationToCompany(any(Company.class), any(Location.class))).thenReturn(company);
 
         mvc.perform(post("/api/companies/1/advertising")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -316,7 +322,11 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Add user to company")
     void shouldReturnError_whenAddAlreadyAddedUser() throws Exception {
-        doThrow(new UserAlreadyAddedException()).when(companyService).addUserToCompany(eq(1L), any(String.class));
+        User user = new User("Alex", "Jones", "Alex.jones@akex.com", "");
+        Company company = new Company("", "asd", "", "", "", "", "");
+        when(companyService.getCompanyById(1L)).thenReturn(company);
+        when(userService.getUserByEmail(any(String.class))).thenReturn(user);
+        doThrow(new UserAlreadyAddedException()).when(companyService).addUserToCompany(any(Company.class), any(User.class));
         AddUserDTO userDTO = new AddUserDTO();
         userDTO.setEmail("alex.jones@alex.com");
 
@@ -344,7 +354,11 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Remove last user from company")
     void shouldReturnError_whenDeleteLastUser() throws Exception {
-        doThrow(new LastUserException()).when(companyService).removeUserFromCompany(1L, 1L);
+        User user = new User("Alex", "Jones", "Alex.jones@akex.com", "");
+        Company company = new Company("", "asd", "", "", "", "", "");
+        when(companyService.getCompanyById(1L)).thenReturn(company);
+        when(userService.getUserById(1L)).thenReturn(user);
+        doThrow(new LastUserException()).when(companyService).removeUserFromCompany(any(Company.class), any(User.class));
 
         mvc.perform(delete("/api/companies/1/users/1")
                 .with(user("user"))
@@ -357,7 +371,11 @@ class CompanyControllerTest {
     @Test
     @DisplayName("Remove not-added user from company")
     void shouldReturnError_whenRemoveNotAddedUser() throws Exception {
-        doThrow(new UserNotInCompanyException()).when(companyService).removeUserFromCompany(1L, 1L);
+        User user = new User("Alex", "Jones", "Alex.jones@akex.com", "");
+        Company company = new Company("", "asd", "", "", "", "", "");
+        when(companyService.getCompanyById(1L)).thenReturn(company);
+        when(userService.getUserById(1L)).thenReturn(user);
+        doThrow(new UserNotInCompanyException()).when(companyService).removeUserFromCompany(any(Company.class), any(User.class));
 
         mvc.perform(delete("/api/companies/1/users/1")
                 .with(user("user"))

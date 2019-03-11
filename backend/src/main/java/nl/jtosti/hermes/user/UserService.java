@@ -6,7 +6,6 @@ import nl.jtosti.hermes.config.acl.MyPermission;
 import nl.jtosti.hermes.user.exception.EmailAlreadyUsedException;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.acls.domain.PrincipalSid;
@@ -31,7 +30,6 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    @PostAuthorize("hasRole('ADMIN') or returnObject.email == authentication.name")
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
                 new UserNotFoundException(id)
