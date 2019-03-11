@@ -4,12 +4,10 @@ import nl.jtosti.hermes.company.exception.*;
 import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.config.acl.MyPermission;
 import nl.jtosti.hermes.location.Location;
-import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
 import nl.jtosti.hermes.location.exception.LocationAlreadyAddedException;
 import nl.jtosti.hermes.location.exception.LocationIsFromCompanyException;
 import nl.jtosti.hermes.user.User;
-import nl.jtosti.hermes.user.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.acls.domain.GrantedAuthoritySid;
@@ -28,16 +26,12 @@ import java.util.stream.Stream;
 public class CompanyService implements CompanyServiceInterface {
 
     private final CompanyRepository companyRepository;
-    private final UserServiceInterface userService;
-    private final LocationServiceInterface locationService;
 
     private final AclServiceInterface aclService;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, UserServiceInterface userService, LocationServiceInterface locationService, AclServiceInterface aclService) {
+    public CompanyService(CompanyRepository companyRepository, AclServiceInterface aclService) {
         this.companyRepository = companyRepository;
-        this.userService = userService;
-        this.locationService = locationService;
         this.aclService = aclService;
     }
 
