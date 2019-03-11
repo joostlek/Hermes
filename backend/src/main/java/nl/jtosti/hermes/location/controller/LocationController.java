@@ -7,6 +7,8 @@ import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.location.dto.ExtendedLocationDTO;
 import nl.jtosti.hermes.location.dto.LocationDTO;
+import nl.jtosti.hermes.user.User;
+import nl.jtosti.hermes.user.UserServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +23,14 @@ public class LocationController {
     private final ModelMapper modelMapper;
     private final LocationServiceInterface locationService;
     private final CompanyServiceInterface companyService;
+    private final UserServiceInterface userService;
 
     @Autowired
-    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, CompanyServiceInterface companyService) {
+    LocationController(LocationServiceInterface locationService, ModelMapper modelMapper, CompanyServiceInterface companyService, UserServiceInterface userService) {
         this.locationService = locationService;
         this.modelMapper = modelMapper;
         this.companyService = companyService;
+        this.userService = userService;
     }
 
     /**
@@ -99,20 +103,8 @@ public class LocationController {
     @DeleteMapping("/locations/{locationId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteLocation(@PathVariable Long locationId) {
-        locationService.delete(locationId);
-    }
-
-    /**
-     * @param locationId Location with company to be removed
-     * @param companyId  Company to be removed from location
-     * @return updated location
-     */
-    @DeleteMapping("/locations/{locationId}/advertising/{companyId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ExtendedLocationDTO removeAdvertisingCompanyFromLocation(@PathVariable Long locationId, @PathVariable Long companyId) {
         Location location = locationService.getLocationById(locationId);
-        Company company = companyService.getCompanyById(companyId);
-        return convertToExtendedDTO(locationService.removeAdvertisingCompanyFromLocation(location, company));
+        locationService.delete(location);
     }
 
     /**
@@ -122,7 +114,8 @@ public class LocationController {
     @GetMapping("/companies/{companyId}/advertising")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedLocationDTO> getAdvertisingLocationsByCompanyId(@PathVariable Long companyId) {
-        List<Location> locations = locationService.getAdvertisingLocationsByCompanyId(companyId);
+        Company company = companyService.getCompanyById(companyId);
+        List<Location> locations = locationService.getAdvertisingLocationsByCompany(company);
         return locations.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -135,7 +128,8 @@ public class LocationController {
     @GetMapping("/users/{userId}/locations")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedLocationDTO> getAllLocationsByUserId(@PathVariable Long userId) {
-        List<Location> locations = locationService.getAllLocationsByUserId(userId);
+        User user = userService.getUserById(userId);
+        List<Location> locations = locationService.getAllLocationsByUser(user);
         return locations.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -148,7 +142,8 @@ public class LocationController {
     @GetMapping("/users/{userId}/locations/advertising")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedLocationDTO> getAdvertisingLocationsByUserId(@PathVariable Long userId) {
-        List<Location> locations = locationService.getAdvertisingLocationsByUserId(userId);
+        User user = userService.getUserById(userId);
+        List<Location> locations = locationService.getAdvertisingLocationsByUser(user);
         return locations.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -161,7 +156,8 @@ public class LocationController {
     @GetMapping("/users/{userId}/locations/personal")
     @ResponseStatus(HttpStatus.OK)
     public List<ExtendedLocationDTO> getPersonalLocationsByUserId(@PathVariable Long userId) {
-        List<Location> locations = locationService.getPersonalLocationsByUserId(userId);
+        User user = userService.getUserById(userId);
+        List<Location> locations = locationService.getPersonalLocationsByUser(user);
         return locations.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());

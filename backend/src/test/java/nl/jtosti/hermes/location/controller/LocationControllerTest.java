@@ -126,7 +126,7 @@ class LocationControllerTest {
 //        location1.setId(2L);
 //        List<Location> locations = Arrays.asList(location, location1);
 //
-//        given(locationService.getPersonalLocationsByUserId(1L)).willReturn(locations);
+//        given(locationService.getPersonalLocationsByUser(1L)).willReturn(locations);
 //
 //        mvc.perform(get("/users/1/personal-locations")
 //                .contentType(MediaType.APPLICATION_JSON_UTF8)

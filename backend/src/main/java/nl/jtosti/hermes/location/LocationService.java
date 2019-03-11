@@ -2,11 +2,12 @@ package nl.jtosti.hermes.location;
 
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.config.acl.AclServiceInterface;
-import nl.jtosti.hermes.location.exception.CompanyHasImagesException;
-import nl.jtosti.hermes.location.exception.CompanyNotAdvertisingException;
 import nl.jtosti.hermes.location.exception.LocationNotFoundException;
+import nl.jtosti.hermes.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,8 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
+    @PostAuthorize("hasPermission(returnObject, 'EMPLOYEE')")
     public Location getLocationById(Long id) {
         return locationRepository.findById(id).orElseThrow(() -> new LocationNotFoundException(id));
     }
@@ -43,19 +46,21 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#location.company, 'EMPLOYEE')")
     public Location save(Location location) {
-        Location newLocation = locationRepository.save(location);
+        Location newLocation = saveLocation(location);
         aclService.addChildObjectWithParent(newLocation, newLocation.getCompany());
         return newLocation;
     }
 
     @Override
-    @PostFilter("hasPermission(filterObject.company, 'EMPLOYEE')")
+    @PostFilter("hasRole('ADMIN') or hasPermission(filterObject.company, 'EMPLOYEE')")
     public List<Location> getLocationsByCompanyId(Long companyId) {
         return locationRepository.findAllByCompanyId(companyId);
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#newLocation.company, 'EMPLOYEE')")
     public Location update(Location newLocation) {
         return locationRepository.findById(newLocation.getId())
                 .map(location -> {
@@ -73,39 +78,36 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
-    public void delete(Long id) {
-        locationRepository.deleteById(id);
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#location.company, 'EMPLOYEE')")
+    public void delete(Location location) {
+        locationRepository.delete(location);
     }
 
     @Override
-    public Location removeAdvertisingCompanyFromLocation(Location location, Company company) {
-        if (!location.hasAdvertisingCompany(company)) {
-            throw new CompanyNotAdvertisingException(company.getName(), location.getName());
-        }
-        if (!company.getImagesByLocation(location).isEmpty()) {
-            throw new CompanyHasImagesException(company.getName());
-        }
-        location.getAdvertisingCompanies().remove(company);
-        return locationRepository.save(location);
+    @PreAuthorize("hasPermission(#company, 'EMPLOYEE')")
+    public List<Location> getAdvertisingLocationsByCompany(Company company) {
+        return locationRepository.findAllByAdvertisingCompany(company);
     }
 
     @Override
-    public List<Location> getAdvertisingLocationsByCompanyId(Long companyId) {
-        return locationRepository.findAllByAdvertisingCompanyId(companyId);
+    @PreAuthorize("authentication.name == user.email")
+    public List<Location> getAdvertisingLocationsByUser(User user) {
+        return locationRepository.findAllAdvertisingCompaniesByUser(user);
     }
 
     @Override
-    public List<Location> getAdvertisingLocationsByUserId(Long userId) {
-        return locationRepository.findAllAdvertisingCompaniesByUserId(userId);
+    @PreAuthorize("authentication.name == user.email")
+    public List<Location> getPersonalLocationsByUser(User user) {
+        return locationRepository.findAllPersonalCompaniesByUser(user);
     }
 
     @Override
-    public List<Location> getPersonalLocationsByUserId(Long userId) {
-        return locationRepository.findAllPersonalCompaniesByUserId(userId);
+    @PreAuthorize("authentication.name == user.email")
+    public List<Location> getAllLocationsByUser(User user) {
+        return locationRepository.findAllCompaniesByUser(user);
     }
 
-    @Override
-    public List<Location> getAllLocationsByUserId(Long userId) {
-        return locationRepository.findAllCompaniesByUserId(userId);
+    private Location saveLocation(Location location) {
+        return this.locationRepository.save(location);
     }
 }

@@ -22,7 +22,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @DisplayName("Location Service")
@@ -154,8 +154,9 @@ class LocationServiceTest {
     @Test
     @DisplayName("Delete location")
     void shouldDoNothing_whenDeleteLocation() {
-        locationService.delete(1L);
-        assertThat(true).isTrue();
+        Location location = new Location("Alex coffee", "Alex", "1", "1234AB", "Cofeve", "", company);
+        locationService.delete(location);
+        verify(locationRepository, atLeastOnce()).delete(any(Location.class));
     }
 
     @TestConfiguration
