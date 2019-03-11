@@ -1,5 +1,7 @@
 package nl.jtosti.hermes.user.controller;
 
+import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.config.V1ApiController;
 import nl.jtosti.hermes.user.User;
 import nl.jtosti.hermes.user.UserServiceInterface;
@@ -22,12 +24,15 @@ public class UserController {
 
     private final ModelMapper modelMapper;
 
-    private UserServiceInterface userService;
+    private final UserServiceInterface userService;
+
+    private final CompanyServiceInterface companyService;
 
     @Autowired
-    UserController(UserServiceInterface userService, ModelMapper modelMapper) {
+    UserController(UserServiceInterface userService, ModelMapper modelMapper, CompanyServiceInterface companyService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.companyService = companyService;
     }
 
     @GetMapping("/users")
@@ -71,13 +76,14 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+        userService.deleteUser(userService.getUserById(id));
     }
 
     @GetMapping("/companies/{companyId}/users")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDTO> getUsersByCompanyId(@PathVariable Long companyId) {
-        return userService.getAllUsersByCompanyId(companyId)
+        Company company = companyService.getCompanyById(companyId);
+        return userService.getAllUsersByCompany(company)
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

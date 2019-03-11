@@ -1,11 +1,15 @@
 package nl.jtosti.hermes.user;
 
-import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
+import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.config.acl.AclServiceInterface;
+import nl.jtosti.hermes.config.acl.MyPermission;
 import nl.jtosti.hermes.user.exception.EmailAlreadyUsedException;
 import nl.jtosti.hermes.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.acls.domain.PrincipalSid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +31,7 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    @PostAuthorize("hasRole('ADMIN') or returnObject.email == authentication.name")
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
                 new UserNotFoundException(id)
@@ -34,7 +39,7 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    @PostFilter("hasPermission(filterObject, 'ADMINISTRATION')")
+    @PostFilter("hasRole('ADMIN') or filterObject.email == authentication.name")
     public List<User> getAllUsers() {
         return userRepository.findAllByOrderByIdAsc();
     }
@@ -52,6 +57,7 @@ public class UserService implements UserServiceInterface {
         user.setRoles(Collections.singletonList("USER"));
         User newUser = this.saveUser(user);
         aclService.addUser(user);
+        aclService.addPermissionsToObject(newUser, new PrincipalSid(user.getEmail()), MyPermission.ADMINISTRATION);
         return newUser;
     }
 
@@ -62,6 +68,7 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#newUser, 'ADMINISTRATION')")
     public User updateUser(User newUser) {
         return userRepository.findById(newUser.getId())
                 .map(user -> {
@@ -77,17 +84,15 @@ public class UserService implements UserServiceInterface {
 
 
     @Override
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    @PreAuthorize("hasRole('ADMIN') or #user.email == authentication.name")
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
     @Override
-    public List<User> getAllUsersByCompanyId(Long companyId) {
-        List<User> users = userRepository.findUsersByCompanyId(companyId);
-        if (users.isEmpty()) {
-            throw new CompanyNotFoundException(companyId);
-        }
-        return users;
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#company, 'EMPLOYEE')")
+    public List<User> getAllUsersByCompany(Company company) {
+        return userRepository.findUsersByCompanyId(company.getId());
     }
 
     private User saveUser(User user) {

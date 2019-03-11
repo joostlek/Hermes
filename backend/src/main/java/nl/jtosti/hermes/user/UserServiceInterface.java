@@ -1,5 +1,7 @@
 package nl.jtosti.hermes.user;
 
+import nl.jtosti.hermes.company.Company;
+
 import java.util.List;
 
 public interface UserServiceInterface {
@@ -15,7 +17,7 @@ public interface UserServiceInterface {
 
     User updateUser(User newUser);
 
-    void deleteUser(Long id);
+    void deleteUser(User user);
 
-    List<User> getAllUsersByCompanyId(Long companyId);
+    List<User> getAllUsersByCompany(Company company);
 }

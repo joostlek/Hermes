@@ -1,6 +1,8 @@
 package nl.jtosti.hermes.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.company.CompanyServiceInterface;
 import nl.jtosti.hermes.company.exception.CompanyNotFoundException;
 import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.security.screen.ScreenAuthenticationProvider;
@@ -54,6 +56,9 @@ class UserControllerTest {
 
     @MockBean
     private StorageServiceInterface storageService;
+
+    @MockBean
+    private CompanyServiceInterface companyService;
 
     @MockBean
     private UserDetailsService userDetailsService;
@@ -133,7 +138,12 @@ class UserControllerTest {
         User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
         User user1 = new User("Jane", "Jones", "jane.jones@jones.com", "");
         List<User> allUsers = Arrays.asList(user, user1);
-        given(service.getAllUsersByCompanyId(1L)).willReturn(allUsers);
+
+        Company company = new Company();
+        company.setId(1L);
+
+        given(companyService.getCompanyById(1L)).willReturn(company);
+        given(service.getAllUsersByCompany(company)).willReturn(allUsers);
 
         mvc.perform(get("/api/companies/1/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -148,7 +158,7 @@ class UserControllerTest {
     @DisplayName("Get all users by invalid company id throws exception")
     void shouldThrowCompanyNotFoundException() throws Exception {
 
-        when(service.getAllUsersByCompanyId(4L)).thenThrow(new CompanyNotFoundException(4L));
+        when(companyService.getCompanyById(4L)).thenThrow(new CompanyNotFoundException(4L));
 
         mvc.perform(get("/api/companies/4/users")
                 .contentType(MediaType.APPLICATION_JSON)
