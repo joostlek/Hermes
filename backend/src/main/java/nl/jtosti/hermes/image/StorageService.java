@@ -4,6 +4,7 @@ import nl.jtosti.hermes.config.ImagePathConfiguration;
 import nl.jtosti.hermes.image.exception.FileStoreException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,7 @@ public class StorageService implements StorageServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public String store(MultipartFile file) {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -47,6 +49,7 @@ public class StorageService implements StorageServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('SCREEN')")
     public Resource load(String filename) {
         try {
             Path file = rootLocation.resolve(filename);
