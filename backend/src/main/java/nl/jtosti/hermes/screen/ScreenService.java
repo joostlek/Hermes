@@ -1,5 +1,6 @@
 package nl.jtosti.hermes.screen;
 
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.exception.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
@@ -17,9 +18,12 @@ public class ScreenService implements ScreenServiceInterface {
 
     private final ScreenRepository screenRepository;
 
+    private final AclServiceInterface aclService;
+
     @Autowired
-    public ScreenService(ScreenRepository screenRepository) {
+    public ScreenService(ScreenRepository screenRepository, AclServiceInterface aclService) {
         this.screenRepository = screenRepository;
+        this.aclService = aclService;
     }
 
     @Override
@@ -82,6 +86,7 @@ public class ScreenService implements ScreenServiceInterface {
         String password = PasswordGenerator.generatePassword();
         screen.setPassword(password);
         this.saveScreen(screen);
+        aclService.addScreen(screen);
         return password;
     }
 
