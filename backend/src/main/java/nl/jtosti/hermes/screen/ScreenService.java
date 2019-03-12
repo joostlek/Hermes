@@ -1,9 +1,11 @@
 package nl.jtosti.hermes.screen;
 
+import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.exception.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
 import nl.jtosti.hermes.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,13 +28,15 @@ public class ScreenService implements ScreenServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Screen> getAllScreens() {
         return screenRepository.findAll();
     }
 
     @Override
-    public List<Screen> getScreensByLocationId(Long id) {
-        return screenRepository.findAllByLocationId(id);
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(#location.company, 'EMPLOYEE')")
+    public List<Screen> getScreensByLocation(Location location) {
+        return screenRepository.findAllByLocation(location);
     }
 
     @Override
@@ -41,18 +45,22 @@ public class ScreenService implements ScreenServiceInterface {
     }
 
     @Override
-    public Screen save(Screen screen) {
-        return screenRepository.save(screen);
+    @PreAuthorize("hasRole('ADMIN')")
+    public Screen addNewScreen(Screen screen, Location location) {
+        screen.setLocation(location);
+        screen.setToReceivePassword(true);
+        return saveScreen(screen);
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public Screen updateScreen(Screen newScreen) {
         return screenRepository.findById(newScreen.getId())
                 .map(screen -> {
                     screen.setHeight(newScreen.getHeight());
                     screen.setWidth(newScreen.getWidth());
                     screen.setName(newScreen.getName());
-                    return screenRepository.save(screen);
+                    return saveScreen(screen);
                 })
                 .orElseThrow(
                         () -> new ScreenNotFoundException(newScreen.getId())
@@ -60,6 +68,7 @@ public class ScreenService implements ScreenServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteScreen(Long id) {
         screenRepository.deleteById(id);
     }
@@ -72,7 +81,11 @@ public class ScreenService implements ScreenServiceInterface {
         }
         String password = PasswordGenerator.generatePassword();
         screen.setPassword(password);
-        this.save(screen);
+        this.saveScreen(screen);
         return password;
+    }
+
+    private Screen saveScreen(Screen screen) {
+        return this.screenRepository.save(screen);
     }
 }

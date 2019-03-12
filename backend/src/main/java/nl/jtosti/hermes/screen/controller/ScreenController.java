@@ -47,16 +47,15 @@ public class ScreenController {
     public ScreenDTO addScreen(@RequestBody ScreenDTO screenDTO, @PathVariable Long locationId) {
         Screen screen = convertToEntity(screenDTO);
         Location location = locationService.getLocationById(locationId);
-        screen.setLocation(location);
-        screen.setToReceivePassword(true);
-        Screen newScreen = screenService.save(screen);
+        Screen newScreen = screenService.addNewScreen(screen, location);
         return convertToExtendedDTO(newScreen);
     }
 
     @GetMapping("/locations/{locationId}/screens")
     @ResponseStatus(HttpStatus.OK)
     public List<ScreenDTO> getScreensByLocationId(@PathVariable Long locationId) {
-        List<Screen> screens = screenService.getScreensByLocationId(locationId);
+        Location location = locationService.getLocationById(locationId);
+        List<Screen> screens = screenService.getScreensByLocation(location);
         return screens.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

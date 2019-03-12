@@ -104,7 +104,8 @@ class ScreenControllerTest {
 
         List<Screen> screens = Arrays.asList(screen, screen1);
 
-        given(screenService.getScreensByLocationId(1L)).willReturn(screens);
+        when(locationService.getLocationById(1L)).thenReturn(location);
+        given(screenService.getScreensByLocation(location)).willReturn(screens);
 
         mvc.perform(get("/api/locations/1/screens")
                 .with(user("user"))
@@ -151,7 +152,7 @@ class ScreenControllerTest {
         screen.setId(1L);
 
         when(locationService.getLocationById(1L)).thenReturn(location);
-        when(screenService.save(any(Screen.class))).thenReturn(screen);
+        when(screenService.addNewScreen(any(Screen.class), any(Location.class))).thenReturn(screen);
 
         mvc.perform(post("/api/locations/1/screens")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

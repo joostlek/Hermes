@@ -1,21 +1,23 @@
 package nl.jtosti.hermes.screen;
 
+import nl.jtosti.hermes.location.Location;
+
 import java.util.List;
 
 public interface ScreenServiceInterface {
-    public Screen getScreenById(Long id);
+    Screen getScreenById(Long id);
 
-    public List<Screen> getAllScreens();
+    List<Screen> getAllScreens();
 
-    public List<Screen> getScreensByLocationId(Long id);
+    List<Screen> getScreensByLocation(Location location);
 
-    public boolean exists(Long id);
+    boolean exists(Long id);
 
-    public Screen save(Screen screen);
+    Screen addNewScreen(Screen screen, Location location);
 
-    public Screen updateScreen(Screen screen);
+    Screen updateScreen(Screen screen);
 
-    public void deleteScreen(Long id);
+    void deleteScreen(Long id);
 
     String registerScreen(Long id);
 }

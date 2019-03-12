@@ -1,6 +1,5 @@
 package nl.jtosti.hermes.screen;
 
-import nl.jtosti.hermes.HermesApplication;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.exception.ScreenIsNotToReceivePasswordException;
@@ -27,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = HermesApplication.class)
+@SpringBootTest(classes = ScreenService.class)
 @DisplayName("Screen Service")
 @Tag("services")
 class ScreenServiceTest {
@@ -35,11 +34,10 @@ class ScreenServiceTest {
     @Autowired
     private ScreenServiceInterface screenService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @MockBean
     private ScreenRepository screenRepository;
+
+    private PasswordEncoder passwordEncoder = Screen.PASSWORD_ENCODER;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
 
@@ -104,9 +102,9 @@ class ScreenServiceTest {
         Screen screen = new Screen("Screen 1", 1920, 1080, location);
         Screen screen1 = new Screen("Screen 2", 1920, 1080, location);
 
-        when(screenRepository.findAllByLocationId(1L)).thenReturn(Arrays.asList(screen, screen1));
+        when(screenRepository.findAllByLocation(location)).thenReturn(Arrays.asList(screen, screen1));
 
-        List<Screen> screens = screenService.getScreensByLocationId(1L);
+        List<Screen> screens = screenService.getScreensByLocation(location);
         assertThat(screens).hasSize(2);
         assertThat(screens.get(0)).isEqualTo(screen);
         assertThat(screens.get(1)).isEqualTo(screen1);
@@ -119,7 +117,7 @@ class ScreenServiceTest {
         screen.setId(1L);
         when(screenRepository.save(any(Screen.class))).thenReturn(screen);
 
-        Screen newScreen = screenService.save(screen);
+        Screen newScreen = screenService.addNewScreen(screen, location);
         assertThat(newScreen).isEqualTo(screen);
     }
 
