@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.config.acl;
 
 
+import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.acls.domain.BasePermission;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyAclService implements AclServiceInterface {
-    private final JdbcMutableAclService aclService;
 
+    private final JdbcMutableAclService aclService;
 
     @Autowired
     public MyAclService(JdbcMutableAclService aclService) {
@@ -26,6 +27,15 @@ public class MyAclService implements AclServiceInterface {
         Sid sid = new PrincipalSid(user.getEmail());
         MutableAcl acl = aclService.createAcl(objectIdentity);
         acl.insertAce(acl.getEntries().size(), BasePermission.ADMINISTRATION, sid, true);
+        aclService.updateAcl(acl);
+    }
+
+    @Override
+    public void addScreen(Screen screen) {
+        ObjectIdentity objectIdentity = new ObjectIdentityImpl(Screen.class, screen.getId());
+        Sid sid = new PrincipalSid(screen.getId().toString());
+        MutableAcl acl = aclService.createAcl(objectIdentity);
+        acl.insertAce(acl.getEntries().size(), MyPermission.READ, sid, true);
         aclService.updateAcl(acl);
     }
 

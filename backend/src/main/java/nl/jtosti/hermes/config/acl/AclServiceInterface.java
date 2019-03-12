@@ -1,11 +1,14 @@
 package nl.jtosti.hermes.config.acl;
 
+import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.user.User;
 import org.springframework.security.acls.model.Permission;
 import org.springframework.security.acls.model.Sid;
 
 public interface AclServiceInterface {
     void addUser(User user);
+
+    void addScreen(Screen screen);
 
     void addPermissionsToObject(Object object, Sid sid, Permission permission);
 
