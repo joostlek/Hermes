@@ -315,15 +315,15 @@
   dependencies:
     tslib "^1.9.0"
 
-"@clr/icons@~1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@clr/icons/-/icons-1.1.0.tgz#af24d4f97a29988289b7ce615a9d5436347f947c"
-  integrity sha512-N1UaQRPvEBBLRcG5L2e6sBqP8b2vpRxt53uVAl+hysloPNuxVnstZjhO/G0yqIS4G0F9Q6hv9b/D4kBHwWxFKA==
+"@clr/icons@~1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@clr/icons/-/icons-1.1.1.tgz#09ee3154aff1ff1c3d6221cb4473756c02a95968"
+  integrity sha512-QOdrt9wSx6/dL0spkpNM5z39q7oGzjUaKKKgRkejf1DL305o3mdAhZ+xRPuo682K6ME141vhCLcUbE9MsLaBVw==
 
-"@clr/ui@~1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@clr/ui/-/ui-1.1.0.tgz#b226fbd8263a04301c8862a72962566348a5aff3"
-  integrity sha512-sY2YDyteGARrG8IDKic1Fnz1uK9zlyiFkKM/4f9/FFBLDhF4B53eTZMJQ/Gh/OfWTICrE6/nwGlmC2gfHWpTiw==
+"@clr/ui@~1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@clr/ui/-/ui-1.1.1.tgz#29abef9f82daff13f6c50ab589017f2f95bfdc4f"
+  integrity sha512-bODUUoScEKpQKGWdy6I5JAdAA2Y6rxkt0UzSsOLRB0d72rLldHj0/m1c5ntQxSn9fEISTfhiHJT4MGdmP07bbQ==
 
 "@ngtools/webpack@7.3.4":
   version "7.3.4"
