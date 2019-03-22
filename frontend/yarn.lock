@@ -308,10 +308,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@clr/angular@~1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@clr/angular/-/angular-1.1.0.tgz#c1aff6d13f7b8370e7eabb302f4d921e297392da"
-  integrity sha512-C2i1r0gMpX7mJKf/kFQZy0rxRRwzmqIT6wgn9H4gin6Gk+rQfu+B4O25mN/WZZd9tyo88h/FllDn837pSQxPGg==
+"@clr/angular@~1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@clr/angular/-/angular-1.1.2.tgz#ecb58cb3f03fb1348b5f04e0ca125205ae93bc9f"
+  integrity sha512-N8Z4bwaKiZshRk4MGPWLZJai8p2S1KEJvwvFe6jtc2a01qhAjSpJRK5VF3qwgb3dBLz67x/zE6i/WszjYsQ74Q==
   dependencies:
     tslib "^1.9.0"
 
