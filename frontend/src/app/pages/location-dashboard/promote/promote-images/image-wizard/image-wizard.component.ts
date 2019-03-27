@@ -139,6 +139,7 @@ export class ImageWizardComponent implements OnInit, OnDestroy {
     reset(): void {
         this.wizard.reset();
         this.firstPage.reset();
+        this.secondPage.reset();
         this.wizard.close();
         this.submitButtonState = ClrLoadingState.DEFAULT;
         this.openStream.next(false);
