@@ -10,6 +10,8 @@ import nl.jtosti.hermes.image.dto.ExtendedImageDTO;
 import nl.jtosti.hermes.image.dto.FileDTO;
 import nl.jtosti.hermes.image.dto.ImageDTO;
 import nl.jtosti.hermes.image.exception.FileStoreException;
+import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.screen.ScreenServiceInterface;
 import nl.jtosti.hermes.user.User;
@@ -42,14 +44,17 @@ public class ImageController {
 
     private final CompanyServiceInterface companyService;
 
+    private final LocationServiceInterface locationService;
+
     @Autowired
-    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService, StorageServiceInterface storageService, CompanyServiceInterface companyService) {
+    public ImageController(ImageServiceInterface imageService, ModelMapper modelMapper, ScreenServiceInterface screenService, UserServiceInterface userService, StorageServiceInterface storageService, CompanyServiceInterface companyService, LocationServiceInterface locationService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.screenService = screenService;
         this.userService = userService;
         this.storageService = storageService;
         this.companyService = companyService;
+        this.locationService = locationService;
     }
 
 
@@ -65,7 +70,8 @@ public class ImageController {
     @GetMapping("/companies/{companyId}/images")
     @ResponseStatus(HttpStatus.OK)
     public List<ImageDTO> getImagesByCompanyId(@PathVariable Long companyId) {
-        List<Image> images = imageService.getImagesByCompanyId(companyId);
+        Company company = companyService.getCompanyById(companyId);
+        List<Image> images = imageService.getImagesByCompany(company);
         return images.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -83,7 +89,8 @@ public class ImageController {
     @GetMapping("/locations/{locationId}/images")
     @ResponseStatus(HttpStatus.OK)
     public List<ImageDTO> getImagesByLocationId(@PathVariable Long locationId) {
-        List<Image> images = imageService.getImagesByLocationId(locationId);
+        Location location = locationService.getLocationById(locationId);
+        List<Image> images = imageService.getImagesByLocation(location);
         return images.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -93,7 +100,9 @@ public class ImageController {
     @ResponseStatus(HttpStatus.OK)
     public List<ImageDTO> getImagesByLocationIdByCompanyId(@PathVariable Long locationId,
                                                            @RequestParam Long companyId) {
-        List<Image> images = imageService.getImagesByLocationIdAndCompanyId(locationId, companyId);
+        Location location = locationService.getLocationById(locationId);
+        Company company = companyService.getCompanyById(companyId);
+        List<Image> images = imageService.getImagesByLocationAndCompany(location, company);
         return images.stream()
                 .map(this::convertToExtendedDTO)
                 .collect(Collectors.toList());
@@ -134,7 +143,8 @@ public class ImageController {
     @DeleteMapping("/images/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteImage(@PathVariable Long id) {
-        imageService.delete(id);
+        Image image = imageService.getImageById(id);
+        imageService.delete(image);
     }
 
     @PostMapping("/images/upload")

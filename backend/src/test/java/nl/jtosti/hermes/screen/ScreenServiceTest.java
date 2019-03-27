@@ -1,6 +1,7 @@
 package nl.jtosti.hermes.screen;
 
 import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.location.Location;
 import nl.jtosti.hermes.screen.exception.ScreenIsNotToReceivePasswordException;
 import nl.jtosti.hermes.screen.exception.ScreenNotFoundException;
@@ -191,9 +192,12 @@ class ScreenServiceTest {
         @Autowired
         private ScreenRepository screenRepository;
 
+        @Autowired
+        private AclServiceInterface aclServiceInterface;
+
         @Bean
         public ScreenServiceInterface screenServiceInterface() {
-            return new ScreenService(screenRepository);
+            return new ScreenService(screenRepository, aclServiceInterface);
         }
     }
 }

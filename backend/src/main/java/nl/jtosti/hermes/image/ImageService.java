@@ -1,8 +1,12 @@
 package nl.jtosti.hermes.image;
 
+import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.image.exception.CacheFileNotFoundException;
 import nl.jtosti.hermes.image.exception.ImageNotFoundException;
+import nl.jtosti.hermes.location.Location;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,33 +27,39 @@ public class ImageService implements ImageServiceInterface {
     }
 
     @Override
+    @PostAuthorize("hasRole('ADMIN') or hasPermission(returnObject, 'READ') or hasPermission(returnObject.company, 'EMPLOYEE') or hasPermission(returnObject.screen.location.company, 'EMPLOYEE')")
     public Image getImageById(Long id) {
         return imageRepository.findById(id).orElseThrow(() -> new ImageNotFoundException(id));
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Image> getAllImages() {
         return imageRepository.findAll();
     }
 
     @Override
+    @PreAuthorize("hasRole('SCREEN') and authentication.name == id.toString()")
     public List<Image> getImagesByScreenId(Long id) {
         return imageRepository.findAllByScreenId(id);
     }
 
     @Override
-    public List<Image> getImagesByCompanyId(Long companyId) {
-        return imageRepository.findAllByCompanyId(companyId);
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(company, 'EMPLOYEE')")
+    public List<Image> getImagesByCompany(Company company) {
+        return imageRepository.findAllByCompany(company);
     }
 
     @Override
-    public List<Image> getImagesByLocationId(Long id) {
-        return imageRepository.findAllByScreenLocationId(id);
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(location.company, 'EMPLOYEE')")
+    public List<Image> getImagesByLocation(Location location) {
+        return imageRepository.findAllByScreenLocation(location);
     }
 
     @Override
-    public List<Image> getImagesByLocationIdAndCompanyId(Long locationId, Long companyId) {
-        return imageRepository.findAllByScreenLocationIdAndCompanyId(locationId, companyId);
+    @PreAuthorize("hasPermission(company, 'EMPLOYEE') or hasPermission(location.company, 'EMPLOYEE')")
+    public List<Image> getImagesByLocationAndCompany(Location location, Company company) {
+        return imageRepository.findAllByScreenLocationAndCompany(location, company);
     }
 
     @Override
@@ -59,6 +69,7 @@ public class ImageService implements ImageServiceInterface {
 
     @Override
     @Transactional
+    @PreAuthorize("hasPermission(image.company, 'EMPLOYEE')")
     public Image save(Image image) {
         if (storageService.cacheFileExist(image.getUrl())) {
             Image image1 = imageRepository.save(image);
@@ -71,6 +82,7 @@ public class ImageService implements ImageServiceInterface {
     }
 
     @Override
+    @PreAuthorize("hasPermission(newImage.company, 'EMPLOYEE')")
     public Image update(Image newImage) {
         return imageRepository.findById(newImage.getId())
                 .map(image -> {
@@ -84,7 +96,8 @@ public class ImageService implements ImageServiceInterface {
     }
 
     @Override
-    public void delete(Long id) {
-        imageRepository.deleteById(id);
+    @PreAuthorize("hasRole('ADMIN') or hasPermission(image.company, 'EMPLOYEE') or hasPermission(image.screen.location.company, 'EMPLOYEE')")
+    public void delete(Image image) {
+        imageRepository.delete(image);
     }
 }

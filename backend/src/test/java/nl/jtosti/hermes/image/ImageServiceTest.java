@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @DisplayName("Image Service")
@@ -88,9 +88,9 @@ class ImageServiceTest {
         Image image = new Image("Image 1", "", screen, user);
         Image image1 = new Image("Image 2", "", screen, user);
 
-        when(imageRepository.findAllByScreenLocationId(1L)).thenReturn(Arrays.asList(image, image1));
+        when(imageRepository.findAllByScreenLocation(any(Location.class))).thenReturn(Arrays.asList(image, image1));
 
-        List<Image> images = imageService.getImagesByLocationId(1L);
+        List<Image> images = imageService.getImagesByLocation(location);
 
         assertThat(images).hasSize(2);
         assertThat(images.get(0)).isEqualTo(image);
@@ -103,9 +103,9 @@ class ImageServiceTest {
         Image image = new Image("Image 1", "", screen, user);
         Image image1 = new Image("Image 2", "", screen, user);
 
-        when(imageRepository.findAllByCompanyId(1L)).thenReturn(Arrays.asList(image, image1));
+        when(imageRepository.findAllByCompany(any(Company.class))).thenReturn(Arrays.asList(image, image1));
 
-        List<Image> images = imageService.getImagesByCompanyId(1L);
+        List<Image> images = imageService.getImagesByCompany(company);
 
         assertThat(images).hasSize(2);
         assertThat(images.get(0)).isEqualTo(image);
@@ -188,8 +188,9 @@ class ImageServiceTest {
     @Test
     @DisplayName("Delete image")
     void shouldDoNothing_whenDeleteImage() {
-        imageService.delete(1L);
-        assertThat(true).isTrue();
+        Image image = new Image();
+        imageService.delete(image);
+        verify(imageRepository, atLeastOnce()).delete(any(Image.class));
     }
 
     @TestConfiguration

@@ -28,7 +28,7 @@ public class LocationService implements LocationServiceInterface {
     }
 
     @Override
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     @PostAuthorize("hasPermission(returnObject, 'EMPLOYEE')")
     public Location getLocationById(Long id) {
         return locationRepository.findById(id).orElseThrow(() -> new LocationNotFoundException(id));

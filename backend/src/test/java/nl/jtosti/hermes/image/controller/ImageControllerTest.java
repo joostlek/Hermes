@@ -212,7 +212,7 @@ class ImageControllerTest {
         image1.setId(2L);
         List<Image> images = Arrays.asList(image, image1);
 
-        given(imageService.getImagesByLocationId(1L)).willReturn(images);
+        given(imageService.getImagesByLocation(any(Location.class))).willReturn(images);
 
         mvc.perform(get("/api/locations/1/images")
                 .contentType(MediaType.APPLICATION_JSON)

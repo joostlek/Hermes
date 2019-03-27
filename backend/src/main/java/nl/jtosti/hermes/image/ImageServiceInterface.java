@@ -1,5 +1,8 @@
 package nl.jtosti.hermes.image;
 
+import nl.jtosti.hermes.company.Company;
+import nl.jtosti.hermes.location.Location;
+
 import java.util.List;
 
 public interface ImageServiceInterface {
@@ -9,11 +12,11 @@ public interface ImageServiceInterface {
 
     List<Image> getImagesByScreenId(Long id);
 
-    List<Image> getImagesByCompanyId(Long companyId);
+    List<Image> getImagesByCompany(Company company);
 
-    List<Image> getImagesByLocationId(Long id);
+    List<Image> getImagesByLocation(Location location);
 
-    List<Image> getImagesByLocationIdAndCompanyId(Long locationId, Long companyId);
+    List<Image> getImagesByLocationAndCompany(Location location, Company company);
 
     boolean exists(Long id);
 
@@ -21,5 +24,5 @@ public interface ImageServiceInterface {
 
     Image update(Image image);
 
-    void delete(Long id);
+    void delete(Image image);
 }
