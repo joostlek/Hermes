@@ -38,6 +38,9 @@ class ScreenServiceTest {
     @MockBean
     private ScreenRepository screenRepository;
 
+    @MockBean
+    private AclServiceInterface aclServiceInterface;
+
     private PasswordEncoder passwordEncoder = Screen.PASSWORD_ENCODER;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com", "");

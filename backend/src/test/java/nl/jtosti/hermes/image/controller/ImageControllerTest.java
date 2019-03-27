@@ -3,10 +3,12 @@ package nl.jtosti.hermes.image.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jtosti.hermes.company.Company;
 import nl.jtosti.hermes.company.CompanyServiceInterface;
+import nl.jtosti.hermes.config.acl.AclServiceInterface;
 import nl.jtosti.hermes.image.Image;
 import nl.jtosti.hermes.image.ImageServiceInterface;
 import nl.jtosti.hermes.image.StorageServiceInterface;
 import nl.jtosti.hermes.location.Location;
+import nl.jtosti.hermes.location.LocationServiceInterface;
 import nl.jtosti.hermes.screen.Screen;
 import nl.jtosti.hermes.screen.ScreenServiceInterface;
 import nl.jtosti.hermes.security.screen.ScreenAuthenticationProvider;
@@ -69,6 +71,12 @@ class ImageControllerTest {
 
     @MockBean
     private ScreenAuthenticationProvider screenAuthenticationProvider;
+
+    @MockBean
+    private AclServiceInterface aclServiceInterface;
+
+    @MockBean
+    private LocationServiceInterface locationServiceInterface;
 
     private User user = new User("Alex", "Jones", "alex.jones@alex.com", "");
 
@@ -213,6 +221,8 @@ class ImageControllerTest {
         List<Image> images = Arrays.asList(image, image1);
 
         given(imageService.getImagesByLocation(any(Location.class))).willReturn(images);
+
+        given(locationServiceInterface.getLocationById(1L)).willReturn(location);
 
         mvc.perform(get("/api/locations/1/images")
                 .contentType(MediaType.APPLICATION_JSON)
