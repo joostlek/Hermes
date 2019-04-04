@@ -50,7 +50,7 @@ after_success:
   - echo $TRAVIS_PULL_REQUEST
   - echo $TRAVIS_PULL_REQUEST_BRANCH
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-  - export TAG=`if [ "$TRAVIS_PULL_REQUEST" = true ]; then echo $TRAVIS_PULL_REQUEST_BRANCH; else echo $TAG; fi`
+  - export TAG=`if [ -v TRAVIS_PULL_REQUEST ]; then echo $TRAVIS_PULL_REQUEST_BRANCH; else echo $TAG; fi`
   - export IMAGE_NAME=joostlek/hermes
   - docker build -t $IMAGE_NAME:$TAG .
   - docker push $IMAGE_NAME
