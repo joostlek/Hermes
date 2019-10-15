@@ -27,7 +27,7 @@
     "@clr/icons": "~1.1.2",
     "@clr/ui": "~1.1.2",
     "@webcomponents/custom-elements": "^1.2.2",
-    "core-js": "^3.0.0",
+    "core-js": "^3.3.2",
     "rxjs": "~6.4.0",
     "zone.js": "~0.8.29"
   },
